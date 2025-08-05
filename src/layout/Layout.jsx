@@ -11,10 +11,10 @@ const Layout = () => {
 
     return (
          <div className="flex flex-col h-screen overflow-hidden">
-            <div className="h-[60px] bg-[var(--primary)] shrink-0">
+            <div className="lg:h-[60px] h-[135px] lg:bg-white bg-black hrink-0">
                 <AppHeader />
             </div>
-            <div className="h-[49px] shrink-0">
+            <div className="shrink-0">
                 <SubHeader />
             </div>
             <div className="flex flex-1 overflow-hidden">

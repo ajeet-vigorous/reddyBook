@@ -57,8 +57,8 @@ const AppSidebar = () => {
   const [matchData, setMatchData] = useState([]);
   const matchlistLocal = localStorage.getItem("matchList") ? JSON.parse(localStorage.getItem("matchList")) : null;
   const [raceId, setRaceId] = useState(null);
+
   useEffect(() => {
-    // console.log(sportMatchList, matchlistLocal, "data?.forEach")
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
     setMatchData(matchListData);
   }, [sportMatchList]);
@@ -151,8 +151,8 @@ const AppSidebar = () => {
                   {
                     <div
                       className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in    ${clickedOutside2 === true
-                          ? " bg-[#bbbbbb]"
-                          : "max-h-0 bg-[#bbbbbb]"
+                        ? " bg-[#bbbbbb]"
+                        : "max-h-0 bg-[#bbbbbb]"
                         } `}
                     >
                       <div className="py-0 divide-y divide-[#9e9e9e] scroll-md">
@@ -202,8 +202,8 @@ const AppSidebar = () => {
                   {
                     <div
                       className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in    ${clickedOutside === true
-                          ? " bg-[#bbbbbb]"
-                          : "max-h-0 bg-[#bbbbbb]"
+                        ? " bg-[#bbbbbb]"
+                        : "max-h-0 bg-[#bbbbbb]"
                         } `}
                     >
                       <div className="py-0 divide-y divide-[#9e9e9e] scroll-md">
@@ -277,8 +277,8 @@ const AppSidebar = () => {
 
               <div
                 className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
-                    ? "max-h-96 bg-[#bbbbbb]"
-                    : "max-h-0 bg-[#bbbbbb]"
+                  ? "max-h-96 bg-[#bbbbbb]"
+                  : "max-h-0 bg-[#bbbbbb]"
                   }`}
               >
                 <div className="">
@@ -294,8 +294,8 @@ const AppSidebar = () => {
                   <div
                     key={index}
                     className={`text-black overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
-                        ? "max-h-96 bg-[#bbbbbb]"
-                        : "max-h-0 bg-[#bbbbbb]"
+                      ? "max-h-96 bg-[#bbbbbb]"
+                      : "max-h-0 bg-[#bbbbbb]"
                       }`}
                   >
                     <div className="cursor-pointer border-b border-[#9e9e9e]">
@@ -316,21 +316,21 @@ const AppSidebar = () => {
                         <div className="py-0 my-0 divide-y divide-[#9e9e9e]">
                           {sport?.series.map((series, seriesIndex) => (
                             <div key={seriesIndex} className="divide-y divide-[#9e9e9e] w-full">
-                                <div
-                                  className="text-sm ml-4 relative px-0 text-black w-full py-0 my-0 space-x-0.5 font-normal inline-flex items-center cursor-pointer"
-                                  onClick={(e) =>
-                                    handleClick1(index, seriesIndex, e)
-                                  }
-                                >
-                                  {openKeys1[`${index}-${seriesIndex}`] ? (
-                                    <AiOutlineMinusSquare />
-                                  ) : (
-                                    <AiOutlinePlusSquare />
-                                  )}
-                                  <span className="px-2 py-0 my-0">
-                                    {series.seriesName}
-                                  </span>
-                                </div>
+                              <div
+                                className="text-sm ml-4 relative px-0 text-black w-full py-0 my-0 space-x-0.5 font-normal inline-flex items-center cursor-pointer"
+                                onClick={(e) =>
+                                  handleClick1(index, seriesIndex, e)
+                                }
+                              >
+                                {openKeys1[`${index}-${seriesIndex}`] ? (
+                                  <AiOutlineMinusSquare />
+                                ) : (
+                                  <AiOutlinePlusSquare />
+                                )}
+                                <span className="px-2 py-0 my-0">
+                                  {series.seriesName}
+                                </span>
+                              </div>
                               {openKeys1[`${index}-${seriesIndex}`] && (
                                 <div className="py-0 my-0">
                                   <ul className="list-disc py-0 my-0  divide-y divide-[#9e9e9e]">

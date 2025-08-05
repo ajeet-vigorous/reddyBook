@@ -20,9 +20,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
-
-
     if (settings.title) {
       document.title = settings.title;
     }
@@ -38,7 +35,7 @@ function App() {
     if (settings.colors) {
       setMultipleRootCssVariables(settings.colors)
     }
-    return () => { clearInterval(sportInterval); }
+    // return () => { clearInterval(sportInterval); }
   }, [dispatch])
 
 
