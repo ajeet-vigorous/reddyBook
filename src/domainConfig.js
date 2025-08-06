@@ -4,19 +4,18 @@ const GrandExchangeSettings = {
   logo: "/logo/reddyBook-logo.png",
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://socket.trovetown.co/",
-  apiurl: "https://api.plx99.com/v1/",
+  apiurl: "https://apidiamond.trovetown.co/v1/",
   domainName: "GRANDEXCH",
   colors: {
     "--primary": "#C10930",
-    // #C10930
     "--secondary": "#6D081D",
-    // #6D081D #343435
     "--darkcolor": "#343435",
     "--darkred": "#8b0000",
 
+    "--matchLagai": "#66d1ff",
+    "--matchKhai": "#ffb4c5",
 
-    "--matchLagai": "#72bbef",
-    "--matchKhai": "#FAA9BA",
+    
     "--result-color": "#355e3b",
     "--rule-bg": '#CCCCCC',
     "--sports-tab": '#266894',

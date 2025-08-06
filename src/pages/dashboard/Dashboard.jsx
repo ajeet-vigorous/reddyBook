@@ -7,6 +7,7 @@ import { IoIosColorWand } from 'react-icons/io';
 import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import LiveMatches from "../../component/dashboard/LiveMatches";
 import TopHeader from "../../component/dashboard/TopHeader";
+import InplayMatches from "../../component/dashboard/InplayMatches";
 
 
 export const sportlistArray = [
@@ -151,7 +152,7 @@ const Dashboard = ({ }) => {
 
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
-    : null;
+    : [];
 
   const [matchData, setMatchData] = useState([]);
 
@@ -164,8 +165,31 @@ const Dashboard = ({ }) => {
 
   return (
     <section className="overflow-hidden">
-      {/* <div className="bg-red-200 p-5">Dashboard</div> */}
-      <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} />
+      <div className="lg:block hidden ">
+        <div className="bg-white w-full flex justify-start items-center overflow-hidden">
+          <div className="w-[2%] bg-[var(--secondary)] px-[2px] z-[50]">
+            <img src='/subHeader/commentary.png' className="w-[22px] h-[22px]" />
+          </div>
+          <div className="w-[98%]">
+            <div className='px-[2px] text-black bg-[var(--secondary)] '>
+              <div className=" px-1 py-[2px] font-[700] tracking-wide animate-[marquee_40s_linear_infinite]  text-white text-[12px] whitespace-nowrap uppercase  ">
+                🏏 THE HUNDRED WOMEN'S & MEN'S CUP WINNER🏆 AND FANCY MARKET STARTED IN OUR EXCHANGE 🏏 🎾 ATP TORONTO & WTA MONTREAL 🏆 CUP WINNER BETS STARTED IN OUR EXCHANGE 🎾 🏏 OUR EXCLUSIVE PREMIUM MARKET FOR (SRL) IS NOW STARTED IN OUR EXCHANGE 🏏 DREAM BIG WIN BIG
+              </div>
+              <style>
+                {`  @keyframes marquee {
+                                            0% { transform: translateX(100%); }
+                                            100% { transform: translateX(-100%); }
+                                            }`}
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="">
+        <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} />
+        <InplayMatches activeTab={activeAllSporttab} matchlistItems={matchData} />
+
+      </div>
     </section>
   )
 }

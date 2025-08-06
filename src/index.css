@@ -27,9 +27,15 @@ body {
   font-family: "Roboto Condensed", sans-serif;
 }
 
+/*----------------------------------------------------------blinking effect -----------------------------------/////////*/
+.blinking-text {
 
+  animation: blink 1s linear infinite;
+  ;
+}
 
-
-
-
-
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

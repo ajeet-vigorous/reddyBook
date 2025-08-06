@@ -4,7 +4,7 @@ import { FaFacebookF, FaLock } from "react-icons/fa6";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { TbDeviceTvOld } from "react-icons/tb";
-import BetLocked from "../casinoComponent/BetLocked";
+// import BetLocked from "../casinoComponent/BetLocked";
 
 function InplayMatches({ activeTab, matchlistItems }) {
 
@@ -254,7 +254,8 @@ function InplayMatches({ activeTab, matchlistItems }) {
 
                           {isLockedSpan && (
                             <div className="absolute top-0 left-0 bg-black/10 p-1 flex justify-center items-center w-full h-full col-span-2 cursor-not-allowed">
-                              <BetLocked />
+                              {/* <BetLocked /> */}
+                              raman
                             </div>
                           )}
                         </div>

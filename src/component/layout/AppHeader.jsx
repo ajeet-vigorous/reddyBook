@@ -1,14 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import settings from "../../domainConfig";
 import { useDispatch } from "react-redux";
 import { getSportMatchList } from "../../redux/reducers/sport_reducer";
 import RulesModal from "../rulesModal/RulesModal";
+import { FaBullseye, FaSearch } from "react-icons/fa";
+import { BiChevronDown, BiLockAlt } from "react-icons/bi";
+import { IoPerson, IoPersonOutline } from "react-icons/io5";
+import { BsBarChart, BsBarChartSteps, BsBoxArrowRight, BsCardText } from "react-icons/bs";
+import BonusRules from "../bonusRules/BonusRules";
+import { useNavigate } from "react-router-dom";
+import LiveMatches from "../dashboard/LiveMatches";
 
 
 const AppHeader = () => {
 
   const dispatch = useDispatch()
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
+  const [bonusModalOpen, setBonusModalOpen] = useState(false);
+  const token = localStorage.getItem("token");
+
+  const [clickedOutside, setClickedOutside] = useState(false);
+  const handleClickInside = () => setClickedOutside(true);
+  const myRef = useRef();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (myRef.current && !myRef.current.contains(event.target)) {
+        setClickedOutside(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const sportInterval = setInterval(() => {
@@ -27,55 +53,232 @@ const AppHeader = () => {
     setRulesModalOpen(false);
   };
 
+  const setBonusTrue = () => {
+    setBonusModalOpen(true);
+  };
+
+  const setBonusFalse = () => {
+    setBonusModalOpen(false);
+  };
+  const matchlistLocal = localStorage.getItem("matchList")
+    ? JSON.parse(localStorage.getItem("matchList"))
+    : [];
+
+  const [matchData, setMatchData] = useState([]);
+
+  useEffect(() => {
+    let matchListData = matchlistLocal;
+    setMatchData(matchListData);
+  }, [matchlistLocal]);
+
   return (
     <>
       {rulesModalOpen ? <RulesModal setModalFalse={setModalFalse} /> : null}
+      {bonusModalOpen ? <BonusRules setBonusFalse={setBonusFalse} /> : null}
 
       <div className="">
-        <div className="mx-auto lg:w-[67%] md:w-[85%] w-full py-3">
-          <div className="flex justify-between items-center lg:px-0 px-2">
-            <div className="flex justify-start items-center lg:space-x-5 ">
-              <img src={settings.logo} className="w-[107px] h-[37px] lg:block hidden" />
-              <img src={settings.logo1} className="w-[107px] h-[37px] lg:hidden block" />
-              <input
-                placeholder="Search Events"
-                className="w-full lg:block hidden text-sm text-[#012970] bg-white border-0 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[7px] rounded-[2px] transition duration-300"
-              />
+        <div className="">
+          <div className="flex justify-between items-center lg:px-0 px-2 mx-auto 2xl:w-[67%] md:w-[90%] w-full py-0">
+            <div className="flex justify-start items-center lg:space-x-5 pt-2 ">
+              <img onClick={() => {
+                navigate("/dashboard");
+              }}
+                src={settings.logo} className="w-[107px] h-[37px] lg:block hidden" />
+              <img
+                onClick={() => {
+                  navigate("/dashboard");
+                }}
+                src={settings.logo1} className="w-[107px] h-[37px] lg:hidden block" />
+              <div className="relative w-full lg:block hidden">
+                <input
+                  placeholder="Search Events"
+                  className="w-full text-sm text-white bg-white border-0 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[7px] rounded-[2px] transition duration-300"
+                />
+                <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#012970] text-sm" />
+              </div>
               <div
                 onClick={() => setModalTrue()}
                 className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[12px] py-[5px] px-[15px] rounded-[5px] text-white flex items-center cursor-pointer">
                 Rules
               </div>
             </div>
-            <div className="uppercase flex space-x-1">
-              <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
-                signup
-              </div>
-              <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
-                Login
-              </div>
+            {token ? (
+              <>
+                <div className="uppercase flex md:space-x-3 sm:space-x-2 ">
+                  <div className="text-center">
+                    <div className="flex justify-center items-center relative">
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">BAL</span>
+                    </div>
+                    <span className="font-bold text-[13px] lg:text-black text-white">
+                      {/* {balance && balance.coins
+                      ? Number(balance.coins).toFixed(2)
+                      : "0"} */}
+                      0.00
+                    </span>
+                  </div>
+                  <div className="text-center">
+                    <div className="flex  justify-center items-center relative">
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">EXP</span>
+                    </div>
+                    <span className="font-bold text-[13px] lg:text-black text-white">
+                      {/* {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"} */} 0.00
+                    </span>
+                  </div>
+                  <div className="text-white  md:relative">
+                    <div
+                      ref={myRef}
+                      onClick={() => {
+                        handleClickInside();
+                        setClickedOutside(!clickedOutside);
+                      }}
+                    >
+                      <div className="flex items-center justify-center space-x-2 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
+                        <IoPerson />
+                        <p className="">
+                          {/* {user && user?.data && user?.data?.username} */}
+                          username
+                        </p>
+                        <BiChevronDown size={20} />
+                      </div>
+                      {clickedOutside ? (
+                        <div className="animate__animated animate__fadeIn animate__faster absolute right-1 top-12 shadow-2xl divide-y  bg-[#f1f5f8] w-[240px] md:mx-0 mr-[2%] ml-[2%] text-[16px] text-[#212529] transition duration-2000 border z-40">
+                          <div className="">
+                            <div className="bg-[var(--primary)] text-[13px] font-semibold tracking-wider text-white p-1.5 text-center">
+                              <span className="uppercase ">
+                                Hi,{/* {user && user?.data && user?.data?.username} */}
+                                username
+                              </span>
+                            </div>
+                            <div className=" p-3 border-b text-[13px] border-black bg-white capitalize space-y-[2px]">
+
+                              <div>Wallet Amount 0.00</div>
+                              <p className="text-[11px]">(inclusive bonus)</p>
+                              <div>Net Exposure 0.00 </div>
+                              <div>Bonus 0.00 </div>
+                              <div>Available 0.00 </div>
+                              <div>Withdrawal 0.00 </div>
+                            </div>
+                            <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
+                              <div className=" rounded-xl border p-[2px] border-[var(--primary)] text-[14px] text-[var(--primary)] cursor-pointer" >
+                                AWAITING BONUS : 0.00
+                              </div>
+                              <div className=" rounded-xl border p-[2px] bg-[var(--primary)] text-[14px] text-white cursor-pointer">
+                                REFER AND EARN
+                              </div>
+
+                            </div>
+                            <div className=" bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
+                              <div
+                                onClick={() => navigate("/dashboard")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <img src='/subHeader/menu-home.png' className="w-[16px] h-[16px]" />
+                                <p>Home{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => navigate("/account-statement")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <IoPersonOutline />
+                                <p>My Profile{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => navigate("/account-statement")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <BsBarChartSteps />
+                                <p>Account Statement{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => setBonusTrue()}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <BsCardText />
+                                <p>Bonus Rules{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => navigate("/account-statement")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <FaBullseye />
+                                <p>Stake Settings{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => navigate("/profitloss-report")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <BsBarChart />
+                                <p>Profit & Loss{" "}</p>
+                              </div>
+
+                              <div
+                                onClick={() => navigate("/unsettled-bets")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <BsBarChart />
+                                <p>Unsettled Bets{" "}</p>
+                              </div>
+                              <div
+                                onClick={() => navigate("/change-password")}
+                                className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
+                              >
+                                <BiLockAlt />
+                                <p>Change Password{" "}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            onClick={() => {
+                              navigate("/login");
+                              localStorage.clear();
+                            }}
+                            className="w-full flex justify-center items-center space-x-2 text-white text-[15px] font-black uppercase text-center cursor-pointer px-2 py-2"
+                            style={{
+                              background: 'linear-gradient(180deg, #fa7e29 0%, #F6682F 80%, #F6682F 100%)',
+                              boxShadow: 'inset 0px -10px 20px 0px #9f0101',
+                            }}
+                          >
+                            <BsBoxArrowRight />
+                            <p>Signout</p>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="uppercase flex space-x-1">
+                  <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    signup
+                  </div>
+                  <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    Login
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="lg:hidden flex relative ">
+            <div className="absolute left-0 top-0 z-[50] bg-white px-[10px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
+              <img src="/header/play-icon.png" className="w-[28px] h-[28px]" />
+            </div>
+
+            <div className=" bg-[url('/header/popular-img.png')] bg-cover bg-center w-full ">
+              <LiveMatches matchList={matchData} />
             </div>
           </div>
-          {/* <div>
-            <div className="bg-white/20  w-full mr-2  overflow-hidden">
-              <div className=" px-1 font-[500] animate-[marquee_20s_linear_infinite]  text-white/90 text-[12px] whitespace-nowrap italic">
-                Now live casinos, Everyday Live sports and Famous fantasy games available on most trusted and oldest exchange. Play to win big.
-              </div>
-              <style>
-                {`
-          @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-          }
-        `}
-              </style>
+          <div className="px-2 mt-1.5">
+            <div className="relative lg:hidden block w-full">
+              <input
+                placeholder="Search Events"
+                className="w-full text-sm text-white bg-transparent border border-grey-50 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[5px] rounded-[2px] transition duration-300"
+              />
+              <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm" />
             </div>
-          </div> */}
-          <div className="px-2 mt-2">
-            <input
-              placeholder="Search Events"
-              className="w-full lg:hidden block text-sm text-[#012970] bg-transparent  border-[1px] border-grey-50 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[5px] rounded-[2px] transition duration-300"
-            />
           </div>
         </div>
       </div >

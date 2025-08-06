@@ -7,9 +7,9 @@ function TopHeader({matchList , activeAllSporttab , setactiveAllSporttab}) {
   
     return (
         <div className="bg-[var(--primary)] xl:bg-transparent">
-          <LiveMatches matchList={matchList} />
+          {/* <LiveMatches matchList={matchList} /> */}
           {/* <Slots /> */}
-          {/* <AllSports activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} /> */}
+          <AllSports activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} />
         </div>
     )
 }
