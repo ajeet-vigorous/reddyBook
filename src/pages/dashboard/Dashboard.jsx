@@ -186,7 +186,7 @@ const Dashboard = ({ }) => {
         </div>
       </div>
       <div className="">
-        <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} />
+        {/* <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} /> */}
         <InplayMatches activeTab={activeAllSporttab} matchlistItems={matchData} />
 
       </div>

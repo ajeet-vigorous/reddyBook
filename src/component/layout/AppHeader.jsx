@@ -10,6 +10,7 @@ import { BsBarChart, BsBarChartSteps, BsBoxArrowRight, BsCardText } from "react-
 import BonusRules from "../bonusRules/BonusRules";
 import { useNavigate } from "react-router-dom";
 import LiveMatches from "../dashboard/LiveMatches";
+import Login from "../login/Login";
 
 
 const AppHeader = () => {
@@ -23,6 +24,17 @@ const AppHeader = () => {
   const handleClickInside = () => setClickedOutside(true);
   const myRef = useRef();
   const navigate = useNavigate();
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const openModal = () => {
+    setIsLoginOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsLoginOpen(false);
+    // localStorage.setItem("unauthorized", false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -252,10 +264,16 @@ const AppHeader = () => {
             ) : (
               <>
                 <div className="uppercase flex space-x-1">
-                  <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                  <div
+                    onClick={() => {
+                      navigate("/signup");
+                    }}
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
                     signup
                   </div>
-                  <div className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                  <div
+                    onClick={openModal}
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
                     Login
                   </div>
                 </div>
@@ -282,6 +300,9 @@ const AppHeader = () => {
           </div>
         </div>
       </div >
+
+      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
+
     </>
   );
 };

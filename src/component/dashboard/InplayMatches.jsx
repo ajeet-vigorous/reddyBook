@@ -127,7 +127,7 @@ function InplayMatches({ activeTab, matchlistItems }) {
     } else {
       content = (
         <>
-          <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+          <div className="lg:flex hidden justify-between px-1.5 py-1 w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
             <h2 className="text-sm font-bold text-black w-[60%] px-2">Game</h2>
             <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
               <span>1</span>
@@ -135,7 +135,7 @@ function InplayMatches({ activeTab, matchlistItems }) {
               <span>2</span>
             </p>
           </div>
-        
+
           {filteredMatches?.map((element, index) => {
             // Lock only for sportId 1 or 2
             const showLock = element.sportId === 1 || element.sportId === 2;
@@ -154,7 +154,8 @@ function InplayMatches({ activeTab, matchlistItems }) {
                       className="flex justify-start items-center cursor-pointer"
                     >
                       <span className="lg:block hidden text-black text-sm px-2 font-normal hover:underline">
-                        {element?.matchName} / {element?.matchDate}
+                        {element?.matchName} / {element?.matchDate}<br/>
+                        ({element?.matchType})
                       </span>
                       <div className="lg:hidden block px-1">
                         <p className="text-black text-sm font-normal hover:underline">
@@ -177,8 +178,8 @@ function InplayMatches({ activeTab, matchlistItems }) {
                         </div>
                       )}
                       {element?.isTv && <LiaDesktopSolid size={16} />}
-                      {element?.isFancy && <FaFacebookF size={12} />}
-                      {element?.isBookmaker && (<span className="font-bold text-[12px]">BM</span>)}
+                      {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[15px] h-[15px]"/>}
+                      {element?.isBookmaker && (<span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px]">BM</span>)}
                     </div>
                   </div>
 
@@ -248,16 +249,15 @@ function InplayMatches({ activeTab, matchlistItems }) {
                           key={i}
                           className={`relative w-full h-full ${isLockedSpan ? "col-span-2" : ""}`}
                         >
-                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-1 flex justify-center items-center w-full h-full`}>
+                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-2.5 flex justify-center items-center w-full h-full`}>
                             {Math.floor(Math.random() * 100)}
                           </div>
 
-                          {isLockedSpan && (
+                          {/* {isLockedSpan && (
                             <div className="absolute top-0 left-0 bg-black/10 p-1 flex justify-center items-center w-full h-full col-span-2 cursor-not-allowed">
-                              {/* <BetLocked /> */}
-                              raman
+                              <BetLocked />
                             </div>
-                          )}
+                          )} */}
                         </div>
                       );
                     })}

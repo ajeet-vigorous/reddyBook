@@ -4,7 +4,6 @@ import { apiCall } from "../../config/HTTP";
 async function login(data) {
   try {
     const user = await apiCall("POST", "user/login", data);
-
     if (user) {
       localStorage.setItem(`user_info_${domainName}`, JSON.stringify(user));
       localStorage.setItem("token", JSON.stringify(user?.token))
