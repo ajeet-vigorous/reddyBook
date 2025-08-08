@@ -12,9 +12,6 @@ const GrandExchangeSettings = {
     "--darkcolor": "#343435",
     "--darkred": "#8b0000",
     "--backgroundmain": "#dfe8e9",
-    
-    
-
     "--matchLagai": "#66d1ff",
     "--matchKhai": "#ffb4c5",
 

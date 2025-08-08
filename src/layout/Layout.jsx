@@ -21,7 +21,7 @@ const Layout = () => {
                 <div className="w-[280px] overflow-y-auto shrink-0 hidden xl:block">
                     <AppSidebar />
                 </div>
-                <div className="flex-1 overflow-y-auto px-4 py-3 bg-[var(--backgroundmain)]">
+                <div className="flex-1 overflow-y-auto lg:px-4 px-2 py-3 bg-[var(--backgroundmain)]">
                     {/* <div className="lg:block hidden ">
                         <div className="bg-white w-full flex justify-start items-center overflow-hidden">
                             <div className="w-[2%] bg-[var(--secondary)] px-[2px] z-[50]">

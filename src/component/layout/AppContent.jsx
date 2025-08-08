@@ -4,6 +4,10 @@ import Dashboard from '../../pages/dashboard/Dashboard'
 import InPlayMatch from '../../pages/in_play/InPlayMatch'
 import Signup from '../../pages/signup/Signup'
 import Profile from '../../pages/profile/Profile'
+import Overview from '../profile/Overview'
+import StakeSettings from '../profile/StakeSettings'
+import ChangePassword from '../profile/ChangePassword'
+import AccountSatement from '../../pages/accountstatement/AccountStatement'
 
 
 
@@ -15,7 +19,14 @@ const AppContent = () => {
       <Route path="/" element={<Navigate to="/dashboard" />} />
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/signup' element={<Signup />} />
-      <Route path='/Profile' element={<Profile />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/:tab" element={<Profile />} />
+      {/* <Route path='/overview' element={<Overview />} />
+      <Route path='/profile/stack-settings' element={<StakeSettings />} />
+      <Route path='/profile/change-password' element={<ChangePassword />} /> */}
+      <Route path='/ac-statement' element={<AccountSatement />} />
+
+
       <Route path='/in-play/:gameId?' element={<InPlayMatch />} />
     </Routes>
 

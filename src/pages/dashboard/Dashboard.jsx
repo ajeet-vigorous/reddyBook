@@ -8,6 +8,10 @@ import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import LiveMatches from "../../component/dashboard/LiveMatches";
 import TopHeader from "../../component/dashboard/TopHeader";
 import InplayMatches from "../../component/dashboard/InplayMatches";
+import Trendring from "../../component/dashboard/groupCasino/Trending";
+import PopularGame from "../../component/dashboard/groupCasino/PopularGame";
+import LiveCasino from "../../component/dashboard/groupCasino/LiveGames";
+import useGroupCasinoList from "../../component/IntGroupCasinoList/IntGroupCasinoList";
 
 
 export const sportlistArray = [
@@ -153,6 +157,7 @@ const Dashboard = ({ }) => {
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
     : [];
+  const groupCasinoList = useGroupCasinoList();
 
   const [matchData, setMatchData] = useState([]);
 
@@ -188,10 +193,12 @@ const Dashboard = ({ }) => {
       <div className="">
         {/* <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} /> */}
         <InplayMatches activeTab={activeAllSporttab} matchlistItems={matchData} />
-
+        {/* <Trendring name={"Trending"} data={groupCasinoList?.trendingGames} />
+        <PopularGame name={"Popular Games"} data={groupCasinoList.popularGames} />
+        <LiveCasino filterSection={"liveCasino"} name={"Live Casino"} data={groupCasinoList?.liveGames} /> */}
       </div>
     </section>
   )
 }
 
-export default React.memo(Dashboard)
+export default React.memo(Dashboard);

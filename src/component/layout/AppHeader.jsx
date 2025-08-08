@@ -101,17 +101,20 @@ const AppHeader = () => {
     }, 1000);
   }, [balance]);
 
-  useEffect(() => {
-    getExposureFunc();
-  }, []);
 
   useEffect(() => {
-    const intervalBalance = setInterval(() => {
-      dispatch(getUserBalance());
-    }, 3000);
+    const token = localStorage.getItem('token');
+    if (token) {
+      getExposureFunc();
+      const intervalBalance = setInterval(() => {
+        dispatch(getUserBalance());
+      }, 3000);
 
-    return () => { clearInterval(intervalBalance); }
-  }, [dispatch])
+      return () => {
+        clearInterval(intervalBalance);
+      }
+    }
+  }, [dispatch]);
 
   const getExposureFunc = async () => {
     const reqData = {
@@ -145,7 +148,7 @@ const AppHeader = () => {
               <div className="relative w-full lg:block hidden">
                 <input
                   placeholder="Search Events"
-                  className="w-full text-sm text-white bg-white border-0 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[7px] rounded-[2px] transition duration-300"
+                  className="w-[320px] text-sm text-white bg-white border-0 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[7px] rounded-[2px] transition duration-300"
                 />
                 <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#012970] text-sm" />
               </div>
@@ -203,15 +206,45 @@ const AppHeader = () => {
                             </div>
                             <div className=" p-3 border-b text-[13px] border-black bg-white capitalize space-y-[2px]">
 
-                              <div className="flex justify-start items-center space-x-2"> <p>Wallet Amount</p>   <p className="font-bold">{balance && balance.coins
-                                ? Number(balance.coins).toFixed(2)
-                                : "0"}</p>
+                              <div className="flex justify-start items-center space-x-8">
+                                <p>Wallet Amount</p>
+                                <p className="font-bold">
+                                  {balance && balance.coins
+                                    ? Number(balance.coins).toFixed(2)
+                                    : "0"}
+                                </p>
                               </div>
                               <p className="text-[11px]">(inclusive bonus)</p>
-                              <div>Net Exposure {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"} </div>
-                              <div>Bonus 0.00 </div>
-                              <div>Available 0.00 </div>
-                              <div>Withdrawal 0.00 </div>
+                              <div className="flex justify-start items-center space-x-8">
+                                <p>Net Exposure</p>
+                                <p className="font-bold">
+                                  {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
+                                </p>
+                              </div>
+                              <div className="flex justify-start items-center space-x-20">
+                                <p>Bonus</p>
+                                <p className="font-bold">
+                                  {balance && balance.coins
+                                    ? Number(balance.coins).toFixed(2)
+                                    : "0.00"}
+                                </p>
+                              </div>
+                              <div className="flex justify-start items-center space-x-16">
+                                <p>Available</p>
+                                <p className="font-bold">
+                                  {balance && balance.coins
+                                    ? Number(balance.coins).toFixed(2)
+                                    : "0.00"}
+                                </p>
+                              </div>
+                              <div className="flex justify-start items-center space-x-14">
+                                <p>Withdrawal</p>
+                                <p className="font-bold">
+                                  {balance && balance.coins
+                                    ? Number(balance.coins).toFixed(2)
+                                    : "0.00"}
+                                </p>
+                              </div>
                             </div>
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
                               <div className=" rounded-xl border p-[2px] border-[var(--primary)] text-[14px] text-[var(--primary)] cursor-pointer" >
@@ -238,7 +271,7 @@ const AppHeader = () => {
                                 <p>My Profile{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/account-statement")}
+                                onClick={() => navigate("/ac-statement")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsBarChartSteps />
@@ -252,7 +285,7 @@ const AppHeader = () => {
                                 <p>Bonus Rules{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/account-statement")}
+                                onClick={() => navigate("/profile/stacksettings")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <FaBullseye />
@@ -274,7 +307,7 @@ const AppHeader = () => {
                                 <p>Unsettled Bets{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/profile")}
+                                onClick={() => navigate("/profile/changepassword")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BiLockAlt />

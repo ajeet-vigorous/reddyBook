@@ -39,3 +39,12 @@ body {
     opacity: 0;
   }
 }
+
+@keyframes marqueeLeftToRight {
+  0% { transform: translateX(-100%); } /* Starts off-screen left */
+  100% { transform: translateX(100%); } /* Ends off-screen right */
+}
+
+.animate-marquee-left-to-right {
+  animation: marqueeLeftToRight 0.9s linear infinite;
+}

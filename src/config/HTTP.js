@@ -56,7 +56,7 @@ export const apiCall = async (method, path, payload) => {
     } catch (error) {
         if (Number(error?.response?.data?.code) === 3 || Number(error?.response?.status) === 401) {
             localStorage.clear();
-            window.location.href = '/login';
+            window.location.href = '/dashboard';
         } else if (error.response) {
             throw error.response;
         } else if (error.request) {

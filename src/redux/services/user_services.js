@@ -1,63 +1,117 @@
 import { apiCall } from "../../config/HTTP";
 
 async function getUserStatement(data) {
-    try {
-        const response = await apiCall("POST", "user/userStatement", data);
-        if (response) {
-            return response;
-          }
-    } catch (error) {
-      console.error("user Statement List", error);
-      return Promise.reject(error);
+  try {
+    const response = await apiCall("POST", "user/userStatement", data);
+    if (response) {
+      return response;
     }
+  } catch (error) {
+    console.error("user Statement List", error);
+    return Promise.reject(error);
   }
+}
 
-  async function getUserBalance (data) {
-    try {
-      const user = await apiCall("POST", "user/userBalance", data);
-  
-      if (user) {
-        localStorage.setItem('clientBalance', JSON.stringify(user.data.coins));
-        localStorage.setItem('clientExposure', JSON.stringify(user.data.exposure));
-        localStorage.setItem('clientProfitLoss', JSON.stringify(user.data.profitLoss));
-        return user;
-      }
-    } catch (error) {
-      console.error("Domain setting error:", error);
-      return Promise.reject(error);
+async function getUserBalance(data) {
+  try {
+    const user = await apiCall("POST", "user/userBalance", data);
+
+    if (user) {
+      localStorage.setItem('clientBalance', JSON.stringify(user.data.coins));
+      localStorage.setItem('clientExposure', JSON.stringify(user.data.exposure));
+      localStorage.setItem('clientProfitLoss', JSON.stringify(user.data.profitLoss));
+      return user;
     }
+  } catch (error) {
+    console.error("Domain setting error:", error);
+    return Promise.reject(error);
   }
+}
 
-  async function userUpdate (data) {
-    try {
-      const user = await apiCall("PATCH", "user/userUpdate", data);
-  
-      if (user) {
-        return user;
-      }
-    } catch (error) {
-      console.error("user Update error:", error);
-      return Promise.reject(error);
+async function userUpdate(data) {
+  try {
+    const user = await apiCall("PATCH", "user/userUpdate", data);
+
+    if (user) {
+      return user;
     }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
   }
-  async function getBetList (data) {
-    try {
-      const casinoListByCateogeory = await apiCall("POST", "sports/betsList", data);
-      if (casinoListByCateogeory) {
-        return casinoListByCateogeory;
-      }
-    } catch (error) {
-      console.error("user Update error:", error);
-      return Promise.reject(error);
+}
+async function getBetList(data) {
+  try {
+    const casinoListByCateogeory = await apiCall("POST", "sports/betsList", data);
+    if (casinoListByCateogeory) {
+      return casinoListByCateogeory;
     }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
   }
-  
+}
 
-
-  export const userServices = {
-    getUserStatement,
-    userUpdate,
-    getBetList,
-    getUserBalance
-
+async function getCasinoListByCateogeory(data) {
+  try {
+    const casinoListByCateogeory = await apiCall("POST", "website/getCasinoListByCateogeory", data);
+    if (casinoListByCateogeory) {
+      return casinoListByCateogeory;
+    }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
   }
+}
+
+async function getInternationalGroupCasinoList(data) {
+  try {
+    const cosinoGroupList = await apiCall("POST", "website/getInternationalGroupCasinoList", data);
+    if (cosinoGroupList) {
+      localStorage.setItem("cosinoGroupList", JSON.stringify(cosinoGroupList.data));
+      return cosinoGroupList;
+    }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
+  }
+}
+
+async function getMatchList(data) {
+  try {
+    const user = await apiCall("POST", "sports/matchList", data);
+    if (user) {
+      const matchList = user?.data && Object.keys(user?.data).length > 0 ? user?.data : [];
+      localStorage.setItem("matchList", JSON.stringify(matchList));
+      return user;
+    }
+  } catch (error) {
+    console.error("MatchList error:", error);
+    return Promise.reject(error);
+  }
+}
+
+async function getDomainSettingData(data) {
+  try {
+    const user = await apiCall("POST", "website/domainSettingByDomainName", data);
+
+    if (user) {
+      localStorage.setItem('clientdomainSetting', JSON.stringify(user.data));
+      return user;
+    }
+  } catch (error) {
+    console.error("Domain setting error:", error);
+    return Promise.reject(error);
+  }
+}
+
+
+export const userServices = {
+  getUserStatement,
+  userUpdate,
+  getBetList,
+  getUserBalance,
+  getMatchList,
+  getDomainSettingData
+
+}
