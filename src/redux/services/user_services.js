@@ -17,7 +17,6 @@ async function getUserStatement(data) {
       const user = await apiCall("POST", "user/userBalance", data);
   
       if (user) {
-  
         localStorage.setItem('clientBalance', JSON.stringify(user.data.coins));
         localStorage.setItem('clientExposure', JSON.stringify(user.data.exposure));
         localStorage.setItem('clientProfitLoss', JSON.stringify(user.data.profitLoss));

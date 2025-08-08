@@ -5,12 +5,15 @@ const GrandExchangeSettings = {
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://socket.trovetown.co/",
   apiurl: "https://apidiamond.trovetown.co/v1/",
-  domainName: "GRANDEXCH",
+  domainName: "reddybook",
   colors: {
     "--primary": "#C10930",
     "--secondary": "#6D081D",
     "--darkcolor": "#343435",
     "--darkred": "#8b0000",
+    "--backgroundmain": "#dfe8e9",
+    
+    
 
     "--matchLagai": "#66d1ff",
     "--matchKhai": "#ffb4c5",

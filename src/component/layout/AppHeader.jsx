@@ -11,6 +11,8 @@ import BonusRules from "../bonusRules/BonusRules";
 import { useNavigate } from "react-router-dom";
 import LiveMatches from "../dashboard/LiveMatches";
 import Login from "../login/Login";
+import { domainName } from "../../config/Auth";
+import { getClientExposure, getUserBalance } from "../../redux/reducers/user_reducer";
 
 
 const AppHeader = () => {
@@ -21,6 +23,11 @@ const AppHeader = () => {
   const token = localStorage.getItem("token");
 
   const [clickedOutside, setClickedOutside] = useState(false);
+  const user = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
+  const [balance, setBalance] = useState({
+    coins: "",
+    exposure: "",
+  });
   const handleClickInside = () => setClickedOutside(true);
   const myRef = useRef();
   const navigate = useNavigate();
@@ -83,6 +90,40 @@ const AppHeader = () => {
     setMatchData(matchListData);
   }, [matchlistLocal]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      let Balance = JSON.parse(localStorage.getItem("clientBalance"));
+      let clientExposure = JSON.parse(localStorage.getItem("clientExposure"));
+      setBalance({
+        coins: Balance,
+        exposure: clientExposure,
+      });
+    }, 1000);
+  }, [balance]);
+
+  useEffect(() => {
+    getExposureFunc();
+  }, []);
+
+  useEffect(() => {
+    const intervalBalance = setInterval(() => {
+      dispatch(getUserBalance());
+    }, 3000);
+
+    return () => { clearInterval(intervalBalance); }
+  }, [dispatch])
+
+  const getExposureFunc = async () => {
+    const reqData = {
+      fancyBet: true,
+      oddsBet: true,
+      isDeclare: false,
+      diamondBet: true,
+      isClientExposure: true,
+    };
+    dispatch(getClientExposure(reqData));
+  };
+
   return (
     <>
       {rulesModalOpen ? <RulesModal setModalFalse={setModalFalse} /> : null}
@@ -123,10 +164,9 @@ const AppHeader = () => {
                       <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">BAL</span>
                     </div>
                     <span className="font-bold text-[13px] lg:text-black text-white">
-                      {/* {balance && balance.coins
-                      ? Number(balance.coins).toFixed(2)
-                      : "0"} */}
-                      0.00
+                      {balance && balance.coins
+                        ? Number(balance.coins).toFixed(2)
+                        : "0"}
                     </span>
                   </div>
                   <div className="text-center">
@@ -135,7 +175,7 @@ const AppHeader = () => {
                       <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">EXP</span>
                     </div>
                     <span className="font-bold text-[13px] lg:text-black text-white">
-                      {/* {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"} */} 0.00
+                      {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
                     </span>
                   </div>
                   <div className="text-white  md:relative">
@@ -149,8 +189,7 @@ const AppHeader = () => {
                       <div className="flex items-center justify-center space-x-2 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
                         <IoPerson />
                         <p className="">
-                          {/* {user && user?.data && user?.data?.username} */}
-                          username
+                          {user && user?.data && user?.data?.username}
                         </p>
                         <BiChevronDown size={20} />
                       </div>
@@ -159,15 +198,17 @@ const AppHeader = () => {
                           <div className="">
                             <div className="bg-[var(--primary)] text-[13px] font-semibold tracking-wider text-white p-1.5 text-center">
                               <span className="uppercase ">
-                                Hi,{/* {user && user?.data && user?.data?.username} */}
-                                username
+                                Hi,{user && user?.data && user?.data?.username}
                               </span>
                             </div>
                             <div className=" p-3 border-b text-[13px] border-black bg-white capitalize space-y-[2px]">
 
-                              <div>Wallet Amount 0.00</div>
+                              <div className="flex justify-start items-center space-x-2"> <p>Wallet Amount</p>   <p className="font-bold">{balance && balance.coins
+                                ? Number(balance.coins).toFixed(2)
+                                : "0"}</p>
+                              </div>
                               <p className="text-[11px]">(inclusive bonus)</p>
-                              <div>Net Exposure 0.00 </div>
+                              <div>Net Exposure {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"} </div>
                               <div>Bonus 0.00 </div>
                               <div>Available 0.00 </div>
                               <div>Withdrawal 0.00 </div>
@@ -190,7 +231,7 @@ const AppHeader = () => {
                                 <p>Home{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/account-statement")}
+                                onClick={() => navigate("/profile")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <IoPersonOutline />
@@ -233,7 +274,7 @@ const AppHeader = () => {
                                 <p>Unsettled Bets{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/change-password")}
+                                onClick={() => navigate("/profile")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BiLockAlt />
@@ -243,7 +284,7 @@ const AppHeader = () => {
                           </div>
                           <div
                             onClick={() => {
-                              navigate("/login");
+                              navigate("/dasboard");
                               localStorage.clear();
                             }}
                             className="w-full flex justify-center items-center space-x-2 text-white text-[15px] font-black uppercase text-center cursor-pointer px-2 py-2"
