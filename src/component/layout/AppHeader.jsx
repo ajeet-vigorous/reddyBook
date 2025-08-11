@@ -161,7 +161,7 @@ const AppHeader = () => {
             {token ? (
               <>
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 ">
-                  <div className="text-center">
+                  <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
                       <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
                       <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">BAL</span>
@@ -172,7 +172,11 @@ const AppHeader = () => {
                         : "0"}
                     </span>
                   </div>
-                  <div className="text-center">
+                  <div
+                    onClick={() => {
+                      navigate("/market-analysis");
+                    }}
+                    className="text-center cursor-pointer">
                     <div className="flex  justify-center items-center relative">
                       <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
                       <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">EXP</span>
@@ -247,10 +251,12 @@ const AppHeader = () => {
                               </div>
                             </div>
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
-                              <div className=" rounded-xl border p-[2px] border-[var(--primary)] text-[14px] text-[var(--primary)] cursor-pointer" >
+                              <div className=" rounded-xl border p-[3px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
                                 AWAITING BONUS : 0.00
                               </div>
-                              <div className=" rounded-xl border p-[2px] bg-[var(--primary)] text-[14px] text-white cursor-pointer">
+                              <div 
+                              onClick={() => navigate("/refer-and-earn")}
+                              className=" rounded-xl border p-[3px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
                                 REFER AND EARN
                               </div>
 

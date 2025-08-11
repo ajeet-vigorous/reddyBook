@@ -8,6 +8,8 @@ import Overview from '../profile/Overview'
 import StakeSettings from '../profile/StakeSettings'
 import ChangePassword from '../profile/ChangePassword'
 import AccountSatement from '../../pages/accountstatement/AccountStatement'
+import MarketAnalysis from '../../pages/marketAnalysis/MarketAnalysis'
+import ReferAndEarn from '../../pages/referAndEarn/ReferAndEarn'
 
 
 
@@ -25,8 +27,8 @@ const AppContent = () => {
       <Route path='/profile/stack-settings' element={<StakeSettings />} />
       <Route path='/profile/change-password' element={<ChangePassword />} /> */}
       <Route path='/ac-statement' element={<AccountSatement />} />
-
-
+      <Route path='/market-analysis' element={<MarketAnalysis />} />
+      <Route path='/refer-and-earn' element={<ReferAndEarn />} />
       <Route path='/in-play/:gameId?' element={<InPlayMatch />} />
     </Routes>
 

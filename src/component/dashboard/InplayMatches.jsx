@@ -130,42 +130,46 @@ function InplayMatches({ activeTab, matchlistItems }) {
     } else {
       content = (
         <>
-          <div className="lg:flex hidden justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
-            <h2 className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1 px-2">
-              Game
-              <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[28px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
-            </h2>
-            <div className="flex justify-center items-center gap-2">
-              <div
-                onClick={() => setIsLive(!isLive)}
-                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+          <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
+            <div className="lg:w-[49%] w-full flex items-center lg:space-x-24 lg:justify-start justify-between">
+              {/* <div className="flex " > */}
+              <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1 px-2">
+                Game
+                <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[28px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+              </div>
+              <div className="flex justify-end items-center gap-2 pr-1">
+                <div
+                  onClick={() => setIsLive(!isLive)}
+                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
                   ${isLive ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
-              >
-                {isLive ? "- LIVE" : "+ LIVE"}
-              </div>
+                >
+                  {isLive ? "- LIVE" : "+ LIVE"}
+                </div>
 
-              <div
-                onClick={() => setIsVirtual(!isVirtual)}
-                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                <div
+                  onClick={() => setIsVirtual(!isVirtual)}
+                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
                   ${isVirtual ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
-              >
-                {isVirtual ? "- VIRTUAL" : "+ VIRTUAL"}
-              </div>
+                >
+                  {isVirtual ? "- VIRTUAL" : "+ VIRTUAL"}
+                </div>
 
-              <div
-                onClick={() => setIsPremium(!isPremium)}
-                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                <div
+                  onClick={() => setIsPremium(!isPremium)}
+                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
                   ${isPremium ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
-              >
-                {isPremium ? "- Premium" : "+ Premium"}
+                >
+                  {isPremium ? "- Premium" : "+ Premium"}
+                </div>
+
               </div>
-           
+              {/* </div> */}
             </div>
-            <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
+            <div className="w-[51%] lg:grid hidden grid-cols-3 text-center text-sm font-bold">
               <span>1</span>
               <span>X</span>
               <span>2</span>
-            </p>
+            </div>
           </div>
 
           {filteredMatches?.map((element, index) => {
@@ -180,7 +184,7 @@ function InplayMatches({ activeTab, matchlistItems }) {
               >
                 <div className="lg:flex w-full">
                   {/* Match info section */}
-                  <div className="lg:w-[60%] w-full flex justify-between items-center bg-white">
+                  <div className="lg:w-[49%] w-full flex justify-between items-center bg-white">
                     <a
                       href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                       className="flex justify-start items-center cursor-pointer"
@@ -198,7 +202,6 @@ function InplayMatches({ activeTab, matchlistItems }) {
                         </p>
                       </div>
 
-
                       <div className="flex items-center space-x-4 cursor-pointer md:px-10 px-1">
                         {implayMatchFunc(element) && (
                           <span className="w-full flex flex-col items-center text-green-600 font-bold text-xs leading-none">
@@ -213,15 +216,15 @@ function InplayMatches({ activeTab, matchlistItems }) {
                     </a>
 
                     {/* Icons */}
-                    <div className="flex items-center space-x-4 cursor-pointer md:px-10 px-1">
+                    <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
                       {element?.isTv && <LiaDesktopSolid size={16} />}
-                      {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[15px] h-[15px]" />}
-                      {element?.isBookmaker && (<span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px]">BM</span>)}
+                      {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[12px] h-[12px]" />}
+                      {element?.isBookmaker && (<span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[19px] h-[19px] text-[9px] pt-[3px]">BM</span>)}
                     </div>
                   </div>
 
 
-                  <div className="lg:w-[40%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
+                  <div className="lg:w-[51%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
                     {Array?.from({ length: 6 }).map((_, i) => {
                       const isLagai = i % 2 === 0;
 
