@@ -4,18 +4,15 @@ const GrandExchangeSettings = {
   logo: "/logo/reddyBook-logo.png",
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://socket.trovetown.co/",
-  apiurl: "https://apidiamond.trovetown.co/v1/",
+  apiurl: "https://api.bpexchanges.com/v1/",
   domainName: "GRANDEXCH",
   colors: {
     "--primary": "#C10930",
     "--secondary": "#6D081D",
     "--darkcolor": "#343435",
     "--darkred": "#8b0000",
-
     "--matchLagai": "#66d1ff",
     "--matchKhai": "#ffb4c5",
-
-    
     "--result-color": "#355e3b",
     "--rule-bg": '#CCCCCC',
     "--sports-tab": '#266894',
@@ -72,9 +69,5 @@ const domainSettings = {
 
 const currentDomain = window.location.host;
 const settings = domainSettings[currentDomain] || domainSettings["localhost:3000"];
-// Object.entries(settings).forEach(([key, value]) => {
-//   if (key.startsWith("--")) {
-//     document.documentElement.style.setProperty(key, value);
-//   }
-// });
+
 export default settings;

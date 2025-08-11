@@ -22,13 +22,6 @@ export function authHeader() {
 }
 
 export const apiCall = async (method, path, payload) => {
-    // if (import.meta.env.VITE_SECRET_KEY_DECREPT_FLAG && path !="user/login") {
-    //     const encryptedDataee = CryptoJS.AES.encrypt(JSON.stringify(payload), import.meta.env.VITE_SECRET_KEY_DECREPT).toString();
-    //      payload = {
-    //         data: encryptedDataee,
-    //         isEncruption: true
-    //     };
-    // }
     try {
         const response = await axios({
             method,
