@@ -26,7 +26,6 @@ function App() {
     dispatch(getMatchList());
     let domainSetting = {
       domainUrl: window.location.origin,
-      // domainUrl: 'https://sikander777.com',
     };
     dispatch(getDomainSettingData(domainSetting));
     const interval = setInterval(() => {

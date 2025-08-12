@@ -22,7 +22,7 @@ const AppContent = () => {
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/signup' element={<Signup />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/:tab" element={<Profile />} />
+      <Route path="/profile/:tab?" element={<Profile />} />
       {/* <Route path='/overview' element={<Overview />} />
       <Route path='/profile/stack-settings' element={<StakeSettings />} />
       <Route path='/profile/change-password' element={<ChangePassword />} /> */}
