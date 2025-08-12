@@ -16,8 +16,8 @@ const menuItems = [
   { id: 7, icon: "/subHeader/menu-99998.png", label: "Casino", url: `in-play/4`, inplay: true },
   { id: 8, icon: "/subHeader/menu-99991.png", label: "Sports Book", url: `in-play/4`, inplay: true },
 
-  { id: 9, icon: "/subHeader/menu-7.png", label: "Horse Racing", url: `in-play/4`, inplay: true },
-  { id: 10, icon: "/subHeader/menu-4339.png", label: "Greyhound Racing", url: `in-play/4`, inplay: true },
+  { id: 9, icon: "/subHeader/menu-7.png", label: "Horse Racing", url: `in-play/7`, inplay: true },
+  { id: 10, icon: "/subHeader/menu-4339.png", label: "Greyhound Racing", url: `in-play/4339`, inplay: true },
   // { id: 11, icon:"/subHeader/menu-99991.png",label: "Sports Book", url: `in-play/4`, inplay: true },
 
   { id: 12, icon: "/subHeader/menu-99990.png", label: "Binary", url: `in-play/4`, inplay: true },

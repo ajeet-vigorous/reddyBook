@@ -9,12 +9,15 @@ import { TbDeviceTvOld } from "react-icons/tb";
 function InplayMatches({ activeTab, matchlistItems }) {
 
   const [subTab, setSubTab] = useState('AU')
+  const [isLive, setIsLive] = useState(false);
+  const [isVirtual, setIsVirtual] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+
   const implayMatchFunc = (element) => {
     const inputMoment = moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A");
     const currentMoment = moment().add(60, "minutes");
     return currentMoment.isSameOrAfter(inputMoment);
   };
-
 
   const filteredMatches = matchlistItems?.filter(
     (element) => element.sportId == activeTab
@@ -127,8 +130,37 @@ function InplayMatches({ activeTab, matchlistItems }) {
     } else {
       content = (
         <>
-          <div className="lg:flex hidden justify-between px-1.5 py-1 w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
-            <h2 className="text-sm font-bold text-black w-[60%] px-2">Game</h2>
+          <div className="lg:flex hidden justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
+            <h2 className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1 px-2">
+              Game
+              <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[28px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+            </h2>
+            <div className="flex justify-center items-center gap-2">
+              <div
+                onClick={() => setIsLive(!isLive)}
+                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  ${isLive ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
+              >
+                {isLive ? "- LIVE" : "+ LIVE"}
+              </div>
+
+              <div
+                onClick={() => setIsVirtual(!isVirtual)}
+                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  ${isVirtual ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
+              >
+                {isVirtual ? "- VIRTUAL" : "+ VIRTUAL"}
+              </div>
+
+              <div
+                onClick={() => setIsPremium(!isPremium)}
+                className={`rounded-xl text-xs md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  ${isPremium ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
+              >
+                {isPremium ? "- Premium" : "+ Premium"}
+              </div>
+           
+            </div>
             <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
               <span>1</span>
               <span>X</span>
@@ -148,13 +180,13 @@ function InplayMatches({ activeTab, matchlistItems }) {
               >
                 <div className="lg:flex w-full">
                   {/* Match info section */}
-                  <div className="lg:w-[60%] w-full flex justify-between items-center">
+                  <div className="lg:w-[60%] w-full flex justify-between items-center bg-white">
                     <a
                       href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                       className="flex justify-start items-center cursor-pointer"
                     >
                       <span className="lg:block hidden text-black text-sm px-2 font-normal hover:underline">
-                        {element?.matchName} / {element?.matchDate}<br/>
+                        {element?.matchName} / {element?.matchDate}<br />
                         ({element?.matchType})
                       </span>
                       <div className="lg:hidden block px-1">
@@ -165,77 +197,32 @@ function InplayMatches({ activeTab, matchlistItems }) {
                           {element?.matchDate}
                         </p>
                       </div>
+
+
+                      <div className="flex items-center space-x-4 cursor-pointer md:px-10 px-1">
+                        {implayMatchFunc(element) && (
+                          <span className="w-full flex flex-col items-center text-green-600 font-bold text-xs leading-none">
+                            LIVE
+                            <span className="block w-8 h-[2px] bg-green-600 mt-[2px] animate-marquee-left-to-right"></span>
+                          </span>
+                        )}
+                      </div>
+                      <span className="lg:block hidden bg-[#e9eff8] p-1 text-black text-sm px-2 font-normal hover:underline">
+                        {element?.matchDate}
+                      </span>
                     </a>
 
                     {/* Icons */}
                     <div className="flex items-center space-x-4 cursor-pointer md:px-10 px-1">
-                      {implayMatchFunc(element) && (
-                        <div className="bg-gray-50 shadow-lg border rounded-md h-2.5 w-2.5">
-                          <span className="relative flex h-2.5 w-2.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                          </span>
-                        </div>
-                      )}
                       {element?.isTv && <LiaDesktopSolid size={16} />}
-                      {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[15px] h-[15px]"/>}
+                      {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[15px] h-[15px]" />}
                       {element?.isBookmaker && (<span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px]">BM</span>)}
                     </div>
                   </div>
 
-                  {/* Odds Section */}
-                  {/* <div className="lg:w-[40%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
-                    <div className="relative ">
-                      <div className="bg-[var(--matchLagai)] p-1 flex justify-center items-center w-full h-full">
-                        {Math.floor(Math.random() * 20)}
-                      </div>
 
-                      <div className="absolute top-0 left-0 bg-black/50 p-1 flex justify-center items-center w-full h-full cursor-not-allowed">
-                        <FaLock size={16} className="text-white" />
-                      </div>
-                    </div>
-                    <div className="bg-[var(--matchKhai)] flex justify-center items-center">
-                      {Math.floor(Math.random() * 40)}
-                    </div>
-                    <div className="relative w-full h-full">
-                      <div className="bg-[var(--matchLagai)] flex justify-center items-center w-full h-full">
-                        {Math.floor(Math.random() * 100)}
-                      </div>
-                      <BetLocked />
-                    </div>
-                    <div className="bg-[var(--matchKhai)] flex justify-center items-center">
-                      {Math.floor(Math.random() * 100)}
-                    </div>
-                    <div className="relative ">
-                      <div className="bg-[var(--matchLagai)] p-1 flex justify-center items-center w-full h-full">
-                        {Math.floor(Math.random() * 20)}
-                      </div>
-
-                      <div className="absolute top-0 left-0 bg-black/50 p-1 flex justify-center items-center w-full h-full cursor-not-allowed">
-                        <FaLock size={16} className="text-white" />
-                      </div>
-                    </div>
-                    <div className="bg-[var(--matchKhai)] flex justify-center items-center">
-                      {Math.floor(Math.random() * 120)}
-                    </div>
-                  </div> */}
-                  {/* <div className="lg:w-[40%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
-                    {Array?.from({ length: 6 }).map((_, i) => {
-                      const isLagai = i % 2 === 0;
-                      const isLocked = (element.sportId === 1 || element.sportId === 2) && lockedIndexes.includes(i);
-                      // const isLocked = lockedIndexes.includes(i);
-                      return (
-                        <div key={i} className="relative w-full h-full">
-                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-1 flex justify-center items-center w-full h-full`}>
-                            {Math.floor(Math.random() * 100)}
-                          </div>
-                          {isLocked && <BetLocked />}
-                        </div>
-                      );
-                    })}
-                  </div> */}
                   <div className="lg:w-[40%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
-                    {Array.from({ length: 6 }).map((_, i) => {
+                    {Array?.from({ length: 6 }).map((_, i) => {
                       const isLagai = i % 2 === 0;
 
                       if (showLock && i === lockStartIndex + 1) {
@@ -249,8 +236,10 @@ function InplayMatches({ activeTab, matchlistItems }) {
                           key={i}
                           className={`relative w-full h-full ${isLockedSpan ? "col-span-2" : ""}`}
                         >
-                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-2.5 flex justify-center items-center w-full h-full`}>
-                            {Math.floor(Math.random() * 100)}
+                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-2.5 flex border-[1px] border-white/40 flex-col justify-center items-center text-center w-full h-full`}>
+                            <p> {(Math.random() * 100).toFixed()}</p>
+                            <p className="text-[10px]">    {(Math.random() * 100).toFixed(2)}
+                            </p>
                           </div>
 
                           {/* {isLockedSpan && (

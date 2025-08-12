@@ -6,6 +6,7 @@ import './App.css'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import settings from './domainConfig'
+import { getDomainSettingData, getInternationalGroupCasinoList, getMatchList } from './redux/reducers/user_reducer'
 
 
 
@@ -18,6 +19,39 @@ function setMultipleRootCssVariables(colors) {
 
 function App() {
   const dispatch = useDispatch();
+
+  const cosinoGroupList = JSON.parse(localStorage.getItem('cosinoGroupList'));
+
+  useEffect(() => {
+    dispatch(getMatchList());
+    let domainSetting = {
+      domainUrl: window.location.origin,
+      // domainUrl: 'https://sikander777.com',
+    };
+    dispatch(getDomainSettingData(domainSetting));
+    const interval = setInterval(() => {
+      dispatch(getMatchList());
+    }, 180000);
+    casinoGroupWise()
+    return () => clearInterval(interval);
+  }, [dispatch]);
+
+  const casinoGroupWise = () => {
+    const ReqData = {
+      "categoriesList": true,
+      "providerList": true,
+      "lobbygames": true,
+      "trendingGames": true,
+      "popularGames": true,
+      "liveGames": true
+    };
+    {
+      !cosinoGroupList && (
+        dispatch(getInternationalGroupCasinoList(ReqData))
+      )
+    }
+
+  }
 
   useEffect(() => {
     if (settings.title) {
@@ -45,7 +79,7 @@ function App() {
       <BalanceProvider>
         <BrowserRouter>
           <Routes>
-           
+
             <Route path="*" element={<Layout />} />
           </Routes>
         </BrowserRouter>

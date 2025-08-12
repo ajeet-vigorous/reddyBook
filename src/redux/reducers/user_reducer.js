@@ -3,7 +3,7 @@ import { userServices } from "../services/user_services";
 
 
 const initialState = {
-  
+
 };
 
 export const getAccountStatement = createAsyncThunk(
@@ -67,6 +67,64 @@ export const getUserBalance = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const user = await userServices.getUserBalance(payload);
+
+      return user;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getCasinoListByCateogeory = createAsyncThunk(
+  "sport/getCasinoListByCateogeory",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const casinoListByCateogeory = await userServices.getCasinoListByCateogeory(payload);
+
+      return casinoListByCateogeory;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+export const getInternationalGroupCasinoList = createAsyncThunk(
+  "websit/getInternationalGroupCasinoList",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const cosinoGroupList = await userServices.getInternationalGroupCasinoList(payload);
+
+      return cosinoGroupList;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getMatchList = createAsyncThunk(
+  "user/getMatchList",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const user = await userServices.getMatchList(payload);
+
+
+      return user;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getDomainSettingData = createAsyncThunk(
+  "user/getDomainSettingData",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const user = await userServices.getDomainSettingData(payload);
 
       return user;
     } catch (error) {
@@ -140,8 +198,8 @@ const userSlice = createSlice({
         state.loading = false;
         state.loggedIn = true;
         state.exposureData = action?.payload?.data;
-        
-        
+
+
       })
       .addCase(getClientExposure.rejected, (state, action) => {
         state.loading = false;
@@ -160,7 +218,57 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      
+
+      // getCasinoListByCateogeory
+      .addCase(getCasinoListByCateogeory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCasinoListByCateogeory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getCasinoListByCateogeoryData = action.payload?.data;
+      })
+      .addCase(getCasinoListByCateogeory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // casino international List
+      .addCase(getInternationalGroupCasinoList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getInternationalGroupCasinoList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getInternationalGroupCasinoListData = action.payload?.data;
+      })
+      .addCase(getInternationalGroupCasinoList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getMatchList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getMatchList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.matchList = action.payload?.data ? action.payload?.data : [];
+      })
+      .addCase(getMatchList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getDomainSettingData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDomainSettingData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userDomainData = action.payload?.data;
+      })
+      .addCase(getDomainSettingData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
   },
 });
 

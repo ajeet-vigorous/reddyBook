@@ -175,7 +175,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
 
                 <div className="text-white text-[13px] text-center mt-4">
                   <div className="flex justify-center items-center space-x-1">
-                    <p>Powered by </p><p className="text-[var(--primary)]">reddybook</p>
+                    <p>Powered by </p><p className="text-[var(--primary)]">{settings.domainName}</p>
                   </div>
                   <div>
                     reddybook.clubofficial@gmail.com

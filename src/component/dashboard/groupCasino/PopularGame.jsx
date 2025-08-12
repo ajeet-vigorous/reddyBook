@@ -1,0 +1,68 @@
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+function PopularGame({ name, data }) {
+    const navigate = useNavigate();
+
+    const handleResponseCasino = (product) => {
+        console.log(product, "productproductproduct");
+        
+        if (product?.gameId) {
+            localStorage.getItem("token")
+                ? navigate(`/iframe-casino-new/${product?.providerName}/${product?.gameId}`)
+                : localStorage.setItem("unauthorized", true);
+
+        } else {
+            if (!product.shortName || !product.eventId) return;
+            localStorage.getItem("token")
+                ? navigate(`/${product.shortName}/${product.eventId}`)
+                : localStorage.setItem("unauthorized", true);
+        }
+    };
+
+
+//     const sortedList = data?.filter(item => item.priority !== 0)
+//     .sort((a, b) => b.priority - a.priority);
+
+// const finalList = [
+//     ...data?.filter(item => item.priority === 0),
+//     ...sortedList
+// ];
+
+    return (
+        <div>
+            <div className="rounded-md my-4 pb-2 border border-secondary">
+                <div className="flex bg-secondary justify-between items-center mb-2 px-3 py-1">
+                    <h2 className="text-white md:text-[14px] text-[12px] font-bold">{name}</h2>
+                </div>
+
+                <Swiper
+                    spaceBetween={10}
+                    slidesPerView="auto"
+                    loop={true}
+                    grabCursor={true}
+                    className="px-2 "
+                >
+                    {data?.map((item, idx) => {
+                        return (
+                            <SwiperSlide key={idx} className="!w-auto">
+                                <img
+                                    onClick={() => handleResponseCasino(item)}
+                                    src={item?.urlThumb}
+                                    alt={item.gameName}
+                                    className="md:w-32 w-24 md:h-32 h-24 object-cover rounded-lg"
+                                />
+                            </SwiperSlide>
+
+                        )
+                    })}
+                </Swiper>
+            </div>
+        </div>
+    );
+}
+
+export default PopularGame;

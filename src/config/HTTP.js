@@ -39,8 +39,8 @@ export const apiCall = async (method, path, payload) => {
                 const bytes = CryptoJS.AES.decrypt(encruptedData, import.meta.env.VITE_SECRET_KEY
                 );
                 const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-                if (decryptedData && decryptedData!=null && decryptedData!=""  ) {
-                    response.data.data = JSON.parse(decryptedData) 
+                if (decryptedData && decryptedData != null && decryptedData != "") {
+                    response.data.data = JSON.parse(decryptedData)
                 }
             }
         }
@@ -49,7 +49,7 @@ export const apiCall = async (method, path, payload) => {
     } catch (error) {
         if (Number(error?.response?.data?.code) === 3 || Number(error?.response?.status) === 401) {
             localStorage.clear();
-            window.location.href = '/login';
+            window.location.href = '/dashboard';
         } else if (error.response) {
             throw error.response;
         } else if (error.request) {
