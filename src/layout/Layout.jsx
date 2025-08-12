@@ -18,7 +18,7 @@ const Layout = () => {
                 <SubHeader />
             </div>
             <div className="flex flex-1 overflow-hidden">
-                <div className="w-[280px] overflow-y-auto shrink-0 hidden xl:block">
+                <div className="w-[250px] overflow-y-auto shrink-0 hidden xl:block scrollbar">
                     <AppSidebar />
                 </div>
                 <div className="flex-1 overflow-y-auto lg:px-4 px-0 py-3 bg-[var(--backgroundmain)]">

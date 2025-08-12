@@ -172,8 +172,8 @@ const Dashboard = ({ }) => {
     <section className="overflow-hidden">
       <div className="lg:block hidden ">
         <div className="bg-white w-full flex justify-start items-center overflow-hidden">
-          <div className="w-[2%] bg-[var(--secondary)] px-[2px] z-[50]">
-            <img src='/subHeader/commentary.png' className="w-[22px] h-[22px]" />
+          <div className="w-[2%] bg-[var(--secondary)] px-[3px] py-[2px] z-[50]">
+            <img src='/subHeader/commentary.png' className="w-[18px] h-[18px]" />
           </div>
           <div className="w-[98%]">
             <div className='px-[2px] text-black bg-[var(--secondary)] '>
@@ -182,9 +182,9 @@ const Dashboard = ({ }) => {
               </div>
               <style>
                 {`  @keyframes marquee {
-                                            0% { transform: translateX(100%); }
-                                            100% { transform: translateX(-100%); }
-                                            }`}
+                       0% { transform: translateX(100%); }
+                      100% { transform: translateX(-100%); }
+                  }`}
               </style>
             </div>
           </div>

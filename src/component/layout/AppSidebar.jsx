@@ -7,10 +7,17 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SPORTSCONSTANT } from "../../config/global";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
+import { BiChevronUp, BiChevronDown } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
+import CasinoSlider from "../casinoSlider/CasinoSlider";
+
 const organizeData = (data) => {
 
   if (!data) return [];
+
   const organizedData = [];
+
   data?.forEach((item) => {
     const { sportId, seriesId, seriesName } = item;
     let sportIndex = organizedData.findIndex(
@@ -37,6 +44,7 @@ const organizeData = (data) => {
 
   return organizedData;
 };
+
 const AppSidebar = () => {
   const navigate = useNavigate();
   const [sidebar, sidebartoggle] = useState(false);
@@ -45,9 +53,6 @@ const AppSidebar = () => {
   const handleResponseGameotherDetails = (data) => { window.location.href = `/sport-view/${data.marketId}/${data.eventId}`; };
   const { sportMatchList } = useSelector((state) => state.sport);
   const modalRef = useRef();
-  const handleClickInside = () => setClickedOutside(true);
-  const handleClickInside1 = () => setClickedOutside1(true);
-  const handleClickInside2 = () => setClickedOutside2(true);
   const [clickedOutside, setClickedOutside] = useState(true);
   const [clickedOutside1, setClickedOutside1] = useState(true);
   const [clickedOutside2, setClickedOutside2] = useState(true);
@@ -74,17 +79,28 @@ const AppSidebar = () => {
       setFilteredData(organizedData);
     }
   }, [matchData]);
-  useEffect(() => {
-    setRacingData(matchData.filter((race) => race.sportId == raceId));
-  }, [raceId]);
+
   const handleClick = (index, e) => {
     e.stopPropagation();
+
+    const clickedItem = SPORTSCONSTANT[index];
+
+    if (clickedItem?.text === "Casino") {
+      navigate("/all-casino");
+      return;
+    }
+    if (clickedItem?.text === "Sports Book") {
+      navigate("/sport-sbook");
+      return;
+    }
+
     if (openKeys.includes(index)) {
       setOpenKeys(openKeys.filter((key) => key !== index));
     } else {
       setOpenKeys([...openKeys, index]);
     }
   };
+
 
   const handleClick1 = (sportIndex, seriesIndex, e) => {
     e.stopPropagation();
@@ -118,6 +134,7 @@ const AppSidebar = () => {
     }
     setRaceId(id)
   }
+
   return (
     <div>
       <CgClose
@@ -125,167 +142,19 @@ const AppSidebar = () => {
         className="absolute top-6 left-[250px] z-40 text-white text-[2rem] lg:hidden block"
       />
       <div className="relative flex flex-col w-full ">
-        <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto h-full scroll-md ">
+        <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto h-full">
           <div className="text-white md:relative ">
-            <div>
-              {
-                <div
-                  className="flex items-center justify-between space-x-2  py-1 px-1  cursor-pointer bg-[var(--primary)]"
-                  onClick={() => {
-                    handleClickInside2();
-                    setClickedOutside2(!clickedOutside2);
-                  }}
-                >
-                  <span className="select-none text-base pl-1 text-[#fff]">
-                    Racing Sports
-                  </span>
-                  <MdOutlineKeyboardArrowDown
-                    size={20}
-                    className={`text-white transform duration-300 ease-linear " ${clickedOutside === true ? "rotate-180 " : "rotate-0 "
-                      }`}
-                  />
-                </div>
-              }
-              {clickedOutside2 ? (
-                <>
-                  {
-                    <div
-                      className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in    ${clickedOutside2 === true
-                        ? " bg-[#bbbbbb]"
-                        : "max-h-0 bg-[#bbbbbb]"
-                        } `}
-                    >
-                      <div className="py-0 divide-y divide-[#9e9e9e] scroll-md">
-                        <div className="divide-y divide-[#9e9e9e] cursor-pointer">
-                          <div
-                            onClick={() => { handleRacing(7) }}
-                            className="text-sm px-3 py-1 w-full flex  font-normal blink-soft"
-                          >
-                            Horse racing
-                          </div>
-                        </div>
-                        <div className="divide-y divide-[#9e9e9e] cursor-pointer">
-                          <div
-                            onClick={() => { handleRacing(4339) }}
-                            className="text-sm px-3 py-1 w-full flex  font-normal blink-soft"
-                          >
-                            Greyhound racing
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                </>
-              ) : null}
-            </div>
-            <div>
-              {
-                <div
-                  className="flex items-center justify-between space-x-2  py-1 px-1  cursor-pointer bg-[var(--primary)]"
-                  onClick={() => {
-                    handleClickInside();
-                    setClickedOutside(!clickedOutside);
-                  }}
-                >
-                  <span className="select-none text-base pl-1 text-[#fff]">
-                    Others
-                  </span>
-                  <MdOutlineKeyboardArrowDown
-                    size={20}
-                    className={`text-white transform duration-300 ease-linear " ${clickedOutside === true ? "rotate-180 " : "rotate-0 "
-                      }`}
-                  />
-                </div>
-              }
-              {clickedOutside ? (
-                <>
-                  {
-                    <div
-                      className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in    ${clickedOutside === true
-                        ? " bg-[#bbbbbb]"
-                        : "max-h-0 bg-[#bbbbbb]"
-                        } `}
-                    >
-                      <div className="py-0 divide-y divide-[#9e9e9e] scroll-md">
-                        <div className="divide-y divide-[#9e9e9e] cursor-pointer">
-                          <div
-                            onClick={() =>
-                              navigate("/casino-layout/our-casino")
-                            }
-                            className=" blinking-text text-sm px-3 py-1 w-full flex  font-normal blink-soft"
-                          >
-                            Our Casino
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate("/casino-layout/our-casino")
-                            }
-                            className=" blinking-text text-sm px-3 py-1 w-full flex  font-normal blink-soft"
-                          >
-                            Our Virtual
-                          </div>
-
-                          <div
-                            onClick={() =>
-                              navigate(`/live-casino/live-casino/tembo`)
-                            }
-                            className="text-sm px-3 py-1 w-full flex  font-normal"
-                          >
-                            Live Casino
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/live-casino/slot-game/turbogames`)
-                            }
-                            className="text-sm px-3 py-1 w-full flex  font-normal"
-                          >
-                            Slot Game
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate("/casino-layout/our-casino")
-                            }
-                            className="text-sm px-3 py-1 w-full flex  font-normal"
-                          >
-                            Fantasy Game
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                </>
-              ) : null}
-            </div>
-
             <div className="">
               <div
-                className="flex items-center justify-between space-x-2 h-8 cursor-pointer bg-[var(--primary)]"
                 onClick={() => {
-                  handleClickInside1();
-                  setClickedOutside1(!clickedOutside1);
+                  navigate("/market-analysis");
                 }}
-              >
-                <span className="select-none text-base pl-1 text-[#fff]">
-                  All Sports
-                </span>
-                <MdOutlineKeyboardArrowDown
-                  size={20}
-                  className={`text-white transform duration-300 ease-linear ${clickedOutside1 === true ? "rotate-180" : "rotate-0"
-                    }`}
-                />
+                className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                <p>
+                  <img src={"/subHeader/menu-market.png"} className="w-[18px] h-[18px]" />
+                </p>
+                <span className="">Multi Market</span>
               </div>
-
-              <div
-                className={`text-black text-base overflow-hidden transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
-                  ? "max-h-96 bg-[#bbbbbb]"
-                  : "max-h-0 bg-[#bbbbbb]"
-                  }`}
-              >
-                <div className="">
-                  <div className="cursor-pointer h-[90%] overflow-y-scroll"></div>
-                </div>
-              </div>
-
               {SPORTSCONSTANT?.map((menuItem, index) => {
                 const sport = filteredData?.find(
                   (sport) => sport.sportId.toString() === menuItem.count
@@ -293,100 +162,114 @@ const AppSidebar = () => {
                 return (
                   <div
                     key={index}
-                    className={`text-black overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
-                      ? "max-h-96 bg-[#bbbbbb]"
-                      : "max-h-0 bg-[#bbbbbb]"
+                    className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
+                      ? "max-h-96 bg-[#fffff]"
+                      : "max-h-0 bg-[#fffff]"
                       }`}
                   >
-                    <div className="cursor-pointer border-b border-[#9e9e9e]">
+                    <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
                       <div
-                        className="text-sm px-3 py-[2px] my-0 ml-0 w-full space-x-0.5 font-normal inline-flex items-center"
+                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
                         onClick={(e) => handleClick(index, e)}
                       >
+                        <div className="flex justify-start items-center space-x-4">
+                          <span>
+                            <img
+                              src={menuItem.icon}
+                              alt={menuItem.text}
+                              className="w-[18px] h-[18px]"
+                            />
+                          </span>
+                          <span className="">{menuItem.text}</span>
+                        </div>
                         <span>
-                          {openKeys.includes(index) ? (
-                            <AiOutlineMinusSquare />
-                          ) : (
-                            <AiOutlinePlusSquare />
+                          {!(menuItem.text === "Casino" || menuItem.text === "Sports Book") && (
+                            openKeys.includes(index) ? (
+                              <BiUpArrow className="w-[10px] h-[10px]" />
+                            ) : (
+                              <BiDownArrow className="w-[10px] h-[10px]" />
+                            )
                           )}
                         </span>
-                        <span>{menuItem.text}</span>
                       </div>
                       {sport && openKeys.includes(index) && (
-                        <div className="py-0 my-0 divide-y divide-[#9e9e9e]">
-                          {sport?.series.map((series, seriesIndex) => (
-                            <div key={seriesIndex} className="divide-y divide-[#9e9e9e] w-full">
-                              <div
-                                className="text-sm ml-4 relative px-0 text-black w-full py-0 my-0 space-x-0.5 font-normal inline-flex items-center cursor-pointer"
-                                onClick={(e) =>
-                                  handleClick1(index, seriesIndex, e)
-                                }
-                              >
-                                {openKeys1[`${index}-${seriesIndex}`] ? (
-                                  <AiOutlineMinusSquare />
-                                ) : (
-                                  <AiOutlinePlusSquare />
-                                )}
-                                <span className="px-2 py-0 my-0">
-                                  {series.seriesName}
-                                </span>
-                              </div>
-                              {openKeys1[`${index}-${seriesIndex}`] && (
-                                <div className="py-0 my-0">
-                                  <ul className="list-disc py-0 my-0  divide-y divide-[#9e9e9e]">
-                                    {series.data.map((item) => (
-                                      <li
-                                        key={item._id}
-                                        className="text-sm relative py-0 my-0 pl-6 text-black border-black w-full space-x-0.5 font-normal inline-flex items-center cursor-pointer"
-                                        onClick={(e) => {
-                                          handleResponseGameotherDetails(item);
-                                          sidebartoggle();
-                                        }}
-                                      >
-                                        <span> {item.matchName}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
+                        <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
+                          {sport?.series.length > 0 ? (
+                            sport.series.map((series, seriesIndex) => (
+                              <div key={seriesIndex} className="cursor-pointer border-b-[1px] border-[#eceaea]">
+                                <div
+                                  className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                                  onClick={(e) => handleClick1(index, seriesIndex, e)}
+                                >
+                                  <span className="px-2 py-0 my-0">
+                                    {series.seriesName}
+                                  </span>
+                                  <span>
+                                    {openKeys1[`${index}-${seriesIndex}`] ? (
+                                      <BiUpArrow className="w-[10px] h-[10px]" />
+                                    ) : (
+                                      <BiDownArrow className="w-[10px] h-[10px]" />
+                                    )}
+                                  </span>
                                 </div>
-                              )}
+
+                                {openKeys1[`${index}-${seriesIndex}`] && (
+                                  <div className="py-0 my-0">
+                                    {series.data.length > 0 ? (
+                                      <ul className="list-disc py-0 my-0 divide-y-[1px] divide-[#f1f1f1]">
+                                        {series.data.map((item) => (
+                                          <li
+                                            key={item._id}
+                                            className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
+                                            onClick={(e) => {
+                                              handleResponseGameotherDetails(item);
+                                              sidebartoggle();
+                                            }}
+                                          >
+                                            <span>{item.matchName}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    ) : (
+                                      <div className="py-2 px-4 text-xs text-gray-500 italic">
+                                        No Match available!
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="py-2 px-4 text-xs text-gray-500 italic">
+                              No Match available!
                             </div>
-                          ))}
+                          )}
                         </div>
                       )}
                     </div>
                   </div>
                 );
               })}
+              <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                <p>
+                  <img src={"/subHeader/wp.png"} className="w-[18px] h-[18px]" />
+                </p>
+                <span className="">Whatsapp Support</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <div
-          ref={modalRef}
-          className="absolute  top-[155px] lg:left-[200px] xl:left-[250px] 2xl:left-[280px]  w-[240px] overflow-auto  h-[600px] border bg-white  "
-          style={{ zIndex: 99999 }}
-        >
-          <div className="text-[20px] px-2 py-2 border-b border-black">
-            <span className="font-bold  ">
-              {raceId == 7 ? "All Horse Racing" : "All GreyHound Racing"}
-            </span>
-          </div>
-          {racingData?.map((race, index) => {
-            return (
-              <div onClick={() => {
-                window.location.href = `/sport-view-racing/${race?.marketId}/${race?.eventId}/${race?.sportId}`
-              }} key={index} className="flex gap-2 hover:underline px-5 py-2">
-                <span>{moment(race?.matchDate).format("HH:mm")} </span>{" "}
-                <span>{race?.matchName}</span>{" "}
-                <span> ({race?.countryCode})</span>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <CasinoSlider data={sidebarData} />
     </div>
   );
 };
 
 export default AppSidebar;
+
+const sidebarData = [
+  { gameImg: "/login/ls_01.png" },
+  { gameImg: "/login/ls_02.png" },
+  { gameImg: "/login/ls_03.png" },
+  { gameImg: "/login/ls_04.png" },
+];

@@ -105,6 +105,18 @@ async function getDomainSettingData(data) {
   }
 }
 
+async function getCasinoListByProviderName (data) {
+  try {
+    const cosinoGroupList = await apiCall("POST", "website/getCasinoListByProviderName", data);
+    if (cosinoGroupList) {
+      return cosinoGroupList;
+    }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
+  }
+}
+
 
 export const userServices = {
   getUserStatement,
@@ -112,6 +124,8 @@ export const userServices = {
   getBetList,
   getUserBalance,
   getMatchList,
-  getDomainSettingData
-
+  getDomainSettingData,
+  getCasinoListByCateogeory,
+  getInternationalGroupCasinoList,
+  getCasinoListByProviderName,
 }
