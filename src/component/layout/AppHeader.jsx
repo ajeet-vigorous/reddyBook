@@ -15,7 +15,7 @@ import { domainName } from "../../config/Auth";
 import { getClientExposure, getUserBalance } from "../../redux/reducers/user_reducer";
 
 
-const AppHeader = () => {
+const AppHeader = ({ setSidebarOpen }) => {
 
   const dispatch = useDispatch()
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
@@ -40,7 +40,6 @@ const AppHeader = () => {
 
   const closeModal = () => {
     setIsLoginOpen(false);
-    // localStorage.setItem("unauthorized", false);
   };
 
   useEffect(() => {
@@ -91,7 +90,7 @@ const AppHeader = () => {
   }, [matchlistLocal]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const interval = setInterval(() => {
       let Balance = JSON.parse(localStorage.getItem("clientBalance"));
       let clientExposure = JSON.parse(localStorage.getItem("clientExposure"));
       setBalance({
@@ -99,7 +98,9 @@ const AppHeader = () => {
         exposure: clientExposure,
       });
     }, 1000);
-  }, [balance]);
+
+    return () => clearInterval(interval);
+  }, []);
 
 
   useEffect(() => {
@@ -154,9 +155,10 @@ const AppHeader = () => {
               </div>
               <div
                 onClick={() => setModalTrue()}
-                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[12px] py-[5px] px-[15px] rounded-[5px] text-white flex items-center cursor-pointer">
+                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[12px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer">
                 Rules
               </div>
+          
             </div>
             {token ? (
               <>
@@ -254,9 +256,9 @@ const AppHeader = () => {
                               <div className=" rounded-xl border p-[3px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
                                 AWAITING BONUS : 0.00
                               </div>
-                              <div 
-                              onClick={() => navigate("/refer-and-earn")}
-                              className=" rounded-xl border p-[3px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
+                              <div
+                                onClick={() => navigate("/refer-and-earn")}
+                                className=" rounded-xl border p-[3px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
                                 REFER AND EARN
                               </div>
 

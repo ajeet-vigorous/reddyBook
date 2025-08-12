@@ -39,6 +39,7 @@ function ForgotModal({ closeFModal }) {
                       // onChange={handleOnChange}
                       className="h-[45px] px-2 bg-[var(--darkcolor)] border-b border-gray-300 text-white text-[13px] text-center rounded-none outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white">
                       <option value="+91">🇮🇳 +91</option>
+                      <option value="+92">🇵🇰 +92</option>
                     </select>
 
                     <input
