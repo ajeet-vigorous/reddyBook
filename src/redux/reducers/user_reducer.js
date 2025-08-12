@@ -134,6 +134,21 @@ export const getDomainSettingData = createAsyncThunk(
   }
 );
 
+export const getCasinoListByProviderName = createAsyncThunk(
+  "websit/getCasinoListByProviderName",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const cosinoGroupList = await userServices.getCasinoListByProviderName(payload);
+
+      return cosinoGroupList;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -269,6 +284,18 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
 
+       // providers list according to provider
+      .addCase(getCasinoListByProviderName.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCasinoListByProviderName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getCasinoListByProviderNameData = action.payload?.data;
+      })
+      .addCase(getCasinoListByProviderName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

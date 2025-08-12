@@ -25,7 +25,7 @@ const ReferAndEarn = () => {
                 <div className='bg-[#e9eff8]'>
                     <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
                         Referral
-                        <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[28px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+                        <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
                     </div>
                 </div>
 

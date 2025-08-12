@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 // import { ourSlides } from '../../redux/_reducers/_reducers';
 
-const CasinoSlider = () => {
+const CasinoSlider = ({ data }) => {
     const dispatch = useDispatch()
     // const { ourSlidesData, } = useSelector(
     //     (state) => state.authentication
@@ -111,11 +111,11 @@ const CasinoSlider = () => {
         <>
             <section className="">
                 <Slider {...settings}>
-                    {sliderData?.map((item, index) => (
+                    {data?.map((item, index) => (
                         <div key={index} className="cursor-pointer">
                             <a
                                 className='flex gap-4'>
-                                <img src={item.gameImg} alt={item.gameName} className='px-0' />
+                                <img src={item.gameImg} alt={item.gameName} className='px-0 w-full' />
                             </a>
                         </div>
                     ))}
@@ -125,16 +125,3 @@ const CasinoSlider = () => {
     )
 }
 export default CasinoSlider;
-
-
-export const sliderData = [
-    {
-        gameImg: '/login/log_one.png',
-    },
-    {
-        gameImg: '/login/log_three.png',
-    },
-    {
-        gameImg: '/login/log_four.png',
-    },
-]

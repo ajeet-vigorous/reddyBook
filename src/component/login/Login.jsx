@@ -9,6 +9,18 @@ import { ImAndroid } from "react-icons/im";
 import { login } from "../../redux/reducers/auth.reducer";
 import ForgotModal from "../forgotModal/ForgotModal";
 
+const sliderData = [
+  {
+    gameImg: '/login/log_one.png',
+  },
+  {
+    gameImg: '/login/log_three.png',
+  },
+  {
+    gameImg: '/login/log_four.png',
+  },
+]
+
 function Login({ isOpen, closeModal, setIsLoginOpen }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -193,7 +205,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                   <FaTimes className="" size={16} />
                 </button>
                 <div>
-                  <CasinoSlider />
+                  <CasinoSlider data={sliderData} />
                 </div>
               </div>
             </div>
