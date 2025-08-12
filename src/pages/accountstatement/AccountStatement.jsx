@@ -285,7 +285,7 @@ const AccountSatement = () => {
                 </div>
               </div>
             </div>
-            <div className="lg:flex lg:flex-row flex-col  justify-center items-center my-2 gap-4">
+            {/* <div className="lg:flex lg:flex-row flex-col  justify-center items-center my-2 gap-4">
 
               <div className="flex justify-center items-center ">
                 <button
@@ -328,7 +328,7 @@ const AccountSatement = () => {
                   className='border p-2 w-32'></input>
               </div>
 
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
