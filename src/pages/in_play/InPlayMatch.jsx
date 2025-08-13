@@ -5,7 +5,6 @@ import InplayMatches from '../../component/dashboard/InplayMatches';
 
 const InPlayMatch = () => {
   const { gameId } = useParams();
-  console.log(gameId, 'fdfdfd')
   const { sportMatchList } = useSelector((state) => state.sport);
   const [matchData, setMatchData] = useState([]);
 
@@ -13,14 +12,26 @@ const InPlayMatch = () => {
     ? JSON.parse(localStorage.getItem("matchList"))
     : null;
 
+
   useEffect(() => {
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
     setMatchData(matchListData);
   }, [sportMatchList]);
 
+  const sportOptions = [
+    { id: 4, label: "Cricket" },
+    { id: 1, label: "Football" },
+    { id: 2, label: "Tennis" },
+    { id: 7, label: "Horse Racing" },
+    { id: 999, label: "Politics" },
+    { id: 4339, label: "Greyhound Racing" }
+  ];
+const sportName = sportOptions.find((sport) => sport.id == gameId)?.label || "Sport";
+
+
   return (
     <div>
-      <InplayMatches activeTab={gameId} matchlistItems={matchData} />
+      <InplayMatches activeTab={gameId} matchlistItems={matchData} sportName={sportName} />
     </div>
   )
 }

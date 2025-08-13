@@ -151,7 +151,7 @@ export const AllSportsArray = [
 ];
 
 
-const Dashboard = ({ }) => {
+const InplaySport = ({ }) => {
 
   const { sportMatchList } = useSelector((state) => state.sport);
   const [activeAllSporttab, setactiveAllSporttab] = useState(localStorage.getItem('dashboardActiveTabKey') || '1');
@@ -207,28 +207,10 @@ const Dashboard = ({ }) => {
         <Providers filterSection={"providers"} name={"Casino Provider"} providersData={groupCasinoList?.providerList} />
 
 
-        <div className="space-y-0">
-          <DashboardUpcoming
-            activeTab="4"
-            matchlistItems={matchData}
-            sportName="Cricket"
-          />
 
-          <DashboardUpcoming
-            activeTab="1"
-            matchlistItems={matchData}
-            sportName="Soccer"
-          />
-
-          <DashboardUpcoming
-            activeTab="2"
-            matchlistItems={matchData}
-            sportName="Tennis"
-          />
-        </div>
       </div>
     </>
   )
 }
 
-export default React.memo(Dashboard);
+export default React.memo(InplaySport);

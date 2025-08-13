@@ -1,5 +1,5 @@
 import moment from "moment";
-import { sportlistArray } from "../../pages/dashboard/Dashboard";
+// import { sportlistArray } from "../../pages/dashboard/Dashboard";
 
 
 /* eslint-disable react/prop-types */

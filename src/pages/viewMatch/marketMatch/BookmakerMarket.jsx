@@ -28,7 +28,8 @@ const BookmakerComponent = ({
       <div className={`${bookmaker2Fancy?.length > 0 ? "w-[75%]" : 'w-[100%]'}`}>
         {matchScoreDetails?.team_data?.length > 0 && (
           <>
-           <MatchDetailsHeaderSection marketType={`Bookmaker (${inplayMatch?.matchName + " - " + inplayMatch?.seriesName})`} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
+           <MatchDetailsHeaderSection marketType={`Bookmaker`} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
+            {/* (${inplayMatch?.matchName + " - " + inplayMatch?.seriesName}) */}
             <div className="flex  whitespace-normal max-w-full border-b border-gray-300">
               <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
                
