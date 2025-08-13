@@ -3,26 +3,58 @@ import AppSidebar from '../component/layout/AppSidebar'
 import AppHeader from '../component/layout/AppHeader'
 import AppContent from '../component/layout/AppContent'
 import SubHeader from '../component/header/SubHeader'
+import { useState } from 'react'
 
 
 
 const Layout = () => {
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
-            <div className="lg:h-[60px] lg:bg-white bg-black hrink-0">
-                <AppHeader />
-            </div>
-            <div className="shrink-0">
-                <SubHeader />
-            </div>
-            <div className="flex flex-1 overflow-hidden">
-                <div className="w-[250px] overflow-y-auto shrink-0 hidden xl:block scrollbar">
-                    <AppSidebar />
+
+        <section className="w-full h-screen flex flex-col overflow-hidden relative">
+            <div className="shrink-0 z-10 lg:bg-white bg-black">
+                <div className="lg:h-[60px] h-[136px] ">
+                    <AppHeader setSidebarOpen={setIsSidebarOpen} />
                 </div>
-                <div className="flex-1 overflow-y-auto lg:px-4 px-0 py-3 bg-[var(--backgroundmain)]">
-                    {/* <div className="lg:block hidden ">
+                <div>
+                    <SubHeader setSidebarOpen={setIsSidebarOpen} />
+                </div>
+            </div>
+
+            <div className="flex flex-1 overflow-hidden relative">
+                <div className={`${isSidebarOpen ? 'fixed' : 'hidden'} 
+                lg:relative lg:block inset-0 lg:inset-auto lg:w-[250px] md:w-[55%] w-[70%] h-screen lg:h-auto z-20 lg:z-auto bg-white overflow-y-auto scrollbar`}>
+                    <AppSidebar
+                        isSidebarOpen={isSidebarOpen}
+                        setIsSidebarOpen={setIsSidebarOpen}
+                    />
+                </div>
+
+                <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)] ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
+                    <div className="p-4 h-full">
+                        <AppContent />
+                    </div>
+                </div>
+
+                {isSidebarOpen && (
+                    <div
+                        className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+                        onClick={() => setIsSidebarOpen(false)}
+                    />
+                )}
+            </div>
+        </section>
+    )
+}
+
+export default Layout
+
+
+
+
+{/* <div className="lg:block hidden ">
                         <div className="bg-white w-full flex justify-start items-center overflow-hidden">
                             <div className="w-[2%] bg-[var(--secondary)] px-[2px] z-[50]">
                                 <img src='/subHeader/commentary.png' className="w-[22px] h-[22px]" />
@@ -42,12 +74,3 @@ const Layout = () => {
                             </div>
                         </div>
                     </div> */}
-                    <AppContent />
-                </div>
-
-            </div>
-        </div>
-    )
-}
-
-export default Layout

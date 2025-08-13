@@ -25,7 +25,7 @@ function Trendring({ name, data }) {
         <div>
             <div className="rounded-md my-4 pb-2 border border-secondary">
                 <div className="flex bg-secondary justify-between items-center mb-2 px-3 py-1">
-                    <h2 className="text-white md:text-[14px] text-[12px] font-bold">{name}</h2>
+                    <h2 className="text-black md:text-[14px] text-[12px] font-bold">{name}</h2>
                 </div>
 
                 <Swiper

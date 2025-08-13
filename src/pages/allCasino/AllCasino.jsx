@@ -19,6 +19,8 @@ function AllCasino() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    console.log(getCasinoListByProviderNameData, "hhhhhhhhhhhhhhhhhhhhhh");
+    
 
     const handlProviderCasinoList = (value) => {
         setSelectedProvider(value);

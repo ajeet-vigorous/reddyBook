@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useSelector } from "react-redux";
-// import { baseUrl } from "../middelware/Http";
-// import { httpPost } from "../middelware/CasinoMiddleware/Http";
-import { BsEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import settings from "../../domainConfig";
+import { apiCall } from "../../config/HTTP";
 
-function Signup({ isSignUpOpen, setIsSignUpOpen }) {
+function Signup({ setShowLogin }) {
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("password");
   const [inputFocused, setInputFocused] = useState(false);
   const [user, setUser] = useState({
@@ -25,7 +20,6 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
     referralCode: ""
   });
 
-  const auth = useSelector((state) => state.auth);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     let truncatedValue = value;
@@ -44,6 +38,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
   };
 
   const handleOnSubmit = async (e) => {
+    alert("1122")
     e.preventDefault();
 
     if (!user.mobileNo || user.mobileNo.length !== 10) {
@@ -98,7 +93,8 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
       if (user.referralCode) {
         loginDetails.referralCode = user.referralCode;
       }
-      // const response = await httpPost("website/registerClient", loginDetails);
+
+      const response = await apiCall("POST", "website/registerClient", loginDetails);
 
       if (response) {
         setUser({
@@ -108,10 +104,11 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
           password: "",
           referralCode: ""
         });
-        navigate("/");
-        message.success(response?.message);
+        message.success(response?.message || "Registration successful!");
+        navigate("/dashboard");
+
       } else {
-        message.error("Registration failed. Please check your details.");
+        message.error(response?.message || "Registration failed. Please check your details.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -121,23 +118,8 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
     }
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword); // password Hide and Show Icons
-  };
-
-  const handleInputFocus = () => {
-    setInputFocused(true);
-  };
-
-  const handleInputBlur = () => {
-    setInputFocused(false);
-  };
-
-  const handalClickNavigate = (url) => {
-    navigate(url);
-  };
-
   let domainSetting = JSON.parse(localStorage.getItem("clientdomainSetting"));
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleOnSubmit(e);
@@ -167,6 +149,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
                     onChange={handleOnChange}
                     className="h-[45px] px-2 bg-[var(--darkcolor)] border-b border-gray-300 text-white text-[13px] text-center rounded-none outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white">
                     <option value="+91">🇮🇳 +91</option>
+                    <option value="+92">🇵🇰 +92</option>
                   </select>
 
                   <input
@@ -176,7 +159,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
                     value={user.mobileNo}
                     onChange={handleOnChange}
                     placeholder="Mobile No"
-                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
+                    className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
                 </div>
 
                 {/* Validation error */}
@@ -189,7 +172,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
 
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={password}
                   name="password"
                   value={user.password}
                   onChange={handleOnChange}
@@ -207,7 +190,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
                   onChange={handleOnChange}
                   onKeyPress={handleKeyPress}
                   placeholder="Referral Code"
-                 className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
+                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
 
               </div>
               {errors.referralCode && <div className="text-[#FF0000] text-sm mb-1">{errors.referralCode}</div>}
@@ -217,6 +200,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
               </div>
 
               <button
+                type="submit"
                 onClick={handleOnSubmit}
                 disabled={loading}
                 className={` w-full block mx-auto mt-5 bg-[var(--primary)] border border-[var(--primary)] text-white text-sm uppercase leading-[3rem] rounded 
@@ -228,7 +212,7 @@ function Signup({ isSignUpOpen, setIsSignUpOpen }) {
                 <p>Already have account?</p>
                 <div
                   onClick={() => {
-                    navigate("/dashboard");
+                    navigate("/dashboard", { state: { showLogin: true } });
                   }}
                   className="mt-1 text-[var(--primary)] text-[15px] uppercase font-[900] flex justify-center items-center cursor-pointer">
                   LOG IN

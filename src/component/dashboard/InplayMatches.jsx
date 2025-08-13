@@ -131,7 +131,7 @@ function InplayMatches({ activeTab, matchlistItems }) {
       content = (
         <>
           <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
-            <div className="lg:w-[49%] w-full flex items-center lg:space-x-24 lg:justify-start justify-between">
+            <div className="lg:w-[49%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
               {/* <div className="flex " > */}
               <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1 px-2">
                 Game

@@ -1,32 +1,213 @@
 export const SPORTSCONSTANT = [
-  // { count: 1, icon: "/subHeader/menu-home.png", text: "Home", url: "/dashboard", inplay: false },
   {
     text: 'Cricket',
     count: "4",
     icon: "/subHeader/menu-4.png",
   },
-  { count: 4, icon: "/subHeader/menu-1.png", text: "Football", },
-  { count: 5, icon: "/subHeader/menu-2.png", text: "Tennis", },
-  { count: 6, icon: "/subHeader/menu-2378961.png", text: "Politics", },
+  {
+    text: 'Football',
+    count: "1",
+    icon: "/subHeader/menu-1.png",
+  },
+  {
+    text: 'Tennis',
+    count: "2",
+    icon: "/subHeader/menu-2.png",
+  },
+  {
+    text: 'Politics',
+    count: "2003",
+    icon: "/subHeader/menu-2378961.png",
+  },
+  {
+    text: "Casino",
+    count: 0,
+    icon: "/subHeader/menu-99998.png",
+  },
+  {
+    text: "Sports Book",
+    count: 0,
+    icon: "/subHeader/menu-99991.png",
+  },
 
-  { count: 7, icon: "/subHeader/menu-99998.png", text: "Casino", },
-  { count: 8, icon: "/subHeader/menu-99991.png", text: "Sports Book", },
+  {
+    text: "Horse Racing",
+    count: 0,
+    icon: "/subHeader/menu-7.png",
+  },
+  {
+    text: "Greyhound Racing",
+    count: 0,
+    icon: "/subHeader/menu-4339.png",
+  },
 
-  { count: 9, icon: "/subHeader/menu-7.png", text: "Horse Racing", },
-  { count: 10, icon: "/subHeader/menu-4339.png", text: "Greyhound Racing" },
+  {
+    text: "Binary",
+    count: 0,
+    icon: "/subHeader/menu-99990.png",
+  },
+  {
+    text: "Kabaddi",
+    count: 0,
+    icon: "/subHeader/menu-99994.png",
+  },
+  {
+    text: "Basketball",
+    count: 0,
+    icon: "/subHeader/menu-7522.png",
+  },
+  {
+    text: "Baseball",
+    count: 0,
+    icon: "/subHeader/menu-7511.png",
+  },
+  {
+    text: "Table Tennis",
+    count: 0,
+    icon: "/subHeader/menu-20.png",
+  },
+  {
+    text: "Volleyball",
+    count: 0,
+    icon: "/subHeader/menu-998917.png",
+  },
+  {
+    text: "Ice hockey",
+    count: 0,
+    icon: "/subHeader/menu-7524.png",
+  },
+  {
+    text: "Rugby",
+    count: 0,
+    icon: "/subHeader/menu-5.png",
+  },
+  {
+    text: "Mixed Martial Arts",
+    count: 0,
+    icon: "/subHeader/menu-26420387.png",
+  },
+  {
+    text: "Darts",
+    count: 0,
+    icon: "/subHeader/menu-3503.png",
+  },
+  {
+    text: "Futsal",
+    count: 0,
+    icon: "/subHeader/menu-29.png",
+  },
 
-  { count: 12, icon: "/subHeader/menu-99990.png", text: "Binary", },
-  { count: 13, icon: "/subHeader/menu-99994.png", text: "Kabaddi", },
-  { count: 14, icon: "/subHeader/menu-7522.png", text: "Basketball", },
-  { count: 15, icon: "/subHeader/menu-7511.png", text: "Baseball", },
-  { count: 16, icon: "/subHeader/menu-20.png", text: "Table Tennis", },
 
-  { count: 17, icon: "/subHeader/menu-998917.png", text: "Volleyball", },
-  { count: 18, icon: "/subHeader/menu-7524.png", text: "Ice hockey", },
-  { count: 19, icon: "/subHeader/menu-5.png", text: "Rugby", },
-  { count: 20, icon: "/subHeader/menu-26420387.png", text: "Mixed Martial Arts", },
-  { count: 21, icon: "/subHeader/menu-3503.png", text: "Darts", },
-  { count: 22, icon: "/subHeader/menu-29.png", text: "Futsal", },
+  // {
+  //   text: 'Kabaddi',
+  //   count: "0",
+  //   icon: "/subHeader/menu-99994.png",
+  // },
+  // {
+  //   text: 'Casino',
+  //   count: "0",
+  //   icon: "/subHeader/menu-99994.png",
+  // },
+  // {
+  //   text: 'Basketball',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Volleyball',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Golf',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Rugby League',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Cycling',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Athletics',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Baseball',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Rugby Union',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Handball',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Ice Hockey',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Motorbikes',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Sumo',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Virtual sports',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Esports',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Soccer',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Boxing',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Mixed Martial Arts',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'MotoGP',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Chess',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Table Tennis',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Snooker',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Beach Volleyball',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Futsal',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'E Games',
+  //   count: "0",
+  // },
+  // {
+  //   text: 'Boat Racing',
+  //   count: "0",
+  // }
 ];
 
 export const slotsArray = [
@@ -2563,3 +2744,43 @@ export const CasinoJson = [
 
 
 ]
+
+export const organizeData = (data) => {
+  if (!data) return [];
+
+  const organizedData = [];
+
+  data?.forEach((item) => {
+    const { sportId, seriesId, seriesName } = item;
+    let sportIndex = organizedData.findIndex((sport) => sport.sportId === sportId);
+
+    if (sportIndex === -1) {
+      sportIndex = organizedData.length;
+      organizedData.push({ sportId, series: [] });
+    }
+
+    let seriesIndex = organizedData[sportIndex].series.findIndex(
+      (series) => series.seriesId === seriesId
+    );
+
+    if (seriesIndex === -1) {
+      organizedData[sportIndex].series.push({
+        seriesId,
+        seriesName,
+        data: [item],
+      });
+    } else {
+      organizedData[sportIndex].series[seriesIndex].data.push(item);
+    }
+  });
+
+  return organizedData;
+};
+
+
+// const sidebarData = [
+//   { gameImg: "/login/ls_01.png" },
+//   { gameImg: "/login/ls_02.png" },
+//   { gameImg: "/login/ls_03.png" },
+//   { gameImg: "/login/ls_04.png" },
+// ];
