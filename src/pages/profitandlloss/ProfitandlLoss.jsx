@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaRegCalendar } from "react-icons/fa6";
 
-const AccountSatement = () => {
+const ProfitandlLoss = () => {
   const [payloadData, setPayloadData] = useState({
     fromDate: moment().subtract(7, "days").format("YYYY-MM-DD"),
     toDate: moment().format("YYYY-MM-DD"),
@@ -111,7 +111,7 @@ const AccountSatement = () => {
       <div className="w-full min-h-screen flex">
         <div className="border w-full">
           <div className='bg-[var(--darkcolor)] uppercase text-black py-1 px-1.5'>
-            <h2 className='text-[14px] text-white'>Account Statement</h2>
+            <h2 className='text-[14px] text-white'>Profit Loss Total P/L : IR 0</h2>
           </div>
           <div className="mt-1.5 border-1 border-gray-400 space-y-2">
             {/* desktop view */}
@@ -311,4 +311,4 @@ const AccountSatement = () => {
   );
 };
 
-export default AccountSatement
+export default ProfitandlLoss;

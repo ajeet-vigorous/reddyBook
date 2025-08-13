@@ -5,6 +5,7 @@ async function login(data) {
   try {
     const user = await apiCall("POST", "user/login", data);
     if (user) {
+      localStorage.setItem('clientspuser', JSON.stringify(user));
       localStorage.setItem(`user_info_${domainName}`, JSON.stringify(user));
       localStorage.setItem("token", JSON.stringify(user?.token))
       localStorage.setItem("clientBalance", JSON.stringify(user?.data?.balance));
@@ -24,7 +25,7 @@ async function login(data) {
 async function updatePassword(data) {
   try {
     const user = await apiCall("PATCH", "user/updateUserPassword", data);
-  return user
+    return user
   } catch (error) {
     console.error("Error:", error);
     return Promise.reject(error);
