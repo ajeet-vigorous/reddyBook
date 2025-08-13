@@ -201,6 +201,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                               )}
                             </span>
                           </div>
+
                           {sport && openKeys.includes(index) && (
                             <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
                               {sport?.series.length > 0 ? (
@@ -288,7 +289,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               onClick={() => setIsSidebarOpen(false)}
               className="block lg:hidden"
             >
-              <FaTimes className="text-black/70" size={16}/>
+              <FaTimes className="text-black/70" size={16} />
             </button>
           </div>
         </div>

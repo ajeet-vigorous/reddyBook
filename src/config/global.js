@@ -32,12 +32,12 @@ export const SPORTSCONSTANT = [
 
   {
     text: "Horse Racing",
-    count: 0,
+    count: 7,
     icon: "/subHeader/menu-7.png",
   },
   {
     text: "Greyhound Racing",
-    count: 0,
+    count: 4339,
     icon: "/subHeader/menu-4339.png",
   },
 
