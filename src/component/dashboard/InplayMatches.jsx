@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
 import { LiaDesktopSolid } from "react-icons/lia";
-import { FaFacebookF, FaLock } from "react-icons/fa6";
 import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { TbDeviceTvOld } from "react-icons/tb";
-// import BetLocked from "../casinoComponent/BetLocked";
 
-function InplayMatches({ activeTab, matchlistItems }) {
+function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
   const [subTab, setSubTab] = useState('AU')
   const [isLive, setIsLive] = useState(false);
@@ -48,26 +46,17 @@ function InplayMatches({ activeTab, matchlistItems }) {
     return Object.entries(groupedByRacingMatch)?.map(([key, value]) => ({ key, value }))
   }
 
-  const generateRandomThree = () => {
-    const numbers = Array.from({ length: 6 }, (_, i) => i);
-    const shuffled = numbers.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
-  };
-
   let content;
 
   useEffect(() => {
-
     const seriesKeys = Object.keys(groupedBySeries);
-
     if (seriesKeys.length > 0 && !subTab) {
       setSubTab(seriesKeys[0]);
     }
   }, [groupedBySeries, subTab]);
+
   useEffect(() => {
-
     setSubTab()
-
   }, [activeTab]);
 
   if (activeTab == 4339 || activeTab == 7) {
@@ -115,7 +104,10 @@ function InplayMatches({ activeTab, matchlistItems }) {
       content = (
         <>
           <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
-            <h2 className="text-sm font-bold text-black w-[60%] px-2">Game</h2>
+            <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
+              {sportName}
+              <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+            </div>
             <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
               <span>1</span>
               <span>X</span>
@@ -129,13 +121,16 @@ function InplayMatches({ activeTab, matchlistItems }) {
       );
     } else {
       content = (
-        <>
+        <div className="overflow-y-auto">
           <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
-            <div className="lg:w-[49%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
-              {/* <div className="flex " > */}
-              <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1 px-2">
-                Game
-                <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[28px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+            <div className="lg:w-[50%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
+              <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
+                {sportName === "Cricket" && <img src='/subHeader/menu-4.png"' className="w-[12px] h-[12px]" />}
+                {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
+                {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
+                {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
+                <p>{sportName}</p>
+                <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
               </div>
               <div className="flex justify-end items-center gap-2 pr-1">
                 <div
@@ -163,9 +158,8 @@ function InplayMatches({ activeTab, matchlistItems }) {
                 </div>
 
               </div>
-              {/* </div> */}
             </div>
-            <div className="w-[51%] lg:grid hidden grid-cols-3 text-center text-sm font-bold">
+            <div className="w-[50%] lg:grid hidden grid-cols-3 text-center text-sm font-bold">
               <span>1</span>
               <span>X</span>
               <span>2</span>
@@ -173,49 +167,46 @@ function InplayMatches({ activeTab, matchlistItems }) {
           </div>
 
           {filteredMatches?.map((element, index) => {
-            // Lock only for sportId 1 or 2
-            const showLock = element.sportId === 1 || element.sportId === 2;
-            const lockStartIndex = showLock ? Math.floor(Math.random() * 5) : -1;
-
             return (
               <div
                 className="divide-y divide-[#C6D2D8] border-b border-[#C6D2D8] md:pb-0 pb-1.5"
                 key={index}
               >
                 <div className="lg:flex w-full">
-                  {/* Match info section */}
-                  <div className="lg:w-[49%] w-full flex justify-between items-center bg-white">
-                    <a
-                      href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
-                      className="flex justify-start items-center cursor-pointer"
-                    >
-                      <span className="lg:block hidden text-black text-sm px-2 font-normal hover:underline">
-                        {element?.matchName} / {element?.matchDate}<br />
-                        ({element?.matchType})
-                      </span>
-                      <div className="lg:hidden block px-1">
-                        <p className="text-black text-sm font-normal hover:underline">
-                          {element?.matchName}
-                        </p>
-                        <p className="text-[13px] text-black font-medium hover:underline">
-                          {element?.matchDate}
-                        </p>
-                      </div>
+                  <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
+                    <div className="flex items-center justify-start w-full bg-white">
+                      <a
+                        href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
+                        className="flex items-center justify-start py-1 space-x-1 w-full"
+                      >
+                        <div className="flex flex-col uppercase w-full sm:w-[32%] px-2">
+                          <span className="text-[12px] font-semibold text-gray-900 hover:underline">
+                            {element?.matchName}
+                          </span>
+                          <span className="text-[10px] font-[500] text-[#838383]">
+                            ({element?.seriesName ? element?.seriesName : "No Series"})
+                          </span>
+                        </div>
 
-                      <div className="flex items-center space-x-4 cursor-pointer md:px-10 px-1">
                         {implayMatchFunc(element) && (
-                          <span className="w-full flex flex-col items-center text-green-600 font-bold text-xs leading-none">
-                            LIVE
-                            <span className="block w-8 h-[2px] bg-green-600 mt-[2px] animate-marquee-left-to-right"></span>
+                          <span className="w-full sm:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold text-[13px] tracking-wide">
+                            <p className="pt-2">LIVE</p>
+                            <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
                           </span>
                         )}
-                      </div>
-                      <span className="lg:block hidden bg-[#e9eff8] p-1 text-black text-sm px-2 font-normal hover:underline">
-                        {element?.matchDate}
-                      </span>
-                    </a>
+                        <div className="bg-[#E9EFF8] w-full sm:w-[10%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                          {element?.matchDate && (
+                            <>
+                              <div>{moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
+                              <div className="text-[10px]">
+                                {moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </a>
+                    </div>
 
-                    {/* Icons */}
                     <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
                       {element?.isTv && <LiaDesktopSolid size={16} />}
                       {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[12px] h-[12px]" />}
@@ -223,44 +214,29 @@ function InplayMatches({ activeTab, matchlistItems }) {
                     </div>
                   </div>
 
-
-                  <div className="lg:w-[51%] w-full grid grid-cols-6 text-sm font-bold text-gray-700">
+                  <div className="lg:w-[50%] w-full grid grid-cols-6 ">
                     {Array?.from({ length: 6 }).map((_, i) => {
-                      const isLagai = i % 2 === 0;
-
-                      if (showLock && i === lockStartIndex + 1) {
-                        return null;
-                      }
-
-                      const isLockedSpan = showLock && i === lockStartIndex;
-
-                      return (
+                        const isLagai = i % 2 === 0;
+                        return (
                         <div
                           key={i}
-                          className={`relative w-full h-full ${isLockedSpan ? "col-span-2" : ""}`}
+                          className={`relative w-full h-full `}
                         >
-                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-2.5 flex border-[1px] border-white/40 flex-col justify-center items-center text-center w-full h-full`}>
+                          <div className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} p-1 flex border-[1px] border-white/40 flex-col justify-center items-center text-center w-full h-full text-sm font-semibold text-gray-900`}>
                             <p> {(Math.random() * 100).toFixed()}</p>
-                            <p className="text-[10px]">    {(Math.random() * 100).toFixed(2)}
+                            <p className="text-[10px] lg:block hidden text-gray-600">
+                              {(Math.random() * 100).toFixed(2)}
                             </p>
                           </div>
-
-                          {/* {isLockedSpan && (
-                            <div className="absolute top-0 left-0 bg-black/10 p-1 flex justify-center items-center w-full h-full col-span-2 cursor-not-allowed">
-                              <BetLocked />
-                            </div>
-                          )} */}
                         </div>
-                      );
+                        );
                     })}
                   </div>
                 </div>
               </div>
             );
           })}
-
-
-        </>
+        </div>
       );
     }
   }

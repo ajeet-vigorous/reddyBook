@@ -9,11 +9,11 @@ export const useGroupCasinoList = () => {
     const dispatch = useDispatch();
     const { getInternationalGroupCasinoListData } = useSelector(state => state.user);
 
-    const cosinoGroupList = JSON.parse(localStorage.getItem('cosinoGroupList'))
+    const casinoGroupData = JSON.parse(localStorage.getItem('casinoGroupData'))
 
     useEffect(() => {
-        if (cosinoGroupList) {
-            setGroupCasinoList(cosinoGroupList);
+        if (casinoGroupData) {
+            setGroupCasinoList(casinoGroupData);
         }
     }, [getInternationalGroupCasinoListData]);
 

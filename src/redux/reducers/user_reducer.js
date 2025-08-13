@@ -95,9 +95,9 @@ export const getInternationalGroupCasinoList = createAsyncThunk(
   "websit/getInternationalGroupCasinoList",
   async (payload, { rejectWithValue }) => {
     try {
-      const cosinoGroupList = await userServices.getInternationalGroupCasinoList(payload);
+      const casinoGroupData = await userServices.getInternationalGroupCasinoList(payload);
 
-      return cosinoGroupList;
+      return casinoGroupData;
     } catch (error) {
 
       return rejectWithValue(error.message);
@@ -138,9 +138,9 @@ export const getCasinoListByProviderName = createAsyncThunk(
   "websit/getCasinoListByProviderName",
   async (payload, { rejectWithValue }) => {
     try {
-      const cosinoGroupList = await userServices.getCasinoListByProviderName(payload);
+      const casinoGroupData = await userServices.getCasinoListByProviderName(payload);
 
-      return cosinoGroupList;
+      return casinoGroupData;
     } catch (error) {
 
       return rejectWithValue(error.message);

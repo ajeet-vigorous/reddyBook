@@ -8,11 +8,11 @@ import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import LiveMatches from "../../component/dashboard/LiveMatches";
 import TopHeader from "../../component/dashboard/TopHeader";
 import InplayMatches from "../../component/dashboard/InplayMatches";
-import Trendring from "../../component/dashboard/groupCasino/Trending";
 import PopularGame from "../../component/dashboard/groupCasino/PopularGame";
 import LiveCasino from "../../component/dashboard/groupCasino/LiveGames";
 import useGroupCasinoList from "../../component/IntGroupCasinoList/IntGroupCasinoList";
 import MarqueeNotification from "../../component/marquee/MarqueeNotification";
+import Trending from "../../component/dashboard/groupCasino/Trending";
 
 
 export const sportlistArray = [
@@ -153,12 +153,11 @@ const Dashboard = ({ }) => {
 
 
   const { sportMatchList } = useSelector((state) => state.sport);
-  const [activeAllSporttab, setactiveAllSporttab] = useState(localStorage.getItem('dashboardActiveTabKey'))
+  const [activeAllSporttab, setactiveAllSporttab] = useState(localStorage.getItem('dashboardActiveTabKey') || '1');
 
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
     : [];
-  const groupCasinoList = useGroupCasinoList();
 
   const [matchData, setMatchData] = useState([]);
 
@@ -167,6 +166,12 @@ const Dashboard = ({ }) => {
     setMatchData(matchListData);
   }, [sportMatchList]);
 
+ const sportsList = [
+    { id: '4', name: 'Cricket' },
+    { id: '1', name: 'Soccer' },
+    { id: '2', name: 'Tennis' },
+  ];
+
 
 
   return (
@@ -174,12 +179,29 @@ const Dashboard = ({ }) => {
       <div className="lg:block hidden ">
         <MarqueeNotification />
       </div>
+
       <div className="">
-        {/* <TopHeader activeAllSporttab={activeAllSporttab} setactiveAllSporttab={setactiveAllSporttab} matchList={matchData} /> */}
-        <InplayMatches activeTab={activeAllSporttab} matchlistItems={matchData} />
-        {/* <Trendring name={"Trending"} data={groupCasinoList?.trendingGames} />
-        <PopularGame name={"Popular Games"} data={groupCasinoList.popularGames} />
-        <LiveCasino filterSection={"liveCasino"} name={"Live Casino"} data={groupCasinoList?.liveGames} /> */}
+        <div className="">
+          {sportsList?.map((sport) => {
+            const sportMatches = matchData?.filter(match => match.sportId == sport.id);
+            return (
+              <div key={sport.id} className="">
+                {sportMatches?.length > 0 ? (
+                  <InplayMatches
+                    activeTab={sport.id}
+                    matchlistItems={sportMatches}
+                    showHeader={false}
+                    sportName={sport.name}
+                  />
+                ) : (
+                  <div className="p-4 text-center text-gray-500">
+                    No {sport.name} Matches available!
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   )

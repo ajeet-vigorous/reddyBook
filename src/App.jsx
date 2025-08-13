@@ -20,7 +20,7 @@ function setMultipleRootCssVariables(colors) {
 function App() {
   const dispatch = useDispatch();
 
-  const cosinoGroupList = JSON.parse(localStorage.getItem('cosinoGroupList'));
+  const casinoGroupData = JSON.parse(localStorage.getItem('casinoGroupData'));
 
   useEffect(() => {
     dispatch(getMatchList());
@@ -46,7 +46,7 @@ function App() {
       "liveGames": true
     };
     {
-      !cosinoGroupList && (
+      !casinoGroupData && (
         dispatch(getInternationalGroupCasinoList(ReqData))
       )
     }

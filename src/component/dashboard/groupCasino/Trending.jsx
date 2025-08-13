@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-function Trendring({ name, data }) {
+function Trending({ name, data }) {
     const navigate = useNavigate();
 
     const handleResponseCasino = (product) => {
@@ -54,4 +54,4 @@ function Trendring({ name, data }) {
     );
 }
 
-export default Trendring;
+export default Trending;

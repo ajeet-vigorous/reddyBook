@@ -68,9 +68,9 @@ const SubHeader = ({ setSidebarOpen }) => {
                   }
                   setActiveBar(item.id);
                 }}
-                className={`group px-[18px] uppercase relative cursor-pointer flex flex-col justify-center items-center w-full text-black ${isActive
-                  ? "bg-[var(--secondary)] h-[45px] text-white transition-all duration-150 group"
-                  : " h-[44px] lg:text-white text-black"
+                className={`group px-[27px] space-y-[1px] uppercase relative cursor-pointer flex flex-col justify-center items-center w-full text-black ${isActive
+                  ? "bg-[var(--primary)] h-[46px] text-white transition-all duration-150 group"
+                  : " h-[46px] lg:text-white text-black"
                   } cursor-pointer lg:border-none border-l-[1px] border-[#eee]`}>
                 <img className="w-[18px] h-[18px]" src={item.icon} />
                 <span>{item.label}</span>
