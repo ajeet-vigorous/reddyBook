@@ -1,6 +1,7 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
 import CashOutSystem from '../CashoutTesting';
+import MatchDetailsHeaderSection from '../../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection';
 
 const BookmakerComponent = ({
   inplayMatch,
@@ -22,37 +23,15 @@ const BookmakerComponent = ({
 
 
   return (
-    <div className="w-full flex justify-start gap-2 items-center">
+    <>
 
       <div className={`${bookmaker2Fancy?.length > 0 ? "w-[75%]" : 'w-[100%]'}`}>
         {matchScoreDetails?.team_data?.length > 0 && (
           <>
-            <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                  Bookmaker
-                </div>
-                <div >
-                  <CashOutSystem
-                    marketList={matchScoreDetails?.team_data}
-                    positionObj={positionObj}
-                    handleBackOpen={handleBackOpen}
-                    toggleRowVisibility={toggleRowVisibility}
-                    marketId={marketId}
-                    betFor={"odds"}
-                    oddsType={"bookmaker"}
-                  />
-                </div>
-              </div>
-            </header>
-
-            <div className="flex whitespace-normal max-w-full border-b border-gray-300">
+           <MatchDetailsHeaderSection marketType={`Bookmaker (${inplayMatch?.matchName + " - " + inplayMatch?.seriesName})`} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
+            <div className="flex  whitespace-normal max-w-full border-b border-gray-300">
               <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                  <span className="text-[12px] font-bold">
-                    Max: {formatNumber(isMatchCoin?.max)}
-                  </span>
-                </div>
+               
               </div>
 
               <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
@@ -287,6 +266,7 @@ const BookmakerComponent = ({
                 )}
               </div>
             ))}
+            </MatchDetailsHeaderSection>
           </>
         )}
       </div>
@@ -294,24 +274,12 @@ const BookmakerComponent = ({
       {bookmaker2Fancy?.length > 0 && (
         <div className="w-[25%]">
           <>
-            <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                  Bookmaker 2
-                </div>
-                <button disabled className="bg-[var(--success-color)] opacity-35 text-sm text-white px-3 py-1">
-                  Cashout
-                </button>
-              </div>
-            </header>
+           <MatchDetailsHeaderSection marketType={"Bookmaker 2"} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>  
+            
 
             <div className="flex whitespace-normal max-w-full border-b border-gray-300">
               <div className="w-1/2 flex px-2">
-                <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                  <span className="text-[12px] font-bold">
-                    Max: {formatNumber(isMatchCoin?.max)}
-                  </span>
-                </div>
+               
               </div>
 
               <div className="w-1/2 grid grid-cols-2">
@@ -497,10 +465,11 @@ const BookmakerComponent = ({
                 )}
               </div>
             ))}
+            </MatchDetailsHeaderSection>
           </>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

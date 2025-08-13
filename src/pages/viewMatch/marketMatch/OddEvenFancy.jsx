@@ -18,15 +18,9 @@ const OddEvenFancyComponent = ({
       <div>
         {OddEvenFancy && OddEvenFancy?.length > 0 ? (
           <>
-            <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                  oddeven
-                </div>
-              </div>
-            </header>
+           
 
-            <div className="grid xl:grid-cols-2 grid-cols-1">
+            <div className="grid  grid-cols-1">
               <div className="xl:flex hidden relative decoration-none border-b border-gray-300 whitespace-normal max-w-full">
                 <div className="xl:w-[58%] w-[65%] flex px-2">
                   <div className="w-full leading-3 flex items-center">
@@ -41,88 +35,32 @@ const OddEvenFancyComponent = ({
                   </div>
                 </div>
                 <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
-                  <span className="lg:block hidden bg-[#FEAFB2]">
+                  <span className="block  bg-[#FEAFB2]">
                     <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
                       <div className="text-center leading-3">
                         <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
                       </div>
                     </div>
                   </span>
-                  <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className="lg:block hidden bg-[#8DD2F0]">
+        
+                  <span className="block  bg-[#8DD2F0]">
                     <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
                       <div className="text-center leading-3">
                         <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>
-                  <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
-                      </div>
-                    </div>
-                  </span>
+                 
                   <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
                 </div>
               </div>
-              <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
-                <div className="xl:w-[58%] w-[65%] flex px-2">
-                  <div className="w-full leading-3 flex items-center">
-                    <span className="lg:hidden flex z-20 pr-1">
-                      <span className="text-black flex items-center justify-center"></span>
-                    </span>
-                    <span className="text-xs truncate">
-                      <span className="text-sm truncate"></span>
-                      <br />
-                      <p></p>
-                    </span>
-                  </div>
-                </div>
-                <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
-                  <span className="lg:block hidden bg-[#FEAFB2]">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className="lg:block hidden bg-[#8DD2F0]">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
-                      <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
-                      </div>
-                    </div>
-                  </span>
-                  <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
-                </div>
-              </div>
+              
             </div>
 
-            <div className="grid xl:grid-cols-2 grid-cols-1">
+            <div className="flex flex-col gap-1">
               {OddEvenFancy?.map((commList, index) => (
                 <div key={index}>
-                  <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
+                  <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal bg-white max-w-full">
                     <div className="xl:w-[58%] w-[65%] flex px-2">
                       <div className="w-full leading-3 flex items-center">
                         <span className="lg:hidden flex z-20 pr-1">

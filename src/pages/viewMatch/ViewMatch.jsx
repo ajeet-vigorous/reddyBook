@@ -1,7 +1,4 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
+
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -27,6 +24,8 @@ import TiedOddsComponent from "./marketMatch/TiedOdssMarket ";
 import CashOutSystemTesting from "./CashoutTesting copy";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
+import { MdScore } from "react-icons/md";
+import { fancyTabs, premiumTabs } from "./matchconstants";
 
 
 
@@ -840,6 +839,118 @@ const ViewMatches = () => {
 
 
 
+    const [mainTab, setMainTab] = useState("fancy");
+    const [subTab, setSubTab] = useState(fancyTabs[0].key);
+
+    // Function to render Fancy components dynamically
+    const renderFancyComponent = () => {
+        switch (subTab) {
+          case "all":
+            return (
+              <NormalFancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                NormalFancy={NormalFancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+              />
+            );
+          case "sessions":
+            return (
+              <OverByOverFancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                OverByOverFancy={OverByOverFancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+                handleFancyPositionModal={handleFancyPositionModal}
+              />
+            );
+          case "wpm":
+            return (
+              <Fancy1FancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                Fancy1Fancy={Fancy1Fancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+                handleFancyPositionModal={handleFancyPositionModal}
+              />
+            );
+          case "khadda":
+            return (
+              <KhadoFancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                KhadoFancy={KhadoFancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+                handleFancyPositionModal={handleFancyPositionModal}
+              />
+            );
+          case "meter":
+            return (
+              <MeterFancyComponent
+                activeTab={activeTab}
+                MeterFancy={MeterFancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+                handleFancyPositionModal={handleFancyPositionModal}
+              />
+            );
+          case "oddeven":
+            return (
+              <OddEvenFancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                OddEvenFancy={OddEvenFancy}
+                fancyPositionObj={fancyPositionObj}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+                formatNumber={formatNumber}
+                handleFancyPositionModal={handleFancyPositionModal}
+              />
+            );
+          case "xtra":
+            return (
+              <GroupedFancyComponent
+                inplayMatch={inplayMatch}
+                activeTab={activeTab}
+                groupedData={groupedData}
+                toggleRowVisibility={toggleRowVisibility}
+                handleBackOpen={handleBackOpen}
+                marketId={marketId}
+                returnDataFancyObject={returnDataFancyObject}
+              />
+            );
+          default:
+            return null;
+        }
+      };
+      
+
 
     return (isLoading ? <span className="animate-spin h-5 w-5"></span> :
         <div>
@@ -883,7 +994,7 @@ const ViewMatches = () => {
                 </div>
             )} */}
 
-            <div className="">
+            {/* <div className="">
                 {inplayMatch &&
                     inplayMatch?.matchName ? (
                     <div className="bg-[var(--secondary)] item-center px-2 py-1 flex justify-between">
@@ -891,7 +1002,7 @@ const ViewMatches = () => {
                         <span className="text-white text-[12px] font-semibold"> {inplayMatch?.matchDate}ffffff</span>
                     </div>
                 ) : null}
-            </div>
+            </div> */}
 
             <div className="flex justify-between items-center xl:hidden whitespace-nowrap w-full border-t-[1px] border-black/30 bg-[var(--primary)] text-white">
 
@@ -917,16 +1028,13 @@ const ViewMatches = () => {
 
             </div>
 
-            <div className="md:flex justify-center text-black  h-full  w-100 gap-x-1">
+            <div className="flex flex-col xl:flex-row text-black  h-full  w-100 gap-x-1">
                 {(matchTab === 1 || matchTab === 3) && (
-                    <div className="xl:w-[calc(100%-402px)] 2xl:w-[calc(100%-452px)] w-full overflow-y-auto p-0">
+                    <div className="w-full xl:w-2/3 overflow-y-auto p-0">
                         <div className="">
                             {matchTab === 3 && (
                                 <div className="xl:hidden block">
-                                    {/* <div className="bg-[var(--secondary)] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
-                                        <span>Live Match</span>
-                                        <button className="flex justify-end space-x-2 font-semibold" > </button>
-                                    </div> */}
+
                                     {inplayMatch?.isTv ? <>
                                         {tvShow && <div className="bg-white w-full h-48">
                                             <div className="details">
@@ -943,9 +1051,10 @@ const ViewMatches = () => {
                             <div className="xl:block hidden">
                                 {inplayMatch &&
                                     inplayMatch?.matchName ? (
-                                    <div className="bg-[var(--secondary)] item-center px-2 py-1.5 flex justify-between">
+                                    <div className="bg-[var(--darkcolor)] item-center px-2 py-1.5 flex justify-between">
                                         <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
-                                        <span className="text-white text-[14px] font-semibold"> {inplayMatch?.matchDate}</span>
+                                        <span className="text-white text-[14px] font-semibold">( {inplayMatch?.matchDate})</span>
+                                        <span className="text-white  font-semibold"> <MdScore onClick={() => handleScore()} size={20} /></span>
                                     </div>
                                 ) : null}
                             </div>
@@ -1041,100 +1150,72 @@ const ViewMatches = () => {
                                 formatNumber={formatNumber}
                             />
 
-                            <NormalFancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                NormalFancy={NormalFancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                            />
+                            <div className="fancy-premium-container">
+
+                                <div className="flex gap-2 w-full">
+                                    <button
+                                        className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] w-full border border-[var(--primary)] hover:text-white  ${mainTab === "fancy" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                            }`}
+                                        onClick={() => {
+                                            setMainTab("fancy");
+                                            setSubTab(fancyTabs[0].key);
+                                        }}
+                                    >
+                                        FANCY
+                                    </button>
+                                    <button
+                                        className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] w-full border border-[var(--primary)] hover:text-white ${mainTab === "premium" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                            }`}
+                                        onClick={() => {
+                                            setMainTab("premium");
+                                            setSubTab(premiumTabs[0].key);
+                                        }}
+                                    >
+                                        PREMIUM <span className="text-xs">NEW</span>
+                                    </button>
+                                </div>
+
+                                {/* Sub Tabs */}
+                                <div className="flex flex-nowrap gap-2 my-2 overflow-x-auto">
+                                    {mainTab === "fancy" &&
+                                        fancyTabs.map((tab) => (
+                                            <button
+                                                key={tab.key}
+                                                className={`mb-1 px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] min-w-[250px] max-w-[250px] border border-[var(--primary)] hover:text-white ${subTab === tab.key ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                                    }`}
+                                                onClick={() => setSubTab(tab.key)}
+                                            >
+                                                {tab.label}
+                                            </button>
+                                        ))}
+
+                                    {mainTab === "premium" &&
+                                        premiumTabs.map((tab) => (
+                                            <button
+                                                key={tab.key}
+                                                className={`px-3 py-1 border ${subTab === tab.key ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                                    }`}
+                                                onClick={() => setSubTab(tab.key)}
+                                            >
+                                                {tab.label}
+                                            </button>
+                                        ))}
+                                </div>
+
+                                {/* Content */}
+                                <div className="mt-4">
+                                    {mainTab === "fancy" && renderFancyComponent()}
+                                    {mainTab === "premium" && (
+                                        <div className="p-4 bg-gray-100">No premium market found.</div>
+                                    )}
+                                </div>
+                            </div>
 
 
-                            {/* over by over  */}
-                            <OverByOverFancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                OverByOverFancy={OverByOverFancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                                handleFancyPositionModal={handleFancyPositionModal}
-                            />
+                          
 
-                            {/* Fancy 1 */}
-                            <Fancy1FancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                Fancy1Fancy={Fancy1Fancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                                handleFancyPositionModal={handleFancyPositionModal}
-                            />
-                            {/* khedo Fancy  */}
-                            <KhadoFancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                KhadoFancy={KhadoFancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                                handleFancyPositionModal={handleFancyPositionModal}
-                            />
 
-                            {/* meter Fancy  */}
 
-                            <MeterFancyComponent
-                                activeTab={activeTab}
-                                MeterFancy={MeterFancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                                handleFancyPositionModal={handleFancyPositionModal}
-                            />
-
-                            {/* oddeven  Fancy*/}
-
-                            <OddEvenFancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                OddEvenFancy={OddEvenFancy}
-                                fancyPositionObj={fancyPositionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                                formatNumber={formatNumber}
-                                handleFancyPositionModal={handleFancyPositionModal}
-                            />
-
-                            {/* groupBy Fancy  */}
-
-                            <GroupedFancyComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                groupedData={groupedData}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataFancyObject={returnDataFancyObject}
-                            />
                             <TiedOddsComponent
                                 inplayMatch={inplayMatch}
                                 activeTab={activeTab}
@@ -1151,7 +1232,7 @@ const ViewMatches = () => {
                         </div>
                     </div>
                 )}
-                <div className="space-y-1.5 xl:w-[402px] 2xl:w-[452px] sticky top-0  lg:h-[calc(100vh-400px)] xl:block hidden ">
+                <div className="w-full xl:w-1/3 xl:block hidden ">
                     <div>
                         <div className="bg-[var(--secondary)] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
                             <span>Live Match</span>
@@ -1359,100 +1440,101 @@ const ViewMatches = () => {
                         </div>
                     </div>
                 </div>
-                {matchTab === 2 && (
-                    <div className="w-full ">
-                        <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
-                            <span> My Bets</span>
-                        </div>
-                        <div className="overflow-hidden w-full  border border-[#C6D2D8]">
-                            <div className="max-w-full overflow-auto ">
-                                <div className="inline-block min-w-full ">
-                                    <div className="overflow-hidden w-full ">
-                                        <table className="min-w-full capitalize">
-                                            <thead>
-                                                <tr className="w-full text-black text-[14px] font-semibold bg-[#CCCCCC] text-left">
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Matched Bets
-                                                    </th>
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Odds
-                                                    </th>
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Stake
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {oddsBetData && oddsBetData?.length > 0 ? (
-                                                    oddsBetData?.map((element, index) => (
-                                                        <tr
-                                                            key={index}
-                                                            className={`w-full text-[#333333]  text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
-                                                                ? "bg-[var(--matchKhai)]"
-                                                                : "bg-[var(--matchLagai)]"
-                                                                }`}
-                                                        >
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                <div>
-                                                                    {element?.teamName} <br />
-                                                                    <span className="font-bold">{element?.marketName}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element && element?.oddsType === "matchOdds"
-                                                                    ? parseFloat(Number(element?.odds) + 1)
+
+            </div>
+            {matchTab === 2 && (
+                <div className="w-full ">
+                    <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
+                        <span> My Bets</span>
+                    </div>
+                    <div className="overflow-hidden w-full  border border-[#C6D2D8]">
+                        <div className="max-w-full overflow-auto ">
+                            <div className="inline-block min-w-full ">
+                                <div className="overflow-hidden w-full ">
+                                    <table className="min-w-full capitalize">
+                                        <thead>
+                                            <tr className="w-full text-black text-[14px] font-semibold bg-[#CCCCCC] text-left">
+                                                <th className="px-[6px] py-1 whitespace-nowrap">
+                                                    Matched Bets
+                                                </th>
+                                                <th className="px-[6px] py-1 whitespace-nowrap">
+                                                    Odds
+                                                </th>
+                                                <th className="px-[6px] py-1 whitespace-nowrap">
+                                                    Stake
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {oddsBetData && oddsBetData?.length > 0 ? (
+                                                oddsBetData?.map((element, index) => (
+                                                    <tr
+                                                        key={index}
+                                                        className={`w-full text-[#333333]  text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
+                                                            ? "bg-[var(--matchKhai)]"
+                                                            : "bg-[var(--matchLagai)]"
+                                                            }`}
+                                                    >
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            <div>
+                                                                {element?.teamName} <br />
+                                                                <span className="font-bold">{element?.marketName}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            {element && element?.oddsType === "matchOdds"
+                                                                ? parseFloat(Number(element?.odds) + 1)
+                                                                    .toFixed(2)
+                                                                    .replace(/\.?0+$/, "")
+                                                                : element &&
+                                                                    (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
+                                                                    ? parseFloat(element?.odds * 100)
                                                                         .toFixed(2)
                                                                         .replace(/\.?0+$/, "")
-                                                                    : element &&
-                                                                        (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
-                                                                        ? parseFloat(element?.odds * 100)
-                                                                            .toFixed(2)
-                                                                            .replace(/\.?0+$/, "")
-                                                                        : parseFloat(element?.odds)
-                                                                            .toFixed(2)
-                                                                            .replace(/\.?0+$/, "")}
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element?.amount}
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                ) : fancyBetData && fancyBetData?.length > 0 ? (
-                                                    fancyBetData?.map((element, index) => (
-                                                        <tr
-                                                            key={index}
-                                                            className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x-2 divide-white ${element?.type === "N"
-                                                                ? "bg-[var(--matchKhai)]"
-                                                                : "bg-[var(--matchLagai)]"
-                                                                }`}
-                                                        >
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                <span className="font-medium text-xs">{element?.sessionName}</span>
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element?.odds}
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element?.amount}
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                ) : (
-                                                    <tr>
-                                                        <td colSpan={3} className="text-center py-2 text-sm">
-                                                            No records found
+                                                                    : parseFloat(element?.odds)
+                                                                        .toFixed(2)
+                                                                        .replace(/\.?0+$/, "")}
+                                                        </td>
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            {element?.amount}
                                                         </td>
                                                     </tr>
-                                                )}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                ))
+                                            ) : fancyBetData && fancyBetData?.length > 0 ? (
+                                                fancyBetData?.map((element, index) => (
+                                                    <tr
+                                                        key={index}
+                                                        className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x-2 divide-white ${element?.type === "N"
+                                                            ? "bg-[var(--matchKhai)]"
+                                                            : "bg-[var(--matchLagai)]"
+                                                            }`}
+                                                    >
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            <span className="font-medium text-xs">{element?.sessionName}</span>
+                                                        </td>
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            {element?.odds}
+                                                        </td>
+                                                        <td className="px-[6px] py-1 whitespace-nowrap">
+                                                            {element?.amount}
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={3} className="text-center py-2 text-sm">
+                                                        No records found
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div >
     );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
 import CashOutSystem from '../CashoutTesting';
+import MatchDetailsHeaderSection from '../../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection';
 
 const TossDataComponent = ({
   inplayMatch,
@@ -17,37 +18,17 @@ const TossDataComponent = ({
   return (
     inplayMatch?.isToss && (activeTab === "other" || activeTab === "all") ? (
       <>
-        <div>
+        <div className='bg-white'>
           {matchScoreDetails &&
             matchScoreDetails.toss_data &&
             matchScoreDetails.toss_data.length > 0 ? (
             <>
-              <header className="mt-1">
-                <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                  <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                    toss_data
-                  </div>
-                 <div >
-                  <CashOutSystem
-                    marketList={matchScoreDetails?.toss_data}
-                    positionObj={positionObj}
-                    handleBackOpen={handleBackOpen}
-                    toggleRowVisibility={toggleRowVisibility}
-                    marketId={marketId}
-                    betFor={"toss"}
-                    oddsType={"toss"}
-                  />
-                </div>
-                </div>
-              </header>
+            <MatchDetailsHeaderSection marketType={"toss_data"} minMax={{ min: 100, max: formatNumber(isTossCoin?.max) }}>
+              
               
               <div className="flex whitespace-normal max-w-full border-b border-gray-300">
                 <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                  <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                    <span className="text-[12px] font-bold">
-                      Max: {formatNumber(isTossCoin?.max)}
-                    </span>
-                  </div>
+                 
                 </div>
                 <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
                   <span className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"></span>
@@ -283,6 +264,7 @@ const TossDataComponent = ({
                     ))
                   : null}
               </>
+              </MatchDetailsHeaderSection>
             </>
           ) : null}
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
+import MatchDetailsHeaderSection from '../../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection';
 
 const OtherMarketsComponent = ({
   activeTab,
@@ -22,24 +23,11 @@ const OtherMarketsComponent = ({
         element.marketType !== "To Win the Toss" && 
         element.marketType !== "Completed Match" && (
           <div key={index}>
-            <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-2 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                  {element?.marketType || "NA"}
-                </div>
-                <button disabled className="bg-[var(--success-color)] opacity-35 text-sm text-white px-3 py-1">
-                  Cashout
-                </button>
-              </div>
-            </header>
+            <MatchDetailsHeaderSection marketType={element.marketType} minMax={{ min: 100, max: formatNumber(isTieCoin?.max) }}>
             
             <div className="flex whitespace-normal max-w-full border-b border-gray-300">
               <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                  <span className="text-[12px] font-bold">
-                    Max: {formatNumber(isTieCoin?.max)}
-                  </span>
-                </div>
+                
               </div>
               
               <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
@@ -255,6 +243,7 @@ const OtherMarketsComponent = ({
                 </div>
               </div>
             ))}
+            </MatchDetailsHeaderSection >
           </div>
         )
       )}
