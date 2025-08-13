@@ -14,6 +14,8 @@ import AllCasino from '../../pages/allCasino/AllCasino'
 import SportsBook from '../../pages/sportsBook/SportsBook'
 import ViewMatches from '../../pages/viewMatch/ViewMatch'
 import InplaySport from '../../pages/inplay/InplaySport'
+import UnsettledBets from '../../pages/unsettledBets/UnsettledBets'
+import ProfitandlLoss from '../../pages/profitandlloss/ProfitandlLoss'
 
 
 
@@ -37,6 +39,8 @@ const AppContent = () => {
       <Route path='/refer-and-earn' element={<ReferAndEarn />} />
       <Route path='/in-play/:gameId?' element={<InPlayMatch />} />
       <Route path='/sports_book' element={<InplaySport />} />
+      <Route path='/unsettled-bets' element={<UnsettledBets />} />
+      <Route path='/profitloss' element={<ProfitandlLoss />} />
       <Route path='/sport-view/:marketId?/:eventId?/:sportId?' element={<ViewMatches />} />
 
     </Routes>
