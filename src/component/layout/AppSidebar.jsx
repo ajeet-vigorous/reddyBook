@@ -277,7 +277,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       </div>
 
 
-      <div className="block lg:hidden">
+      <div className="block lg:hidden shadow-[0_0_20px_rgba(1,41,112,0.1)]">
         <div className="flex justify-between items-center border-b-[1px] border-[#eceaea] py-1 px-2">
           <div></div>
           <div>

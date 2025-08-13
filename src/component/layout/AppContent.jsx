@@ -12,6 +12,7 @@ import MarketAnalysis from '../../pages/marketAnalysis/MarketAnalysis'
 import ReferAndEarn from '../../pages/referAndEarn/ReferAndEarn'
 import AllCasino from '../../pages/allCasino/AllCasino'
 import SportsBook from '../../pages/sportsBook/SportsBook'
+import ViewMatches from '../../pages/viewMatch/ViewMatch'
 
 
 
@@ -34,6 +35,8 @@ const AppContent = () => {
       <Route path='/market-analysis' element={<MarketAnalysis />} />
       <Route path='/refer-and-earn' element={<ReferAndEarn />} />
       <Route path='/in-play/:gameId?' element={<InPlayMatch />} />
+      <Route path='/sport-view/:marketId?/:eventId?/:sportId?' element={<ViewMatches />} />
+
     </Routes>
 
   )

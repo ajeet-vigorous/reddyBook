@@ -25,7 +25,7 @@ const Layout = () => {
 
             <div className="flex flex-1 overflow-hidden relative">
                 <div className={`${isSidebarOpen ? 'fixed' : 'hidden'} 
-                lg:relative lg:block inset-0 lg:inset-auto lg:w-[250px] md:w-[55%] w-[70%] h-screen lg:h-auto z-20 lg:z-auto bg-white overflow-y-auto scrollbar`}>
+                lg:relative lg:block inset-0 lg:inset-auto lg:w-[250px] w-[55%] h-screen lg:h-auto z-20 lg:z-auto bg-white overflow-y-auto scrollbar`}>
                     <AppSidebar
                         isSidebarOpen={isSidebarOpen}
                         setIsSidebarOpen={setIsSidebarOpen}
@@ -33,7 +33,7 @@ const Layout = () => {
                 </div>
 
                 <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)] ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
-                    <div className="p-4 h-full">
+                    <div className="lg:p-1 p-1 h-full">
                         <AppContent />
                     </div>
                 </div>
