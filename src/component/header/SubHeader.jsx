@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useIntCasinoCategoryList from "../../hook/useIntCasinoCategoryList";
 import { BsListNested } from "react-icons/bs";
+import MarqueeNotification from "../marquee/MarqueeNotification";
 
 
 
@@ -80,29 +81,12 @@ const SubHeader = ({ setSidebarOpen }) => {
         </div>
         <div
           onClick={() => setSidebarOpen(true)}
-          className="text-black px-3 bg-white flex h-[45px] justify-end items-center lg:hidden z-50">
+          className="text-black px-3 bg-white flex h-[45px] justify-end items-center lg:hidden z-0">
           <BsListNested size={18} />
         </div>
       </div>
       <div className="lg:hidden block ">
-        <div className="bg-white w-full flex justify-start items-center overflow-hidden">
-          <div className="w-[10%] bg-white px-[2px] z-[50]">
-            <img src='/subHeader/commentary.png' className="w-[22px] h-[22px]" />
-          </div>
-          <div className="w-[90%]">
-            <div className=" px-1 py-[2px] font-[700] tracking-wide animate-[marquee_30s_linear_infinite]  text-black text-[12px] whitespace-nowrap uppercase  ">
-              🏏 THE HUNDRED WOMEN'S & MEN'S CUP WINNER🏆 AND FANCY MARKET STARTED IN OUR EXCHANGE 🏏 🎾 ATP TORONTO & WTA MONTREAL 🏆 CUP WINNER BETS STARTED IN OUR EXCHANGE 🎾 🏏 OUR EXCLUSIVE PREMIUM MARKET FOR (SRL) IS NOW STARTED IN OUR EXCHANGE 🏏 DREAM BIG WIN BIG
-            </div>
-            <style>
-              {`
-          @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-          }
-        `}
-            </style>
-          </div>
-        </div>
+        <MarqueeNotification />
       </div>
     </>
   );

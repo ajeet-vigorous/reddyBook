@@ -13,6 +13,7 @@ import LiveMatches from "../dashboard/LiveMatches";
 import Login from "../login/Login";
 import { domainName } from "../../config/Auth";
 import { getClientExposure, getUserBalance } from "../../redux/reducers/user_reducer";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 
 const AppHeader = ({ setSidebarOpen }) => {
@@ -136,7 +137,7 @@ const AppHeader = ({ setSidebarOpen }) => {
       <div className="">
         <div className="">
           <div className="flex justify-between items-center lg:px-0 px-2 mx-auto 2xl:w-[67%] md:w-[90%] w-full py-0">
-            <div className="flex justify-start items-center lg:space-x-5 pt-2 ">
+            <div className="flex justify-start items-center lg:space-x-5 pt-2 pb-1.5 ">
               <img onClick={() => {
                 navigate("/dashboard");
               }}
@@ -158,17 +159,17 @@ const AppHeader = ({ setSidebarOpen }) => {
                 className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[12px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer">
                 Rules
               </div>
-          
+
             </div>
             {token ? (
               <>
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 ">
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">BAL</span>
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:mt-0 -mt-1.5" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 md:top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">BAL</span>
                     </div>
-                    <span className="font-bold text-[13px] lg:text-black text-white">
+                    <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
                       {balance && balance.coins
                         ? Number(balance.coins).toFixed(2)
                         : "0"}
@@ -180,10 +181,10 @@ const AppHeader = ({ setSidebarOpen }) => {
                     }}
                     className="text-center cursor-pointer">
                     <div className="flex  justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px]" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 top-2 text-white text-[13px] font-semibold">EXP</span>
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:mt-0 -mt-1.5" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 md:top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">EXP</span>
                     </div>
-                    <span className="font-bold text-[13px] lg:text-black text-white">
+                    <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
                       {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
                     </span>
                   </div>
@@ -195,12 +196,15 @@ const AppHeader = ({ setSidebarOpen }) => {
                         setClickedOutside(!clickedOutside);
                       }}
                     >
-                      <div className="flex items-center justify-center space-x-2 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
-                        <IoPerson />
-                        <p className="">
-                          {user && user?.data && user?.data?.username}
-                        </p>
-                        <BiChevronDown size={20} />
+                      <div className="flex items-center justify-center space-x-0 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
+
+                        <div className="flex  items-center justify-center space-x-2">
+                          <IoPerson />
+                          <p className="">
+                            {user && user?.data && user?.data?.username}
+                          </p>
+                        </div>
+                        <IoMdArrowDropdown size={18} />
                       </div>
                       {clickedOutside ? (
                         <div className="animate__animated animate__fadeIn animate__faster absolute right-1 top-12 shadow-2xl divide-y  bg-[#f1f5f8] w-[240px] md:mx-0 mr-[2%] ml-[2%] text-[16px] text-[#212529] transition duration-2000 border z-40">

@@ -101,8 +101,8 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
   return (
     <>
       {isOpen && (
-        <div className="fixed z-[99999] inset-0 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="bg-[#005098] text-white lg:w-[800px] w-[500px] h-[600px] shadow-lg relative mx-2">
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-[#005098] text-white lg:w-[800px] w-[500px] h-[600px] shadow-[0_0_25px_2px_#222] relative -top-2 mx-2">
 
             <div className="md:flex w-full">
               {/* Form */}

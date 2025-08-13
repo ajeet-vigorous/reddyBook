@@ -150,7 +150,7 @@ const AccountSatement = () => {
                 </select>
                 <button
                   onClick={handleSubmit}
-                  className="py-1.5 ml-2 md:bg-[var(--bluebtn)] md:border-[var(--bluebtn)]  bg-[var(--primary)] hover:opacity-85 text-white text-md w-[150px] rounded-sm">
+                  className="py-1.5 ml-2 md:bg-[var(--primary)] md:border-[var(--primary)]  bg-[var(--primary)] hover:opacity-85 text-white text-md w-[150px] rounded-sm">
                   Submit
                 </button>
               </div>
