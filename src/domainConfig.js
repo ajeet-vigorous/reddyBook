@@ -6,7 +6,8 @@ const GrandExchangeSettings = {
   SOCKET_URL: "https://socket.trovetown.co/",
   // apiurl: "https://apidiamond.trovetown.co/v1/",
   // apiurl: 'https://api.reddyplus100.com/v1/',
-  apiurl: 'https://api.10xbpexch.com/v1/',
+  // apiurl: 'https://api.10xbpexch.com/v1/',
+  apiurl: 'https://api.bpexchanges.com/v1/',
   domainName: "reddybook",
   colors: {
     "--primary": "#C10930",
@@ -19,6 +20,7 @@ const GrandExchangeSettings = {
 
     "--result-color": "#355e3b",
     "--rule-bg": '#CCCCCC',
+    "--sports-tab": '#266894',
     "--suspended-color": 'rgba(0,0,0,0.7)',
     "--blink-color": "#fdcf13",
     "--success-color": "#086f3f"
@@ -72,5 +74,9 @@ const domainSettings = {
 
 const currentDomain = window.location.host;
 const settings = domainSettings[currentDomain] || domainSettings["localhost:3000"];
-
+// Object.entries(settings).forEach(([key, value]) => {
+//   if (key.startsWith("--")) {
+//     document.documentElement.style.setProperty(key, value);
+//   }
+// });
 export default settings;

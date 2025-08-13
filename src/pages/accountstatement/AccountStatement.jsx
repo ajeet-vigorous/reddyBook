@@ -115,14 +115,23 @@ const AccountSatement = () => {
           </div>
           <div className="mt-1.5 border-1 border-gray-400 space-y-2">
             {/* desktop view */}
-            <div className="bg-[#DFDDE0] p-1 justify-start hidden sm:flex items-center">
+            <div className="bg-[#DFDDE0] p-1 justify-start hidden md:flex items-center">
               <div className="flex justify-between sm:space-x-8 ">
+                <select
+                  className="px-3 py-[2px] text-md bg-transparent border bg-white border-gray-400 xl:w-[252px] w-[165px] rounded-md focus:outline-none text-[#495057] placeholder-text-gray-500"
+                  onChange={handleSelectChange}
+                  value={setPayloadData?.statementFor}
+                >
+                  <option value="">All</option>
+                  <option value="profitLoss">Sports Reports</option>
+                  <option value="ACCOUNT_STATEMENT">Deposit/Withdraw Reports</option>
+                </select>
                 <div className="">
                   <DatePicker
                     selected={payloadData?.fromDate}
                     onChange={(date) => setPayloadData({ ...payloadData, fromDate: date })}
                     dateFormat="dd/MM/yyyy"
-                    className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-black"
+                    className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 xl:w-[252px] w-[165px] rounded-md focus:outline-none text-black"
                     required
                     showIcon
                     icon={calendarIcon}
@@ -133,30 +142,22 @@ const AccountSatement = () => {
                     selected={payloadData?.toDate}
                     onChange={(date) => setPayloadData({ ...payloadData, toDate: date })}
                     dateFormat="dd/MM/yyyy"
-                    className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-black"
+                    className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 xl:w-[252px] w-[165px] rounded-md focus:outline-none text-black"
                     required
                     showIcon
                     icon={calendarIcon}
                   />
                 </div>
-                <select
-                  className="px-3 py-[2px] text-md bg-transparent border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-[#495057] placeholder-text-gray-500"
-                  onChange={handleSelectChange}
-                  value={setPayloadData?.statementFor}
-                >
-                  <option value="">All</option>
-                  <option value="profitLoss">Sports Reports</option>
-                  <option value="ACCOUNT_STATEMENT">Deposit/Withdraw Reports</option>
-                </select>
+
                 <button
                   onClick={handleSubmit}
-                  className="h-[30px] text-[12px] uppercase bg-black md:border-[var(--primary)] hover:bg-[var(--secondary)] text-white text-md w-[142px] rounded-md">
+                  className="h-[30px] text-[12px] uppercase bg-black md:border-[var(--primary)] hover:bg-[var(--secondary)] text-white text-md xl:w-[252px] w-[165px] rounded-md">
                   Get Statement
                 </button>
               </div>
             </div>
             {/* mobile view */}
-            <div className="flex flex-col sm:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
+            <div className="flex flex-col bg-white md:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
               <div className="flex w-full justify-center items-center  gap-2">
                 <div className="">
                   <DatePicker
@@ -206,12 +207,13 @@ const AccountSatement = () => {
                     <table className="min-w-full border-collapse border overflow-x-auto border-gray-400">
                       <thead className="bg-[#DFDDE0]">
                         <tr className="text-left text-[12px] lg:bg-transparent text-[#212529]  font-semibold border border-[#c7c8ca]/50">
-                          <th className="px-3 py-2 w-[5%] border whitespace-nowrap border-[#c7c8ca]/50">Sr no</th>
-                          <th className="px-3 py-2 w-[15%] border border-[#c7c8ca]/50">Date</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Credit</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Debit</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Balance</th>
-                          <th className="px-3 py-2 w-[50%] border border-[#c7c8ca]/50">Description</th>
+                          <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">No</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Date</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Total</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Balance</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">D/C</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Description</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Details</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -228,31 +230,36 @@ const AccountSatement = () => {
                                   .format("YYYY/MM/DD hh:mm:ss")}
                               </td>
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 text-green-600">
-                                {element?.amount > 0
-                                  ? Number.parseFloat(element?.amount).toFixed(2)
-                                  : element?.amount === 0
-                                    ? Number.parseFloat(0).toFixed(2)
-                                    : "-"}
+                                {Number.parseFloat(element?.balance).toFixed(2)}
                               </td>
-
-                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-red-600">
-                                {element?.amount < 0
-                                  ? "-" + Number.parseFloat(Math.abs(element?.amount)).toFixed(2)
-                                  : element?.amount === 0
-                                    ? Number.parseFloat(Math.abs(0)).toFixed(2)
-                                    : "-"}
-                              </td>
-
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 text-green-600">
                                 {Number.parseFloat(element?.balance).toFixed(2)}
                               </td>
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-black flex space-x-2">
+                                <p className="text-green-600">
+                                  ( {element?.amount > 0
+                                    ? Number.parseFloat(element?.amount).toFixed(2)
+                                    : element?.amount === 0
+                                      ? Number.parseFloat(0).toFixed(2)
+                                      : "-"})
+                                </p>
+                                <p>/</p>
+                                <p className="text-red-600">
+                                  ({element?.amount < 0
+                                    ? "-" + Number.parseFloat(Math.abs(element?.amount)).toFixed(2)
+                                    : element?.amount === 0
+                                      ? Number.parseFloat(Math.abs(0)).toFixed(2)
+                                      : "-"})
+                                </p>
+                              </td>
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.remark}</td>
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.remark}</td>
                             </tr>
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={6} className=" text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left">
-                              No records found.
+                            <td colSpan={7} className=" text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left">
+                              No Data Found
                             </td>
                           </tr>
                         )}

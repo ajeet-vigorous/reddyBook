@@ -96,31 +96,31 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
           </>
         )}
 
-        <div className="flex items-center">
+        <div className="bg-[var(--darkcolor)] flex items-center p-0">
           {Object.keys(groupedBySeries)?.map((el, index) => {
             return (
               <>
-                <div onClick={() => setSubTab(el)} className={`border border-r-[var(--secondary)]  ${subTab === el ? "bg-[var(--secondary)] px-4 py-1 text-white" : "bg-[#cccc] px-4 py-1 text-black"}`} key={index}>
+                <div onClick={() => setSubTab(el)} className={`border border-[var(--secondary)]  ${subTab === el ? "bg-[var(--secondary)] px-5 py-1 text-white" : "bg-[#cccc] px-5 py-1 text-black"}`} key={index}>
                   {el}
                 </div>
               </>
             )
           })}
         </div>
-        <div className="bg-[#F2F2F2] ">
+        <div className="bg-[#F2F2F2]">
           {groupedBySeries[subTab] && functiongroupbyRacingmatch(groupedBySeries[subTab])?.length > 0 ? (
             functiongroupbyRacingmatch(groupedBySeries[subTab])?.map((match, index) => (
               <div key={index} className="flex xl:items-center p-1.5 xl:justify-start md:grid md:grid-cols-[0.5fr_1.5fr]  xl:flex-row flex-col items-start justify-between gap-1 my-0.5 border-b border-gray-300">
                 <div className="flex flex-row justify-start items-center gap-2">
                   <FaTv className="text-black" />
-                  <div className="xl:min-w-[400px] text-[15px] min-w-full">{match?.key}</div>
+                  <div className="xl:min-w-[400px] text-[13px] min-w-full font-[600] uppercase">{match?.key}</div>
                 </div>
                 {<div className="xl:min-w-[400px]  min-w-full flex  flex-wrap justify-start items-center gap-1">
 
                   {match?.value?.map((allMatchTime, newindex) => (
                     <div onClick={() => {
                       window.location.href = `/sport-view-racing/${allMatchTime?.marketId}/${allMatchTime?.eventId}/${allMatchTime?.sportId}`
-                    }} key={newindex} className="bg-[#cccc] rounded-[4px] text-black px-3 py-1 text-center cursor-pointer">
+                    }} key={newindex} className="bg-[var(--darkcolor)] rounded-[4px] text-white px-3 py-1 text-[14px] text-center cursor-pointer">
                       {moment(allMatchTime?.matchDate, 'YYYY-MM-DD HH:mm:ss', true).isValid() ? (
                         moment(allMatchTime.matchDate, 'YYYY-MM-DD HH:mm:ss').format("HH:mm")
                       ) : null}

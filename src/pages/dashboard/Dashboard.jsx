@@ -206,7 +206,12 @@ const Dashboard = ({ }) => {
         </div>
         <Providers filterSection={"providers"} name={"Casino Provider"} providersData={groupCasinoList?.providerList} />
 
-
+        <div className="p-2 bg-[#008000]">
+          <div className="flex space-x-2 items-center">
+            <img src="/subHeader/menu-upcoming.png" className="w-[20px] h-[20px]" alt="menu" />
+            <p className="text-white font-semibold text-[14px] tracking-wider">UPCOMING EVENTS</p>
+          </div>
+        </div>
         <div className="space-y-0">
           <DashboardUpcoming
             activeTab="4"

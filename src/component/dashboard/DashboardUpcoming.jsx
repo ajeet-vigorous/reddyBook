@@ -22,7 +22,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
   if (!filteredMatches || filteredMatches.length === 0) {
     return (
       <>
-        <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+        <div className="lg:flex hidden justify-between py-1 w-full border-b border-t border-[#C6D2D8]">
           <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
             {sportName}
             <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
@@ -33,7 +33,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
             <span>2</span>
           </p>
         </div>
-        <div className="border-b px-3 py-1 text-[13px]">No Upcoming Matches Found</div>
+        <div className="border-b px-3 py-1 text-[13px] bg-white">No Upcoming Matches Found</div>
       </>
     );
   }

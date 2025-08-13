@@ -35,7 +35,7 @@ const UnsettledBets = ({ }) => {
                     <h2 className='text-[14px] text-white'>Unsettled Bets</h2>
                 </div>
 
-                <div className="overflow-hidden">
+                <div className="overflow-hidden mt-2">
                     <div className="max-w-full overflow-auto">
                         <div className="inline-block min-w-full">
                             <div className="overflow-hidden w-full">
