@@ -13,6 +13,7 @@ import LiveCasino from "../../component/dashboard/groupCasino/LiveGames";
 import useGroupCasinoList from "../../component/IntGroupCasinoList/IntGroupCasinoList";
 import MarqueeNotification from "../../component/marquee/MarqueeNotification";
 import Trending from "../../component/dashboard/groupCasino/Trending";
+import Providers from "../../component/dashboard/Providers";
 
 
 export const sportlistArray = [
@@ -38,7 +39,6 @@ export const sportlistArray = [
   },
 
 ]
-
 
 export const AllSportsArray = [
   {
@@ -151,9 +151,11 @@ export const AllSportsArray = [
 
 const Dashboard = ({ }) => {
 
-
   const { sportMatchList } = useSelector((state) => state.sport);
   const [activeAllSporttab, setactiveAllSporttab] = useState(localStorage.getItem('dashboardActiveTabKey') || '1');
+  const groupCasinoList = useGroupCasinoList();
+  console.log(groupCasinoList, "groupCasinoList");
+
 
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
@@ -166,7 +168,7 @@ const Dashboard = ({ }) => {
     setMatchData(matchListData);
   }, [sportMatchList]);
 
- const sportsList = [
+  const sportsList = [
     { id: '4', name: 'Cricket' },
     { id: '1', name: 'Soccer' },
     { id: '2', name: 'Tennis' },
@@ -175,35 +177,34 @@ const Dashboard = ({ }) => {
 
 
   return (
-    <section className="overflow-hidden">
-      <div className="lg:block hidden ">
-        <MarqueeNotification />
-      </div>
-
-      <div className="">
-        <div className="">
-          {sportsList?.map((sport) => {
-            const sportMatches = matchData?.filter(match => match.sportId == sport.id);
-            return (
-              <div key={sport.id} className="">
-                {sportMatches?.length > 0 ? (
-                  <InplayMatches
-                    activeTab={sport.id}
-                    matchlistItems={sportMatches}
-                    showHeader={false}
-                    sportName={sport.name}
-                  />
-                ) : (
-                  <div className="p-4 text-center text-gray-500">
-                    No {sport.name} Matches available!
-                  </div>
-                )}
-              </div>
-            );
-          })}
+    <>
+      <div className="h-full overflow-y-auto ">
+        <div className="lg:block hidden ">
+          <MarqueeNotification />
         </div>
+
+        <div className="space-y-0">
+          <InplayMatches
+            activeTab="4"
+            matchlistItems={matchData}
+            sportName="Cricket"
+          />
+
+          <InplayMatches
+            activeTab="1"
+            matchlistItems={matchData}
+            sportName="Soccer"
+          />
+
+          <InplayMatches
+            activeTab="2"
+            matchlistItems={matchData}
+            sportName="Tennis"
+          />
+        </div>
+        <Providers filterSection={"providers"} name={"Casino Provider"} providersData={groupCasinoList?.providerList} />
       </div>
-    </section>
+    </>
   )
 }
 

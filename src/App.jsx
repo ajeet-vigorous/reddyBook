@@ -20,13 +20,12 @@ function setMultipleRootCssVariables(colors) {
 function App() {
   const dispatch = useDispatch();
 
-  const casinoGroupData = JSON.parse(localStorage.getItem('casinoGroupData'));
+  const cosinoGroupList = JSON.parse(localStorage.getItem('cosinoGroupList'))
 
   useEffect(() => {
     dispatch(getMatchList());
     let domainSetting = {
       domainUrl: window.location.origin,
-      // domainUrl: 'https://sikander777.com',
     };
     dispatch(getDomainSettingData(domainSetting));
     const interval = setInterval(() => {
@@ -46,9 +45,9 @@ function App() {
       "liveGames": true
     };
     {
-      !casinoGroupData && (
+      // !cosinoGroupList && (
         dispatch(getInternationalGroupCasinoList(ReqData))
-      )
+      // )
     }
 
   }

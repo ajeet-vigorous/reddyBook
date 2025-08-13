@@ -3,6 +3,7 @@ import { LiaDesktopSolid } from "react-icons/lia";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { TbDeviceTvOld } from "react-icons/tb";
+import { useParams } from "react-router-dom";
 
 function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
@@ -10,16 +11,18 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
   const [isLive, setIsLive] = useState(false);
   const [isVirtual, setIsVirtual] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
-
-  const implayMatchFunc = (element) => {
-    const inputMoment = moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A");
-    const currentMoment = moment().add(60, "minutes");
-    return currentMoment.isSameOrAfter(inputMoment);
-  };
+  const { gameId } = useParams();
 
   const filteredMatches = matchlistItems?.filter(
     (element) => element.sportId == activeTab
   ).sort((a, b) => moment(a.matchDate, "DD-MM-YYYY HH:mm:ss").isBefore(moment(b.matchDate, "DD-MM-YYYY HH:mm:ss")) ? -1 : 1);
+
+  const isInplayMatch = (match) => {
+    const matchMoment = moment(match?.matchDate, "DD-MM-YYYY HH:mm:ss A");
+    const currentMoment = moment().add(60, 'minutes');
+    return currentMoment.isSameOrAfter(matchMoment);
+  };
+
   const groupedBySeries = {};
   if (filteredMatches?.length > 0) {
     filteredMatches.forEach((match) => {
@@ -28,9 +31,9 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
         groupedBySeries[series] = [];
       }
       groupedBySeries[series].push(match);
-
     });
   }
+
   const functiongroupbyRacingmatch = (matchArray) => {
     const groupedByRacingMatch = {};
     if (matchArray?.length > 0) {
@@ -61,12 +64,39 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
   if (activeTab == 4339 || activeTab == 7) {
     content = (
-      <div className="px-3 py-2 text-gray-700 text-[16px]">
+      <div className=" text-gray-700 text-[16px]">
+        {gameId === "7" && (
+          <>
+            <div>
+              <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
+                <div className="flex space-x-2 items-center">
+                  <img src="/subHeader/menu-99998.png" className="w-[20px] h-[20px]" alt="menu" />
+                  <p>Horse Racing</p>
+                </div>
+                <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+              </div>
+            </div>
+          </>
+
+        )}
+        {gameId === "4339" && (
+          <>
+            <div>
+              <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
+                <div className="flex space-x-2 items-center">
+                  <img src="/subHeader/menu-99998.png" className="w-[20px] h-[20px]" alt="menu" />
+                  <p>Greyhound Racing</p>
+                </div>
+                <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+              </div>
+            </div>
+          </>
+        )}
         <div className="flex items-center">
           {Object.keys(groupedBySeries)?.map((el, index) => {
             return (
               <>
-                <div onClick={() => setSubTab(el)} className={`${subTab === el ? "bg-[var(--primary)] px-2 py-1 text-white" : "bg-[#cccc] px-2 py-1 text-black"}`} key={index}>
+                <div onClick={() => setSubTab(el)} className={`border border-r-[var(--secondary)]  ${subTab === el ? "bg-[var(--secondary)] px-4 py-1 text-white" : "bg-[#cccc] px-4 py-1 text-black"}`} key={index}>
                   {el}
                 </div>
               </>
@@ -74,29 +104,43 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
           })}
         </div>
         <div className="bg-[#F2F2F2] ">
-          {functiongroupbyRacingmatch(groupedBySeries[subTab]) ? functiongroupbyRacingmatch(groupedBySeries[subTab])?.map((match, index) => (
-            <div key={index} className="flex xl:items-center p-1.5 xl:justify-start md:grid md:grid-cols-[0.5fr_1.5fr]  xl:flex-row flex-col items-start justify-between gap-1 my-0.5 border-b border-gray-300">
-              <div className="flex flex-row justify-start items-center gap-2">
-                <TbDeviceTvOld className="text-black" />
-                <div className="xl:min-w-[400px] text-[15px] min-w-full">{match?.key}</div>
+          {groupedBySeries[subTab] && functiongroupbyRacingmatch(groupedBySeries[subTab])?.length > 0 ? (
+            functiongroupbyRacingmatch(groupedBySeries[subTab])?.map((match, index) => (
+              <div key={index} className="flex xl:items-center p-1.5 xl:justify-start md:grid md:grid-cols-[0.5fr_1.5fr]  xl:flex-row flex-col items-start justify-between gap-1 my-0.5 border-b border-gray-300">
+                <div className="flex flex-row justify-start items-center gap-2">
+                  <FaTv className="text-black" />
+                  <div className="xl:min-w-[400px] text-[15px] min-w-full">{match?.key}</div>
+                </div>
+                {<div className="xl:min-w-[400px]  min-w-full flex  flex-wrap justify-start items-center gap-1">
+
+                  {match?.value?.map((allMatchTime, newindex) => (
+                    <div onClick={() => {
+                      window.location.href = `/sport-view-racing/${allMatchTime?.marketId}/${allMatchTime?.eventId}/${allMatchTime?.sportId}`
+                    }} key={newindex} className="bg-[#cccc] rounded-[4px] text-black px-3 py-1 text-center cursor-pointer">
+                      {moment(allMatchTime?.matchDate, 'YYYY-MM-DD HH:mm:ss', true).isValid() ? (
+                        moment(allMatchTime.matchDate, 'YYYY-MM-DD HH:mm:ss').format("HH:mm")
+                      ) : null}
+
+                    </div>
+                  ))}
+                </div>}
               </div>
-              {<div className="xl:min-w-[400px]  min-w-full flex  flex-wrap justify-start items-center gap-1">
-
-                {match?.value?.map((allMatchTime, newindex) => (
-                  <div onClick={() => {
-                    window.location.href = `/sport-view-racing/${allMatchTime?.marketId}/${allMatchTime?.eventId}/${allMatchTime?.sportId}`
-                  }} key={newindex} className="bg-[#cccc] rounded-[4px] text-black px-3 py-1 cursor-pointer">
-                    {moment(allMatchTime?.matchDate, 'YYYY-MM-DD HH:mm:ss', true).isValid() ? (
-                      moment(allMatchTime.matchDate, 'YYYY-MM-DD HH:mm:ss').format("HH:mm")
-                    ) : null}
-
-                  </div>
-                ))}
-              </div>}
-            </div>
-          )) : <div>No Data Found</div>}
+            ))
+          ) : (
+            <>
+              <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+                <h2 className="text-sm font-bold text-black w-[60%] px-2">Game</h2>
+                <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
+                  <span>1</span>
+                  <span>X</span>
+                  <span>2</span>
+                </p>
+              </div>
+              <div className="border-b px-2 py-1 text-[13px]">
+                No Records found
+              </div>
+            </>)}
         </div>
-
       </div>
     );
   } else {
@@ -115,7 +159,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
             </p>
           </div>
           <div className="border-b  px-3 py-1 text-[13px]">
-            No Records found
+            No Records found!
           </div>
         </>
       );
@@ -125,7 +169,6 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
           <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
             <div className="lg:w-[50%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
               <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
-                {sportName === "Cricket" && <img src='/subHeader/menu-4.png"' className="w-[12px] h-[12px]" />}
                 {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
                 {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
                 {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
@@ -167,6 +210,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
           </div>
 
           {filteredMatches?.map((element, index) => {
+            const isInplay = isInplayMatch(element);
             return (
               <div
                 className="divide-y divide-[#C6D2D8] border-b border-[#C6D2D8] md:pb-0 pb-1.5"
@@ -188,7 +232,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                           </span>
                         </div>
 
-                        {implayMatchFunc(element) && (
+                        {isInplay && (
                           <span className="w-full sm:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold text-[13px] tracking-wide">
                             <p className="pt-2">LIVE</p>
                             <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
@@ -216,8 +260,8 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
                   <div className="lg:w-[50%] w-full grid grid-cols-6 ">
                     {Array?.from({ length: 6 }).map((_, i) => {
-                        const isLagai = i % 2 === 0;
-                        return (
+                      const isLagai = i % 2 === 0;
+                      return (
                         <div
                           key={i}
                           className={`relative w-full h-full `}
@@ -229,7 +273,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                             </p>
                           </div>
                         </div>
-                        );
+                      );
                     })}
                   </div>
                 </div>
@@ -242,7 +286,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
   }
 
   return (
-    <div className="max-h-[200px]  overflow-y-auto  md:px-0 m-auto md:max-h-none md:overflow-auto">
+    <div className="h-full overflow-y-auto md:px-0 m-auto md:max-h-none md:overflow-auto">
       {content}
     </div>
   );

@@ -95,9 +95,9 @@ export const getInternationalGroupCasinoList = createAsyncThunk(
   "websit/getInternationalGroupCasinoList",
   async (payload, { rejectWithValue }) => {
     try {
-      const casinoGroupData = await userServices.getInternationalGroupCasinoList(payload);
+      const cosinoGroupList = await userServices.getInternationalGroupCasinoList(payload);
 
-      return casinoGroupData;
+      return cosinoGroupList;
     } catch (error) {
 
       return rejectWithValue(error.message);
@@ -247,19 +247,6 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
 
-      // casino international List
-      .addCase(getInternationalGroupCasinoList.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getInternationalGroupCasinoList.fulfilled, (state, action) => {
-        state.loading = false;
-        state.getInternationalGroupCasinoListData = action.payload?.data;
-      })
-      .addCase(getInternationalGroupCasinoList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-
       .addCase(getMatchList.pending, (state) => {
         state.loading = true;
       })
@@ -284,7 +271,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
 
-       // providers list according to provider
+      // providers list according to provider
       .addCase(getCasinoListByProviderName.pending, (state) => {
         state.loading = true;
       })
@@ -293,6 +280,19 @@ const userSlice = createSlice({
         state.getCasinoListByProviderNameData = action.payload?.data;
       })
       .addCase(getCasinoListByProviderName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // casino international List
+      .addCase(getInternationalGroupCasinoList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getInternationalGroupCasinoList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getInternationalGroupCasinoListData = action.payload?.data;
+      })
+      .addCase(getInternationalGroupCasinoList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

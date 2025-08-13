@@ -64,19 +64,6 @@ async function getCasinoListByCateogeory(data) {
   }
 }
 
-async function getInternationalGroupCasinoList(data) {
-  try {
-    const casinoGroupData = await apiCall("POST", "website/getInternationalGroupCasinoList", data);
-    if (casinoGroupData) {
-      localStorage.setItem("casinoGroupData", JSON.stringify(casinoGroupData.data));
-      return casinoGroupData;
-    }
-  } catch (error) {
-    console.error("user Update error:", error);
-    return Promise.reject(error);
-  }
-}
-
 async function getMatchList(data) {
   try {
     const user = await apiCall("POST", "sports/matchList", data);
@@ -105,7 +92,7 @@ async function getDomainSettingData(data) {
   }
 }
 
-async function getCasinoListByProviderName (data) {
+async function getCasinoListByProviderName(data) {
   try {
     const casinoGroupData = await apiCall("POST", "website/getCasinoListByProviderName", data);
     if (casinoGroupData) {
@@ -117,6 +104,18 @@ async function getCasinoListByProviderName (data) {
   }
 }
 
+async function getInternationalGroupCasinoList(data) {
+  try {
+    const cosinoGroupList = await apiCall("POST", "website/getInternationalGroupCasinoList", data);
+    if (cosinoGroupList) {
+      localStorage.setItem("cosinoGroupList", JSON.stringify(cosinoGroupList.data));
+      return cosinoGroupList;
+    }
+  } catch (error) {
+    console.error("user Update error:", error);
+    return Promise.reject(error);
+  }
+}
 
 export const userServices = {
   getUserStatement,
