@@ -302,7 +302,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                                 <p>Stake Settings{" "}</p>
                               </div>
                               <div
-                                onClick={() => navigate("/profitloss")}
+                                onClick={() => navigate("/profit-loss")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsBarChart />

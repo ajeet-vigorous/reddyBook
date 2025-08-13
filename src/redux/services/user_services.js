@@ -117,6 +117,19 @@ async function getInternationalGroupCasinoList(data) {
   }
 }
 
+async function getuserLedger(data) {
+  try {
+    const user = await apiCall("POST", "user/userLedger", data);
+
+    if (user) {
+      return user;
+    }
+  } catch (error) {
+    console.error("ledger error:", error);
+    return Promise.reject(error);
+  }
+}
+
 export const userServices = {
   getUserStatement,
   userUpdate,
@@ -127,4 +140,5 @@ export const userServices = {
   getCasinoListByCateogeory,
   getInternationalGroupCasinoList,
   getCasinoListByProviderName,
+  getuserLedger,
 }

@@ -15,8 +15,7 @@ import SportsBook from '../../pages/sportsBook/SportsBook'
 import ViewMatches from '../../pages/viewMatch/ViewMatch'
 import InplaySport from '../../pages/inplay/InplaySport'
 import UnsettledBets from '../../pages/unsettledBets/UnsettledBets'
-import ProfitandlLoss from '../../pages/profitandlloss/ProfitandlLoss'
-
+import ProfitLoss from '../../pages/profitloss/ProfitLoss'
 
 
 
@@ -40,7 +39,7 @@ const AppContent = () => {
       <Route path='/in-play/:gameId?' element={<InPlayMatch />} />
       <Route path='/sports_book' element={<InplaySport />} />
       <Route path='/unsettled-bets' element={<UnsettledBets />} />
-      <Route path='/profitloss' element={<ProfitandlLoss />} />
+      <Route path='/profit-loss' element={<ProfitLoss />} />
       <Route path='/sport-view/:marketId?/:eventId?/:sportId?' element={<ViewMatches />} />
 
     </Routes>

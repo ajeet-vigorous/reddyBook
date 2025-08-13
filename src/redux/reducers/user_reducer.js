@@ -148,6 +148,19 @@ export const getCasinoListByProviderName = createAsyncThunk(
   }
 );
 
+export const getuserLedger = createAsyncThunk(
+  "user/getuserLedger",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const user = await userServices.getuserLedger(payload);
+
+      return user;
+    } catch (error) {
+
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -293,6 +306,18 @@ const userSlice = createSlice({
         state.getInternationalGroupCasinoListData = action.payload?.data;
       })
       .addCase(getInternationalGroupCasinoList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //Ledger Data
+      .addCase(getuserLedger.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getuserLedger.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userLedgerData = action.payload?.data;
+      })
+      .addCase(getuserLedger.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

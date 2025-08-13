@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaRegCalendar } from "react-icons/fa6";
 
-const ProfitandlLoss = () => {
+const ProfitLoss = () => {
   const [payloadData, setPayloadData] = useState({
     fromDate: moment().subtract(7, "days").format("YYYY-MM-DD"),
     toDate: moment().format("YYYY-MM-DD"),
@@ -311,4 +311,260 @@ const ProfitandlLoss = () => {
   );
 };
 
-export default ProfitandlLoss;
+export default ProfitLoss;
+
+
+// import React, { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import moment from "moment";
+// import { FaCircleInfo } from "react-icons/fa6";
+// import { getuserLedger } from "../../redux/reducers/user_reducer";
+// import { domainName } from "../../config/Auth";
+
+
+// function ProfitLoss() {
+//   const [payloadData, setPayloadData] = useState({
+//     fromDate: moment().subtract(7, "days").format("YYYY-MM-DD"),
+//     toDate: moment().format("YYYY-MM-DD"),
+//     statementFor: "",
+//   });
+//   const dispatch = useDispatch();
+//   const { userLedgerData } = useSelector((state) => state.user);
+//   const ledgerData = userLedgerData?.ledgerData
+//   const [pageNumber, setPageNumber] = useState(1)
+//   const pageSize = 5
+//   const downlineUserId = JSON.parse(localStorage.getItem(`user_info_${domainName}`))?.userId
+//   const [modalData, setModalData] = useState({
+//     status: false,
+//     id: ""
+//   })
+//   useEffect(() => {
+//     // const reqData = {
+//     //     "pageNo": pageNumber,
+//     //     "size": pageSize
+//     // }
+//     // dispatch(getuserLedger(reqData)); 
+//     handleSubmit()
+//   }, [dispatch, pageNumber]);
+
+
+//   const groupedData = {};
+//   ledgerData?.forEach((item) => {
+//     const dateKey = moment(item.date).format("YYYY-MM-DD");
+//     groupedData[dateKey] = groupedData[dateKey] || [];
+//     groupedData[dateKey].push(item);
+//   });
+
+//   let totalAmount = 0;
+//   ledgerData?.map((data) => {
+//     totalAmount += data.amount;
+//   });
+//   let balance = 0;
+//   let showAmount = 0;
+//   let finalData = ledgerData?.map((data) => {
+//     balance = totalAmount - showAmount;
+//     showAmount += data.amount;
+//     return {
+//       amount: data.amount,
+//       date: data.date,
+//       balance: balance,
+//       ledgerType: data.ledgerType,
+//       remark: data.remark,
+//       eventName: data.eventName,
+//       statementFor: data.statementFor,
+//       isComm: data.isComm,
+//       marketId: data.marketId,
+//       createdAt: data.createdAt,
+//       selectionId: data.selectionId || "0",
+//     };
+//   });
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setPayloadData({
+//       ...payloadData,
+//       [name]: value,
+//     });
+//   };
+
+//   // Handle change for the select dropdown
+//   //   const handleSelectChange = (e) => {
+//   //     setPayloadData({
+//   //             "downlineUserId": downlineUserId
+//   //     });
+//   //     const reqData = {
+//   //       fromDate: payloadData.fromDate,
+//   //       toDate: payloadData.toDate,
+//   //       "pageNo": pageNumber,
+//   //       "size": pageSize,
+//   //       statementFor: e.target.value,
+//   //     };
+//   //     dispatch(getuserLedger(reqData));
+//   //   };
+
+
+//   const handleSubmit = () => {
+//     const reqData = {
+//       "downlineUserId": downlineUserId
+//     };
+//     dispatch(getuserLedger(reqData));
+//   };
+
+//   const openModal = (id) => {
+//     setModalData({ status: true, id });
+//   };
+
+//   const closeModal = () => {
+//     setModalData({ status: false, id: '' });
+//   };
+
+//   return (
+//     <>
+//       {modalData.status && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 mx-2">
+//           <div className="bg-primary  max-w-[550px] md:min-w-[500px] min-w-[100%] rounded-2xl shadow-lg">
+//             <div className="flex items-center justify-between mb-4 border-b border-secondary px-6 py-4">
+//               <img src="/assets/logo.png" alt="Reddy Plus" className="h-10" />
+//               <button
+//                 onClick={closeModal}
+//                 className="text-white bg-gray-700/70 w-9 h-9 rounded-full flex justify-center items-center  hover:text-white text-4xl"
+//               >
+//                 &times;
+//               </button>
+//             </div>
+//             <div className="m-2 p-2 bg-gradient-to-b from-[#84c2f1] space-y-2 font-semibold capitalize to-blue-50 rounded-lg">
+//               <div className="flex text-xs text-black justify-between items-center py-1 border-b border-black"><span>remark</span> <span>{modalData?.id?.remark}</span></div>
+//               <div className="flex text-xs text-black justify-between items-center py-1 border-b border-black"><span>date</span> <span>{moment(modalData?.id?.date).format("DD-MM-YYYY HH:MM")}</span></div>
+//               <div className="flex text-xs text-black justify-between items-center py-1 border-b border-black"><span>eventName</span> <span>{modalData?.id?.eventName}</span></div>
+//               <div className="flex text-xs text-black justify-between items-center py-1 border-b border-black"><span>ledgerType</span> <span>{modalData?.id?.ledgerType}</span></div>
+//               <div className="flex text-xs text-black justify-between items-center py-1 border-b border-black"><span>marketId</span> <span>{modalData?.id?.marketId}</span></div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//       <section className="w-full bg-black mb-28">
+//         <div className="relative mx-auto text-center w-full max-w-full shadow-xl sm:rounded-md py-4">
+//           <div className="px-2 space-y-1 h-auto afterFooter">
+//             <div className="w-full overflow-x-auto">
+//               <div className="flex md:flex-row flex-col justify-center text-center relative lg:gap-3 gap-1 py-2">
+
+//                 <div className="flex w-full lg:w-52 items-start border-2 border-secondary  rounded-sm mb-6 transition-colors relative">
+//                   <div className="absolute mx-2 -top-[10px] space-x-2 text-[#7b7b7b] max-w-[85%] flex justify-satrt items-center bg-main px-2">
+//                     <h2 className="text-xs font-semibold">From</h2>
+//                   </div>
+//                   <input
+//                     type="date"
+//                     name="fromDate"
+//                     id="fromDate"
+//                     value={payloadData.fromDate}
+//                     onChange={handleChange}
+//                     className="block w-full  mt-1 border-white rounded-sm bg-black text-white py-3 px-3 shadow-sm focus:outline-none "
+//                   />
+//                 </div>
+//                 <div className="flex w-full lg:w-52 items-start border-2 border-secondary  rounded-sm mb-6 transition-colors relative">
+//                   <div className="absolute mx-2 -top-[10px] space-x-2 text-[#7b7b7b] max-w-[85%] flex justify-satrt items-center bg-main px-2">
+//                     <h2 className="text-xs font-semibold">To</h2>
+//                   </div>
+//                   <input
+//                     type="date"
+//                     name="toDate"
+//                     id="toDate"
+//                     value={payloadData.toDate}
+//                     onChange={handleChange}
+//                     className="block w-full  mt-1 border-white rounded-sm bg-black text-white py-3 px-3 shadow-sm focus:outline-none "
+//                   />
+//                 </div>
+
+
+//                 <div>
+//                   <button
+//                     type="submit"
+//                     className="bg-button mt-1 text-white text-sm font-bold px-4 py-4 lg:w-52 w-full   rounded-sm"
+//                     onClick={handleSubmit}
+//                   >
+//                     Load Report
+//                   </button>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div className="py-4 space-y-1">
+//               {finalData?.length > 0 ? (
+//                 <>
+
+
+//                   <div className="overflow-x-auto w-full">
+//                     <table className="w-full text-sm text-left text-white bg-main border border-secondary capitalize">
+//                       <thead className="text-xs uppercase bg-[#404040]">
+//                         <tr>
+//                           <th scope="col" className="px-6 py-3">
+//                             Date
+//                           </th>
+//                           <th scope="col" className="px-6 py-3">
+//                             DESC
+//                           </th>
+//                           <th scope="col" className="px-6 py-3">
+//                             Amount
+//                           </th>
+//                           <th scope="col" className="px-6 py-3">
+//                             Balance
+//                           </th>
+//                           <th scope="col" className="px-6 py-3">Action </th>
+
+//                         </tr>
+//                       </thead>
+//                       {finalData?.map((item, index) => (
+//                         <tbody key={index}>
+//                           <tr className="bg-main border-b-[1px] border-secondary">
+//                             <th
+//                               scope="row"
+//                               className="px-6 py-4 font-medium whitespace-nowrap"
+//                             >
+//                               {moment(item.date).format("DD/MM/YYYY hh:mm:ss A")}
+//                             </th>
+//                             <td className="px-6 py-4">{item.remark}</td>
+//                             <td
+//                               className={`px-6 py-4 ${item.amount > 0
+//                                 ? "text-green-600"
+//                                 : item.amount < 0
+//                                   ? "text-red-600"
+//                                   : "text-white"
+//                                 }`}
+//                             >
+//                               {parseFloat(item.amount)
+//                                 .toFixed(2)
+//                                 .replace(/\.?0+$/, "")}
+//                             </td>
+//                             <td className={`px-6 py-4 ${Number(item.balance) > 0
+//                               ? "text-green-600"
+//                               : Number(item.balance) < 0
+//                                 ? "text-red-600"
+//                                 : "text-white"
+//                               }`}>
+//                               {parseFloat(item.balance)
+//                                 .toFixed(2)
+//                                 .replace(/\.?0+$/, "")}
+//                             </td>
+//                             <td className="px-6 py-4 text-center space-x-2 ">
+//                               <FaCircleInfo onClick={() => openModal(item)} size={20} />
+//                             </td>
+
+//                           </tr>
+//                         </tbody>
+//                       ))}
+//                     </table>
+
+//                   </div>
+//                   <CustomPagination totalCount={userLedgerData?.totalCount} pageSize={pageSize} currentPage={pageNumber} onChange={setPageNumber} />
+//                 </>
+//               ) :
+//                 <div className="text-center border-2 border-button  px-2 py-3 text-md text-button uppercase"> No data found</div>}
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+//     </>
+//   );
+// }
+
+// export default ProfitLoss;
