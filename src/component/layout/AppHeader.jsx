@@ -61,7 +61,7 @@ const AppHeader = ({ setSidebarOpen }) => {
     }, 10000);
 
     return () => { clearInterval(sportInterval); }
-  }, [dispatch])
+  }, [])
 
 
   const setModalTrue = () => {
@@ -79,16 +79,14 @@ const AppHeader = ({ setSidebarOpen }) => {
   const setBonusFalse = () => {
     setBonusModalOpen(false);
   };
-  const matchlistLocal = localStorage.getItem("matchList")
-    ? JSON.parse(localStorage.getItem("matchList"))
-    : [];
-
   const [matchData, setMatchData] = useState([]);
 
   useEffect(() => {
-    let matchListData = matchlistLocal;
-    setMatchData(matchListData);
-  }, [matchlistLocal]);
+    const matchListLocal = localStorage.getItem("matchList");
+    const parsedData = matchListLocal ? JSON.parse(matchListLocal) : [];
+    setMatchData(parsedData);
+  }, []);
+  
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
 import CashOutSystem from '../CashoutTesting';
+import MatchDetailsHeaderSection from '../../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection';
 
 const TiedOddsComponent = ({
   inplayMatch,
@@ -28,43 +29,11 @@ const TiedOddsComponent = ({
             <>
               {Object.values(finalSocket)?.map((element, index) =>
                 element.marketType === "Tied Match" && (
-                  <div className="" key={index}>
-                    <header className="mt-1">
-                      <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                        <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                          Tied_Match
-                        </div>
-                        {element?.runners?.length > 0 && (
-                          <CashOutSystem
-                            marketList={element.runners.map(runner => ({
-                              selectionid: runner.selectionId,
-                              team_name: runner.selectionName,
-                              lgaai: runner.ex?.availableToBack?.[0]?.price || 0,
-                              khaai: runner.ex?.availableToLay?.[0]?.price || 0,
-                              selectionName: runner.selectionName,
-                              ex: {
-                                availableToBack: runner.ex?.availableToBack || [],
-                                availableToLay: runner.ex?.availableToLay || []
-                              }
-                            }))}
-                            positionObj={positionObj}
-                            handleBackOpen={handleBackOpen}
-                            toggleRowVisibility={toggleRowVisibility}
-                            marketId={element.marketId}
-                            betFor={"tiedMatch"}
-                            oddsType={element.marketType}
-                          />
-                        )}
-                      </div>
-                    </header>
-
+                  <div className="bg-white" key={index}>
+                     <MatchDetailsHeaderSection marketType={"Tied_Match"} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}> 
                     <div className="flex whitespace-normal max-w-full border-b border-gray-300">
                       <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                        <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                          <span className="text-[12px] font-bold">
-                            Max: {formatNumber(isMatchCoin?.max)}
-                          </span>
-                        </div>
+                        
                       </div>
 
                       <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
@@ -88,7 +57,6 @@ const TiedOddsComponent = ({
                         <span className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"></span>
                       </div>
                     </div>
-
                     {element?.runners?.length > 0 && element.runners.map((elementtemp, index) => (
                       <div className="flex whitespace-normal max-w-full border-b border-gray-300" key={index}>
                         <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
@@ -281,6 +249,7 @@ const TiedOddsComponent = ({
                         </div>
                       </div>
                     ))}
+                    </MatchDetailsHeaderSection>
                   </div>
                 )
               )}
