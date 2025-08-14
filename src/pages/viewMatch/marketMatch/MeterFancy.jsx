@@ -17,11 +17,21 @@ const MeterFancyComponent = ({
       <div>
         {MeterFancy && MeterFancy?.length > 0 ? (
           <>
-            <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
-                  Meter
-                </div>
+             <header className="mt-1">
+              <div className="bg-slate-300 items-center flex justify-between relative z-0 ">
+                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold bg-slate-300">
+                <span className="
+              h-10 inline-flex items-center px-[10px] mr-[10px] relative 
+              text-white text-[13px] font-semibold uppercase bg-[var(--primary)] 
+              leading-none mobile:text-[11px] mobile:px-[5px] 
+              before:content-[''] before:absolute before:right-[-17px] before:top-0 
+              before:w-[18px] before:h-full 
+              before:bg-[linear-gradient(180deg,var(--primary)_0,var(--primary))] 
+              before:[clip-path:polygon(0_-1px,100%_-1px,1px_100%,0_100%)]
+            ">
+                 Meter
+                </span>
+              </div>
               </div>
             </header>
 

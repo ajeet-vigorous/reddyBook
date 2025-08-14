@@ -165,8 +165,8 @@ const AppHeader = ({ setSidebarOpen }) => {
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 ">
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:mt-0 -mt-1.5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 md:top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">BAL</span>
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:-mt-[2px] -mt-4" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">BAL</span>
                     </div>
                     <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
                       {balance && balance.coins
@@ -180,8 +180,8 @@ const AppHeader = ({ setSidebarOpen }) => {
                     }}
                     className="text-center cursor-pointer">
                     <div className="flex  justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:mt-0 -mt-1.5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 md:top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">EXP</span>
+                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:-mt-[2px] -mt-4" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">EXP</span>
                     </div>
                     <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
                       {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}

@@ -97,7 +97,7 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax }) => {
         overflow-hidden transition-all duration-300 ease-in-out bg-white
         ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}
       `}>
-                <div className="py-2">
+                <div className="py-0">
                     {children}
                 </div>
             </div>

@@ -184,6 +184,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     </p>
                     <span className="">Multi Market</span>
                   </div>
+                  {console.log(filteredData,"filteredData")}
                   {SPORTSCONSTANT?.map((menuItem, index) => {
                     const sport = filteredData?.find(
                       (sport) => sport.sportId.toString() === menuItem.count

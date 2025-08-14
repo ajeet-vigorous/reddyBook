@@ -17,18 +17,33 @@ const GroupedFancyComponent = ({
           Object.entries(groupedData).map(([sessionName, items], index) => (
             <div key={index} className="mb-4 overflow-hidden">
               {/* Header */}
-              <div className="bg-[#763e3e] text-white p-2 text-sm font-bold uppercase">
-                {sessionName}
+               <header className="mt-1">
+              <div className="bg-slate-300 items-center flex justify-between relative z-0 ">
+                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold bg-slate-300">
+                <span className="
+              h-10 inline-flex items-center px-[10px] mr-[10px] relative 
+              text-white text-[13px] font-semibold uppercase bg-[var(--primary)] 
+              leading-none mobile:text-[11px] mobile:px-[5px] 
+              before:content-[''] before:absolute before:right-[-17px] before:top-0 
+              before:w-[18px] before:h-full 
+              before:bg-[linear-gradient(180deg,var(--primary)_0,var(--primary))] 
+              before:[clip-path:polygon(0_-1px,100%_-1px,1px_100%,0_100%)]
+            ">
+                  {sessionName}
+
+                </span>
               </div>
+              </div>
+            </header>
 
               {/* Min/Max */}
               <div className="grid grid-cols-[80%_20%] gap-2 border-t text-sm">
                 <div className="text-[11px] text-[teal] px-2 py-1 font-medium">
                   Min: 100 Max: 1L
                 </div>
-                <div className={`py-1 flex justify-center items-center bg-[#8DD2F0]`}>
+                <div className={`py-1.5 flex justify-center items-center`}>
                   <div className='text-center leading-3'>
-                    <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                    <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                   </div>
                 </div>
               </div>

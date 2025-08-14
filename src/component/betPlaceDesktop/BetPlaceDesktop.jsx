@@ -198,17 +198,17 @@ export function BetPlaceDesktop(props) {
   };
 
   return (
-    <div ref={modalRef} className={`md:block hidden relative w-100 overflow-x-auto overflow-y-auto  `}>
+    <div ref={modalRef} className={`xl:block hidden relative w-100 overflow-x-auto overflow-y-auto  `}>
       {/* <strong className="flex justify-between  px-1 text-white py-1"> <span>Bet Slip</span> <a target="_blank" href="/admin/profile" class="button hover:text-white hover:underline" >Edit Bet Sizes</a></strong> */}
       <table className="table-auto bg-gray-300  text-sm w-full table">
-        <thead>
+        {/* <thead>
           <tr className='text-sm font-[800] py-1'>
             <th className='text-left px-1 py-1'>(Bet for)</th>
             <th width='10%'>Odds</th>
             <th>Stake</th>
             <th>Profit</th>
           </tr>
-        </thead>
+        </thead> */}
         <tbody className={`${betSlipData.betType === "Y" || betSlipData.betType === "L" ? "!bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"} my-2`}>
           <tr className={`border-b border-[#c7c8ca]`}>
             <td className='text-left px-1 py-2 font-[700]'>{betSlipData.name}</td>

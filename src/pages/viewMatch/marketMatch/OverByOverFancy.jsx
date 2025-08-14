@@ -19,10 +19,21 @@ const OverByOverFancyComponent = ({
         {OverByOverFancy && OverByOverFancy?.length > 0 ? (
           <>
             <header className="mt-1">
-              <div className="bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold">
+              <div className="bg-slate-300 items-center flex justify-between relative z-0 ">
+                <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold bg-slate-300">
+                <span className="
+              h-10 inline-flex items-center px-[10px] mr-[10px] relative 
+              text-white text-[13px] font-semibold uppercase bg-[var(--primary)] 
+              leading-none mobile:text-[11px] mobile:px-[5px] 
+              before:content-[''] before:absolute before:right-[-17px] before:top-0 
+              before:w-[18px] before:h-full 
+              before:bg-[linear-gradient(180deg,var(--primary)_0,var(--primary))] 
+              before:[clip-path:polygon(0_-1px,100%_-1px,1px_100%,0_100%)]
+            ">
                   Over By Over
-                </div>
+
+                </span>
+              </div>
               </div>
             </header>
 
@@ -42,30 +53,30 @@ const OverByOverFancyComponent = ({
                 </div>
                 <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
                   <span className="lg:block hidden bg-[#FEAFB2]">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#FEAFB2]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#FEAFB2]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:block hidden bg-[#8DD2F0]">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#8DD2F0]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#8DD2F0]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>
@@ -87,30 +98,30 @@ const OverByOverFancyComponent = ({
                 </div>
                 <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
                   <span className="lg:block hidden bg-[#FEAFB2]">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#FEAFB2]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#FEAFB2]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">No</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:block hidden bg-[#8DD2F0]">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#8DD2F0]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:hidden block">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
+                    <div className="py-1.5 flex justify-center items-center bg-[#8DD2F0]">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>

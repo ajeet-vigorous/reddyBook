@@ -94,3 +94,8 @@ body {
   scrollbar-width: thin !important;
   scrollbar-color: #C10930 transparent !important;
 }
+
+
+.invertimage {
+  filter: invert(100%) brightness(100%);
+}

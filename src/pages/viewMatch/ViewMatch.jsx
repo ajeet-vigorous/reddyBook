@@ -845,111 +845,126 @@ const ViewMatches = () => {
     // Function to render Fancy components dynamically
     const renderFancyComponent = () => {
         switch (subTab) {
-          case "all":
-            return (
-              <NormalFancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                NormalFancy={NormalFancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-              />
-            );
-          case "sessions":
-            return (
-              <OverByOverFancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                OverByOverFancy={OverByOverFancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-                handleFancyPositionModal={handleFancyPositionModal}
-              />
-            );
-          case "wpm":
-            return (
-              <Fancy1FancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                Fancy1Fancy={Fancy1Fancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-                handleFancyPositionModal={handleFancyPositionModal}
-              />
-            );
-          case "khadda":
-            return (
-              <KhadoFancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                KhadoFancy={KhadoFancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-                handleFancyPositionModal={handleFancyPositionModal}
-              />
-            );
-          case "meter":
-            return (
-              <MeterFancyComponent
-                activeTab={activeTab}
-                MeterFancy={MeterFancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-                handleFancyPositionModal={handleFancyPositionModal}
-              />
-            );
-          case "oddeven":
-            return (
-              <OddEvenFancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                OddEvenFancy={OddEvenFancy}
-                fancyPositionObj={fancyPositionObj}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-                formatNumber={formatNumber}
-                handleFancyPositionModal={handleFancyPositionModal}
-              />
-            );
-          case "xtra":
-            return (
-              <GroupedFancyComponent
-                inplayMatch={inplayMatch}
-                activeTab={activeTab}
-                groupedData={groupedData}
-                toggleRowVisibility={toggleRowVisibility}
-                handleBackOpen={handleBackOpen}
-                marketId={marketId}
-                returnDataFancyObject={returnDataFancyObject}
-              />
-            );
-          default:
-            return null;
+            case "all":
+                return (
+                    <NormalFancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        NormalFancy={NormalFancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                    />
+                );
+            case "sessions":
+                return (
+                    <OverByOverFancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        OverByOverFancy={OverByOverFancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                        handleFancyPositionModal={handleFancyPositionModal}
+                    />
+                );
+            case "wpm":
+                return (
+                    <Fancy1FancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        Fancy1Fancy={Fancy1Fancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                        handleFancyPositionModal={handleFancyPositionModal}
+                    />
+                );
+            case "khadda":
+                return (
+                    <KhadoFancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        KhadoFancy={KhadoFancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                        handleFancyPositionModal={handleFancyPositionModal}
+                    />
+                );
+            case "meter":
+                return (
+                    <MeterFancyComponent
+                        activeTab={activeTab}
+                        MeterFancy={MeterFancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                        handleFancyPositionModal={handleFancyPositionModal}
+                    />
+                );
+            case "oddeven":
+                return (
+                    <OddEvenFancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        OddEvenFancy={OddEvenFancy}
+                        fancyPositionObj={fancyPositionObj}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                        formatNumber={formatNumber}
+                        handleFancyPositionModal={handleFancyPositionModal}
+                    />
+                );
+            case "xtra":
+                return (
+                    <GroupedFancyComponent
+                        inplayMatch={inplayMatch}
+                        activeTab={activeTab}
+                        groupedData={groupedData}
+                        toggleRowVisibility={toggleRowVisibility}
+                        handleBackOpen={handleBackOpen}
+                        marketId={marketId}
+                        returnDataFancyObject={returnDataFancyObject}
+                    />
+                );
+            default:
+                return null;
         }
-      };
-      
+    };
+
+    const betplaceDataThroughProps = {
+
+        betSlipData,
+        openBets,
+        closeRow,
+        placeBet,
+        errorMessage,
+        successMessage,
+        betLoading,
+        increaseCount,
+        decreaseCount,
+        handleBackclose,
+        setBetSlipData,
+        handleButtonValues
+    }
 
 
     return (isLoading ? <span className="animate-spin h-5 w-5"></span> :
@@ -960,22 +975,7 @@ const ViewMatches = () => {
                     <marquee className="">{inplayMatch?.notification}</marquee>
                 </span>
             )}
-            {betSlipData?.name && <PlaceBetMobile
-                openBets={openBets}
-                closeRow={closeRow}
-                matchName={inplayMatch?.matchName}
-                betSlipData={betSlipData}
-                placeBet={placeBet}
-                errorMessage={errorMessage}
-                successMessage={successMessage}
-                count={betSlipData.count}
-                betLoading={betLoading}
-                increaseCount={increaseCount}
-                decreaseCount={decreaseCount}
-                handleClose={handleBackclose}
-                setBetSlipData={setBetSlipData}
-                handleButtonValues={handleButtonValues}
-            />}
+
 
             {/* {buttonValue && (
                 <div
@@ -1004,7 +1004,7 @@ const ViewMatches = () => {
                 ) : null}
             </div> */}
 
-            <div className="flex justify-between items-center xl:hidden whitespace-nowrap w-full border-t-[1px] border-black/30 bg-[var(--primary)] text-white">
+            {/* <div className="flex justify-between items-center xl:hidden whitespace-nowrap w-full border-t-[1px] border-black/30 bg-[var(--primary)] text-white">
 
                 <button
                     onClick={() => handleMatchClick(1)}
@@ -1026,215 +1026,254 @@ const ViewMatches = () => {
                     <span className=''><FaTv size={18} /></span>
                 </button>
 
-            </div>
+            </div> */}
 
             <div className="flex flex-col xl:flex-row text-black  h-full  w-100 gap-x-1">
-                {(matchTab === 1 || matchTab === 3) && (
-                    <div className="w-full xl:w-2/3 overflow-y-auto p-0">
-                        <div className="">
-                            {matchTab === 3 && (
-                                <div className="xl:hidden block">
-
-                                    {inplayMatch?.isTv ? <>
-                                        {tvShow && <div className="bg-white w-full h-48">
-                                            <div className="details">
-                                                <div className={`w-full relative md:text-sm text-[10px]`}>
-                                                    <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
-                                                </div>
-                                            </div>
-                                        </div>}
-                                    </>
-                                        : null}
-                                </div>
-                            )}
-
-                            <div className="xl:block hidden">
-                                {inplayMatch &&
-                                    inplayMatch?.matchName ? (
-                                    <div className="bg-[var(--darkcolor)] item-center px-2 py-1.5 flex justify-between">
-                                        <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
-                                        <span className="text-white text-[14px] font-semibold">( {inplayMatch?.matchDate})</span>
-                                        <span className="text-white  font-semibold"> <MdScore onClick={() => handleScore()} size={20} /></span>
+                {/* {(matchTab === 1 || matchTab === 3) && ( */}
+                <div className="w-full xl:w-2/3 overflow-y-auto p-0">
+                    <div className="">
+                        {/* {matchTab === 3 && ( */}
+                        {/* <div className="xl:hidden block">
+                            {inplayMatch?.isTv ? <>
+                                {tvShow && <div className="bg-white w-full h-48">
+                                    <div className="details">
+                                        <div className={`w-full relative md:text-sm text-[10px]`}>
+                                            <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
+                                        </div>
                                     </div>
-                                ) : null}
+                                </div>}
+                            </>
+                                : null}
+                        </div> */}
+                        {/* )} */}
+
+                        <div className="xl:block hidden">
+                            {inplayMatch &&
+                                inplayMatch?.matchName ? (
+                                <div className="bg-[var(--darkcolor)] item-center px-2 py-1.5 flex justify-between">
+                                    <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
+                                    <span className="text-white text-[14px] font-semibold">({inplayMatch?.matchDate})</span>
+                                    <span
+                                        onClick={() => handleScore()}
+                                        className="text-white  font-semibold">
+                                        <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                                    </span>
+                                </div>
+                            ) : null}
+                        </div>
+
+                        <div className="xl:hidden block">
+                            {inplayMatch &&
+                                inplayMatch?.matchName ? (
+                                <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
+                                    <div className="flex flex-col">
+                                        <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
+                                        <span className="text-white text-[10px] font-semibold">({inplayMatch?.matchDate})</span>
+                                    </div>
+                                    <div className="flex justify-end items-center gap-1.5">
+
+                                        <span
+                                            onClick={() => handleScore()}
+                                            className="text-white  font-semibold">
+                                            <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                                        </span>
+                                        <span onClick={() => {
+                                            handelTvModal();
+                                        }} className='text-white'><FaTv size={18} /></span>
+                                        <span className="bg-[var(--primary)] text-white px-1 py-[2px] rounded-sm uppercase text-[13px]">Bets</span>
+                                    </div>
+                                </div>
+                            ) : null}
+                            <div className="xl:hidden block">
+                                {inplayMatch?.isTv ? <>
+                                    {tvShow && <div className="bg-white w-full h-48">
+                                        <div className="details">
+                                            <div className={`w-full relative md:text-sm text-[10px]`}>
+                                                <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
+                                            </div>
+                                        </div>
+                                    </div>}
+                                </>
+                                    : null}
                             </div>
-                            <div className="xl:hidden block"
-                            // style={{ background: 'linear-gradient(#060a2a, #521d31 160%)' }}
-                            >
-                                {isScorecardOpen && inplayMatch.isScore && (
-                                    <div className="border-2 border-secondary rounded-lg ">
-                                        <div className="flex justify-between items-center py-0 px-2 bg-[var(--primary)] ">
-                                            <div
-                                                onClick={() => setFullScreen((state) => !state)}
-                                                className="text-white bg-button rounded-sm px-2 py-1 text-xs font-semibold"
-                                            >
-                                                {fullscreen ? "HS" : "FS"}
-                                            </div>
-                                            <div
-                                                className="px-2 py-1 text-white text-xs"
-                                                onClick={() => handleScore()}
-                                            >
-                                                <FaTimes size={13} />
-                                            </div>
+                        </div>
+                        <div className=""
+                        // style={{ background: 'linear-gradient(#060a2a, #521d31 160%)' }}
+                        >
+                            {isScorecardOpen && inplayMatch.isScore && (
+                                <div className="border-2 border-secondary rounded-lg mt-2">
+                                    <div className="flex justify-between items-center py-0 px-2 bg-[var(--primary)] ">
+                                        <div
+                                            onClick={() => setFullScreen((state) => !state)}
+                                            className="text-white bg-button rounded-sm px-2 py-1 text-xs font-semibold"
+                                        >
+                                            {fullscreen ? "HS" : "FS"}
                                         </div>
                                         <div
-                                            className={`bg-white w-full ${fullscreen ? "h-[220px]" : "h-[110px]"
-                                                }`}
+                                            className="px-2 py-1 text-white text-xs"
+                                            onClick={() => handleScore()}
                                         >
-                                            <div className="details">
-                                                <div
-                                                    className={`w-full relative md:text-sm text-[10px]`}
-                                                >
-                                                    <iframe
-                                                        src={inplayMatch && inplayMatch.scoreIframe ? inplayMatch.scoreIframe : ""}
-                                                        title=" "
-                                                        loading="lazy"
-                                                        className={`w-[100%] ${fullscreen ? "h-[220px]" : "h-[110px]"
-                                                            }`}
-                                                    />
-                                                </div>
+                                            <FaTimes size={13} />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={`bg-white w-full ${fullscreen ? "h-[220px]" : "h-[110px]"
+                                            }`}
+                                    >
+                                        <div className="details">
+                                            <div
+                                                className={`w-full relative md:text-sm text-[10px]`}
+                                            >
+                                                <iframe
+                                                    src={inplayMatch && inplayMatch.scoreIframe ? inplayMatch.scoreIframe : ""}
+                                                    title=" "
+                                                    loading="lazy"
+                                                    className={`w-[100%] ${fullscreen ? "h-[220px]" : "h-[110px]"
+                                                        }`}
+                                                />
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            )}
+                        </div>
+
+
+                        <MatchOddsComponent
+                            inplayMatch={inplayMatch}
+                            activeTab={activeTab}
+                            finalSocket={finalSocket}
+                            isMatchCoin={isMatchCoin}
+                            positionObj={positionObj}
+                            returnDataObject={returnDataObject}
+                            toggleRowVisibility={toggleRowVisibility}
+                            handleBackOpen={handleBackOpen}
+                            formatNumber={formatNumber}
+                            betplaceSection={betplaceDataThroughProps}
+                        />
+                        <OtherMarketsComponent
+                            activeTab={activeTab}
+                            otherFinalSocket={otherFinalSocket}
+                            isTieCoin={isTieCoin}
+                            positionObj={positionObj}
+                            returnDataObject={returnDataObject}
+                            handleBackOpen={handleBackOpen}
+                            formatNumber={formatNumber}
+                            betplaceSection={betplaceDataThroughProps}
+                        />
+
+
+                        <BookmakerComponent
+                            inplayMatch={inplayMatch}
+                            activeTab={activeTab}
+                            bookmaker2Fancy={bookmaker2Fancy}
+                            matchScoreDetails={matchScoreDetails}
+                            isMatchCoin={isMatchCoin}
+                            positionObj={positionObj}
+                            marketId={marketId}
+                            returnDataObject={returnDataObject}
+                            returnDataFancyObject={returnDataFancyObject}
+                            toggleRowVisibility={toggleRowVisibility}
+                            handleBackOpen={handleBackOpen}
+                            formatNumber={formatNumber}
+                            betplaceSection={betplaceDataThroughProps}
+                        />
+
+                        <TossDataComponent
+                            inplayMatch={inplayMatch}
+                            activeTab={activeTab}
+                            matchScoreDetails={matchScoreDetails}
+                            isTossCoin={isTossCoin}
+                            positionObj={positionObj}
+                            toggleRowVisibility={toggleRowVisibility}
+                            handleBackOpen={handleBackOpen}
+                            marketId={marketId}
+                            returnDataObject={returnDataObject}
+                            formatNumber={formatNumber}
+                            betplaceSection={betplaceDataThroughProps}
+                        />
+
+                        <TiedOddsComponent
+                            inplayMatch={inplayMatch}
+                            activeTab={activeTab}
+                            finalSocket={finalSocket}
+                            isMatchCoin={isMatchCoin}
+                            positionObj={positionObj}
+                            returnDataObject={returnDataObject}
+                            toggleRowVisibility={toggleRowVisibility}
+                            handleBackOpen={handleBackOpen}
+                            formatNumber={formatNumber}
+                            betplaceSection={betplaceDataThroughProps}
+                        />
+
+                        <div className="fancy-premium-container mt-1">
+
+                            <div className="flex gap-2 w-full">
+                                <button
+                                    className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:shadow-[inset_0px_-10px_20px_0px_#9f0101] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] w-full border border-[var(--primary)] hover:text-white  ${mainTab === "fancy" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                        }`}
+                                    onClick={() => {
+                                        setMainTab("fancy");
+                                        setSubTab(fancyTabs[0].key);
+                                    }}
+                                >
+                                    FANCY
+                                </button>
+                                <button
+                                    className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] hover:shadow-[inset_0px_-10px_20px_0px_#9f0101] w-full border border-[var(--primary)] hover:text-white ${mainTab === "premium" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                        }`}
+                                    onClick={() => {
+                                        setMainTab("premium");
+                                        setSubTab(premiumTabs[0].key);
+                                    }}
+                                >
+                                    PREMIUM <span className="text-xs">NEW</span>
+                                </button>
+                            </div>
+
+                            {/* Sub Tabs */}
+                            <div className="flex flex-nowrap gap-2 my-2 overflow-x-auto">
+                                {mainTab === "fancy" &&
+                                    fancyTabs.map((tab) => (
+                                        <button
+                                            key={tab.key}
+                                            className={`mb-1 px-3 py-1.5 rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] hover:shadow-[inset_0px_-10px_20px_0px_#9f0101]  min-w-[250px] max-w-[250px] border border-[var(--primary)] hover:text-white ${subTab === tab.key ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
+                                                }`}
+                                            onClick={() => setSubTab(tab.key)}
+                                        >
+                                            {tab.label}
+                                        </button>
+                                    ))}
+
+                                {mainTab === "premium" &&
+                                    premiumTabs.map((tab) => (
+                                        <button
+                                            key={tab.key}
+                                            className={`px-5 py-1 border ${subTab === tab.key ? "bg-black text-white" : "bg-[var(--darkcolor)] text-white"
+                                                }`}
+                                            onClick={() => setSubTab(tab.key)}
+                                        >
+                                            {tab.label}
+                                        </button>
+                                    ))}
+                            </div>
+
+                            {/* Content */}
+                            <div className="mb-2">
+                                {mainTab === "fancy" && renderFancyComponent()}
+                                {mainTab === "premium" && (
+                                    <div className="p-4 bg-gray-100">No Premium market found.</div>
                                 )}
                             </div>
-
-
-                            <MatchOddsComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                finalSocket={finalSocket}
-                                isMatchCoin={isMatchCoin}
-                                positionObj={positionObj}
-                                returnDataObject={returnDataObject}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                formatNumber={formatNumber}
-                            />
-                            <OtherMarketsComponent
-                                activeTab={activeTab}
-                                otherFinalSocket={otherFinalSocket}
-                                isTieCoin={isTieCoin}
-                                positionObj={positionObj}
-                                returnDataObject={returnDataObject}
-                                handleBackOpen={handleBackOpen}
-                                formatNumber={formatNumber}
-                            />
-
-
-                            <BookmakerComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                bookmaker2Fancy={bookmaker2Fancy}
-                                matchScoreDetails={matchScoreDetails}
-                                isMatchCoin={isMatchCoin}
-                                positionObj={positionObj}
-                                marketId={marketId}
-                                returnDataObject={returnDataObject}
-                                returnDataFancyObject={returnDataFancyObject}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                formatNumber={formatNumber}
-                            />
-
-                            <TossDataComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                matchScoreDetails={matchScoreDetails}
-                                isTossCoin={isTossCoin}
-                                positionObj={positionObj}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                marketId={marketId}
-                                returnDataObject={returnDataObject}
-                                formatNumber={formatNumber}
-                            />
-
-                            <div className="fancy-premium-container">
-
-                                <div className="flex gap-2 w-full">
-                                    <button
-                                        className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] w-full border border-[var(--primary)] hover:text-white  ${mainTab === "fancy" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
-                                            }`}
-                                        onClick={() => {
-                                            setMainTab("fancy");
-                                            setSubTab(fancyTabs[0].key);
-                                        }}
-                                    >
-                                        FANCY
-                                    </button>
-                                    <button
-                                        className={`px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] w-full border border-[var(--primary)] hover:text-white ${mainTab === "premium" ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
-                                            }`}
-                                        onClick={() => {
-                                            setMainTab("premium");
-                                            setSubTab(premiumTabs[0].key);
-                                        }}
-                                    >
-                                        PREMIUM <span className="text-xs">NEW</span>
-                                    </button>
-                                </div>
-
-                                {/* Sub Tabs */}
-                                <div className="flex flex-nowrap gap-2 my-2 overflow-x-auto">
-                                    {mainTab === "fancy" &&
-                                        fancyTabs.map((tab) => (
-                                            <button
-                                                key={tab.key}
-                                                className={`mb-1 px-3 py-1.5  rounded-[5px] text-[12px] font-[700] hover:bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] min-w-[250px] max-w-[250px] border border-[var(--primary)] hover:text-white ${subTab === tab.key ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
-                                                    }`}
-                                                onClick={() => setSubTab(tab.key)}
-                                            >
-                                                {tab.label}
-                                            </button>
-                                        ))}
-
-                                    {mainTab === "premium" &&
-                                        premiumTabs.map((tab) => (
-                                            <button
-                                                key={tab.key}
-                                                className={`px-3 py-1 border ${subTab === tab.key ? "bg-[linear-gradient(180deg,#fa7e29_0%,#F6682F_80%,#F6682F_100%)] shadow-[inset_0px_-10px_20px_0px_#9f0101] text-white" : "bg-white text-red-500"
-                                                    }`}
-                                                onClick={() => setSubTab(tab.key)}
-                                            >
-                                                {tab.label}
-                                            </button>
-                                        ))}
-                                </div>
-
-                                {/* Content */}
-                                <div className="mt-4">
-                                    {mainTab === "fancy" && renderFancyComponent()}
-                                    {mainTab === "premium" && (
-                                        <div className="p-4 bg-gray-100">No premium market found.</div>
-                                    )}
-                                </div>
-                            </div>
-
-
-                          
-
-
-
-                            <TiedOddsComponent
-                                inplayMatch={inplayMatch}
-                                activeTab={activeTab}
-                                finalSocket={finalSocket}
-                                isMatchCoin={isMatchCoin}
-                                positionObj={positionObj}
-                                returnDataObject={returnDataObject}
-                                toggleRowVisibility={toggleRowVisibility}
-                                handleBackOpen={handleBackOpen}
-                                formatNumber={formatNumber}
-                            />
-
-                            {/* <CashOutSystemTesting /> */}
                         </div>
+
+                        {/* <CashOutSystemTesting /> */}
                     </div>
-                )}
+                </div>
+                {/* // )} */}
                 <div className="w-full xl:w-1/3 xl:block hidden ">
                     <div>
-                        <div className="bg-[var(--secondary)] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
+                        <div className="bg-[var(--darkcolor)] rounded-[5px] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
                             <span>Live Match</span>
                             <button className="flex justify-end space-x-2 font-semibold" > </button>
                         </div>
@@ -1249,10 +1288,10 @@ const ViewMatches = () => {
                         </>
                             : null}
                     </div>
-                    <div>
+                    <div className="mt-1">
                         {!betShow && (
                             <>
-                                <div className="bg-[var(--secondary)] flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold rounded-sm">
+                                <div className="bg-[var(--darkcolor)] rounded-t-md  flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold">
                                     <span>Place Bet </span>
                                 </div>
                                 <BetPlaceDesktop
@@ -1273,8 +1312,8 @@ const ViewMatches = () => {
                         )}
                     </div>
 
-                    <div className=" ">
-                        <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
+                    <div className="mt-1">
+                        <div className="bg-[var(--darkcolor)] rounded-t-md py-1.5 px-4 font-bold text-white text-sm">
                             <span>My Bets</span>
                         </div>
                         <div className="overflow-hidden w-full  border border-[#C6D2D8] !p-0 !m-0">
@@ -1283,9 +1322,9 @@ const ViewMatches = () => {
                                     <div className="overflow-hidden w-full ">
                                         <table className="min-w-full capitalize">
                                             <thead>
-                                                <tr className="w-full text-black text-[14px] font-semibold bg-[#CCCCCC] text-left">
+                                                <tr className="w-full text-black/80 text-[14px] font-[400] bg-[#ffffff] text-left">
                                                     <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Matched Bets
+                                                        Selname
                                                     </th>
                                                     <th className="px-[6px] py-1 whitespace-nowrap">
                                                         Odds
@@ -1293,7 +1332,9 @@ const ViewMatches = () => {
                                                     <th className="px-[6px] py-1 whitespace-nowrap">
                                                         Stake
                                                     </th>
-
+                                                    <th className="px-[6px] py-1 whitespace-nowrap">
+                                                        Date/Time
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1328,6 +1369,9 @@ const ViewMatches = () => {
                                                             </td>
                                                             <td className="px-[6px] py-1 whitespace-nowrap">
                                                                 {element?.amount}
+                                                            </td>
+                                                            <td className="px-[6px] py-1 whitespace-nowrap">
+                                                                {element?.date}
                                                             </td>
                                                         </tr>
                                                     ))
@@ -1442,99 +1486,105 @@ const ViewMatches = () => {
                 </div>
 
             </div>
-            {matchTab === 2 && (
-                <div className="w-full ">
-                    <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
-                        <span> My Bets</span>
-                    </div>
-                    <div className="overflow-hidden w-full  border border-[#C6D2D8]">
-                        <div className="max-w-full overflow-auto ">
-                            <div className="inline-block min-w-full ">
-                                <div className="overflow-hidden w-full ">
-                                    <table className="min-w-full capitalize">
-                                        <thead>
-                                            <tr className="w-full text-black text-[14px] font-semibold bg-[#CCCCCC] text-left">
-                                                <th className="px-[6px] py-1 whitespace-nowrap">
-                                                    Matched Bets
-                                                </th>
-                                                <th className="px-[6px] py-1 whitespace-nowrap">
-                                                    Odds
-                                                </th>
-                                                <th className="px-[6px] py-1 whitespace-nowrap">
-                                                    Stake
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {oddsBetData && oddsBetData?.length > 0 ? (
-                                                oddsBetData?.map((element, index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className={`w-full text-[#333333]  text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
-                                                            ? "bg-[var(--matchKhai)]"
-                                                            : "bg-[var(--matchLagai)]"
-                                                            }`}
-                                                    >
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            <div>
-                                                                {element?.teamName} <br />
-                                                                <span className="font-bold">{element?.marketName}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            {element && element?.oddsType === "matchOdds"
-                                                                ? parseFloat(Number(element?.odds) + 1)
+            {/* {matchTab === 2 && ( */}
+            <div className="w-full ">
+                <div className="bg-[var(--darkcolor)] rounded-t-md mt-1 py-1.5 px-4 font-bold text-white text-sm">
+                    <span> My Bets</span>
+                </div>
+                <div className="overflow-hidden w-full  border border-[#C6D2D8]">
+                    <div className="max-w-full overflow-auto ">
+                        <div className="inline-block min-w-full ">
+                            <div className="overflow-hidden w-full ">
+                                <table className="min-w-full capitalize">
+                                    <thead>
+                                        <tr className="w-full text-black/80 text-[14px] font-semibold bg-[#CCCCCC] text-left">
+                                            <th className="px-[6px] py-1 whitespace-nowrap">
+                                                Matched Bets
+                                            </th>
+                                            <th className="px-[6px] py-1 whitespace-nowrap">
+                                                Odds
+                                            </th>
+                                            <th className="px-[6px] py-1 whitespace-nowrap">
+                                                Stake
+                                            </th>
+                                            <th className="px-[6px] py-1 whitespace-nowrap">
+                                                Date/Time
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {oddsBetData && oddsBetData?.length > 0 ? (
+                                            oddsBetData?.map((element, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className={`w-full text-[#333333]  text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
+                                                        ? "bg-[var(--matchKhai)]"
+                                                        : "bg-[var(--matchLagai)]"
+                                                        }`}
+                                                >
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        <div>
+                                                            {element?.teamName} <br />
+                                                            <span className="font-bold">{element?.marketName}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        {element && element?.oddsType === "matchOdds"
+                                                            ? parseFloat(Number(element?.odds) + 1)
+                                                                .toFixed(2)
+                                                                .replace(/\.?0+$/, "")
+                                                            : element &&
+                                                                (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
+                                                                ? parseFloat(element?.odds * 100)
                                                                     .toFixed(2)
                                                                     .replace(/\.?0+$/, "")
-                                                                : element &&
-                                                                    (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
-                                                                    ? parseFloat(element?.odds * 100)
-                                                                        .toFixed(2)
-                                                                        .replace(/\.?0+$/, "")
-                                                                    : parseFloat(element?.odds)
-                                                                        .toFixed(2)
-                                                                        .replace(/\.?0+$/, "")}
-                                                        </td>
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            {element?.amount}
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : fancyBetData && fancyBetData?.length > 0 ? (
-                                                fancyBetData?.map((element, index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x-2 divide-white ${element?.type === "N"
-                                                            ? "bg-[var(--matchKhai)]"
-                                                            : "bg-[var(--matchLagai)]"
-                                                            }`}
-                                                    >
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            <span className="font-medium text-xs">{element?.sessionName}</span>
-                                                        </td>
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            {element?.odds}
-                                                        </td>
-                                                        <td className="px-[6px] py-1 whitespace-nowrap">
-                                                            {element?.amount}
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan={3} className="text-center py-2 text-sm">
-                                                        No records found
+                                                                : parseFloat(element?.odds)
+                                                                    .toFixed(2)
+                                                                    .replace(/\.?0+$/, "")}
+                                                    </td>
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        {element?.amount}
+                                                    </td>
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        {element?.date}
                                                     </td>
                                                 </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            ))
+                                        ) : fancyBetData && fancyBetData?.length > 0 ? (
+                                            fancyBetData?.map((element, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x-2 divide-white ${element?.type === "N"
+                                                        ? "bg-[var(--matchKhai)]"
+                                                        : "bg-[var(--matchLagai)]"
+                                                        }`}
+                                                >
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        <span className="font-medium text-xs">{element?.sessionName}</span>
+                                                    </td>
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        {element?.odds}
+                                                    </td>
+                                                    <td className="px-[6px] py-1 whitespace-nowrap">
+                                                        {element?.amount}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan={3} className="text-center py-2 text-sm">
+                                                    No records found
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            )}
+            </div>
+            {/* )} */}
         </div >
     );
 };
