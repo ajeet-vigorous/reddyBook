@@ -148,13 +148,13 @@ export const getCasinoListByProviderName = createAsyncThunk(
   }
 );
 
-export const getuserLedger = createAsyncThunk(
-  "user/getuserLedger",
+export const getUserLedger = createAsyncThunk(
+  "user/getUserLedger",
   async (payload, { rejectWithValue }) => {
     try {
-      const user = await userServices.getuserLedger(payload);
+      const getUserLedger = await userServices.getUserLedger(payload);
 
-      return user;
+      return getUserLedger;
     } catch (error) {
 
       return rejectWithValue(error.message);
@@ -310,14 +310,14 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
       //Ledger Data
-      .addCase(getuserLedger.pending, (state) => {
+      .addCase(getUserLedger.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getuserLedger.fulfilled, (state, action) => {
+      .addCase(getUserLedger.fulfilled, (state, action) => {
         state.loading = false;
-        state.userLedgerData = action.payload?.data;
+        state.userLegderList = action.payload?.data;
       })
-      .addCase(getuserLedger.rejected, (state, action) => {
+      .addCase(getUserLedger.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

@@ -73,7 +73,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
             <div>
               <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
                 <div className="flex space-x-2 items-center">
-                  <img src="/subHeader/menu-99998.png" className="w-[20px] h-[20px]" alt="menu" />
+                  <img src="/subHeader/menu-7.png" className="w-[20px] h-[20px]" alt="menu" />
                   <p>Horse Racing</p>
                 </div>
                 <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
@@ -87,7 +87,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
             <div>
               <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
                 <div className="flex space-x-2 items-center">
-                  <img src="/subHeader/menu-99998.png" className="w-[20px] h-[20px]" alt="menu" />
+                  <img src="/subHeader/menu-4339.png" className="w-[20px] h-[20px]" alt="menu" />
                   <p>Greyhound Racing</p>
                 </div>
                 <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>

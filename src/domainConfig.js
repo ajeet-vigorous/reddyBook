@@ -6,8 +6,9 @@ const GrandExchangeSettings = {
   SOCKET_URL: "https://socket.trovetown.co/",
   // apiurl: "https://apidiamond.trovetown.co/v1/",
   // apiurl: 'https://api.reddyplus100.com/v1/',
+  apiurl: "https://api.10xbpexch.com/v1/",
   // apiurl: 'https://api.10xbpexch.com/v1/',
-  apiurl: 'https://api.bpexchanges.com/v1/',
+  // apiurl: 'https://api.bpexchanges.com/v1/',
   domainName: "reddybook",
   colors: {
     "--primary": "#C10930",

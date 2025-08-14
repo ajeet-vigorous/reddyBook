@@ -117,18 +117,23 @@ async function getInternationalGroupCasinoList(data) {
   }
 }
 
-async function getuserLedger(data) {
+async function getUserLedger(data) {
   try {
-    const user = await apiCall("POST", "user/userLedger", data);
+    const user = await apiCall("POST", "reports/profitLossForAllExch", data);
 
     if (user) {
+
+      localStorage.setItem('clientBalance', JSON.stringify(user.data.coins));
+      localStorage.setItem('clientExposure', JSON.stringify(user.data.exposure));
+      localStorage.setItem('clientProfitLoss', JSON.stringify(user.data.profitLoss));
       return user;
     }
   } catch (error) {
-    console.error("ledger error:", error);
+    console.error("Domain setting error:", error);
     return Promise.reject(error);
   }
 }
+
 
 export const userServices = {
   getUserStatement,
@@ -140,5 +145,5 @@ export const userServices = {
   getCasinoListByCateogeory,
   getInternationalGroupCasinoList,
   getCasinoListByProviderName,
-  getuserLedger,
+  getUserLedger,
 }

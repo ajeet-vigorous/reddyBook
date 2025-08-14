@@ -26,8 +26,8 @@ const UnsettledBets = ({ }) => {
         fetchBetLists();
     }, []);
 
-
     let totalAmount = oddsBetData?.reduce((sum, item) => sum + item.amount, 0);
+
     return (
         <div className="w-full min-h-screen flex">
             <div className="border w-full">
@@ -42,8 +42,12 @@ const UnsettledBets = ({ }) => {
                                 <table className="min-w-full border-collapse border overflow-x-auto border-gray-400">
                                     <thead className="bg-[#DFDDE0]">
                                         <tr className="text-left text-[12px] lg:bg-transparent text-[#212529]  font-semibold border border-[#c7c8ca]/50">
-                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Date</th>
+                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">No</th>
+                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Event Name</th>
+                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Game Name</th>
+                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Event Type</th>
                                             <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Market Name</th>
+                                            <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Date</th>
                                             <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">Liability</th>
                                         </tr>
                                     </thead>
@@ -55,16 +59,22 @@ const UnsettledBets = ({ }) => {
                                                     key={index}
                                                 >
                                                     <td className="px-3 py-2 border border-[#c7c8ca]/50 ">
+                                                        {index + 1}
+                                                    </td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.gameName}</td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.gameType}</td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.overallType}</td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.remarks}</td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50 ">
                                                         {moment(element?.createdAt).format("DD-MM-YYYY HH:mm:ss A")}
                                                     </td>
-                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.remarks}</td>
                                                     <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.amount / 100}</td>
                                                 </tr>
                                             ))
                                         ) : (
                                             <tr>
                                                 <td
-                                                    colSpan="3"
+                                                    colSpan="7"
                                                     className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left"
                                                 >
                                                     No Data Available
@@ -73,7 +83,7 @@ const UnsettledBets = ({ }) => {
                                         )}
                                     </tbody>
                                     <tr className="">
-                                        <td colSpan="2" className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-right">Total Liability</td>
+                                        <td colSpan="6" className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-right">Total Liability</td>
                                         <td className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left"><p className="text-left">{totalAmount / 100}</p></td>
                                     </tr>
                                 </table>

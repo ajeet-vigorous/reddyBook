@@ -54,7 +54,7 @@ function Providers({ filterSection, name, providersData }) {
 
   return (
     <div>
-      <div className="bg-[#e9eff8] rounded-md md:block hidden my-4 pb-2 border border-secondary">
+      <div className="bg-[#e9eff8] rounded-md py-2 border border-secondary">
         <div>
           <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
             <div className="flex space-x-2 items-center">
@@ -65,7 +65,7 @@ function Providers({ filterSection, name, providersData }) {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-11 md:grid-cols-6 sm:grid-cols-3 grid-cols-1 gap-0.5">
+        <div className="grid lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-5 grid-cols-4 gap-0.5 mt-0.5">
           {ProvidersList?.map((item, idx) => (
             <div key={idx} className="!w-auto">
               <a href={`/casino-list-by-providername/${item.name}`} className="block">

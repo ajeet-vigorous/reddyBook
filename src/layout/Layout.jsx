@@ -15,7 +15,7 @@ const Layout = () => {
 
         <section className="w-full h-screen flex flex-col overflow-hidden relative">
             <div className="shrink-0 z-10 lg:bg-white bg-black">
-                <div className="lg:h-[60px] h-[136px] ">
+                <div className="lg:h-[60px] h-[140px] ">
                     <AppHeader setSidebarOpen={setIsSidebarOpen} />
                 </div>
                 <div>
@@ -32,7 +32,7 @@ const Layout = () => {
                     />
                 </div>
 
-                <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)] ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
+                <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)]  ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
                     <div className="lg:p-4 p-1 h-full">
                         <AppContent />
                     </div>
@@ -49,7 +49,7 @@ const Layout = () => {
     )
 }
 
-export default Layout
+export default Layout;
 
 
 

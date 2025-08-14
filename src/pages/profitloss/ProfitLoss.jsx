@@ -1,106 +1,91 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getAccountStatement } from "../../redux/reducers/user_reducer";
+import { getAccountStatement, getUserLedger } from "../../redux/reducers/user_reducer";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaRegCalendar } from "react-icons/fa6";
 
 const ProfitLoss = () => {
-  const [payloadData, setPayloadData] = useState({
-    fromDate: moment().subtract(7, "days").format("YYYY-MM-DD"),
-    toDate: moment().format("YYYY-MM-DD"),
-    statementFor: "",
-  });
-  const [paginationPage, setPaginationPage] = useState(1)
-  const dispatch = useDispatch();
-  const { accountStatement } = useSelector((state) => state.user);
-  const statementData = accountStatement?.statementData;
 
+const { userLegderList } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const [fromDate, setFromDate] = useState(moment().format('YYYY-MM-DD'));
+  const [toDate, setToDate] = useState(moment().format('YYYY-MM-DD'));
+  const [IsClienthistory, SetIsClienthistory] = useState(false);
+  const [profitLossData, setProfitLossData] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [sportType, setSportType] = useState("");
-  const [filteredData, setFilteredData] = useState();
+  
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
 
-  const totalPages = accountStatement?.totalCount && pageSize
-    ? Math.ceil(accountStatement?.totalCount / pageSize)
-    : 1
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
 
+  const [selectedValue, setSelectedValue] = useState('5');
+
+  // const handleChangeSelectedValue = (event) => {
+  //   setSelectedValue(event.target.value);
+  // };
+
+  const fetchUserLedger = () => {
+    const user = JSON.parse(localStorage.getItem('clientspuser'));
+
+    const reqData = {
+      isCreatorId: user.data.userId,
+      fromDate: fromDate,
+      toDate: toDate,
+      size: selectedValue,
+    };
+
+    dispatch(getUserLedger(reqData));
+  };
 
   useEffect(() => {
-    handleSubmit();
-  }, [dispatch, pageNumber, pageSize]);
+    fetchUserLedger();
+  }, [dispatch, selectedValue]);
 
-  useEffect(() => {
-    let dataFilter;
-    if (sportType === "") {
-      dataFilter = statementData;
-    } else if (sportType === "cricket") {
-      dataFilter = statementData?.filter(
-        (ele) =>
-          ele.statementFor !== "internationalCasino" &&
-          ele.statementFor !== "diamondCasino"
-      );
-    } else {
-      dataFilter = statementData?.filter(
-        (ele) => ele.statementFor === sportType
-      );
-    }
-    setFilteredData(dataFilter);
-  }, [sportType, statementData]);
 
-  const groupedData = {};
-  filteredData?.forEach((item) => {
-    const dateKey = moment(item.date).format("YYYY-MM-DD");
-    groupedData[dateKey] = groupedData[dateKey] || [];
-    groupedData[dateKey].push(item);
-  });
-
-  let totalAmount = 0;
-  filteredData?.map((data) => {
-    totalAmount += data.amount;
-  });
+   let totalAmount = 0;
+  userLegderList?.map((data, key) => {
+    totalAmount += data.clientNetAmount
+  })
   let balance = 0;
   let showAmount = 0;
-  let finalData = filteredData?.map((data) => {
+  let finalData = userLegderList?.map((data, key) => {
     balance = totalAmount - showAmount;
-    showAmount += data.amount;
-    return {
-      amount: data.amount,
+    showAmount += data.userNetProfitLoss;
+    const pushObj = {
+      amount: data.sessionAmt + data.oddsAmt + data.userOddsComm + data.userSessionComm,
+      Amt: data?.clientNetAmount,
+      commisition: data.userOddsComm + data.userSessionComm,
+      userOddsComm: data.userOddsComm,
+      userSessionComm: data.userSessionComm,
+      clientNetAmount: data.clientNetAmount,
       date: data.date,
       balance: balance,
-      gameType: data.gameType,
-      remark: data.remark,
+      ledgerType: data.ledgerType,
+      eventName: data.eventName,
       userRemark: data.userRemark,
       statementFor: data.statementFor,
       isComm: data.isComm,
       marketId: data.marketId,
       createdAt: data.createdAt,
-      selectionId: data.selectionId || "0",
-      _id: data?._id
+      isCasino: data.isCasino,
+      result: data.result ? data.result : '-' ,
+      
     };
+    return pushObj;
   });
 
-  const handleSelectChange = (e) => {
-    setPayloadData({
-      ...payloadData,
-      statementFor: e.target.value,
-    });
+  const handleSearch = () => {
+    fetchUserLedger();
   };
-
-  const handleSubmit = () => {
-    const reqData = {
-      fromDate: payloadData.fromDate,
-      toDate: payloadData.toDate,
-      pageNo: pageNumber,
-      size: +pageSize,
-    };
-    if (payloadData?.statementFor) {
-      reqData.statementFor = payloadData?.statementFor
-    }
-    dispatch(getAccountStatement(reqData));
-  };
-
+  
   const calendarIcon = (
     <FaRegCalendar className="absolute right-1 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
   );
@@ -118,20 +103,28 @@ const ProfitLoss = () => {
             <div className="bg-[#DFDDE0] p-1 justify-start hidden sm:flex items-center">
               <div className="flex justify-between sm:space-x-8 ">
                 <div className="">
-                  <DatePicker
-                    selected={payloadData?.fromDate}
-                    onChange={(date) => setPayloadData({ ...payloadData, fromDate: date })}
-                    dateFormat="dd/MM/yyyy"
-                    className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-black"
-                    required
-                    showIcon
-                    icon={calendarIcon}
+                 <input
+                    type="date"
+                    placeholder="From Date"
+                    className="block w-full outline-1 outline-[#04699b] text-xs px-3 py-2"
+                    value={fromDate}
+                    onChange={handleFromDateChange}
                   />
+                  <DatePicker
+      selected={fromDate}
+      onChange={handleFromDateChange}
+      dateFormat="dd/MM/yyyy"
+      className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 xl:w-[252px] w-[165px] rounded-md focus:outline-none text-black"
+      required
+      showIcon
+      icon={calendarIcon}
+      placeholderText="From Date"
+    />
                 </div>
                 <div className="">
                   <DatePicker
-                    selected={payloadData?.toDate}
-                    onChange={(date) => setPayloadData({ ...payloadData, toDate: date })}
+                   value={toDate}
+                  onChange={handleToDateChange} 
                     dateFormat="dd/MM/yyyy"
                     className="!px-2 !py-[4px] text-sm border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-black"
                     required
@@ -139,7 +132,7 @@ const ProfitLoss = () => {
                     icon={calendarIcon}
                   />
                 </div>
-                <select
+                {/* <select
                   className="px-3 py-[2px] text-md bg-transparent border bg-white border-gray-400 w-[142px] rounded-md focus:outline-none text-[#495057] placeholder-text-gray-500"
                   onChange={handleSelectChange}
                   value={setPayloadData?.statementFor}
@@ -147,16 +140,16 @@ const ProfitLoss = () => {
                   <option value="">All</option>
                   <option value="profitLoss">Sports Reports</option>
                   <option value="ACCOUNT_STATEMENT">Deposit/Withdraw Reports</option>
-                </select>
+                </select> */}
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleSearch}
                   className="h-[30px] text-[12px] uppercase bg-black md:border-[var(--primary)] hover:bg-[var(--secondary)] text-white text-md w-[142px] rounded-md">
-                  Get Statement
+                  Submit
                 </button>
               </div>
             </div>
             {/* mobile view */}
-            <div className="flex flex-col sm:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
+            {/* <div className="flex flex-col sm:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
               <div className="flex w-full justify-center items-center  gap-2">
                 <div className="">
                   <DatePicker
@@ -197,7 +190,7 @@ const ProfitLoss = () => {
                   Get Statement
                 </button>
               </div>
-            </div>
+            </div> */}
 
             <div className="overflow-hidden">
               <div className="max-w-full overflow-auto">
@@ -206,12 +199,14 @@ const ProfitLoss = () => {
                     <table className="min-w-full border-collapse border overflow-x-auto border-gray-400">
                       <thead className="bg-[#DFDDE0]">
                         <tr className="text-left text-[12px] lg:bg-transparent text-[#212529]  font-semibold border border-[#c7c8ca]/50">
-                          <th className="px-3 py-2 w-[5%] border whitespace-nowrap border-[#c7c8ca]/50">Sr no</th>
-                          <th className="px-3 py-2 w-[15%] border border-[#c7c8ca]/50">Date</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Credit</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Debit</th>
-                          <th className="px-3 py-2 w-[10%] border border-[#c7c8ca]/50">Balance</th>
-                          <th className="px-3 py-2 w-[50%] border border-[#c7c8ca]/50">Description</th>
+                          <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">No</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Date</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Credit</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Debit</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Balance</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">P&L</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Result</th>
+                          <th className="px-3 py-2  border border-[#c7c8ca]/50">Description</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -246,12 +241,16 @@ const ProfitLoss = () => {
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 text-green-600">
                                 {Number.parseFloat(element?.balance).toFixed(2)}
                               </td>
-                              <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.remark}</td>
+                              <td className={`px-3 py-2 border border-[#c7c8ca]/50 ${element?.Amt >= 0 ? "text-green-700" : 'text-red-600'}`}>
+                                 {Math.abs(Math.floor(parseFloat(element?.Amt * 100) / 100) / 100).toFixed(2)}
+                               </td>
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.result}</td>
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.eventName}</td>
                             </tr>
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={6} className=" text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left">
+                            <td colSpan={10} className=" text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left">
                               No records found.
                             </td>
                           </tr>
@@ -312,6 +311,307 @@ const ProfitLoss = () => {
 };
 
 export default ProfitLoss;
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import moment from 'moment';
+// // import './ProfitAndLoss.css'
+// import { CiMenuBurger } from "react-icons/ci";
+// // import { DownloadFileExcel, DownloadFilePdf, DownloadFileCsv } from '../../Components/DownloadFile/DownloadFile';
+// import { FaRegCalendarDays } from 'react-icons/fa6';
+// import { getuserLedger } from '../../redux/reducers/user_reducer';
+// // import ClientProfit from '../../Components/clientprofit/ClientProfit';
+
+// const ProfitLoss = () => {
+//   const { userLegderList } = useSelector(state => state.user);
+//   const dispatch = useDispatch();
+//   const [fromDate, setFromDate] = useState(moment().format('YYYY-MM-DD'));
+//   const [toDate, setToDate] = useState(moment().format('YYYY-MM-DD'));
+//   const [IsClienthistory, SetIsClienthistory] = useState(false);
+//   const [profitLossData, setProfitLossData] = useState('');
+
+//   const handleApplyModal = (data) => {
+//     SetIsClienthistory(!IsClienthistory);
+//     setProfitLossData(data)
+
+//   };
+//   const handleFromDateChange = (event) => {
+//     setFromDate(event.target.value);
+//   };
+
+//   const handleToDateChange = (event) => {
+//     setToDate(event.target.value);
+//   };
+
+//   const [selectedValue, setSelectedValue] = useState('5');
+//   const handleChangeSelectedValue = (event) => {
+//     setSelectedValue(event.target.value);
+//   };
+
+//   const fetchUserLedger = () => {
+//     const user = JSON.parse(localStorage.getItem('clientspuser'));
+
+//     const reqData = {
+//       isCreatorId: user.data.userId,
+//       fromDate: fromDate,
+//       toDate: toDate,
+//       size: selectedValue,
+//     };
+
+//     dispatch(getuserLedger(reqData));
+//   };
+
+//   useEffect(() => {
+//     fetchUserLedger();
+//   }, [dispatch, selectedValue]);
+
+//   const handleSearch = () => {
+//     fetchUserLedger();
+//   };
+
+
+
+//   let totalAmount = 0;
+//   userLegderList?.map((data, key) => {
+//     totalAmount += data.clientNetAmount
+//   })
+//   let balance = 0;
+//   let showAmount = 0;
+//   let finalData = userLegderList?.map((data, key) => {
+//     balance = totalAmount - showAmount;
+//     showAmount += data.userNetProfitLoss;
+//     const pushObj = {
+//       amount: data.sessionAmt + data.oddsAmt + data.userOddsComm + data.userSessionComm,
+//       Amt: data?.clientNetAmount,
+//       commisition: data.userOddsComm + data.userSessionComm,
+//       userOddsComm: data.userOddsComm,
+//       userSessionComm: data.userSessionComm,
+//       clientNetAmount: data.clientNetAmount,
+//       date: data.date,
+//       balance: balance,
+//       ledgerType: data.ledgerType,
+//       eventName: data.eventName,
+//       userRemark: data.userRemark,
+//       statementFor: data.statementFor,
+//       isComm: data.isComm,
+//       marketId: data.marketId,
+//       createdAt: data.createdAt,
+//       isCasino: data.isCasino,
+//       result: data.result ? data.result : '-' ,
+      
+//     };
+//     return pushObj;
+//   });
+
+//   const headers = [
+//     { header: 'Market Name', dataKey: 'eventName' },
+//     { header: 'Result', dataKey: 'Result' },
+//     { header: 'P&L', dataKey: 'balance' },
+//     { header: 'Start Date', dataKey: 'createdAt' },
+//   ];
+  
+
+//   return (
+//     <div className="main-body  overflow-y-auto h-screen spacing-class">
+//       <div className=''>
+//         <div className='mx-3'>
+//           <div className='accountFilterViewprofit'>
+//             <div className="row mb-3">
+//               <div className=" col-md-3 col-12 px-3">
+//                 <label className='mb-2'>Total P&L:</label>
+//                 <input
+//                   type='text'
+//                   readOnly
+//                   value={Math.abs(parseFloat(totalAmount / 100).toFixed(2).replace(/\.?0+$/, ''))}
+                  
+//                   placeholder='0.00'
+//                   className='block w-full outline-1 outline-[#04699b] text-xs px-2 py-2'
+//                   style={{ color: totalAmount > 0 ? 'green' : totalAmount < 0 ? 'red' : 'black' }}
+//                 />
+//               </div>
+
+//               <div className=" col-md-3 col-12 px-3">
+//                 <label className='mb-1'>From:</label>
+//                 <div className="relative w-full">
+//                   <input
+//                     type="date"
+//                     placeholder="From Date"
+//                     className="block w-full outline-1 outline-[#04699b] text-xs px-3 py-2"
+//                     value={fromDate}
+//                     onChange={handleFromDateChange}
+//                   />
+//                   <FaRegCalendarDays
+//                     className="absolute right-[14px]  top-1/2 transform -translate-y-1/2 text-[#333C4B] pointer-events-none"
+//                     size={16}
+//                   />
+//                 </div>
+
+//               </div>
+
+//               <div className=" col-md-3 col-12 px-3">
+//                 <label className='mb-1'>To:</label>
+//                 <div className='relative w-full'>
+//                 <input placeholder="From Date" type="date" className='block w-full outline-1 outline-[#04699b] text-xs px-3 py-2' value={toDate}
+//                   onChange={handleToDateChange} />
+//                 <FaRegCalendarDays
+//                     className="absolute right-[14px]  top-1/2 transform -translate-y-1/2 text-[#333C4B] pointer-events-none"
+//                     size={16}
+//                   />
+//                   </div>
+//               </div>
+
+//               <div className=" col-md-3 col-12 px-3 search-profitloss">
+//                 <label className='p-0 invisible mb-2'>btn</label>
+//                 <button className='block bg-[var(--blue-button)] w-full text-white p-2 text-xs' onClick={handleSearch}>Search</button>
+//               </div>
+//             </div>
+//           </div>
+//           <div className='row'>
+//             <div className='col-lg-6 col-md-4 col-4 '>
+//               <div className='profit-lossselectnumber'>
+//                 <label>Show:</label>
+//                 <select className='w-full' value={selectedValue} onChange={handleChangeSelectedValue} >
+//                   <option value="5">5</option>
+//                   <option value="10">10</option>
+//                   <option value="20">20</option>
+//                   <option value="30">30</option>
+//                   <option value="50">50</option>
+//                   <option value="100">100</option>
+//                 </select>
+//               </div>
+//             </div>
+
+//             <div className='col-lg-6 col-md-8 col-8'>
+//               <div className='statment-download profitstatment-download'>
+//                 <label className='invisible'>hidden</label>
+//                 {/* <div className='d-flex download-button download-button2 justify-end'>
+//                   <DownloadFilePdf headers={headers} data={finalData} fileName={`clientlist`} />
+//                   <DownloadFileCsv data={headers} columns={finalData} fileName="clientlist" />
+//                   <DownloadFileExcel headers={headers} data={finalData} fileName={`clientlist`} />
+//                 </div> */}
+//               </div>
+//             </div>
+//             <div></div>
+//           </div>
+//         </div>
+//         <div>
+//           <div className="profitloss-table2">
+//             <table className="profitloss-table">
+//               <thead className=''>
+//                 <tr>
+//                   <th scope="col" className=''>
+//                     <div className='d-flex flex-wrap justify-between align-items-center'>
+//                       <div className='d-flex flex-wrap justify-between align-items-center gap-2'>
+//                         <p>App Sport</p>
+//                       </div>
+//                       <div className='menu-icon'><CiMenuBurger /></div>
+//                     </div>
+//                     <div className='statmenttable-filterwork'>
+//                       <div className='w-44 border border-[#d2d6de] px-1'>
+//                         <select className='tableselect-data w-full text-xs bg-white outline-1 border border-black'>
+//                           <option value="equals">Equals</option>
+//                           <option value="notEqual">Not equal</option>
+//                           <option value="startsWith">Starts with</option>
+//                           <option value="endsWith">Ends with</option>
+//                           <option value="contains">Contains</option>
+//                           <option value="notContains">Not contains</option>
+//                         </select>
+//                         <input className="statmenttable-filterinput block text-xs px-1 border border-black outline-none my-1 text-black placeholder:text-black w-full" id="filterText" type="text" placeholder="Filter..." />
+//                         <div className='d-flex gap-3'>
+//                           <div className='d-flex gap-2 items-center'>
+//                             <input type="radio" className='statmenttable-filterradio' name="fav_language" value="HTML"></input>
+//                             <label className='text-xs font-bold text-black'>AND</label>
+//                           </div>
+//                           <div className='d-flex gap-2'>
+//                             <input type="radio" className='statmenttable-filterradio' name="fav_language" value="HTML"></input>
+//                             <label className='text-xs font-bold text-black'>OR</label>
+//                           </div>
+
+//                         </div>
+//                         <div className='block mt-1'>
+//                           <select className='tableselect-data w-full text-xs bg-white outline-1 border border-black block'>
+//                             <option value="equals">Equals</option>
+//                             <option value="notEqual">Not equal</option>
+//                             <option value="startsWith">Starts with</option>
+//                             <option value="endsWith">Ends with</option>
+//                             <option value="contains">Contains</option>
+//                             <option value="notContains">Not contains</option>
+//                           </select>
+//                           <input class="statmenttable-filterinput block text-xs px-1 border border-black outline-none my-1 text-black placeholder:text-black w-full" id="filterText" type="text" placeholder="Filter..." />
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </th>
+//                   <th scope="col">
+//                     <div className='d-flex flex-wrap justify-between align-items-center'>
+//                       <div className='d-flex flex-wrap justify-between align-items-center gap-2'>
+//                         <p>Market Name</p>
+//                       </div>
+//                       <div className='menu-icon'><CiMenuBurger /></div>
+//                     </div>
+//                   </th>
+//                   <th scope="col" className=''>
+//                     <div className='d-flex flex-wrap justify-between align-items-center'>
+//                       <div className='d-flex flex-wrap justify-between align-items-center gap-2'>
+//                         <p>Result</p>
+//                       </div>
+//                       <div className='menu-icon'><CiMenuBurger /></div>
+//                     </div>
+//                   </th>
+//                   {/* <th scope="col">COM OUT</th> */}
+//                   <th scope="col" className=''>
+//                     <div className='d-flex flex-wrap justify-between align-items-center'>
+//                       <div className='d-flex flex-wrap justify-between align-items-center gap-2'>
+//                         <p>P&L</p>
+//                       </div>
+//                       <div className='menu-icon'><CiMenuBurger /></div>
+//                     </div>
+//                   </th>
+//                   <th scope="col">
+//                     <div className='d-flex flex-wrap justify-between align-items-center'>
+//                       <div className='d-flex flex-wrap justify-between align-items-center gap-2'>
+//                         <p>Started Date</p>
+//                       </div>
+//                       <div className='menu-icon'><CiMenuBurger /></div>
+//                     </div>
+//                   </th>
+//                 </tr>
+//               </thead>             
+//               {finalData && finalData.length > 0 && (
+//                 <>
+//                   {finalData?.map((item, index) => (
+//                     <tbody className='profittableBody text-left' key={index}>
+//                       <tr>
+                       
+//                         <td className='anySecHide'><b>-</b></td>
+//                         <td style={{ color: "#039be5" }} onClick={() => handleApplyModal(item?.marketId)}>
+//                           {item.eventName}
+//                         </td>
+//                         <td className='anySecHide'>{item.result}</td>
+//                         <td className={`anySecHide ${item.Amt >= 0 ? "text-green-700" : 'text-red-600' }`}>{Math.abs(Math.floor(parseFloat(item.Amt * 100) / 100) / 100).toFixed(2)} </td>
+//                         <td>{moment(item.createdAt).format('DD/MM/YYYY, hh:mm A')}</td>
+
+//                       </tr>
+//                     </tbody>
+//                   ))}
+//                 </>
+//               )}
+//             </table>
+//           </div>
+//         </div>
+
+//       </div>
+//       {/* {IsClienthistory && (
+//         <ClientProfit Clienthistory={IsClienthistory} handleClose={handleApplyModal} profitLossData={profitLossData} />
+//       )} */}
+
+
+//     </div>
+//   );
+// };
+
+// export default ProfitLoss;
 
 
 // import React, { useState, useEffect } from "react";

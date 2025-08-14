@@ -59,7 +59,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
         if (!data.error) {
           closeModal();
           if (data?.payload?.userinfo?.data?.isPasswordChanged === false) {
-            window.location.href = "/profile"
+            window.location.href = "/dashboard"
             localStorage.setItem("isRedirected", false)
           } else {
             window.location.href = "/dashboard"

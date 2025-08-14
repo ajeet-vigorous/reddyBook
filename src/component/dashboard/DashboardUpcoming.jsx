@@ -23,11 +23,14 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
     return (
       <>
         <div className="lg:flex hidden justify-between py-1 w-full border-b border-t border-[#C6D2D8]">
-          <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
-            {sportName}
+         <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
+            {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
+            {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
+            {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
+            <p>{sportName}</p>
             <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
           </div>
-          <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
+          <p className="w-[50%] grid grid-cols-3 text-center text-sm font-bold">
             <span>1</span>
             <span>X</span>
             <span>2</span>
@@ -66,7 +69,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                   href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                   className="flex items-center justify-start py-1 space-x-1 w-full"
                 >
-                  <div className="flex flex-col uppercase w-full sm:w-[32%] px-2">
+                  <div className="flex flex-col uppercase w-[60%] sm:w-[35%] px-2">
                     <span className="text-[12px] font-semibold text-gray-900 hover:underline">
                       {element?.matchName}
                     </span>
@@ -75,7 +78,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                     </span>
                   </div>
 
-                  <div className="bg-[#E9EFF8] w-full sm:w-[10%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[30%] sm:w-[10%] text-[#FF0000] sm:text-xs text-[10px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
                     <div className="text-[10px]">
                       {moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}

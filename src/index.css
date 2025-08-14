@@ -74,3 +74,23 @@ body {
   scrollbar-width: thin !important;
   scrollbar-color: #aab7cf transparent !important;
 }
+
+
+/* red */
+.scrollbar-red::-webkit-scrollbar {
+  width: 80px !important;
+}
+
+.scrollbar-red::-webkit-scrollbar-thumb {
+  background-color: white !important;
+  border-radius: 4px !important;
+}
+
+.scrollbar-red::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.scrollbar-red {
+  scrollbar-width: thin !important;
+  scrollbar-color: #C10930 transparent !important;
+}

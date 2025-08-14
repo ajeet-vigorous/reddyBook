@@ -14,6 +14,7 @@ import Login from "../login/Login";
 import { domainName } from "../../config/Auth";
 import { getClientExposure, getUserBalance } from "../../redux/reducers/user_reducer";
 import { IoMdArrowDropdown } from "react-icons/io";
+import moment from "moment";
 
 
 const AppHeader = ({ setSidebarOpen }) => {
@@ -86,12 +87,12 @@ const AppHeader = ({ setSidebarOpen }) => {
     const parsedData = matchListLocal ? JSON.parse(matchListLocal) : [];
     setMatchData(parsedData);
   }, []);
-  
+
 
   useEffect(() => {
     const interval = setInterval(() => {
-      let Balance = JSON.parse(localStorage.getItem("clientBalance"));
-      let clientExposure = JSON.parse(localStorage.getItem("clientExposure"));
+      let Balance = JSON.parse(localStorage.getItem("clientBalance") || "0");
+      let clientExposure = JSON.parse(localStorage.getItem("clientExposure") || "0");
       setBalance({
         coins: Balance,
         exposure: clientExposure,
@@ -135,7 +136,7 @@ const AppHeader = ({ setSidebarOpen }) => {
       <div className="">
         <div className="">
           <div className="flex justify-between items-center lg:px-0 px-2 mx-auto 2xl:w-[67%] md:w-[90%] w-full py-0">
-            <div className="flex justify-start items-center lg:space-x-5 pt-2 pb-1.5 ">
+            <div className="flex justify-start items-center lg:space-x-5 py-3">
               <img onClick={() => {
                 navigate("/dashboard");
               }}
@@ -347,32 +348,41 @@ const AppHeader = ({ setSidebarOpen }) => {
               </>
             ) : (
               <>
-                <div className="uppercase flex space-x-1">
+                <div className="uppercase flex space-x-[2px]">
                   <div
                     onClick={() => {
                       navigate("/signup");
                     }}
-                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
                     signup
                   </div>
                   <div
                     onClick={openModal}
-                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white rounded-[10px] border-b-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
                     Login
                   </div>
                 </div>
               </>
             )}
           </div>
-          <div className="lg:hidden flex relative ">
-            <div className="absolute left-0 top-0 z-[50] bg-white px-[10px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
-              <img src="/header/play-icon.png" className="w-[28px] h-[28px]" />
-            </div>
 
-            <div className=" bg-[url('/header/popular-img.png')] bg-cover bg-center w-full ">
-              <LiveMatches matchList={matchData} />
-            </div>
-          </div>
+          {matchData?.filter(element => {
+            if (!element?.matchDate) return false;
+            const inputMoment = moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A");
+            const currentMoment = moment().add(60, "minutes");
+            return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
+          })?.length > 0 && (
+              <div className="lg:hidden flex relative">
+                <div className="absolute left-0 top-0 z-[50] bg-white px-[10px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
+                  <img src="/header/play-icon.png" className="w-[28px] h-[28px]" />
+                </div>
+                <div className="bg-[url('/header/popular-img.png')] bg-cover bg-center w-full">
+                  <LiveMatches matchList={matchData} />
+                </div>
+              </div>
+            )}
+
+
           <div className="px-2 mt-1.5">
             <div className="relative lg:hidden block w-full">
               <input
