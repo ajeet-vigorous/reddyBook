@@ -1,5 +1,6 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
+import PlaceBetMobile from '../../../component/betplaceMobile/PlaceBetMobile';
 
 const KhadoFancyComponent = ({
   inplayMatch,
@@ -11,8 +12,23 @@ const KhadoFancyComponent = ({
   marketId,
   returnDataFancyObject,
   formatNumber,
-  handleFancyPositionModal
+  handleFancyPositionModal,
+  betplaceSection,
 }) => {
+  const {
+    betSlipData,
+    openBets,
+    closeRow,
+    placeBet,
+    errorMessage,
+    successMessage,
+    betLoading,
+    increaseCount,
+    decreaseCount,
+    handleBackclose,
+    setBetSlipData,
+    handleButtonValues,
+  } = betplaceSection;
   return (
     inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
       <div>
@@ -191,6 +207,28 @@ const KhadoFancyComponent = ({
                   {commList?.remark &&
                     <div className="px-1 text-[#097c93] text-left text-[11px] w-full">{commList?.remark}</div>
                   }
+                     {betSlipData?.oddsType === "fancy" &&
+                                                                    commList?.Selection_id ===
+                                                                      betSlipData?.selectionId && (
+                                                                      <PlaceBetMobile
+                                                                        openBets={openBets}
+                                                                        closeRow={closeRow}
+                                                                        matchName={inplayMatch?.matchName}
+                                                                        betSlipData={betSlipData}
+                                                                        placeBet={placeBet}
+                                                                        errorMessage={errorMessage}
+                                                                        successMessage={successMessage}
+                                                                        count={betSlipData.count}
+                                                                        betLoading={betLoading}
+                                                                        increaseCount={increaseCount}
+                                                                        decreaseCount={decreaseCount}
+                                                                        handleClose={handleBackclose}
+                                                                        setBetSlipData={setBetSlipData}
+                                                                        handleButtonValues={handleButtonValues}
+                                                                      />
+                                                                    )}
+
+
                 </div>
               ))}
             </div>

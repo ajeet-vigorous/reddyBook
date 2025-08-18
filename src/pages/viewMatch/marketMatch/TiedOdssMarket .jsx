@@ -45,7 +45,31 @@ const TiedOddsComponent = ({
               {Object.values(finalSocket)?.map((element, index) =>
                 element.marketType === "Tied Match" && (
                   <div className="bg-white" key={index}>
-                    <MatchDetailsHeaderSection marketType={"Tied_Match"} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
+                    <MatchDetailsHeaderSection 
+                    cashOut={
+                      element?.runners?.length > 0 && (
+                        <CashOutSystem
+                          marketList={element.runners.map(runner => ({
+                            selectionid: runner.selectionId,
+                            team_name: runner.selectionName,
+                            lgaai: runner.ex?.availableToBack?.[0]?.price || 0,
+                            khaai: runner.ex?.availableToLay?.[0]?.price || 0,
+                            selectionName: runner.selectionName,
+                            ex: {
+                              availableToBack: runner.ex?.availableToBack || [],
+                              availableToLay: runner.ex?.availableToLay || []
+                            }
+                          }))}
+                          positionObj={positionObj}
+                          handleBackOpen={handleBackOpen}
+                          toggleRowVisibility={toggleRowVisibility}
+                          marketId={element.marketId}
+                          betFor={"tiedMatch"}
+                          oddsType={element.marketType}
+                        />
+                      )}
+                    
+                     marketType={"Tied_Match"} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
                       <div className="flex whitespace-normal max-w-full border-b border-gray-300">
                         <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
 
@@ -74,6 +98,7 @@ const TiedOddsComponent = ({
                       </div>
                       {element?.runners?.length > 0 && element.runners.map((elementtemp, index) => (
                         <>
+                      
                           <div className="flex whitespace-normal max-w-full border-b border-gray-300" key={index}>
                             <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
                               <div className="w-full py-1 leading-3 flex items-center text-[#333333]">

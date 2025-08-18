@@ -3,13 +3,28 @@ import AppSidebar from '../component/layout/AppSidebar'
 import AppHeader from '../component/layout/AppHeader'
 import AppContent from '../component/layout/AppContent'
 import SubHeader from '../component/header/SubHeader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
 const Layout = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isStakeModalOpen, setIsStakeModalOpen] = useState(false);
+
+    const handleToggle = () => {
+        document.body.classList.toggle("StakeModalOpen");
+    };
+    useEffect(() => {
+        const checkSidebarStatus = () => {
+            setIsStakeModalOpen(document.body.classList.contains("StakeModalOpen"));
+        };
+        checkSidebarStatus();
+        const observer = new MutationObserver(checkSidebarStatus);
+        observer.observe(document.body, { attributes: true });
+        return () => observer.disconnect();
+    }, []);
+
 
     return (
 

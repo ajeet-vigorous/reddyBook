@@ -260,6 +260,8 @@ const ViewMatches = () => {
         }
     }, [positioBetData]);
 
+    
+
 
 
     useEffect(() => {
@@ -792,9 +794,12 @@ const ViewMatches = () => {
 
     const handleButtonValues = (e) => {
         setbuttonValue((prev) => !prev);
+
         document.body.classList.toggle("StakeModalOpen");
-        e.stopPropagation();
+       
     };
+
+
 
     const [matchTab, setMatchTab] = useState(1);
 
@@ -857,6 +862,7 @@ const ViewMatches = () => {
                         marketId={marketId}
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
+                        betplaceSection={betplaceDataThroughProps}
                     />
                 );
             case "sessions":
@@ -872,6 +878,7 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
+                        betplaceSection={betplaceDataThroughProps}
                     />
                 );
             case "wpm":
@@ -902,11 +909,13 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
+                        betplaceSection={betplaceDataThroughProps}
                     />
                 );
             case "meter":
                 return (
                     <MeterFancyComponent
+                    inplayMatch={inplayMatch}
                         activeTab={activeTab}
                         MeterFancy={MeterFancy}
                         fancyPositionObj={fancyPositionObj}
@@ -916,6 +925,7 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
+                       betplaceSection={betplaceDataThroughProps}
                     />
                 );
             case "oddeven":
@@ -931,6 +941,7 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
+                        betplaceSection={betplaceDataThroughProps}
                     />
                 );
             case "xtra":
@@ -943,6 +954,7 @@ const ViewMatches = () => {
                         handleBackOpen={handleBackOpen}
                         marketId={marketId}
                         returnDataFancyObject={returnDataFancyObject}
+                        betplaceSection={betplaceDataThroughProps}
                     />
                 );
             default:

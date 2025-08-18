@@ -1,5 +1,6 @@
 import React from 'react';
 import BlinkingComponent from '../BlinkingComponent';
+import PlaceBetMobile from '../../../component/betplaceMobile/PlaceBetMobile';
 
 const GroupedFancyComponent = ({
   inplayMatch,
@@ -8,11 +9,27 @@ const GroupedFancyComponent = ({
   toggleRowVisibility,
   handleBackOpen,
   marketId,
-  returnDataFancyObject
+  returnDataFancyObject,
+  betplaceSection,
+
 }) => {
+  const {
+    betSlipData,
+    openBets,
+    closeRow,
+    placeBet,
+    errorMessage,
+    successMessage,
+    betLoading,
+    increaseCount,
+    decreaseCount,
+    handleBackclose,
+    setBetSlipData,
+    handleButtonValues,
+  } = betplaceSection;
   return (
     inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
-      <div className="grid xl:grid-cols-2 gap-0.5 grid-cols-1">
+      <div className="grid xl:grid-cols-1 gap-0.5 grid-cols-1">
         {groupedData && Object.keys(groupedData).length > 0 &&
           Object.entries(groupedData).map(([sessionName, items], index) => (
             <div key={index} className="mb-4 overflow-hidden">
@@ -86,10 +103,35 @@ const GroupedFancyComponent = ({
                       boderColors={"border-[#489bbd]"}
                     />
                   </div>
+                  {betSlipData?.oddsType === "fancy" &&
+                                                                    commList?.Selection_id ===
+                                                                      betSlipData?.selectionId && (
+                                                                      <PlaceBetMobile
+                                                                        openBets={openBets}
+                                                                        closeRow={closeRow}
+                                                                        matchName={inplayMatch?.matchName}
+                                                                        betSlipData={betSlipData}
+                                                                        placeBet={placeBet}
+                                                                        errorMessage={errorMessage}
+                                                                        successMessage={successMessage}
+                                                                        count={betSlipData.count}
+                                                                        betLoading={betLoading}
+                                                                        increaseCount={increaseCount}
+                                                                        decreaseCount={decreaseCount}
+                                                                        handleClose={handleBackclose}
+                                                                        setBetSlipData={setBetSlipData}
+                                                                        handleButtonValues={handleButtonValues}
+                                                                      />
+                                                                    )}
+
                 </div>
               ))}
+            
+         
             </div>
           ))}
+          
+
       </div>
     )
   );

@@ -37,13 +37,15 @@ const organizeData = (data) => {
     }
   });
   return organizedData;
-}
+};
 
 const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const [sidebar, sidebartoggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleResponseGameotherDetails = (data) => { window.location.href = `/sport-view/${data.marketId}/${data.eventId}`; };
+  const handleResponseGameotherDetails = (data) => {
+    window.location.href = `/sport-view/${data.marketId}/${data.eventId}`;
+  };
   const { sportMatchList } = useSelector((state) => state.sport);
   const modalRef = useRef();
   const [clickedOutside, setClickedOutside] = useState(true);
@@ -53,11 +55,16 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [openKeys, setOpenKeys] = useState([]);
   const [openKeys1, setOpenKeys1] = useState({});
   const [matchData, setMatchData] = useState([]);
-  const matchlistLocal = localStorage.getItem("matchList") ? JSON.parse(localStorage.getItem("matchList")) : null;
+  const matchlistLocal = localStorage.getItem("matchList")
+    ? JSON.parse(localStorage.getItem("matchList"))
+    : null;
   const [raceId, setRaceId] = useState(null);
 
   const [openRaceId, setOpenRaceId] = useState(null);
   const [racingData, setRacingData] = useState([]);
+  console.log("raceId", raceId);
+  console.log("racingData", racingData);
+  console.log("matchData", matchData);
 
   useEffect(() => {
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
@@ -77,8 +84,8 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   }, [matchData]);
 
   useEffect(() => {
-    if (matchData && raceId !== null) {
-      setRacingData(matchData.filter((race) => race.sportId == raceId));
+    if (matchData && raceId != null) {
+      setRacingData(matchData.filter((race) => race.sportId == Number(raceId)));
     }
   }, [matchData, raceId]);
 
@@ -102,8 +109,9 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   //     setOpenKeys([...openKeys, index]);
   //   }
   // };
-
+  console.log("openKeys", openKeys);
   const handleClick = (index, e) => {
+    console.log("index", index, openKeys, e);
     e.stopPropagation();
     if (openKeys.includes(index)) {
       setOpenKeys(openKeys.filter((key) => key !== index));
@@ -111,6 +119,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       setOpenKeys([...openKeys, index]);
     }
     const clickedItem = SPORTSCONSTANT[index];
+    console.log("clickedItem", clickedItem);
 
     if (clickedItem?.text === "Casino") {
       navigate("/all-casino");
@@ -119,6 +128,19 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     if (clickedItem?.text === "Sports Book") {
       navigate("/sports-book");
       return;
+    }
+    if (clickedItem?.text === "Horse Racing") {
+      setOpenRaceId(7);
+      return;
+    }
+    if (clickedItem?.text === "Greyhound Racing") {
+      setOpenRaceId(Number(4339));
+      return;
+    }
+    if (clickedItem?.id) {
+      setOpenRaceId(clickedItem.id);
+    } else {
+      setOpenRaceId(null); // fallback
     }
   };
 
@@ -132,12 +154,12 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const handleRacing = (id) => {
-    setOpenRaceId(prevId => prevId === id ? null : id);
+    setOpenRaceId((prevId) => (prevId === id ? null : id));
   };
 
   useEffect(() => {
     if (openRaceId) {
-      setRacingData(matchData.filter(race => race.sportId === openRaceId));
+      setRacingData(matchData.filter((race) => race.sportId === openRaceId));
     } else {
       setRacingData([]);
     }
@@ -157,13 +179,8 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     };
   }, [isSidebarOpen, setIsSidebarOpen]);
 
-
-
   return (
-
     <>
-
-
       <div className="hidden lg:block">
         <div>
           <CgClose
@@ -178,24 +195,43 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     onClick={() => {
                       navigate("/market-analysis");
                     }}
-                    className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                    className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
+                  >
                     <p>
-                      <img src={"/subHeader/menu-market.png"} className="w-[18px] h-[18px]" />
+                      <img
+                        src={"/subHeader/menu-market.png"}
+                        className="w-[18px] h-[18px]"
+                      />
                     </p>
                     <span className="">Multi Market</span>
                   </div>
-     
+
                   {SPORTSCONSTANT?.map((menuItem, index) => {
                     const sport = filteredData?.find(
                       (sport) => sport.sportId.toString() === menuItem.count
                     );
+                    const racingDataSidebar =
+                      menuItem.count == "7"
+                        ? matchData.filter(
+                            (race) => race.sportId == Number(menuItem.count)
+                          )
+                        : [];
+                    const greyhoundDataSidebar =
+                      menuItem.count == "4339"
+                        ? matchData.filter(
+                            (race) => race.sportId == Number(menuItem.count)
+                          )
+                        : [];
+                        const recingGreyhopund = menuItem.count == "4339" ? greyhoundDataSidebar : menuItem.count == "7" ? racingDataSidebar : [];
+
                     return (
                       <div
                         key={index}
-                        className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
-                          ? "max-h-96 bg-[#fffff]"
-                          : "max-h-0 bg-[#fffff]"
-                          }`}
+                        className={`text-[#343435]  py-0 my-0 transition-[max-height] duration-300 ease-in ${
+                          clickedOutside1 === true
+                            ? "max-h-96 bg-[#fffff]"
+                            : "max-h-0 bg-[#fffff]"
+                        }`}
                       >
                         <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
                           <div
@@ -213,30 +249,63 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                               <span className="">{menuItem.text}</span>
                             </div>
                             <span>
-                              {!(menuItem.text === "Casino" || menuItem.text === "Sports Book") && (
-                                openKeys.includes(index) ? (
+                              {!(
+                                menuItem.text === "Casino" ||
+                                menuItem.text === "Sports Book"
+                              ) &&
+                                (openKeys.includes(index) ? (
                                   <BiUpArrow className="w-[10px] h-[10px]" />
                                 ) : (
                                   <BiDownArrow className="w-[10px] h-[10px]" />
-                                )
-                              )}
+                                ))}
                             </span>
                           </div>
 
-                          {sport && openKeys.includes(index) && (
+                          {(menuItem?.count === "4339" || menuItem?.count === "7") &&
+                            openKeys.includes(index) && (
+                              <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
+                                {recingGreyhopund.length > 0 ? (
+                                  recingGreyhopund?.map((item) => (
+                                    <div
+                                      key={item._id}
+                                      className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                      onClick={() => {
+                                        handleResponseGameotherDetails(item);
+                                        sidebartoggle();
+                                      }}
+                                    >
+                                      🎮 {item.matchName}
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="py-2 px-4 text-xs text-gray-500 italic">
+                                    No Match available!
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                          {sport && menuItem?.count !== "4339" && menuItem?.count !== "7" && openKeys.includes(index) && (
                             <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
                               {sport?.series.length > 0 ? (
                                 sport.series.map((series, seriesIndex) => (
-                                  <div key={seriesIndex} className="cursor-pointer border-b-[1px] border-[#eceaea]">
+                                  <div
+                                    key={seriesIndex}
+                                    className="cursor-pointer border-b-[1px] border-[#eceaea]"
+                                  >
                                     <div
                                       className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
-                                      onClick={(e) => handleClick1(index, seriesIndex, e)}
+                                      onClick={(e) =>
+                                        handleClick1(index, seriesIndex, e)
+                                      }
                                     >
                                       <span className="px-2 py-0 my-0">
                                         {series.seriesName}
                                       </span>
                                       <span>
-                                        {openKeys1[`${index}-${seriesIndex}`] ? (
+                                        {openKeys1[
+                                          `${index}-${seriesIndex}`
+                                        ] ? (
                                           <BiUpArrow className="w-[10px] h-[10px]" />
                                         ) : (
                                           <BiDownArrow className="w-[10px] h-[10px]" />
@@ -253,7 +322,9 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                 key={item._id}
                                                 className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
                                                 onClick={(e) => {
-                                                  handleResponseGameotherDetails(item);
+                                                  handleResponseGameotherDetails(
+                                                    item
+                                                  );
                                                   sidebartoggle();
                                                 }}
                                               >
@@ -284,7 +355,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       </div>
                     );
                   })}
-                  <div className="text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in">
+                  {/* <div className="text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in">
                     <div className="cursor-pointer divide-y-[1px] divide-[#f1f1f1] border-b-[1px] border-[#eceaea]">
                       <div
                         className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
@@ -311,7 +382,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       {openRaceId === 7 && (
                         <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
                           {racingData.length > 0 ? (
-                            racingData.map(item => (
+                            racingData.map((item) => (
                               <div
                                 key={item._id}
                                 className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
@@ -356,7 +427,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       {openRaceId === 4339 && (
                         <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
                           {racingData.length > 0 ? (
-                            racingData.map(item => (
+                            racingData.map((item) => (
                               <div
                                 key={item._id}
                                 className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
@@ -376,11 +447,14 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                  <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                     <p>
-                      <img src={"/subHeader/wp.png"} className="w-[18px] h-[18px]" />
+                      <img
+                        src={"/subHeader/wp.png"}
+                        className="w-[18px] h-[18px]"
+                      />
                     </p>
                     <span className="">Whatsapp Support</span>
                   </div>
@@ -391,7 +465,6 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <CasinoSlider data={sidebarData} />
         </div>
       </div>
-
 
       <div className="block lg:hidden shadow-[0_0_20px_rgba(1,41,112,0.1)]">
         <div className="flex justify-between items-center border-b-[1px] border-[#eceaea] py-1 px-2">
@@ -416,9 +489,13 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   onClick={() => {
                     navigate("/market-analysis");
                   }}
-                  className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                  className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
+                >
                   <p>
-                    <img src={"/subHeader/menu-market.png"} className="w-[18px] h-[18px]" />
+                    <img
+                      src={"/subHeader/menu-market.png"}
+                      className="w-[18px] h-[18px]"
+                    />
                   </p>
                   <span className="">Multi Market</span>
                 </div>
@@ -433,8 +510,11 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   return (
                     <div
                       key={index}
-                      className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true ? "max-h-96 bg-[#fffff]" : "max-h-0 bg-[#fffff]"
-                        }`}
+                      className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${
+                        clickedOutside1 === true
+                          ? "max-h-96 bg-[#fffff]"
+                          : "max-h-0 bg-[#fffff]"
+                      }`}
                     >
                       <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
                         {/* Sport Header */}
@@ -460,13 +540,15 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             <span className="">{menuItem.text}</span>
                           </div>
                           <span>
-                            {!(menuItem.text === "Casino" || menuItem.text === "Sports Book") && (
-                              openKeys.includes(index) ? (
+                            {!(
+                              menuItem.text === "Casino" ||
+                              menuItem.text === "Sports Book"
+                            ) &&
+                              (openKeys.includes(index) ? (
                                 <BiUpArrow className="w-[10px] h-[10px]" />
                               ) : (
                                 <BiDownArrow className="w-[10px] h-[10px]" />
-                              )
-                            )}
+                              ))}
                           </span>
                         </div>
 
@@ -489,74 +571,85 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         )}
 
                         {/* If this is NOT racing, render the normal sport series */}
-                        {!isRacingCategory && sport && openKeys.includes(index) && (
-                          <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
-                            {sport?.series.length > 0 ? (
-                              sport.series.map((series, seriesIndex) => (
-                                <div
-                                  key={seriesIndex}
-                                  className="cursor-pointer border-b-[1px] border-[#eceaea]"
-                                >
+                        {!isRacingCategory &&
+                          sport &&
+                          openKeys.includes(index) && (
+                            <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
+                              {sport?.series.length > 0 ? (
+                                sport.series.map((series, seriesIndex) => (
                                   <div
-                                    className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
-                                    onClick={(e) => handleClick1(index, seriesIndex, e)}
+                                    key={seriesIndex}
+                                    className="cursor-pointer border-b-[1px] border-[#eceaea]"
                                   >
-                                    <span className="px-2 py-0 my-0">
-                                      {series.seriesName}
-                                    </span>
-                                    <span>
-                                      {openKeys1[`${index}-${seriesIndex}`] ? (
-                                        <BiUpArrow className="w-[10px] h-[10px]" />
-                                      ) : (
-                                        <BiDownArrow className="w-[10px] h-[10px]" />
-                                      )}
-                                    </span>
-                                  </div>
-
-                                  {openKeys1[`${index}-${seriesIndex}`] && (
-                                    <div className="py-0 my-0">
-                                      {series.data.length > 0 ? (
-                                        <ul className="list-disc py-0 my-0 divide-y-[1px] divide-[#f1f1f1]">
-                                          {series.data.map((item) => (
-                                            <li
-                                              key={item._id}
-                                              className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
-                                              onClick={(e) => {
-                                                handleResponseGameotherDetails(item);
-                                                sidebartoggle();
-                                              }}
-                                            >
-                                              <span className="flex items-center space-x-1">
-                                                <p>🎮</p>
-                                                <p>{item.matchName}</p>
-                                              </span>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      ) : (
-                                        <div className="py-2 px-4 text-xs text-gray-500 italic">
-                                          No Match available!
-                                        </div>
-                                      )}
+                                    <div
+                                      className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                                      onClick={(e) =>
+                                        handleClick1(index, seriesIndex, e)
+                                      }
+                                    >
+                                      <span className="px-2 py-0 my-0">
+                                        {series.seriesName}
+                                      </span>
+                                      <span>
+                                        {openKeys1[
+                                          `${index}-${seriesIndex}`
+                                        ] ? (
+                                          <BiUpArrow className="w-[10px] h-[10px]" />
+                                        ) : (
+                                          <BiDownArrow className="w-[10px] h-[10px]" />
+                                        )}
+                                      </span>
                                     </div>
-                                  )}
+
+                                    {openKeys1[`${index}-${seriesIndex}`] && (
+                                      <div className="py-0 my-0">
+                                        {series.data.length > 0 ? (
+                                          <ul className="list-disc py-0 my-0 divide-y-[1px] divide-[#f1f1f1]">
+                                            {series.data.map((item) => (
+                                              <li
+                                                key={item._id}
+                                                className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
+                                                onClick={(e) => {
+                                                  handleResponseGameotherDetails(
+                                                    item
+                                                  );
+                                                  sidebartoggle();
+                                                }}
+                                              >
+                                                <span className="flex items-center space-x-1">
+                                                  <p>🎮</p>
+                                                  <p>{item.matchName}</p>
+                                                </span>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        ) : (
+                                          <div className="py-2 px-4 text-xs text-gray-500 italic">
+                                            No Match available!
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                ))
+                              ) : (
+                                <div className="py-2 px-4 text-xs text-gray-500 italic">
+                                  No Match available!
                                 </div>
-                              ))
-                            ) : (
-                              <div className="py-2 px-4 text-xs text-gray-500 italic">
-                                No Match available!
-                              </div>
-                            )}
-                          </div>
-                        )}
+                              )}
+                            </div>
+                          )}
                       </div>
                     </div>
                   );
                 })}
 
-                <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer " >
+                <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                   <p>
-                    <img src={"/subHeader/wp.png"} className="w-[18px] h-[18px]" />
+                    <img
+                      src={"/subHeader/wp.png"}
+                      className="w-[18px] h-[18px]"
+                    />
                   </p>
                   <span className="">Whatsapp Support</span>
                 </div>

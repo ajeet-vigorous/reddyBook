@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 
-const MatchDetailsHeaderSection = ({ children, marketType, minMax }) => {
+const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [isExpanded, setIsExpanded] = useState(true);
     const [showNotification, setShowNotification] = useState(false);
@@ -50,7 +50,7 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax }) => {
             )}
 
             {/* Header */}
-            <div className="cursor-pointer bg-slate-300" onClick={toggleExpand}>
+            <div className="cursor-pointer bg-slate-300">
                 <p className="flex items-center justify-between flex-wrap">
                     <div className="flex items-center">
                         <span className="
@@ -79,9 +79,10 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax }) => {
                                 <FaRegBookmark size={16} className='text-[var(--primary)]' />
                             )}
                         </button>
+                        {cashOut}
                     </div>
 
-                    <span className="h-10 flex items-center text-black text-[10px] font-semibold mobile:text-[9px]">
+                    <span  onClick={toggleExpand} className="h-10 flex items-center text-black text-[10px] font-semibold mobile:text-[9px]">
                         <span>Min: {minMax.min} | Max: {minMax.max}</span>
                         {isExpanded ? (
                             <MdOutlineKeyboardArrowUp size={20} className='text-[var(--primary)] ml-2' />
