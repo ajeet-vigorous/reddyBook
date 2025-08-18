@@ -71,6 +71,7 @@ const StakeSettings = () => {
                                             <input
                                                 type="text"
                                                 value={item.key}
+                                                disabled
                                                 className="text-center py-1.5 px-2 bg-[var(--secondary)] text-white w-[70px] text-[13px] font-[500]"
                                                 onChange={(e) => {
                                                     handleKeyChange(rowIndex * 2 + itemIndex, e.target.value);

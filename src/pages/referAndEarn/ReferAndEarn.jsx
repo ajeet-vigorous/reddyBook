@@ -12,11 +12,10 @@ const ReferAndEarn = () => {
     }, [])
 
     const clientUserData = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
-
     const hostname = window.location.origin;
-    const referralCode = clientUserData?.referralCode;
+    const referralCode = clientUserData?.data?.referralCode;
     const clipboardText = `${hostname}/ragister/${referralCode}`;
-    console.log(clipboardText, "clipboardText");
+    console.log(clientUserData, "clipboardText");
 
     return (
         <>
@@ -44,10 +43,10 @@ const ReferAndEarn = () => {
                         <div className="bg-black text-center mt-3 rounded-md">
                             <div className="w-full py-2 text-[16px] font-[400] text-white">
                                 Don’t wait, start making HUGE PROFITS NOW! Use my special code{" "}
-                                {clientUserData?.referralCode} to Sign-Up & Get a  Referral Bonus!
+                                {clientUserData?.data?.referralCode} to Sign-Up & Get a  Referral Bonus!
                             </div>
                             <div className="w-full py-2 text-[20px] font-[500] text-white  overflow-x-auto">
-                                {hostname}/{clientUserData?.referralCode}
+                                {hostname}/{clientUserData?.data?.referralCode}
                             </div>
                         </div>
                         <div className="flex justify-center items-center mt-2">
@@ -60,7 +59,7 @@ const ReferAndEarn = () => {
 
 
                         <div className="bg-black text-center mt-3 rounded-md w-full">
-                            <div className=" py-2 text-lg font-bold text-white overflow-x-auto">{clientUserData?.referralCode}</div>
+                            <div className=" py-2 text-lg font-bold text-white overflow-x-auto">{clientUserData?.data?.referralCode}</div>
                         </div>
                         <div className="flex justify-center items-center mt-2">
                             <CopyToClipboard text={referralCode} >

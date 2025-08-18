@@ -20,7 +20,7 @@ export default function BonusRules(props) {
     return (
         <>
             <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black bg-opacity-50">
-                <div className="w-full h-full flex items-start justify-center pt-5 overflow-y-auto">
+                <div className="w-full h-full flex items-start justify-center py-6 overflow-y-auto">
                     <div className="xl:w-[45%] lg:w-[80%] w-full bg-white text-black rounded shadow-md">
                         <div className="border border-gray-300 rounded-none bg-white">
                             <div className=" w-full h-full bg-[var(--darkcolor)] flex justify-between px-2 py-2 items-center">

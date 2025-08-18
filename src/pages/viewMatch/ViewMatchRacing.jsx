@@ -1,7 +1,4 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
+
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -12,9 +9,6 @@ import moment from "moment";
 import { apiCall } from "../../config/HTTP";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ButtonValues from "../buttonvalues/ButtonValues";
 import { message } from "antd";
 
 
@@ -627,7 +621,7 @@ const ViewMatchRacing = () => {
                 setBetShow(false)
                 setBetShowM(false)
                 if (!saveBetOdds.error) {
-                   
+
                     setSuccessMessage(saveBetOdds?.message)
                     message.success(saveBetOdds?.message, 2);
 
@@ -637,7 +631,7 @@ const ViewMatchRacing = () => {
 
                 } else {
                     setBetLoading(false)
-                   
+
                     message.error("Sorry, your bet couldn't be placed. " + saveBetOdds?.message, 2);
                 }
             } else {
@@ -647,7 +641,7 @@ const ViewMatchRacing = () => {
                 setBetShow(false);
                 setBetShowM(false);
                 setSuccessMessage(saveBetOdds?.message);
-            
+
 
                 if (!saveBetOdds.error) {
                     setBetLoading(false)
@@ -657,7 +651,7 @@ const ViewMatchRacing = () => {
                     await matchOddsPos()
 
                 } else {
-                   
+
                     setBetLoading(false)
                     message.error("Sorry, your bet couldn't be placed.", 2);
                 }
@@ -769,7 +763,7 @@ const ViewMatchRacing = () => {
                 const minutes = String(duration.minutes()).padStart(2, '0');
                 const seconds = String(duration.seconds()).padStart(2, '0');
                 if (hours == '00') {
-                    setTimeLeft( <> <span className="text-yellow-400 !text-[20px] !sm-text-[12px]"> {minutes} </span> <span className="text-white !text-[12px]">minutes</span> <span className="text-yellow-400 !text-[20px] !sm-text-[12px]">{seconds}</span>  <span className="text-white !text-[12px]">Seconds Remaining</span> </>);
+                    setTimeLeft(<> <span className="text-yellow-400 !text-[20px] !sm-text-[12px]"> {minutes} </span> <span className="text-white !text-[12px]">minutes</span> <span className="text-yellow-400 !text-[20px] !sm-text-[12px]">{seconds}</span>  <span className="text-white !text-[12px]">Seconds Remaining</span> </>);
                     return
                 } if (hours) {
                     setTimeLeft(`${hours} hours ${minutes} minutes Remaining`);
@@ -854,10 +848,10 @@ const ViewMatchRacing = () => {
                     className={`${matchTab === 2 ? "border-t-2" : ""} border-white  border-l-2 pr-3 py-2 text-center uppercase shadow-xl w-1/2 text-[12px] font-bold  cursor-pointer`}>
                     <span className=''>Matched Bets</span>
                 </button>
-               
+
             </div>
             <div className="md:flex justify-center text-black h-screen w-100 gap-x-1">
-                {(matchTab === 1 ) && (
+                {(matchTab === 1) && (
                     <div className="xl:w-[calc(100%-402px)] 2xl:w-[calc(100%-452px)] w-full">
                         <div className="">
 
@@ -984,7 +978,6 @@ const ViewMatchRacing = () => {
                                                     <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold ">
                                                         Match_Odds
                                                     </div>
-                                                    <button disabled className="bg-[var(--success-color)] opacity-35  text-sm text-white px-3 py-1">Cashout</button>
 
                                                 </div>
                                             </header>
@@ -1064,16 +1057,16 @@ const ViewMatchRacing = () => {
                                                         </div>
 
                                                         <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 relative">
-                                                        
-                                                        { (elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status==="SUSPENDED" || finalSocket["Match Odds"]?.status==="CLOSED") && <div
-                                                                                    className={`w-full h-full  absolute  lg:flex  bg-[var(--suspended-color)]    hidden justify-center items-center z-[1999]`}
-                                                                                >
-                                                                                    <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
-                                                                                        <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
-                                                                                           {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>}
+
+                                                            {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
+                                                                className={`w-full h-full  absolute  lg:flex  bg-[var(--suspended-color)]    hidden justify-center items-center z-[1999]`}
+                                                            >
+                                                                <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
+                                                                    <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
+                                                                        {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
+                                                                    </span>
+                                                                </div>
+                                                            </div>}
                                                             {elementtemp && elementtemp.ex && elementtemp.ex.availableToBack && elementtemp.ex.availableToBack.length > 0 ? (
                                                                 <>
                                                                     {elementtemp.ex.availableToBack.slice(1).map((tempData, index) => (
@@ -1248,16 +1241,16 @@ const ViewMatchRacing = () => {
                                                                     )
                                                                 )) : null}
                                                         </div>
-                                                     
-                                                        { (elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status==="SUSPENDED" || finalSocket["Match Odds"]?.status==="CLOSED") && <div
-                                                                                    className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center z-[1999]`}
-                                                                                >
-                                                                                    <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
-                                                                                        <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
-                                                                                        {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>}
+
+                                                        {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
+                                                            className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center z-[1999]`}
+                                                        >
+                                                            <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
+                                                                <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
+                                                                    {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
+                                                                </span>
+                                                            </div>
+                                                        </div>}
                                                     </div>
                                                 </>
                                             )) : null}
