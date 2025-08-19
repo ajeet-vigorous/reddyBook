@@ -304,9 +304,19 @@ import { LiaDesktopSolid } from "react-icons/lia";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Login from "../login/Login";
 
 function DashboardInplay({ activeTab, matchlistItems, sportName }) {
   const { gameId } = useParams();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const openModal = () => {
+    setIsLoginOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsLoginOpen(false);
+  };
 
   // Filter only matches for the current active sport tab
   const filteredMatches = matchlistItems
@@ -326,21 +336,24 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
   if (!filteredMatches || filteredMatches.length === 0) {
     return (
       <>
-        <div className="lg:flex hidden justify-between py-1 w-full border-b border-t bg-[#e9eff8] border-[#C6D2D8]">
-          <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
-            {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
-            {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
-            {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
-            <p>{sportName}</p>
-            <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+        <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
+        <section>
+          <div className="lg:flex hidden justify-between py-1 w-full border-b border-t bg-[#e9eff8] border-[#C6D2D8]">
+            <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
+              {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
+              {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
+              {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
+              <p>{sportName}</p>
+              <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
+            </div>
+            <p className="w-[50%] grid grid-cols-3 text-center text-sm justify-center items-center font-bold">
+              <span>1</span>
+              <span>X</span>
+              <span>2</span>
+            </p>
           </div>
-          <p className="w-[50%] grid grid-cols-3 text-center text-sm justify-center items-center font-bold">
-            <span>1</span>
-            <span>X</span>
-            <span>2</span>
-          </p>
-        </div>
-        <div className="border-b px-3 py-1 text-[13px] bg-white">No In-Play Records found!</div>
+          <div className="border-b px-3 py-1 text-[13px] bg-white">No In-Play Records found!</div>
+        </section>
       </>
     );
   }
@@ -370,7 +383,24 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
               <div className="flex items-center justify-start w-full bg-white">
                 <a
-                  href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
+
+                  // onClick={() => {
+                  //   localStorage.getItem('token')
+                  //     ? window.location.href = `/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`
+                  //     : localStorage.setItem("unauthorized", true);
+                  // }}
+                  // href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
+
+                  onClick={() => {
+                    if (localStorage.getItem("token")) {
+                      window.location.href = `/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`;
+                    } else {
+                      // openModal();
+                      localStorage.setItem("unauthorized", true);
+                    }
+                  }}
+
+                  // href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                   className="flex items-center justify-start py-1 space-x-1 w-full"
                 >
                   <div className="flex flex-col uppercase w-[50%] sm:w-[32%] px-2">

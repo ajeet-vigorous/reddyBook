@@ -19,7 +19,7 @@ export default function RulesModal(props) {
 
     return (
 
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-full h-full flex items-start justify-center pt-5 overflow-y-auto">
                 <div className="xl:w-[45%] lg:w-[80%] w-full bg-white text-black rounded shadow-md">
                     <div className="border border-gray-300 rounded-none bg-white">

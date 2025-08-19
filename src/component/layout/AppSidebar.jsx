@@ -109,7 +109,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   //     setOpenKeys([...openKeys, index]);
   //   }
   // };
-  console.log("openKeys", openKeys);
+  // console.log("openKeys", openKeys);
   const handleClick = (index, e) => {
     console.log("index", index, openKeys, e);
     e.stopPropagation();
@@ -212,13 +212,13 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     );
                     const racingDataSidebar =
                       menuItem.count == "7"
-                        ? matchData.filter(
+                        ? matchData?.filter(
                             (race) => race.sportId == Number(menuItem.count)
                           )
                         : [];
                     const greyhoundDataSidebar =
                       menuItem.count == "4339"
-                        ? matchData.filter(
+                        ? matchData?.filter(
                             (race) => race.sportId == Number(menuItem.count)
                           )
                         : [];
