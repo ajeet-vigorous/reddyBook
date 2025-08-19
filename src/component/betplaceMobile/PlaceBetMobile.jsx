@@ -297,12 +297,12 @@ export default function PlaceBetMobile(props) {
                 <div className='grid grid-cols-4 gap-[3px] px-2'>
 
                     <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
-                        onClick={() => { }}>Min Stake
+                        onClick={() => {arrayData(isMatchCoin?.min) }}>Min Stake
                         <div className="ld ld-ball ld-flip">
                         </div>
                     </div>
                     <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
-                        onClick={() => { }}>Max Stake
+                        onClick={() => {arrayData(isMatchCoin?.max) }}>Max Stake
                         <div className="ld ld-ball ld-flip">
                         </div>
                     </div>
@@ -328,7 +328,7 @@ export default function PlaceBetMobile(props) {
                 </div>
 
                 <div className="text-red-600 text-xs font-semibold  pl-2">
-                    min Bet :100 max Bet :{isMatchCoin?.max}
+                    min Bet :{isMatchCoin?.min} max Bet :{isMatchCoin?.max}
                 </div>
 
                 <div className='grid grid-cols-2 gap-1 p-1'>

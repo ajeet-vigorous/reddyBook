@@ -10,6 +10,9 @@ import { apiCall } from "../../config/HTTP";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
 import { message } from "antd";
+import { FaTv } from "react-icons/fa";
+import MatchDetailsHeaderSection from "../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection";
+import CashOutSystem from "./CashoutTesting";
 
 
 
@@ -739,7 +742,7 @@ const ViewMatchRacing = () => {
 
     const handleButtonValues = (e) => {
         setbuttonValue((prev) => !prev);
-        e.stopPropagation();
+        // e.stopPropagation();
     };
 
     const [matchTab, setMatchTab] = useState(1);
@@ -856,7 +859,7 @@ const ViewMatchRacing = () => {
                     <div className="xl:w-[calc(100%-402px)] 2xl:w-[calc(100%-452px)] w-full">
                         <div className="">
 
-                            <div className="horse-banner"><img src="https://versionobj.ecoassetsservice.com/v38/static/front/img/10.png" className="img-fluid" /><div className="horse-banner-detail"><div className="text-success">{finalSocket['Match Odds']?.status ?? ""}</div><div className="horse-timer"><span>{timeLeft}&nbsp;</span></div><div className="time-detail"><p>{inplayMatch?.countryCode}  &gt;  {inplayMatch?.matchName}</p><h5><span>{inplayMatch?.matchDate}</span><span> </span></h5></div></div></div>
+                            {/* <div className="horse-banner"><img src="https://versionobj.ecoassetsservice.com/v38/static/front/img/10.png" className="img-fluid" /><div className="horse-banner-detail"><div className="text-success">{finalSocket['Match Odds']?.status ?? ""}</div><div className="horse-timer"><span>{timeLeft}&nbsp;</span></div><div className="time-detail"><p>{inplayMatch?.countryCode}  &gt;  {inplayMatch?.matchName}</p><h5><span>{inplayMatch?.matchDate}</span><span> </span></h5></div></div></div> */}
 
                             {/* ---------------------------------------------------------match odds counts starts------------------------------------------------------------- */}
                             {matchOddsSelected?.length > 1 &&
@@ -968,80 +971,155 @@ const ViewMatchRacing = () => {
                                 </>
                             }
                             {/* ---------------------------------------------------------match odds counts end ------------------------------------------------------------- */}
+                             <div className=" block">
+                                                        {inplayMatch &&
+                                                            inplayMatch?.matchName ? (
+                                                            <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
+                                                                <div className="flex flex-col uppercase">
+                                                                    <span className="text-white text-[14px] font-[400]">{inplayMatch?.matchName}</span>
+                                                                    <span className="text-white text-[8px] font-[400]">({inplayMatch?.matchDate})</span>
+                                                                </div>
+                                                                <div className="flex justify-end items-center gap-1.5">
+                            
+                                                                    <span
+                                                                        // onClick={() => handleScore()}
+                                                                        className="text-white  font-semibold">
+                                                                        <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                                                                    </span>
+                                                                    {/* <span onClick={() => {
+                                                                        handelTvModal();
+                                                                    }} className='text-white'><FaTv size={18} /></span> */}
+                                                                    <span className="bg-[var(--primary)] xl:hidden block text-white px-[3px] py-[3px] tracking-wide rounded-[3px] uppercase text-[12px]"
+                                                                        // onClick={() => handleBets()}
+                                                                        >
+                                                                            Bets</span>
+                                                                </div>
+                                                            </div>
+                                                        ) : null}
+                                                        <div className="xl:hidden block">
+                                                            {inplayMatch?.isTv ? <>
+                                                                {tvShow && <div className="bg-white w-full h-48">
+                                                                    <div className="details">
+                                                                        <div className={`w-full relative md:text-sm text-[10px]`}>
+                                                                            <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>}
+                                                            </>
+                                                                : null}
+                                                        </div>
+                                                    </div>
 
                             {inplayMatch?.isMatchOdds && (activeTab === "all") ? (
                                 <>
+                               
+                                 <MatchDetailsHeaderSection
+                                                            marketType={inplayMatch?.marketName}
+                                                            minMax={{ min: 100, max: (isMatchCoin?.max) }}
+                                                            // cashOut={
+                                                            //   element?.runners?.length > 0 && (
+                                                            //     <CashOutSystem
+                                                            //       marketList={element.runners.map((runner) => ({
+                                                            //         selectionid: runner.selectionId,
+                                                            //         team_name: runner.selectionName,
+                                                            //         lgaai: runner.ex?.availableToBack?.[0]?.price || 0,
+                                                            //         khaai: runner.ex?.availableToLay?.[0]?.price || 0,
+                                                            //         selectionName: runner.selectionName,
+                                                            //         ex: {
+                                                            //           availableToBack: runner.ex?.availableToBack || [],
+                                                            //           availableToLay: runner.ex?.availableToLay || [],
+                                                            //         },
+                                                            //       }))}
+                                                            //       positionObj={positionObj}
+                                                            //       handleBackOpen={handleBackOpen}
+                                                            //       toggleRowVisibility={toggleRowVisibility}
+                                                            //       marketId={element.marketId}
+                                                            //       betFor={"matchOdds"}
+                                                            //       oddsType={element.marketType}
+                                                            //     />
+                                                            //   )
+                                                            // }
+                                                          >
+
+
                                     {Object.values(finalSocket).map((element, index) => element.marketType === "Match Odds" && (
+                                        <>
+
+                                     
 
                                         <div className="" key={index}>
-                                            <header className="mt-1">
+                                            {/* <header className="mt-1">
                                                 <div className=" bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
                                                     <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold ">
                                                         Match_Odds
                                                     </div>
 
                                                 </div>
-                                            </header>
+                                            </header> */}
                                             <div className={`  flex whitespace-normal max-w-full border-b border-gray-300 `}>
-                                                <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
+                                                <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex ">
 
-                                                    <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
+                                                    <div className="w-full py-1 bg-white leading-3 flex items-center text-xs text-[#097c93]">
                                                         <span className="text-[12px] font-bold">
-                                                            Max: {isMatchCoin?.max}
+                                                            {/* Max: {isMatchCoin?.max} */}
                                                         </span>
                                                     </div>
                                                 </div>
 
                                                 <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
-                                                    <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                                    <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
 
                                                     </span>
-                                                    <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                                    <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
                                                     </span>
                                                     <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                        <div className={`py-1 flex justify-center items-center ${`bg-[#8DD2F0]`}`}>
+                                                        <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
                                                             <div className='text-center leading-3'>
-                                                                <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span><br />
+                                                                <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Back</span><br />
 
                                                             </div>
                                                         </div>
                                                     </span>
                                                     <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                        <div className={`py-1 flex justify-center items-center ${`bg-[#FEAFB2]`}`}>
+                                                        <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
                                                             <div className='text-center leading-3'>
-                                                                <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Lay</span><br />
+                                                                <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Lay</span><br />
 
                                                             </div>
                                                         </div>
                                                     </span>
-                                                    <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                                    <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
 
                                                     </span>
-                                                    <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                                    <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
 
                                                     </span>
 
 
                                                 </div>
                                             </div>
+                                           
 
                                             {element && element.runners && element.runners.length > 0 ? element.runners.map((elementtemp, index) => (
                                                 <>
+                                                
+                                               
                                                     <div
-                                                        className={`  flex whitespace-normal max-w-full border-b border-gray-300 relative`}
+                                                        className={`  flex whitespace-normal bg-white max-w-full border-b border-gray-300 relative`}
                                                         key={index}
                                                     >
                                                         <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
                                                             {/* w-11/12  */}
-                                                            <div className="w-full py-1 leading-3 flex items-center text-[#333333]">
-                                                                <span class="text-[13px] font-bold flex items-center gap-2">
+                                                            <div className="w-full py-1 flex flex-col leading-3 justify-center items-start text-[#333333]">
+                                                                <div className="text-[13px] font-bold flex  items-center gap-2">
                                                                     {sportId == 7 &&
                                                                         <>
-                                                                            <span><input checked={matchOddsSelected.includes(index + 1)} onClick={() => { handleCheckboxClick(index + 1) }} type="checkbox" className="!bg-white h-4 w-4" /></span>
+                                                                    <div><input checked={matchOddsSelected.includes(index + 1)} onClick={() => { handleCheckboxClick(index + 1) }} type="checkbox" className="!bg-white h-4 w-4" /></div>
                                                                             <span>({index + 1}) </span>
                                                                         </>
                                                                     }
                                                                     <span> {elementtemp.selectionName} <br />
+                                                                    
                                                                         <div key={index} className={positionObj[elementtemp.selectionId] > 0 ? 'text-green-500 !mt-2' : positionObj[elementtemp.selectionId] < 0 ? 'text-red-500 !mt-2' : 'black'} >
                                                                             {/* {returnDataObject[elementtemp.selectionId] !== 0 ? returnDataObject[elementtemp.selectionId] : "-"} */}
 
@@ -1049,9 +1127,11 @@ const ViewMatchRacing = () => {
 
                                                                         </div>
                                                                     </span>
+                                                                   
 
 
-                                                                </span>
+                                                                </div>
+                                                                <div className="text-[13px]  flex  items-center gap-1  ">   <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"> <span className="text-[13px] font-bold flex  items-center gap-2">Jockey:</span> {elementtemp?.jockeyName}</div> <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"><span className="text-[13px] font-bold flex  items-center gap-2">Age:</span> {elementtemp?.age}</div></div>
                                                             </div>
 
 
@@ -1060,7 +1140,7 @@ const ViewMatchRacing = () => {
                                                         <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 relative">
 
                                                             {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
-                                                                className={`w-full h-full  absolute  lg:flex  bg-[var(--suspended-color)]    hidden justify-center items-center z-[1999]`}
+                                                                className={`w-full h-full  absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 lg:flex     hidden justify-center items-center z-[1999]`}
                                                             >
                                                                 <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
                                                                     <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
@@ -1255,16 +1335,19 @@ const ViewMatchRacing = () => {
                                                     </div>
                                                 </>
                                             )) : null}
+                                          
                                         </div>
-                                    ))}
+                                        </>))}
+                                        </MatchDetailsHeaderSection>
                                 </>
                             ) : null}
                         </div>
                     </div>
+                    
                 )}
                 <div className="space-y-1.5 xl:w-[402px]  2xl:w-[452px] sticky top-0  lg:h-[calc(100vh-400px)] xl:block hidden p-1">
                     <div>
-                        <div className="bg-[var(--secondary)] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
+                        <div className="bg-black cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
                             <span>Live Match</span>
                             <button className="flex justify-end space-x-2 font-semibold" > </button>
                         </div>
@@ -1282,7 +1365,7 @@ const ViewMatchRacing = () => {
                     <div>
                         {!betShow && (
                             <>
-                                <div className="bg-[var(--secondary)] flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold rounded-sm">
+                                <div className="bg-black flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold rounded-sm">
                                     <span>Place Bet </span>
                                 </div>
                                 <BetPlaceDesktop
@@ -1298,13 +1381,14 @@ const ViewMatchRacing = () => {
                                     increaseCount={increaseCount}
                                     decreaseCount={decreaseCount}
                                     handleButtonValues={handleButtonValues}
+                                    isMatchCoin={minMaxCoins}
                                 />
                             </>
                         )}
                     </div>
 
                     <div className=" ">
-                        <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
+                        <div className="bg-black rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
                             <span> My Bets</span>
                         </div>
                         <div className="overflow-hidden w-full  border border-[#C6D2D8]">
@@ -1516,6 +1600,7 @@ const ViewMatchRacing = () => {
 
 
             </div>
+            
         </div >
     );
 };

@@ -41,6 +41,7 @@ export function BetPlaceDesktop(props) {
   const myArray = Object.values(betChipsData);
   const modalRef = useRef();
   const [positions, setPositionData] = useState(0);
+  console.log(editStake,'editStake');
 
   useEffect(() => {
     if (
@@ -411,14 +412,14 @@ export function BetPlaceDesktop(props) {
                     <div className="grid grid-cols-4 gap-0.5 p-0.5">
                       <div
                         className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
-                        onClick={() => { }}
+                        onClick={() => {arrayData(isMatchCoin?.min) }}
                       >
                         Min Stake
                         <div className="ld ld-ball ld-flip"></div>
                       </div>
                       <div
                         className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
-                        onClick={() => { }}
+                        onClick={() => {arrayData(isMatchCoin?.max) }}
                       >
                         Max Stake
                         <div className="ld ld-ball ld-flip"></div>
@@ -481,7 +482,7 @@ export function BetPlaceDesktop(props) {
                       </div>
                     </div> */}
                     <div className="text-red-600 text-xs font-semibold  pl-2">
-                      min Bet :100 max Bet :{isMatchCoin?.max}
+                      min Bet :{isMatchCoin?.min} max Bet :{isMatchCoin?.max}
                     </div>
                     <div className="grid grid-cols-2 gap-1 p-1">
                       <div>
@@ -538,7 +539,7 @@ export function BetPlaceDesktop(props) {
             setEditStake(false);
             e.stopPropagation();
           }}
-          className="fixed inset-0 z-50 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 "
+          className="fixed inset-0 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 "
         >
           <div
             onClick={(e) => {
