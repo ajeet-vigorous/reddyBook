@@ -251,7 +251,7 @@ export function BetPlaceDesktop(props) {
           <tr className={`border-b border-[#c7c8ca]`}>
             <div width="100% h-full ">
               <div className="relative h-full grid pt-1 grid-cols-2 px-1 gap-1 items-center">
-                <div className="flex h-full items-center">
+                {/* <div className="flex h-full items-center">
                   <div
                     onClick={decreaseCount}
                     className="cursor-pointer  h-full  flex justify-center items-center w-[40px] bg-[#024F99] leading-none"
@@ -277,16 +277,16 @@ export function BetPlaceDesktop(props) {
                   >
                     <GoPlus size={14} color="white" />
                   </div>
-                </div>
+                </div> */}
                 <div className="flex flex-col">
                   {/* <span className="text-center text-[12px]">Odds</span> */}
                   <div className="flex items-center w-full overflow-hidden bg-white border border-gray-300 h-9">
                     <button className="h-9 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
-                      <FaMinus size={13} />
+                      <FiMinus size={13} />
                     </button>
                     <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-9">{count && count ? count : 0}</div>
                     <button className="h-9 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
-                      <FaPlus size={13} />
+                      <GoPlus size={13} />
                     </button>
                   </div>
                 </div>
@@ -304,8 +304,8 @@ export function BetPlaceDesktop(props) {
               </div>
             </div>
 
-            <td className="text-right ">
-              {Array.isArray(betSlipData?.nameOther) &&
+            {/* <td className="text-right ">
+              {Array?.isArray(betSlipData?.nameOther) &&
                 betSlipData.nameOther.length <= 3
                 ? betSlipData.nameOther.map((other, index) => (
                   <React.Fragment key={index}>
@@ -356,7 +356,7 @@ export function BetPlaceDesktop(props) {
                   </React.Fragment>
                 ))
                 : null}
-            </td>
+            </td> */}
           </tr>
           <tr className="">
             <td colSpan={4}>
