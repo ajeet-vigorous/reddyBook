@@ -227,7 +227,7 @@ const BookmakerComponent = ({
                         <BlinkingComponent
                           price={(commList.khaai * 100).toFixed(2)}
                           size={(commList.lgaai * 100).toFixed(2)}
-                          color={"bg-[#FEAFB2]"}
+                          color={"bg-[#F9C8D3]"}
                           blinkColor={"bg-[#FE7A7F]"}
                           textColors={"text-black"}
                           boderColors={"border-[#f996ab]"}
@@ -291,7 +291,7 @@ const BookmakerComponent = ({
                     </div>
 
                     {(commList.lgaai === "0.00" || commList.lgaai === "0.000") && (
-                      <div className="xl:w-[42%] bg-white/80 border-l-red-500 border-[0.5px] border-r-red-500 lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute flex justify-center items-center z-30">
+                      <div className="xl:w-[42%] bg-white/80 border-l-red-500 border-[0.5px] border-r-red-500 lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute flex justify-center items-center ">
                         <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap rounded font-bold bg-transparent opacity-90">
                           <span className="text-[#FF071B] xl:text-lg text-sm font-bold uppercase">
                             {/* SUSPENDED */}

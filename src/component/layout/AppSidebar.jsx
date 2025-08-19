@@ -261,12 +261,12 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                           {(menuItem?.count === "4339" || menuItem?.count === "7") &&
                             openKeys.includes(index) && (
-                              <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
+                              <div className="bg-[#f6f9ff]  divide-y divide-[#eceaea]">
                                 {recingGreyhopund.length > 0 ? (
                                   recingGreyhopund?.map((item) => (
                                     <div
                                       key={item._id}
-                                      className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                      className="bg-[#f6f9ff] text-xs font-[500]  py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
                                       onClick={() => {
                                         handleResponseGameotherDetails(item);
                                         sidebartoggle();

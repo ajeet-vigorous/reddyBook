@@ -203,7 +203,7 @@ export default function PlaceBetMobile(props) {
 
     return (
         <div className='xl:hidden flex justify-center items-start '>
-            <div className={`xl:w-[50%] w-full relative  z-50 mx-auto ${betSlipData.type === "No"
+            <div className={`xl:w-[50%] w-full relative   mx-auto ${betSlipData.type === "No"
                 ? "bg-[var(--matchKhai)] "
                 : "bg-[var(--matchLagai)]"
                 } `}>

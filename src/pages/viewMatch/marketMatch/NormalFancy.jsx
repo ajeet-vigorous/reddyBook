@@ -301,7 +301,7 @@ const NormalFancyComponent = ({
                                 boderColors={"border-[#489bbd]"}
                               />
                             </span>
-                            <span className="xl:flex items-center bg-white text-end px-2 w-full justify-end hidden z-20 text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden ">
+                            <span className="xl:flex items-center bg-white text-end px-2 w-full justify-end hidden  text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden ">
                               Min:100
                               <br />
                               Max:{formatNumber(commList?.max)}
@@ -311,7 +311,7 @@ const NormalFancyComponent = ({
                               (commList.running_status === "SUSPENDED" ||
                                 commList.running_status === "CLOSE" ||
                                 commList.running_status === "Ball Running") ? (
-                              <div className={`xl:w-[42%] lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute bg-white/80 border-l-red-500 border-[0.5px] border-r-red-500 flex justify-center items-center z-30`}>
+                              <div className={`xl:w-[42%] lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute bg-white/80 border-l-red-500 border-[0.5px] border-r-red-500 flex justify-center items-center `}>
                                 <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap rounded font-bold bg-transparent opacity-90">
                                   <span className="text-[#FF071B] xl:text-lg text-sm font-bold uppercase">
                                     {/* {commList.running_status} */}
