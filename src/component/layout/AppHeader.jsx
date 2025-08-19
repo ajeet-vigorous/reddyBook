@@ -125,7 +125,7 @@ const AppHeader = ({ setSidebarOpen }) => {
       diamondBet: true,
       isClientExposure: true,
     };
-    dispatch(getClientExposure(reqData));
+    // dispatch(getClientExposure(reqData)); //betList
   };
 
   return (
@@ -145,7 +145,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                 onClick={() => {
                   navigate("/dashboard");
                 }}
-                src={settings.logo1} className="w-[107px] h-[37px] lg:hidden block" />
+                src={settings.logo1} className="w-[100px] h-[34px] lg:hidden block" />
               <div className="relative w-full lg:block hidden">
                 <input
                   placeholder="Search Events"
@@ -162,10 +162,10 @@ const AppHeader = ({ setSidebarOpen }) => {
             </div>
             {token ? (
               <>
-                <div className="uppercase flex md:space-x-3 sm:space-x-2 ">
+                <div className="uppercase flex md:space-x-3 sm:space-x-2 -space-x-3 ">
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:-mt-[2px] -mt-4" src='/header/inner-balexpo-red.png' />
+                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] md:-mt-[2px] -mt-5" src='/header/inner-balexpo-red.png' />
                       <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">BAL</span>
                     </div>
                     <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
@@ -180,7 +180,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                     }}
                     className="text-center cursor-pointer">
                     <div className="flex  justify-center items-center relative">
-                      <img className="w-[30x] h-[30px] md:w-[35x] md:h-[35px] md:-mt-[2px] -mt-4" src='/header/inner-balexpo-red.png' />
+                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] md:-mt-[2px] -mt-5" src='/header/inner-balexpo-red.png' />
                       <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">EXP</span>
                     </div>
                     <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
@@ -197,7 +197,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                     >
                       <div className="flex items-center justify-center space-x-0 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
 
-                        <div className="flex  items-center justify-center space-x-2">
+                        <div className="flex  items-center justify-center sm:space-x-2 space-x-1">
                           <IoPerson />
                           <p className="">
                             {user && user?.data && user?.data?.username}

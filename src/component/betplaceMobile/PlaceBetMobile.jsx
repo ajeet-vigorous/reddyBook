@@ -16,7 +16,7 @@ export const betChipsData = {
 };
 
 export default function PlaceBetMobile(props) {
-    const { decreaseCount, count, setBetSlipData, handleButtonValues, increaseCount, placeBet, handleClose, betSlipData, betLoading, inputChange, isFetch,isMatchCoin } = props;
+    const { decreaseCount, count, setBetSlipData, handleButtonValues, increaseCount, placeBet, handleClose, betSlipData, betLoading, inputChange, isFetch, isMatchCoin } = props;
     const updateStackOnclic = (input) => {
         const numericInput = parseFloat(input);
         if (!isNaN(numericInput)) {
@@ -232,15 +232,15 @@ export default function PlaceBetMobile(props) {
                 </div>
 
 
-                <div className="px-2 bg-[#ffffff45] grid grid-cols-2 justify-between items-center gap-2 mx-2 ">
+                <div className="px-0 bg-[#ffffff45] grid grid-cols-2 justify-between items-center gap-2 mx-2 ">
                     <div className="flex flex-col">
                         {/* <span className="text-center text-[12px]">Odds</span> */}
-                        <div className="flex items-center w-full overflow-hidden bg-white border border-gray-300">
-                            <button className="h-8 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
+                        <div className="flex items-center w-full overflow-hidden bg-white border border-gray-300 h-9">
+                            <button className="h-9 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
                                 <FaMinus size={13} />
                             </button>
-                            <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-7">{count && count ? count : 0}</div>
-                            <button className="h-8 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
+                            <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-9">{count && count ? count : 0}</div>
+                            <button className="h-9 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
                                 <FaPlus size={13} />
                             </button>
                         </div>
@@ -248,7 +248,7 @@ export default function PlaceBetMobile(props) {
 
                     <div className="flex flex-col w-full">
                         {/* <span className="text-center text-[12px]">Amount</span> */}
-                        <input className="focus:outline-none text-sm w-full text-start px-2 py-4 bg-white h-7 border border-black" type="number" placeholder="0" value={betSlipData.stake} onChange={updateInputValue} />
+                        <input className="focus:outline-none text-sm w-full text-start px-2 py-4 bg-white h-8 border border-black" type="number" placeholder="0" value={betSlipData.stake} onChange={updateInputValue} />
                     </div>
 
                 </div>
@@ -294,73 +294,73 @@ export default function PlaceBetMobile(props) {
                         <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("20000")}>20000</button> */}
                 </div>
 
-                <div className='grid grid-cols-4 gap-0.5 p-0.5'>
+                <div className='grid grid-cols-4 gap-[3px] px-2'>
 
-                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                          onClick={() => {}}>Min Stake
-                          <div className="ld ld-ball ld-flip">
-                          </div>
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
+                        onClick={() => { }}>Min Stake
+                        <div className="ld ld-ball ld-flip">
                         </div>
-                        <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                          onClick={() => {}}>Max Stake
-                          <div className="ld ld-ball ld-flip">
-                          </div>
+                    </div>
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
+                        onClick={() => { }}>Max Stake
+                        <div className="ld ld-ball ld-flip">
                         </div>
-
-                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#008000]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                         onClick={ ()=> { handleButtonValues();setEditStake(true)}}>Edit Stake
-                          <div className="ld ld-ball ld-flip">
-                          </div>
-                        </div>
-
-                        <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#0b7d36] hover:bg-[#0b7d36]/90 border-[1px] border-[#0b7d36] hover:border-[#0b7d36]/90 text-white ld-over cursor-pointer ${betLoading ? "opacity-50 border-2 border-green-900" : ""}`}
-                          onClick={() => { handleClear() }}>
-                          <b className='flex justify-center items-center'>
-                           Clear
-
-                          </b>
-                          <div className="ld ld-ball ld-flip">
-                          </div>
-                        </div>
-
-
-
                     </div>
 
-                    <div className="text-red-600 text-xs font-semibold  pl-2">
-                      min Bet :100 max Bet :{isMatchCoin?.max}
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#008000] text-white text-center uppercase ld-over cursor-pointer `}
+                        onClick={() => { handleButtonValues(); setEditStake(true) }}>Edit Stake
+                        <div className="ld ld-ball ld-flip">
+                        </div>
                     </div>
-                    
-    <div className='grid grid-cols-2 gap-1 p-1'>
-                      <div>
-                      <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#F96F72]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                          onClick={() => handleClose()}>Cancel
-                          <div className="ld ld-ball ld-flip">
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                    
-                      <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#249C59]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                          onClick={() => {placeBet()}}>Placer Bet
-                          <div className="ld ld-ball ld-flip">
-                          </div>
-                        </div>
-                      </div>
 
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#0b7d36] hover:bg-[#0b7d36]/90 border-[1px] border-[#0b7d36] hover:border-[#0b7d36]/90 text-white text-center uppercase ld-over cursor-pointer ${betLoading ? "opacity-50 border-2 border-green-900" : ""}`}
+                        onClick={() => { handleClear() }}>
+                        <b className='flex justify-center items-center'>
+                            Clear
+
+                        </b>
+                        <div className="ld ld-ball ld-flip">
+                        </div>
                     </div>
+
+
+
+                </div>
+
+                <div className="text-red-600 text-xs font-semibold  pl-2">
+                    min Bet :100 max Bet :{isMatchCoin?.max}
+                </div>
+
+                <div className='grid grid-cols-2 gap-1 p-1'>
+                    <div>
+                        <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#F96F72] text-center uppercase text-white ld-over cursor-pointer `}
+                            onClick={() => handleClose()}>Cancel
+                            <div className="ld ld-ball ld-flip">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+
+                        <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#249C59] text-center uppercase text-white ld-over cursor-pointer `}
+                            onClick={() => { placeBet() }}>Placer Bet
+                            <div className="ld ld-ball ld-flip">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 {
-editStake && <div onClick={(e)=>{setEditStake(false);e.stopPropagation()}} className='fixed px-2 inset-0 z-50 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 '>
-       <div onClick={(e)=>{e.stopPropagation()}} className='w-[450px]  mt-6 bg-white '>
-        
-         <div className='bg-black flex justify-between items-center text-white p-2 w-full' >Stacke  <span onClick={(e)=>{setEditStake(false);e.stopPropagation()}}>X</span></div>
-        
-        <div className='p-2'>
-        <StakeSettings />
-        </div>
-       </div>
-      </div>
-      }
+                    editStake && <div onClick={(e) => { setEditStake(false); e.stopPropagation() }} className='fixed px-2 inset-0 z-50 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 '>
+                        <div onClick={(e) => { e.stopPropagation() }} className='w-[450px]  mt-6 bg-white '>
+
+                            <div className='bg-black flex justify-between items-center text-white p-2 w-full' >Stacke  <span onClick={(e) => { setEditStake(false); e.stopPropagation() }}>X</span></div>
+
+                            <div className='p-2'>
+                                <StakeSettings />
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 

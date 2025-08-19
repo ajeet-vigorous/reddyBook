@@ -156,9 +156,9 @@ const Dashboard = ({ }) => {
   const { sportMatchList } = useSelector((state) => state.sport);
   const [activeAllSporttab, setactiveAllSporttab] = useState(localStorage.getItem('dashboardActiveTabKey') || '1');
   const groupCasinoList = useGroupCasinoList();
+  // console.log(groupCasinoList, "groupCasinoList");
 
-
-
+  
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
     : [];
@@ -169,13 +169,6 @@ const Dashboard = ({ }) => {
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
     setMatchData(matchListData);
   }, [sportMatchList]);
-
-  const sportsList = [
-    { id: '4', name: 'Cricket' },
-    { id: '1', name: 'Soccer' },
-    { id: '2', name: 'Tennis' },
-  ];
-
 
 
   return (

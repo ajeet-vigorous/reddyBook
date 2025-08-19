@@ -93,7 +93,15 @@ const ViewMatches = () => {
 
     // const [betPlaceModalMobile, setBetPlaceModalMobile] = useState(false);
 
+    const [open, setOpen] = useState(false);
 
+    const handleBets = () => {
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    };
     // let { marketId, eventId } = useParams();
     const { marketId, eventId, sportId } = useParams();
 
@@ -260,7 +268,7 @@ const ViewMatches = () => {
         }
     }, [positioBetData]);
 
-    
+
 
 
 
@@ -796,7 +804,7 @@ const ViewMatches = () => {
         setbuttonValue((prev) => !prev);
 
         document.body.classList.toggle("StakeModalOpen");
-       
+
     };
 
 
@@ -919,7 +927,7 @@ const ViewMatches = () => {
             case "meter":
                 return (
                     <MeterFancyComponent
-                    inplayMatch={inplayMatch}
+                        inplayMatch={inplayMatch}
                         activeTab={activeTab}
                         MeterFancy={MeterFancy}
                         fancyPositionObj={fancyPositionObj}
@@ -929,9 +937,9 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
-                       betplaceSection={betplaceDataThroughProps}
-                       isMatchCoin={isMatchCoin}
-                                            />
+                        betplaceSection={betplaceDataThroughProps}
+                        isMatchCoin={isMatchCoin}
+                    />
                 );
             case "oddeven":
                 return (
@@ -1074,7 +1082,7 @@ const ViewMatches = () => {
                                     <span className="text-white text-[14px] font-semibold">({inplayMatch?.matchDate})</span>
                                     <span
                                         onClick={() => handleScore()}
-                                        className="text-white  font-semibold">
+                                        className="text-white font-semibold cursor-pointer">
                                         <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
                                     </span>
                                 </div>
@@ -1085,9 +1093,9 @@ const ViewMatches = () => {
                             {inplayMatch &&
                                 inplayMatch?.matchName ? (
                                 <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
-                                    <div className="flex flex-col">
-                                        <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
-                                        <span className="text-white text-[10px] font-semibold">({inplayMatch?.matchDate})</span>
+                                    <div className="flex flex-col uppercase">
+                                        <span className="text-white text-[14px] font-[400]">{inplayMatch?.matchName}</span>
+                                        <span className="text-white text-[8px] font-[400]">({inplayMatch?.matchDate})</span>
                                     </div>
                                     <div className="flex justify-end items-center gap-1.5">
 
@@ -1099,7 +1107,8 @@ const ViewMatches = () => {
                                         <span onClick={() => {
                                             handelTvModal();
                                         }} className='text-white'><FaTv size={18} /></span>
-                                        <span className="bg-[var(--primary)] text-white px-1 py-[2px] rounded-sm uppercase text-[13px]" onClick={() => handleMatchClick(2)}>Bets</span>
+                                        <span className="bg-[var(--primary)] text-white px-[3px] py-[3px] tracking-wide rounded-[3px] uppercase text-[12px]"
+                                            onClick={() => handleBets()}>Bets</span>
                                     </div>
                                 </div>
                             ) : null}
@@ -1120,16 +1129,16 @@ const ViewMatches = () => {
                         // style={{ background: 'linear-gradient(#060a2a, #521d31 160%)' }}
                         >
                             {isScorecardOpen && inplayMatch.isScore && (
-                                <div className="border-2 border-secondary rounded-lg mt-2">
-                                    <div className="flex justify-between items-center py-0 px-2 bg-[var(--primary)] ">
+                                <div className="border-2 border-secondary rounded-lg">
+                                    <div className="flex justify-between items-center py-0 px-2 bg-[var(--darkcolor)] ">
                                         <div
                                             onClick={() => setFullScreen((state) => !state)}
-                                            className="text-white bg-button rounded-sm px-2 py-1 text-xs font-semibold"
+                                            className="text-white bg-button rounded-sm px-2 py-1 text-xs font-semibold cursor-pointer"
                                         >
                                             {fullscreen ? "HS" : "FS"}
                                         </div>
                                         <div
-                                            className="px-2 py-1 text-white text-xs"
+                                            className="px-2 py-1 text-white text-xs cursor-pointer"
                                             onClick={() => handleScore()}
                                         >
                                             <FaTimes size={13} />
@@ -1160,7 +1169,7 @@ const ViewMatches = () => {
 
                         <MatchOddsComponent
                             inplayMatch={inplayMatch}
-                            
+
                             activeTab={activeTab}
                             finalSocket={finalSocket}
                             isMatchCoin={isMatchCoin}
@@ -1170,7 +1179,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
-                            
+
                         />
                         <OtherMarketsComponent
                             activeTab={activeTab}
@@ -1199,7 +1208,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
-                            
+
                         />
 
                         <TossDataComponent
@@ -1228,7 +1237,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
-                            
+
                         />
 
                         <div className="fancy-premium-container mt-1">
@@ -1512,6 +1521,113 @@ const ViewMatches = () => {
                 </div>
 
             </div>
+
+            <>
+                {open && (
+                    <div className="fixed inset-0 bg-black/70 flex justify-center items-start z-50">
+                        <div className="bg-white w-full max-w-3xl rounded-md shadow-lg m-4 p-0">
+                            <div className="rounded-t-md py-4 px-4 font-normal text-black/90 text-sm border-b border-[#dee2e6] flex justify-between items-center">
+                                <span className="text-[20px]">Open Bets</span>
+                                <button onClick={closeModal} className="text-black/90 text-md">
+                                    <FaTimes />
+                                </button>
+                            </div>
+                            <div className="overflow-hidden w-full p-0 !m-0">
+                                <div className="max-w-full overflow-auto ">
+                                    <div className="inline-block min-w-full ">
+                                        <div className="overflow-hidden w-full ">
+                                            <table className="min-w-full capitalize border border-[#dee2e6]">
+                                                <thead>
+                                                    <tr className="w-full text-[#212529] text-[12px] bg-[#ffffff] border border-[#dee2e6] text-left">
+                                                        <th className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                            Selname
+                                                        </th>
+                                                        <th className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                            Odds
+                                                        </th>
+                                                        <th className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                            Stake
+                                                        </th>
+                                                        <th className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                            Date/Time
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {oddsBetData && oddsBetData?.length > 0 ? (
+                                                        oddsBetData?.map((element, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className={`w-full text-[#212529] text-[12px] border-b border-t divide-x divide-white text-left ${element?.type === "K"
+                                                                    ? "bg-[var(--matchKhai)]"
+                                                                    : "bg-[var(--matchLagai)]"
+                                                                    }`}
+                                                            >
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    <div>
+                                                                        {element?.teamName} <br />
+                                                                        <span className="font-bold">{element?.marketName}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    {element && element?.oddsType === "matchOdds"
+                                                                        ? parseFloat(Number(element?.odds) + 1)
+                                                                            .toFixed(2)
+                                                                            .replace(/\.?0+$/, "")
+                                                                        : element &&
+                                                                            (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
+                                                                            ? parseFloat(element?.odds * 100)
+                                                                                .toFixed(2)
+                                                                                .replace(/\.?0+$/, "")
+                                                                            : parseFloat(element?.odds)
+                                                                                .toFixed(2)
+                                                                                .replace(/\.?0+$/, "")}
+                                                                </td>
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    {element?.amount}
+                                                                </td>
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    {element?.date}
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    ) : fancyBetData && fancyBetData?.length > 0 ? (
+                                                        fancyBetData?.map((element, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className={`w-full text-[#212529] text-[12px] border-b border-t text-left divide-x divide-white ${element?.type === "N"
+                                                                    ? "bg-[var(--matchKhai)]"
+                                                                    : "bg-[var(--matchLagai)]"
+                                                                    }`}
+                                                            >
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    <span className="font-medium text-xs">{element?.sessionName}</span>
+                                                                </td>
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    {element?.odds}
+                                                                </td>
+                                                                <td className="px-[6px] py-1 whitespace-nowrap border border-[#dee2e6]">
+                                                                    {element?.amount}
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan={4} className="text-center py-2 text-sm">
+                                                                No records found
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </>
             {/* {matchTab === 2 && (
                 <div className="w-full fixed inset-0 z-10">
                     <div className="bg-[var(--darkcolor)] rounded-t-md mt-1 py-1.5 px-4 font-bold text-white text-sm">

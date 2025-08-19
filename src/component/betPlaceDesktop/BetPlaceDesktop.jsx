@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useEffect } from "react";
-import { FaAngleDown, FaAngleUp, FaCircle } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp, FaCircle, FaMinus, FaPlus } from "react-icons/fa";
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import StakeSettings from "../profile/StakeSettings";
@@ -243,19 +243,18 @@ export function BetPlaceDesktop(props) {
           </tr>
         </thead> */}
         <tbody
-          className={`${
-            betSlipData.betType === "Y" || betSlipData.betType === "L"
+          className={`${betSlipData.betType === "Y" || betSlipData.betType === "L"
               ? "!bg-[var(--matchLagai)]"
               : "bg-[var(--matchKhai)]"
-          } my-2`}
+            } my-2`}
         >
           <tr className={`border-b border-[#c7c8ca]`}>
             <div width="100% h-full ">
-              <div className="relative h-full grid pt-1 grid-cols-2 px-1 items-center">
-                <div className="flex h-full items-center bg-red-400">
+              <div className="relative h-full grid pt-1 grid-cols-2 px-1 gap-1 items-center">
+                {/* <div className="flex h-full items-center">
                   <div
                     onClick={decreaseCount}
-                    className="cursor-pointer  h-full  flex justify-center items-center    w-[40px] bg-[#024F99] leading-none"
+                    className="cursor-pointer  h-full  flex justify-center items-center w-[40px] bg-[#024F99] leading-none"
                   >
                     <FiMinus size={14} color="white" />
                   </div>
@@ -266,8 +265,8 @@ export function BetPlaceDesktop(props) {
                     id="exampleFormControlInput1"
                     value={
                       betSlipData.oddsType === "fancy" ||
-                      betSlipData.oddsType === "bookmaker" ||
-                      betSlipData.oddsType === "toss"
+                        betSlipData.oddsType === "bookmaker" ||
+                        betSlipData.oddsType === "toss"
                         ? (count * 100).toFixed(2).replace(/\.00$/, "")
                         : count
                     }
@@ -277,6 +276,18 @@ export function BetPlaceDesktop(props) {
                     className="cursor-pointer  h-full  flex justify-center items-center    w-[40px] bg-[#024F99] leading-none"
                   >
                     <GoPlus size={14} color="white" />
+                  </div>
+                </div> */}
+                <div className="flex flex-col">
+                  {/* <span className="text-center text-[12px]">Odds</span> */}
+                  <div className="flex items-center w-full overflow-hidden bg-white border border-gray-300 h-9">
+                    <button className="h-9 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
+                      <FiMinus size={13} />
+                    </button>
+                    <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-9">{count && count ? count : 0}</div>
+                    <button className="h-9 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
+                      <GoPlus size={13} />
+                    </button>
                   </div>
                 </div>
                 <div width="100%">
@@ -293,61 +304,59 @@ export function BetPlaceDesktop(props) {
               </div>
             </div>
 
-            <td className="text-right ">
-              {Array.isArray(betSlipData?.nameOther) &&
-              betSlipData.nameOther.length <= 3
+            {/* <td className="text-right ">
+              {Array?.isArray(betSlipData?.nameOther) &&
+                betSlipData.nameOther.length <= 3
                 ? betSlipData.nameOther.map((other, index) => (
-                    <React.Fragment key={index}>
-                      <div className="text-sm font-bold pr-2">
-                        {betSlipData.oddsType == "Match Odds" ||
+                  <React.Fragment key={index}>
+                    <div className="text-sm font-bold pr-2">
+                      {betSlipData.oddsType == "Match Odds" ||
                         betSlipData.oddsType == "Tied Match" ? (
-                          <span
-                            className={`${
-                              !isNaN(betSlipData.position[other.selectionId]) &&
+                        <span
+                          className={`${!isNaN(betSlipData.position[other.selectionId]) &&
                               parseFloat(
                                 betSlipData.position[other.selectionId]
                               )
                                 .toFixed(2)
                                 .replace(/\.?0+$/, "") < 0
-                                ? "text-red-500"
-                                : "text-green-700"
+                              ? "text-red-500"
+                              : "text-green-700"
                             } font-bold col-12 text-center`}
-                          >
-                            {!isNaN(betSlipData.position[other.selectionId])
-                              ? parseFloat(
-                                  betSlipData.position[other.selectionId]
-                                )
-                                  .toFixed(2)
-                                  .replace(/\.?0+$/, "")
-                              : ""}
-                          </span>
-                        ) : betSlipData.oddsType == "fancy" ? null : (
-                          <span
-                            className={`${
-                              !isNaN(betSlipData.position[other.selectionid]) &&
+                        >
+                          {!isNaN(betSlipData.position[other.selectionId])
+                            ? parseFloat(
+                              betSlipData.position[other.selectionId]
+                            )
+                              .toFixed(2)
+                              .replace(/\.?0+$/, "")
+                            : ""}
+                        </span>
+                      ) : betSlipData.oddsType == "fancy" ? null : (
+                        <span
+                          className={`${!isNaN(betSlipData.position[other.selectionid]) &&
                               parseFloat(
                                 betSlipData.position[other.selectionid]
                               )
                                 .toFixed(2)
                                 .replace(/\.?0+$/, "") < 0
-                                ? "text-red-500"
-                                : "text-green-700"
+                              ? "text-red-500"
+                              : "text-green-700"
                             } font-bold col-12 text-center`}
-                          >
-                            {!isNaN(betSlipData.position[other.selectionid])
-                              ? parseFloat(
-                                  betSlipData.position[other.selectionid]
-                                )
-                                  .toFixed(2)
-                                  .replace(/\.?0+$/, "")
-                              : ""}
-                          </span>
-                        )}
-                      </div>
-                    </React.Fragment>
-                  ))
+                        >
+                          {!isNaN(betSlipData.position[other.selectionid])
+                            ? parseFloat(
+                              betSlipData.position[other.selectionid]
+                            )
+                              .toFixed(2)
+                              .replace(/\.?0+$/, "")
+                            : ""}
+                        </span>
+                      )}
+                    </div>
+                  </React.Fragment>
+                ))
                 : null}
-            </td>
+            </td> */}
           </tr>
           <tr className="">
             <td colSpan={4}>
@@ -378,8 +387,8 @@ export function BetPlaceDesktop(props) {
                           className="flex py-1.5 justify-center items-center bg-white !border-0 "
                           onClick={() => arrayData(item, true)}
                         >
-                          <span className="text-black text-md font-[700]">
-                            + {formatNumber(item)}
+                          <span className="text-black text-md font-[500]">
+                            <span className='text-green-500 text-sm font-[500]'> + </span> {formatNumber(item)}
                           </span>
                         </td>
                       );
@@ -401,22 +410,22 @@ export function BetPlaceDesktop(props) {
                     </div> */}
                     <div className="grid grid-cols-4 gap-0.5 p-0.5">
                       <div
-                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                        onClick={() => {}}
+                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
+                        onClick={() => { }}
                       >
                         Min Stake
                         <div className="ld ld-ball ld-flip"></div>
                       </div>
                       <div
-                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
-                        onClick={() => {}}
+                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white text-center uppercase ld-over cursor-pointer `}
+                        onClick={() => { }}
                       >
                         Max Stake
                         <div className="ld ld-ball ld-flip"></div>
                       </div>
 
                       <div
-                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#008000]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#008000] text-white text-center uppercase ld-over cursor-pointer `}
                         onClick={() => {
                           handleButtonValues();
                           setEditStake(true);
@@ -427,11 +436,10 @@ export function BetPlaceDesktop(props) {
                       </div>
 
                       <div
-                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#0b7d36] hover:bg-[#0b7d36]/90 border-[1px] border-[#0b7d36] hover:border-[#0b7d36]/90 text-white ld-over cursor-pointer ${
-                          betLoading
+                        className={` px-4 py-1  text-[13px] font-[500]  whitespace-nowrap btn bg-[#ff0000] hover:bg-[#ff0000]/90 border-[1px] border-[#ff0000] hover:border-[#ff0000]/90 text-white ld-over cursor-pointer text-center uppercase ${betLoading
                             ? "opacity-50 border-2 border-green-900"
                             : ""
-                        }`}
+                          }`}
                         onClick={() => {
                           handleClear();
                         }}
@@ -478,7 +486,7 @@ export function BetPlaceDesktop(props) {
                     <div className="grid grid-cols-2 gap-1 p-1">
                       <div>
                         <div
-                          className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#F96F72]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#F96F72] text-center   text-white ld-over cursor-pointer `}
                           onClick={() => {
                             openBets();
                           }}
@@ -489,7 +497,7 @@ export function BetPlaceDesktop(props) {
                       </div>
                       <div>
                         <div
-                          className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#249C59]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#249C59] text-center  text-white ld-over cursor-pointer `}
                           onClick={() => {
                             placeBet();
                           }}
@@ -539,12 +547,13 @@ export function BetPlaceDesktop(props) {
             className="w-[450px] mt-6 bg-white h-[300px]"
           >
             <div className="bg-black flex justify-between items-center text-white p-2 w-full">
-              Stacke{" "}
+              Stake{" "}
               <span
                 onClick={(e) => {
                   setEditStake(false);
                   e.stopPropagation();
                 }}
+                className="cursor-pointer "
               >
                 X
               </span>
