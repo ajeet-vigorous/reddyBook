@@ -274,7 +274,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         sidebartoggle();
                                       }}
                                     >
-                                      🎮 {item.matchName}
+                                      🎮 {item.matchName} {item.matchId}
                                     </div>
                                   ))
                                 ) : (

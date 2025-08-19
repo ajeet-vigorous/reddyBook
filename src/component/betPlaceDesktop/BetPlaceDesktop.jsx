@@ -315,18 +315,18 @@ export function BetPlaceDesktop(props) {
                     </div>
                     <div className='grid grid-cols-4 gap-0.5 p-0.5'>
 
-                    <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#bd1828] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                    <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                           onClick={() => {}}>Min Stake
                           <div className="ld ld-ball ld-flip">
                           </div>
                         </div>
-                        <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#6D081D] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                        <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                           onClick={() => {}}>Max Stake
                           <div className="ld ld-ball ld-flip">
                           </div>
                         </div>
 
-                    <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#008000] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                    <div className={` px-4 py-2 font-[500]  whitespace-nowrap btn bg-[#008000]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                          onClick={ ()=> { handleButtonValues();}}>Edit Stake
                           <div className="ld ld-ball ld-flip">
                           </div>
@@ -358,7 +358,7 @@ export function BetPlaceDesktop(props) {
 
 
                       <div className='flex gap-1'>
-                        <div className={` px-4 py-2 font-[500] btn bg-[#bd1828] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                        <div className={` px-4 py-2 font-[500] btn bg-[#bd1828] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                           onClick={() => openBets()}>Reset
                           <div className="ld ld-ball ld-flip">
                           </div>
@@ -378,7 +378,7 @@ export function BetPlaceDesktop(props) {
                         <div className='text-red-600 text-xs font-semibold  pl-2'>min Bet :100 max Bet :25000</div>
                     <div className='grid grid-cols-2 gap-1 p-1'>
                       <div>
-                      <div className={` px-4 py-2 font-[500] btn bg-[#F96F72] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                      <div className={` px-4 py-2 font-[500] btn bg-[#F96F72]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                           onClick={() => {openBets()}}>Cancel
                           <div className="ld ld-ball ld-flip">
                           </div>
@@ -386,7 +386,7 @@ export function BetPlaceDesktop(props) {
                       </div>
                       <div>
                     
-                      <div className={` px-4 py-2 font-[500] btn bg-[#249C59] hover:bg-[#FC4242]/90 border-[1px] border-[#bd1828] hover:border-[#FC4242]/90 text-white ld-over cursor-pointer `}
+                      <div className={` px-4 py-2 font-[500] btn bg-[#249C59]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
                           onClick={() => {placeBet()}}>Placer Bet
                           <div className="ld ld-ball ld-flip">
                           </div>

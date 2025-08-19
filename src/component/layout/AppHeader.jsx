@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getSportMatchList } from "../../redux/reducers/sport_reducer";
 import RulesModal from "../rulesModal/RulesModal";
 import { FaBullseye, FaSearch } from "react-icons/fa";
-import { BiChevronDown, BiLockAlt } from "react-icons/bi";
+import {  BiLockAlt } from "react-icons/bi";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
 import { BsBarChart, BsBarChartSteps, BsBoxArrowRight, BsCardText } from "react-icons/bs";
 import BonusRules from "../bonusRules/BonusRules";
