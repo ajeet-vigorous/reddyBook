@@ -227,7 +227,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         key={index}
                         className={`text-[#343435]  py-0 my-0 transition-[max-height] duration-300 ease-in ${
                           clickedOutside1 === true
-                            ? "max-h-96 bg-[#fffff]"
+                            ? "max-h-auto bg-[#fffff]"
                             : "max-h-0 bg-[#fffff]"
                         }`}
                       >
@@ -510,14 +510,14 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       key={index}
                       className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${
                         clickedOutside1 === true
-                          ? "max-h-96 bg-[#fffff]"
+                          ? "max-h-auto bg-[#fffff]"
                           : "max-h-0 bg-[#fffff]"
                       }`}
                     >
-                      <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
+                      <div className="cursor-pointer">
                         {/* Sport Header */}
                         <div
-                          className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                          className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center border-b-[1px] border-[#eceaea]"
                           onClick={(e) => {
                             if (isRacingCategory) {
                               // If racing, just toggle
