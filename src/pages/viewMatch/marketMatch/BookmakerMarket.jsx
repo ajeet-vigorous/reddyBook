@@ -227,7 +227,7 @@ const BookmakerComponent = ({
                         <BlinkingComponent
                           price={(commList.khaai * 100).toFixed(2)}
                           size={(commList.lgaai * 100).toFixed(2)}
-                          color={"bg-[#FEAFB2]"}
+                          color={"bg-[#F9C8D3]"}
                           blinkColor={"bg-[#FE7A7F]"}
                           textColors={"text-black"}
                           boderColors={"border-[#f996ab]"}

@@ -300,7 +300,7 @@ const MatchOddsComponent = ({
                                         <BlinkingComponent
                                           price={tempData.price}
                                           size={tempData.size}
-                                          color={"bg-[#FEAFB2]"}
+                                          color={"bg-[#F9C8D3]"}
                                           blinkColor={"bg-[#FE7A7F]"}
                                         />
                                       </span>
