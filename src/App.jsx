@@ -3,7 +3,7 @@ import Layout from './layout/Layout'
 import { ToastContainer } from 'react-toastify'
 import { BalanceProvider } from './global/contextApi/BalanceContext'
 import './App.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import settings from './domainConfig'
 import { getDomainSettingData, getInternationalGroupCasinoList, getMatchList } from './redux/reducers/user_reducer'
@@ -21,13 +21,43 @@ function App() {
   const dispatch = useDispatch();
 
   const cosinoGroupList = JSON.parse(localStorage.getItem('cosinoGroupList'))
+  const {userDomainData} = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getMatchList());
-    let domainSetting = {
-      domainUrl: window.location.origin,
+    const fetchDomainSetting = () => {
+      let domainSetting = {
+        domainUrl: window.location.origin,
+      };
+  
+      dispatch(getDomainSettingData(domainSetting)).then((res) => {
+        if (!res?.error) {
+          const domainData = res?.payload?.data;
+          localStorage.setItem(
+            "clientdomainSetting",
+            JSON.stringify(domainData)
+          );
+        }
+      });
     };
-    dispatch(getDomainSettingData(domainSetting));
+  
+    const domainData = JSON.parse(localStorage.getItem("clientdomainSetting"));
+  
+    if (!domainData) {      
+      fetchDomainSetting();
+    } 
+    if(domainData){
+     setInterval(() => {
+      fetchDomainSetting();
+     }, 180000); 
+    }
+  }, []);
+  
+
+  useEffect(() => {
+    
+    dispatch(getMatchList());
+    
+    
     const interval = setInterval(() => {
       dispatch(getMatchList());
     }, 180000);

@@ -809,6 +809,7 @@ const ViewMatchRacing = () => {
                 handleClose={handleBackclose}
                 setBetSlipData={setBetSlipData}
                 handleButtonValues={handleButtonValues}
+                isMatchCoin={isMatchCoin}
             />}
 
             {/* {buttonValue && (

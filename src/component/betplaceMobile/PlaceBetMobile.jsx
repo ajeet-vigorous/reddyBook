@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { FaCircle, FaMinus, FaPlus } from 'react-icons/fa';
 import { IoCloseSharp } from 'react-icons/io5';
+import StakeSettings from '../profile/StakeSettings';
 
 export const betChipsData = {
     "1000": 1000,
@@ -15,7 +16,7 @@ export const betChipsData = {
 };
 
 export default function PlaceBetMobile(props) {
-    const { decreaseCount, count, setBetSlipData, handleButtonValues, increaseCount, placeBet, handleClose, betSlipData, betLoading, inputChange, isFetch } = props;
+    const { decreaseCount, count, setBetSlipData, handleButtonValues, increaseCount, placeBet, handleClose, betSlipData, betLoading, inputChange, isFetch,isMatchCoin } = props;
     const updateStackOnclic = (input) => {
         const numericInput = parseFloat(input);
         if (!isNaN(numericInput)) {
@@ -32,6 +33,7 @@ export default function PlaceBetMobile(props) {
     const myArray = Object.values(betChipsData);
     const modalRef = useRef();
     const [positions, setPositionData] = useState(0);
+    const [editStake, setEditStake] = useState(false);
 
 
     useEffect(() => {
@@ -218,10 +220,10 @@ export default function PlaceBetMobile(props) {
                     </div>
                 </div> */}
                 <div className="flex  justify-between items-center space-x-1 text-black px-2 pt-2.5">
-                    <div className='p-1 font-medium text-[12px] capitalize'>
+                    {/* <div className='p-1 font-medium text-[12px] capitalize'>
                         {betSlipData.name}
-                    </div>
-                    <div className='text-black text-[12px]'>Profit: 0</div>
+                    </div> */}
+                    {/* <div className='text-black text-[12px]'>Profit: 0</div> */}
                     {/* <div className="bg-white my-1 rounded flex divide-x divide-gray-300">
                             <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={decreaseCount}>-</span>
                             <span className="py-1 px-6 text-sm">{count && count ? count : 0}</span>
@@ -230,23 +232,23 @@ export default function PlaceBetMobile(props) {
                 </div>
 
 
-                <div className="px-2 bg-[#ffffff45] grid grid-cols-2 justify-between items-center gap-2 mx-2 py-2">
+                <div className="px-2 bg-[#ffffff45] grid grid-cols-2 justify-between items-center gap-2 mx-2 ">
                     <div className="flex flex-col">
-                        <span className="text-center text-[12px]">Odds</span>
+                        {/* <span className="text-center text-[12px]">Odds</span> */}
                         <div className="flex items-center w-full overflow-hidden bg-white border border-gray-300">
-                            <button className="h-7 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[var(--secondary)]" onClick={decreaseCount}>
+                            <button className="h-8 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
                                 <FaMinus size={13} />
                             </button>
-                            <div className="py-[3px] text-left px-2 text-sm w-full h-7">{count && count ? count : 0}</div>
-                            <button className="h-7 py-[5px] px-1.5 font-bold text-white cursor-pointer bg-[var(--secondary)]" onClick={increaseCount}>
+                            <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-7">{count && count ? count : 0}</div>
+                            <button className="h-8 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
                                 <FaPlus size={13} />
                             </button>
                         </div>
                     </div>
 
                     <div className="flex flex-col w-full">
-                        <span className="text-center text-[12px]">Amount</span>
-                        <input className="focus:outline-none text-sm w-full text-start px-2 py-1.5 bg-white h-7 border border-black" type="number" placeholder="0" value={betSlipData.stake} onChange={updateInputValue} />
+                        {/* <span className="text-center text-[12px]">Amount</span> */}
+                        <input className="focus:outline-none text-sm w-full text-start px-2 py-4 bg-white h-7 border border-black" type="number" placeholder="0" value={betSlipData.stake} onChange={updateInputValue} />
                     </div>
 
                 </div>
@@ -277,9 +279,9 @@ export default function PlaceBetMobile(props) {
                         ))} */}
 
                     {betchipdata && betchipdata.length > 0 && betchipdata.map((item, chip) => (
-                        <button key={chip} className="flex px-1.5 py-1 justify-center items-center bg-[#6C2D2CD9] !border-0 "
+                        <button key={chip} className="flex px-1.5 py-1 justify-center items-center bg-white text-black !border-0 "
                             onClick={() => updateStackOnclic(item)}>
-                            <span className='text-white text-sm font-[700]'>+ {formatNumber(item)}</span>
+                            <span className='text-green-500 text-sm font-[700]'> + </span> <span className='text-black text-[12px] font-[500]'> {formatNumber(item)}</span>
                         </button>
                     ))}
                     {/* <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("500")}>500</button>
@@ -292,39 +294,73 @@ export default function PlaceBetMobile(props) {
                         <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("20000")}>20000</button> */}
                 </div>
 
-                <div className="px-2 pt-0 pb-2">
-                    <div className="grid grid-cols-4">
-                        <div onClick={() => handleClear()} className=" flex text-[#0d6efd] font-[700] cursor-pointer justify-start items-center underline px-4 py-1">
-                            Clear
-                        </div>
-                        <button className="bg-[#097c93] hover:bg-[#097c93]/90 font-[700] flex justify-center items-center text-white text-[14px] px-4 py-1.5 h-[35px] "
-                            onClick={() => handleButtonValues()}
-                        >
-                            Edit
-                        </button>
+                <div className='grid grid-cols-4 gap-0.5 p-0.5'>
 
-                        <button className="bg-[#bd1828] hover:bg-[#FC4242]/90 font-[700] flex justify-center items-center text-white text-[14px] px-2 py-1.5 h-[35px] " onClick={() => handleClose()}>
-                            Reset
-                        </button>
-                        <button className="bg-[#086f3f] hover:bg-[#0b7d36]/90 font-[700] flex justify-center items-center text-white text-[14px] px-2 py-1.5 h-[35px] " onClick={() => placeBet()}>
-                            <b className='flex justify-center items-center'>
-                                {/* {
-                                        betLoading ?
-                                            <div className=' relative flex justify-center items-center'>
-                                                <FaCircle size={12} className='text-white absolute left-5 top-1 bottom-0 animate-ping' />
-                                                <span className='text-white/40'>Submit</span>
-                                            </div>
-                                            : */}
-                                Place Bet
-                                {/* // } */}
-                            </b>
-                            <div className="ld ld-ball ld-flip"></div>
-                        </button>
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#bd1828]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          onClick={() => {}}>Min Stake
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+                        <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#6D081D]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          onClick={() => {}}>Max Stake
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+
+                    <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#008000]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                         onClick={ ()=> { handleButtonValues();setEditStake(true)}}>Edit Stake
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+
+                        <div className={` px-4 py-1 text-[13px] font-[400]  whitespace-nowrap btn bg-[#0b7d36] hover:bg-[#0b7d36]/90 border-[1px] border-[#0b7d36] hover:border-[#0b7d36]/90 text-white ld-over cursor-pointer ${betLoading ? "opacity-50 border-2 border-green-900" : ""}`}
+                          onClick={() => { handleClear() }}>
+                          <b className='flex justify-center items-center'>
+                           Clear
+
+                          </b>
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+
+
+
                     </div>
 
-                    <div className="text-black text-[12px] pt-2">Range: 100 to 3L</div>
-                </div>
+                    <div className="text-red-600 text-xs font-semibold  pl-2">
+                      min Bet :100 max Bet :{isMatchCoin?.max}
+                    </div>
+                    
+    <div className='grid grid-cols-2 gap-1 p-1'>
+                      <div>
+                      <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#F96F72]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          onClick={() => handleClose()}>Cancel
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                    
+                      <div className={` px-4 py-1.5 text-[13px] font-[500] btn bg-[#249C59]  border-[1px] border-[#bd1828]  text-white ld-over cursor-pointer `}
+                          onClick={() => {placeBet()}}>Placer Bet
+                          <div className="ld ld-ball ld-flip">
+                          </div>
+                        </div>
+                      </div>
 
+                    </div>
+                {
+editStake && <div onClick={(e)=>{setEditStake(false);e.stopPropagation()}} className='fixed px-2 inset-0 z-50 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 '>
+       <div onClick={(e)=>{e.stopPropagation()}} className='w-[450px]  mt-6 bg-white '>
+        
+         <div className='bg-black flex justify-between items-center text-white p-2 w-full' >Stacke  <span onClick={(e)=>{setEditStake(false);e.stopPropagation()}}>X</span></div>
+        
+        <div className='p-2'>
+        <StakeSettings />
+        </div>
+       </div>
+      </div>
+      }
             </div>
         </div>
 

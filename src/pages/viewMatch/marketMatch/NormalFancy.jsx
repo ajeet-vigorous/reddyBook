@@ -14,6 +14,7 @@ const NormalFancyComponent = ({
   returnDataFancyObject,
   formatNumber,
   betplaceSection,
+  isMatchCoin
 }) => {
   const {
     betSlipData,
@@ -57,7 +58,7 @@ const NormalFancyComponent = ({
 
                 <div className="grid xl:grid-cols-1 grid-cols-1">
                   <div className={`border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
-                    <div className="xl:w-[58%] w-[65%] flex px-2">
+                    <div className="xl:w-[58%] bg-white w-[65%] flex px-2">
                       <div className="w-full leading-3 flex items-center">
                         <span className="lg:hidden flex z-20 pr-1">
                           <span className="text-black flex items-center justify-center"></span>
@@ -70,35 +71,35 @@ const NormalFancyComponent = ({
                       </div>
                     </div>
                     <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
-                      <span className="lg:block hidden bg-[#FEAFB2]">
-                        <div className={`py-1.5 flex justify-center items-center bg-[#FEAFB2]`}>
+                      <span className="lg:block hidden bg-white">
+                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
                           <div className='text-center leading-3'>
                             <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                           </div>
                         </div>
                       </span>
                       <span className="lg:hidden block">
-                        <div className={`py-1.5 flex justify-center items-center bg-[#FEAFB2]`}>
+                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
                           <div className='text-center leading-3'>
                             <span className="text-xs uppercase text-gray-800 font-bold">No</span>
                           </div>
                         </div>
                       </span>
-                      <span className="lg:block hidden bg-[#8DD2F0]">
-                        <div className={`py-1.5 flex justify-center items-center bg-[#8DD2F0]`}>
+                      <span className="lg:block hidden bg-white">
+                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
                           <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                            <span className="text-xs uppercase text-gray-800 font-bold">Yes</span>
                           </div>
                         </div>
                       </span>
                       <span className="lg:hidden block">
-                        <div className={`py-1.5 flex justify-center items-center bg-[#8DD2F0]`}>
+                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
                           <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                            <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                           </div>
                         </div>
                       </span>
-                      <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
+                      <span className="xl:flex items-center bg-white text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
                     </div>
                   </div>
                 </div>
@@ -145,7 +146,7 @@ const NormalFancyComponent = ({
                     .map((commList, index) => (
                       console.log("commList", commList),
                       <div key={index}>
-                        <div className={`border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
+                        <div className={`border-b bg-white border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
                           <div className="xl:w-[58%] w-[65%] flex px-2">
                             <div className="w-full leading-3 flex items-center">
                               <span className="lg:hidden flex z-20 pr-1">
@@ -301,7 +302,7 @@ const NormalFancyComponent = ({
                                 boderColors={"border-[#489bbd]"}
                               />
                             </span>
-                            <span className="xl:flex items-center text-end px-2 w-full justify-end hidden z-20 text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden bg-gray-200">
+                            <span className="xl:flex items-center bg-white text-end px-2 w-full justify-end hidden z-20 text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden ">
                               Min:100
                               <br />
                               Max:{formatNumber(commList?.max)}
@@ -311,7 +312,7 @@ const NormalFancyComponent = ({
                               (commList.running_status === "SUSPENDED" ||
                                 commList.running_status === "CLOSE" ||
                                 commList.running_status === "Ball Running") ? (
-                              <div className={`xl:w-[42%] lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute bg-[var(--suspended-color)] flex justify-center items-center z-30`}>
+                              <div className={`xl:w-[42%] lg:w-1/2 w-[35%] px-0.5 right-0 h-full absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 flex justify-center items-center z-30`}>
                                 <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap rounded font-bold bg-transparent opacity-90">
                                   <span className="text-[#FF071B] xl:text-lg text-sm font-bold uppercase">
                                     {commList.running_status}
@@ -344,6 +345,7 @@ const NormalFancyComponent = ({
                                                       handleClose={handleBackclose}
                                                       setBetSlipData={setBetSlipData}
                                                       handleButtonValues={handleButtonValues}
+                                                      isMatchCoin={isMatchCoin}
                                                     />
                                                   )}
                       </div>

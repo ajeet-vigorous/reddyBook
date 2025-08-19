@@ -862,6 +862,7 @@ const ViewMatches = () => {
                         marketId={marketId}
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
+                        isMatchCoin={isMatchCoin}
                         betplaceSection={betplaceDataThroughProps}
                     />
                 );
@@ -879,6 +880,7 @@ const ViewMatches = () => {
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
                         betplaceSection={betplaceDataThroughProps}
+                        isMatchCoin={isMatchCoin}
                     />
                 );
             case "wpm":
@@ -894,6 +896,7 @@ const ViewMatches = () => {
                         returnDataFancyObject={returnDataFancyObject}
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
+                        isMatchCoin={isMatchCoin}
                     />
                 );
             case "khadda":
@@ -910,6 +913,7 @@ const ViewMatches = () => {
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
                         betplaceSection={betplaceDataThroughProps}
+                        isMatchCoin={isMatchCoin}
                     />
                 );
             case "meter":
@@ -926,7 +930,8 @@ const ViewMatches = () => {
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
                        betplaceSection={betplaceDataThroughProps}
-                    />
+                       isMatchCoin={isMatchCoin}
+                                            />
                 );
             case "oddeven":
                 return (
@@ -942,6 +947,7 @@ const ViewMatches = () => {
                         formatNumber={formatNumber}
                         handleFancyPositionModal={handleFancyPositionModal}
                         betplaceSection={betplaceDataThroughProps}
+                        isMatchCoin={isMatchCoin}
                     />
                 );
             case "xtra":
@@ -955,6 +961,7 @@ const ViewMatches = () => {
                         marketId={marketId}
                         returnDataFancyObject={returnDataFancyObject}
                         betplaceSection={betplaceDataThroughProps}
+                        isMatchCoin={isMatchCoin}
                     />
                 );
             default:
@@ -1153,6 +1160,7 @@ const ViewMatches = () => {
 
                         <MatchOddsComponent
                             inplayMatch={inplayMatch}
+                            
                             activeTab={activeTab}
                             finalSocket={finalSocket}
                             isMatchCoin={isMatchCoin}
@@ -1162,6 +1170,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
+                            
                         />
                         <OtherMarketsComponent
                             activeTab={activeTab}
@@ -1172,6 +1181,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
+                            isMatchCoin={isMatchCoin}
                         />
 
 
@@ -1189,6 +1199,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
+                            
                         />
 
                         <TossDataComponent
@@ -1203,6 +1214,7 @@ const ViewMatches = () => {
                             returnDataObject={returnDataObject}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
+                            isMatchCoin={isMatchCoin}
                         />
 
                         <TiedOddsComponent
@@ -1216,6 +1228,7 @@ const ViewMatches = () => {
                             handleBackOpen={handleBackOpen}
                             formatNumber={formatNumber}
                             betplaceSection={betplaceDataThroughProps}
+                            
                         />
 
                         <div className="fancy-premium-container mt-1">
@@ -1319,6 +1332,7 @@ const ViewMatches = () => {
                                     increaseCount={increaseCount}
                                     decreaseCount={decreaseCount}
                                     handleButtonValues={handleButtonValues}
+                                    isMatchCoin={isMatchCoin}
                                 />
                             </>
                         )}

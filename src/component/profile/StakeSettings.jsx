@@ -54,7 +54,7 @@ const StakeSettings = () => {
 
 
     return (
-        <div className='w-full bg-white'>
+        <div className='w-full bg-white '>
             <div className="w-full text-sm text-left sm:px-4 my-4">
                 <div>
                     <div className="grid grid-cols-1 gap-4">

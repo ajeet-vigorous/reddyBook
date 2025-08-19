@@ -14,6 +14,7 @@ const KhadoFancyComponent = ({
   formatNumber,
   handleFancyPositionModal,
   betplaceSection,
+  isMatchCoin
 }) => {
   const {
     betSlipData,
@@ -53,7 +54,7 @@ const KhadoFancyComponent = ({
             </header>
 
             <div className="grid xl:grid-cols-1 grid-cols-1">
-              <div className="xl:flex hidden relative decoration-none border-b border-gray-300 whitespace-normal max-w-full">
+              <div className="xl:flex hidden bg-white relative decoration-none border-b border-gray-300 whitespace-normal max-w-full">
                 <div className="xl:w-[85%] w-[65%] flex px-2">
                   <div className="w-full leading-3 flex items-center">
                     <span className="lg:hidden flex z-20 pr-1">
@@ -70,14 +71,14 @@ const KhadoFancyComponent = ({
                   <span className="lg:block hidden">
                     <div className="py-1.5 flex justify-center items-center ">
                       <div className="text-center leading-3">
-                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:hidden block">
                     <div className="py-1.5 flex justify-center items-center ">
                       <div className="text-center leading-3">
-                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                       </div>
                     </div>
                   </span>
@@ -89,7 +90,7 @@ const KhadoFancyComponent = ({
             <div className="grid xl:grid-cols-1 grid-cols-1">
               {KhadoFancy?.map((commList, index) => (
                 <div key={index}>
-                  <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
+                  <div className="border-b bg-white border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
                     <div className="xl:w-[85%] w-[65%] flex px-2">
                       <div className="w-full leading-3 flex items-center">
                         <span className="lg:hidden flex z-20 pr-1">
@@ -184,7 +185,7 @@ const KhadoFancyComponent = ({
                           boderColors={"border-[#489bbd]"}
                         />
                       </span>
-                      <span className="xl:flex items-center text-end px-2 w-full justify-end hidden z-20 text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden bg-gray-200">
+                      <span className="xl:flex items-center text-end px-2 w-full justify-end hidden bg-white z-20 text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden bg-gray-200">
                         Min:100
                         <br />
                         Max:{formatNumber(commList?.max)}
@@ -225,6 +226,7 @@ const KhadoFancyComponent = ({
                                                                         handleClose={handleBackclose}
                                                                         setBetSlipData={setBetSlipData}
                                                                         handleButtonValues={handleButtonValues}
+                                                                        isMatchCoin={isMatchCoin}
                                                                       />
                                                                     )}
 
