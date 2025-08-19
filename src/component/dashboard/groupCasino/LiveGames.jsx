@@ -13,7 +13,6 @@ function LiveCasino({ name, data }) {
     const [categoryWiseCasinoList, setCategoryWiseCasinoList] = useState([]);
     const { getCasinoListByCateogeoryData, loading } = useSelector((state) => state.user);
     const handleResponseCasino = (product) => {
-        console.log(product, "productproductproduct");
         
         if (product?.gameId) {
             localStorage.getItem("token")
