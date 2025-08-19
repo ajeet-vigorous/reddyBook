@@ -73,6 +73,7 @@ body {
 .scrollbar {
   scrollbar-width: thin !important;
   scrollbar-color: #aab7cf transparent !important;
+  z-index: 0 !important;
 }
 
 

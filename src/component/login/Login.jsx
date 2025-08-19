@@ -210,8 +210,6 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
               </div>
             </div>
 
-
-
           </div>
         </div>
       )}

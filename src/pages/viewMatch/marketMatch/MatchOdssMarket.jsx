@@ -146,7 +146,7 @@ const MatchOddsComponent = ({
                                   <BlinkingComponent
                                     price={tempData.price}
                                     size={tempData.size}
-                                    color={"bg-[#E6F2FC]"}
+                                    color={"bg-[#c7eeff]"}
                                     blinkColor={"bg-[#00B2FF]"}
                                     hoverColor={"bg-sky-600"}
                                   />
@@ -220,7 +220,7 @@ const MatchOddsComponent = ({
                                     <BlinkingComponent
                                       price={tempData.price}
                                       size={tempData.size}
-                                      color={"bg-[#8DD2F0]"}
+                                      color={"bg-[#94dfff]"}
                                       blinkColor={"bg-[#00B2FF]"}
                                     />
                                   </span>
@@ -266,7 +266,7 @@ const MatchOddsComponent = ({
                                         <BlinkingComponent
                                           price={tempData.price}
                                           size={tempData.size}
-                                          color={"bg-[#FEAFB2]"}
+                                          color={"bg-[#f9c8d3]"}
                                           blinkColor={"bg-[#FE7A7F]"}
                                         />
                                       </span>
@@ -310,7 +310,7 @@ const MatchOddsComponent = ({
                                       <BlinkingComponent
                                         price={tempData.price}
                                         size={tempData.size}
-                                        color={"bg-[#FCE3E4]"}
+                                        color={"bg-[#efe1e5]"}
                                         blinkColor={"bg-[#CDEBEB]"}
                                       />
                                     </span>
