@@ -539,7 +539,7 @@ export function BetPlaceDesktop(props) {
             setEditStake(false);
             e.stopPropagation();
           }}
-          className="fixed inset-0 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 "
+          className="fixed inset-0 z-50 top-0 left-0 h-full w-full flex justify-center items-start bg-black/50 "
         >
           <div
             onClick={(e) => {
