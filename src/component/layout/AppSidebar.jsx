@@ -260,12 +260,12 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                           {(menuItem?.count === "4339" || menuItem?.count === "7") &&
                             openKeys.includes(index) && (
-                              <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
+                              <div className="bg-[#f6f9ff]  divide-y divide-[#eceaea]">
                                 {recingGreyhopund.length > 0 ? (
                                   recingGreyhopund?.map((item) => (
                                     <div
                                       key={item._id}
-                                      className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                      className="bg-[#f6f9ff] text-xs font-[500]  py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
                                       onClick={() => {
                                         handleResponseGameotherDetails(item);
                                         sidebartoggle();
@@ -516,7 +516,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
                         {/* Sport Header */}
                         <div
-                          className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                          className="hover:bg-[#FFF6EE]  hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
                           onClick={(e) => {
                             if (isRacingCategory) {
                               // If racing, just toggle
