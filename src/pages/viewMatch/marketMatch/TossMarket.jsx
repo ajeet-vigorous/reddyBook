@@ -9,7 +9,7 @@ const TossDataComponent = ({
   activeTab,
   matchScoreDetails,
   isTossCoin,
-
+  isMatchCoin,
   positionObj,
   toggleRowVisibility,
   handleBackOpen,
@@ -303,6 +303,7 @@ const TossDataComponent = ({
                             decreaseCount={decreaseCount}
                             handleClose={handleBackclose}
                             setBetSlipData={setBetSlipData}
+                            isMatchCoin={isMatchCoin}
                             handleButtonValues={handleButtonValues}
                           />}
                       </>

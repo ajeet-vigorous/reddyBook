@@ -29,6 +29,7 @@ const OverByOverFancyComponent = ({
     handleBackclose,
     setBetSlipData,
     handleButtonValues,
+    isMatchCoin
   } = betplaceSection;
   return (
     inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
@@ -55,7 +56,7 @@ const OverByOverFancyComponent = ({
             </header>
 
             <div className="grid xl:grid-cols-1 grid-cols-1">
-                  <div className={`border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
+                  <div className={`border-b bg-white border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
                     <div className="xl:w-[58%] w-[65%] flex px-2">
                       <div className="w-full leading-3 flex items-center">
                         <span className="lg:hidden flex z-20 pr-1">
@@ -86,18 +87,18 @@ const OverByOverFancyComponent = ({
                       <span className="lg:block hidden bg-[#8DD2F0]">
                         <div className={`py-1.5 flex justify-center items-center bg-[#8DD2F0]`}>
                           <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                            <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                           </div>
                         </div>
                       </span>
                       <span className="lg:hidden block">
                         <div className={`py-1.5 flex justify-center items-center bg-[#8DD2F0]`}>
                           <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                            <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                           </div>
                         </div>
                       </span>
-                      <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
+                      <span className="xl:flex items-center text-end px-1 w-full bg-white justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
                     </div>
                   </div>
                 </div>
@@ -283,7 +284,7 @@ const OverByOverFancyComponent = ({
                   {commList?.remark &&
                     <div className="px-1 text-[#097c93] text-left text-[11px] w-full">{commList?.remark}</div>
                   }
-                  {console.log("betSlipDafsdfsafta", commList)}
+
                   {betSlipData?.oddsType === "fancy" &&
                                                                     commList?.Selection_id ===
                                                                       betSlipData?.selectionId && (
@@ -302,6 +303,7 @@ const OverByOverFancyComponent = ({
                                                                         handleClose={handleBackclose}
                                                                         setBetSlipData={setBetSlipData}
                                                                         handleButtonValues={handleButtonValues}
+                                                                        isMatchCoin={isMatchCoin}
                                                                       />
                                                                     )}
                 </div>

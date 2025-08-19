@@ -83,7 +83,7 @@ async function getDomainSettingData(data) {
     const user = await apiCall("POST", "website/domainSettingByDomainName", data);
 
     if (user) {
-      localStorage.setItem('clientdomainSetting', JSON.stringify(user.data));
+      // localStorage.setItem('clientdomainSetting', JSON.stringify(user.data));
       return user;
     }
   } catch (error) {

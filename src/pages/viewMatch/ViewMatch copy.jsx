@@ -139,6 +139,8 @@ const ViewMatches = () => {
         }
     }
 
+ 
+
 
     useEffect(() => {
         setDataFromLocalstorage()
@@ -154,6 +156,7 @@ const ViewMatches = () => {
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
         setupAsyncActions(marketId);
+        
 
         return () => {
             document.removeEventListener('visibilitychange', handleVisibilityChange);
@@ -312,6 +315,10 @@ const ViewMatches = () => {
 
         }
     };
+
+    
+
+ 
 
 
     useEffect(() => {
@@ -911,6 +918,7 @@ const ViewMatches = () => {
                 handleClose={handleBackclose}
                 setBetSlipData={setBetSlipData}
                 handleButtonValues={handleButtonValues}
+                isMatchCoin={isMatchCoin}
             />}
 
             {/* {buttonValue && (

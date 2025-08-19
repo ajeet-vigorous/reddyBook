@@ -11,6 +11,7 @@ const GroupedFancyComponent = ({
   marketId,
   returnDataFancyObject,
   betplaceSection,
+  isMatchCoin
 
 }) => {
   const {
@@ -54,13 +55,13 @@ const GroupedFancyComponent = ({
             </header>
 
               {/* Min/Max */}
-              <div className="grid grid-cols-[80%_20%] gap-2 border-t text-sm">
+              <div className="grid grid-cols-[80%_20%] bg-white gap-2 border-t text-sm">
                 <div className="text-[11px] text-[teal] px-2 py-1 font-medium">
-                  Min: 100 Max: 1L
+                  Min: 100 Max: {Number(isMatchCoin?.max).toFixed(2)}
                 </div>
                 <div className={`py-1.5 flex justify-center items-center`}>
                   <div className='text-center leading-3'>
-                    <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
+                    <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
                   </div>
                 </div>
               </div>
@@ -69,7 +70,7 @@ const GroupedFancyComponent = ({
               {items.map((commList, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-[80%_20%] gap-2 border-t text-sm"
+                  className="grid grid-cols-[80%_20%] bg-white gap-2 border-t text-sm"
                 >
                   <div className="px-2">{i} Number</div>
                   <div
@@ -103,6 +104,7 @@ const GroupedFancyComponent = ({
                       boderColors={"border-[#489bbd]"}
                     />
                   </div>
+                  <div className="col-span-2">
                   {betSlipData?.oddsType === "fancy" &&
                                                                     commList?.Selection_id ===
                                                                       betSlipData?.selectionId && (
@@ -121,8 +123,11 @@ const GroupedFancyComponent = ({
                                                                         handleClose={handleBackclose}
                                                                         setBetSlipData={setBetSlipData}
                                                                         handleButtonValues={handleButtonValues}
+                                                                        isMatchCoin={isMatchCoin}
+                                                                        
                                                                       />
                                                                     )}
+                                                                    </div>
 
                 </div>
               ))}
