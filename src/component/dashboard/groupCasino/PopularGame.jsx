@@ -8,7 +8,6 @@ function PopularGame({ name, data }) {
     const navigate = useNavigate();
 
     const handleResponseCasino = (product) => {
-        console.log(product, "productproductproduct");
         
         if (product?.gameId) {
             localStorage.getItem("token")

@@ -144,7 +144,6 @@ const NormalFancyComponent = ({
                       return orderComparison;
                     })
                     .map((commList, index) => (
-                      console.log("commList", commList),
                       <div key={index}>
                         <div className={`border-b bg-white border-gray-300 relative flex decoration-none whitespace-normal max-w-full`}>
                           <div className="xl:w-[58%] w-[65%] flex px-2">

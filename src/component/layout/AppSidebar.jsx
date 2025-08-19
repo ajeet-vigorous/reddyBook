@@ -62,9 +62,6 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   const [openRaceId, setOpenRaceId] = useState(null);
   const [racingData, setRacingData] = useState([]);
-  console.log("raceId", raceId);
-  console.log("racingData", racingData);
-  console.log("matchData", matchData);
 
   useEffect(() => {
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
@@ -109,9 +106,9 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   //     setOpenKeys([...openKeys, index]);
   //   }
   // };
-  console.log("openKeys", openKeys);
+ 
   const handleClick = (index, e) => {
-    console.log("index", index, openKeys, e);
+  
     e.stopPropagation();
     if (openKeys.includes(index)) {
       setOpenKeys(openKeys.filter((key) => key !== index));
@@ -119,7 +116,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       setOpenKeys([...openKeys, index]);
     }
     const clickedItem = SPORTSCONSTANT[index];
-    console.log("clickedItem", clickedItem);
+  
 
     if (clickedItem?.text === "Casino") {
       navigate("/all-casino");

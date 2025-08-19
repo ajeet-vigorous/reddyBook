@@ -33,7 +33,6 @@ const TossDataComponent = ({
     handleButtonValues
   } = betplaceSection;
 
-  console.log("betSlipData", betSlipData);
 
   return (
     inplayMatch?.isToss && (activeTab === "other" || activeTab === "all") ? (

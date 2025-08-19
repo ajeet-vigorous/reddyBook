@@ -15,7 +15,6 @@ const ReferAndEarn = () => {
     const hostname = window.location.origin;
     const referralCode = clientUserData?.data?.referralCode;
     const clipboardText = `${hostname}/ragister/${referralCode}`;
-    console.log(clientUserData, "clipboardText");
 
     return (
         <>

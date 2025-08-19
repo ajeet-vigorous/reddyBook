@@ -44,7 +44,7 @@ const BookmakerComponent = ({
       <div className={`${bookmaker2Fancy?.length > 0 ? "w-[75%]" : 'w-[100%]'}`}>
         {matchScoreDetails?.team_data?.length > 0 && (
           <>
-          {console.log("matchScoreDetails?.team_data", matchScoreDetails?.team_data)}
+      
             <MatchDetailsHeaderSection 
               cashOut={
                 <CashOutSystem
@@ -91,7 +91,6 @@ const BookmakerComponent = ({
 
                 <>
 
-                  {console.log("commLisdfasfast", betSlipData)}
                   <div key={index} className="relative border-b border-gray-300 flex decoration-none whitespace-normal max-w-full">
                     <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex">
                       <div className="w-full leading-3 flex items-center capitalize text-[#333333]">
