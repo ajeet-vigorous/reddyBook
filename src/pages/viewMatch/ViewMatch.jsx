@@ -1240,7 +1240,7 @@ const ViewMatches = () => {
 
                         />
 
-                        <div className="fancy-premium-container mt-1">
+                        {sportId == "4" && <div className="fancy-premium-container mt-1">
 
                             <div className="flex gap-2 w-full">
                                 <button
@@ -1299,7 +1299,7 @@ const ViewMatches = () => {
                                     <div className="p-4 bg-gray-100">No Premium market found.</div>
                                 )}
                             </div>
-                        </div>
+                        </div>}
 
                         {/* <CashOutSystemTesting /> */}
                     </div>
