@@ -132,7 +132,7 @@
 //             ))
 //           ) : (
 //             <>
-//               <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+//               <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#f8f8f8]">
 //                 <h2 className="text-sm font-bold text-black w-[60%] px-2">Game</h2>
 //                 <p className="w-[40%] grid grid-cols-3 text-center text-sm font-bold">
 //                   <span>1</span>
@@ -151,7 +151,7 @@
 //     if (!filteredMatches || filteredMatches.length === 0) {
 //       content = (
 //         <>
-//           <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+//           <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#f8f8f8]">
 //             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
 //               {sportName}
 //               <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
@@ -170,7 +170,7 @@
 //     } else {
 //       content = (
 //         <div className="overflow-y-auto">
-//           <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
+//           <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#f8f8f8]">
 //             <div className="lg:w-[50%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
 //               <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
 //                 {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
@@ -217,7 +217,7 @@
 //             const isInplay = isInplayMatch(element);
 //             return (
 //               <div
-//                 className="divide-y divide-[#C6D2D8] border-b border-[#C6D2D8] md:pb-0 pb-1.5"
+//                 className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5"
 //                 key={index}
 //               >
 //                 <div className="lg:flex w-full">
@@ -338,7 +338,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
       <>
         <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
         <section>
-          <div className="lg:flex hidden justify-between py-1 w-full border-b border-t bg-[#e9eff8] border-[#C6D2D8]">
+          <div className="lg:flex hidden justify-between py-0 w-full border-b border-t bg-[#e9eff8] border-[#f8f8f8]">
             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
               {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
               {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
@@ -360,7 +360,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
 
   return (
     <div className="overflow-y-auto">
-      <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
+      <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#f8f8f8]">
         <div className="lg:w-[50%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
           <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
             {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
@@ -378,7 +378,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
       </div>
 
       {filteredMatches?.map((element, index) => (
-        <div className="divide-y divide-[#C6D2D8] border-b border-[#C6D2D8] md:pb-0 pb-1.5" key={index}>
+        <div className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5" key={index}>
           <div className="lg:flex w-full">
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
               <div className="flex items-center justify-start w-full bg-white">
@@ -427,11 +427,15 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
               </div>
 
               <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
-                {element?.isTv && <LiaDesktopSolid size={16} />}
+                {element?.isTv &&<img src={"/dashbaord/score-tv-icon.svg"} className="w-[15px] h-[15px]" />}
                 {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[12px] h-[12px]" />}
-                {element?.isBookmaker && (
-                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[19px] h-[19px] text-[9px] pt-[3px]">
+                {element?.isToss && (
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
                     BM
+                  </span>
+                )} {element?.isBookmaker && (
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
+                    T
                   </span>
                 )}
               </div>

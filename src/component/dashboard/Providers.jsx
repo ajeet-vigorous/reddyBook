@@ -54,7 +54,7 @@ function Providers({ filterSection, name, providersData }) {
 
   return (
     <div>
-      <div className="bg-[#e9eff8] rounded-md py-2 border border-secondary">
+      <div className="bg-[#e9eff8] rounded-md border border-secondary">
         <div>
           <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
             <div className="flex space-x-2 items-center">

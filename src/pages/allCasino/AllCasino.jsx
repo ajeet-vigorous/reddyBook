@@ -46,9 +46,8 @@ function AllCasino() {
     useEffect(() => {
         if (getCasinoListByProviderNameData) {
             setProviderWiseCasinoList(getCasinoListByProviderNameData);
-            // Extract unique categories from the fetched provider data
             const uniqueCategories = [...new Set(getCasinoListByProviderNameData?.map(item => item.category))];
-            setCategories(uniqueCategories);  // Set categories for dynamic tabs
+            setCategories(uniqueCategories); 
         }
     }, [getCasinoListByProviderNameData]);
 
@@ -59,16 +58,13 @@ function AllCasino() {
         }
     }, [dispatch, selectedCategory]);
 
-    // Update category-wise list when the API data is received
     useEffect(() => {
-
         if (getCasinoListByCateogeoryData) {
             setCategoryWiseCasinoList(getCasinoListByCateogeoryData);
         }
     }, [getCasinoListByCateogeoryData]);
 
 
-    // Select default provider on mount
     useEffect(() => {
         if (groupCasinoList?.providerList?.length && !selectedProvider) {
             setSelectedProvider("All");
@@ -80,19 +76,18 @@ function AllCasino() {
         }
     }, [groupCasinoList, selectedProvider, dispatch]);
 
-    // Set default category when provider data comes
+
     useEffect(() => {
         if (getCasinoListByProviderNameData?.length) {
             const uniqueCategories = [...new Set(getCasinoListByProviderNameData.map(item => item.category))];
             setCategories(uniqueCategories);
-            // Set first category as default if not set
             if (!selectedCategory && uniqueCategories.length) {
                 setSelectedCategory(uniqueCategories[0]);
             }
         }
     }, [getCasinoListByProviderNameData]);
 
-    // When default category is selected, fetch its games
+
     useEffect(() => {
         if (selectedCategory && selectedCategory !== "All") {
             dispatch(getCasinoListByCateogeory({ category: selectedCategory }));
