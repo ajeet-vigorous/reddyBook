@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import Loader from "../../component/casinoComponent/Loader";
 import { FaSearch } from "react-icons/fa";
 import { getCasinoListByCateogeory, getCasinoListByProviderName } from "../../redux/reducers/user_reducer";
+import Loader from "../../component/loader/Loader";
 
 function AllCasino() {
     const [providerWiseCasinoList, setProviderWiseCasinoList] = useState([]);
@@ -14,7 +15,7 @@ function AllCasino() {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const groupCasinoList = useGroupCasinoList();
     const [selectedProvider, setSelectedProvider] = useState(null);
-    const { getCasinoListByProviderNameData, loading, getCasinoListByCateogeoryData } = useSelector((state) => state.casino);
+    const { getCasinoListByProviderNameData, loading, getCasinoListByCateogeoryData } = useSelector((state) => state.user);
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -124,7 +125,7 @@ function AllCasino() {
 
     return (
         <div className="w-[100%]">
-            <div className='bg-[#e9eff8] sm:flex justify-between items-center sm:space-y-0 space-y-1'>
+            <div className='bg-[#e9eff8] flex justify-between items-center'>
 
                 <div>
                     <div className="relative uppercase tracking-wider text-sm bg-[var(--primary)] w-[200px] font-bold text-white py-1.5 px-3">
@@ -134,8 +135,8 @@ function AllCasino() {
                         <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
                     </div>
                 </div>
-                <div className="flex items-center justify-end">
-                    <div className="flex rounded border border-[var(--secondary)]">
+                <div className="flex items-center">
+                    <div className="flex w-[320px] rounded overflow-hidden border border-[var(--secondary)]">
                         <input
                             type="text"
                             placeholder="Search Games..."
@@ -171,7 +172,6 @@ function AllCasino() {
                 {loading ? <Loader /> :
                     <>
                         <div className="">
-                            {console.log(categories,"categories")}
                             <div className="flex justify-start items-center overflow-x-auto   ">
                                 {categories?.map((category, idx) => (
                                     <button
