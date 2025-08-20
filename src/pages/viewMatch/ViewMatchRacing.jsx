@@ -1140,7 +1140,7 @@ const ViewMatchRacing = () => {
                                                         <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 relative">
 
                                                             {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
-                                                                className={`w-full h-full  absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 lg:flex     hidden justify-center items-center z-[1999]`}
+                                                                className={`w-full h-full  absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 lg:flex     hidden justify-center items-center `}
                                                             >
                                                                 <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
                                                                     <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
@@ -1324,7 +1324,7 @@ const ViewMatchRacing = () => {
                                                         </div>
 
                                                         {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
-                                                            className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center z-[1999]`}
+                                                            className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center `}
                                                         >
                                                             <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
                                                                 <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
@@ -1365,7 +1365,7 @@ const ViewMatchRacing = () => {
                     <div>
                         {!betShow && (
                             <>
-                                <div className="bg-black flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold rounded-sm">
+                                <div className="bg-black flex justify-start items-center rounded-md py-1.5 px-4 text-white text-sm font-semibold ">
                                     <span>Place Bet </span>
                                 </div>
                                 <BetPlaceDesktop
