@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BlinkingComponent from '../BlinkingComponent';
 import PlaceBetMobile from '../../../component/betplaceMobile/PlaceBetMobile';
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 
 
 const NormalFancyComponent = ({
@@ -14,7 +15,8 @@ const NormalFancyComponent = ({
   returnDataFancyObject,
   formatNumber,
   betplaceSection,
-  isMatchCoin
+  isMatchCoin,
+  marketType
 }) => {
   const {
     betSlipData,
@@ -31,8 +33,31 @@ const NormalFancyComponent = ({
     handleButtonValues,
   } = betplaceSection;
 
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    setIsBookmarked(bookmarks.includes(marketType));
+  }, [marketType]);
+
+  // Show temporary notification
+  const showTempNotification = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 2000);
+  };
+
   return (
-    inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
+    <>
+      {/* Notification */}
+      {showNotification && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
+          {isBookmarked ? 'Added to bookmarks!' : 'Removed from bookmarks!'}
+        </div>
+      )}
+
+      inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
       <div>
         {NormalFancy && NormalFancy?.length > 0 ? (
           <>
@@ -155,6 +180,20 @@ const NormalFancyComponent = ({
                                 ></span>
                               </span>
                               <span className="text-xs truncate">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+
+                                  }}
+                                  className="ml-2 focus:outline-none"
+                                  aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                                >
+                                  {isBookmarked ? (
+                                    <FaBookmark size={16} className='text-[var(--primary)]' />
+                                  ) : (
+                                    <FaRegBookmark size={16} className='text-[var(--primary)]' />
+                                  )}
+                                </button>
                                 <span className="text-[13px] truncate text-[#333333]">
                                   {commList.session_name}
                                 </span>
@@ -320,33 +359,33 @@ const NormalFancyComponent = ({
                               </div>
                             ) : null}
                           </div>
-                        
-                          
+
+
                         </div>
                         {commList?.remark &&
                           <div className="px-1 text-[#097c93] text-left text-[11px] w-full">{commList?.remark}</div>
                         }
                         {betSlipData?.oddsType === "fancy" &&
-                                                  commList?.Selection_id ===
-                                                    betSlipData?.selectionId && (
-                                                    <PlaceBetMobile
-                                                      openBets={openBets}
-                                                      closeRow={closeRow}
-                                                      matchName={inplayMatch?.matchName}
-                                                      betSlipData={betSlipData}
-                                                      placeBet={placeBet}
-                                                      errorMessage={errorMessage}
-                                                      successMessage={successMessage}
-                                                      count={betSlipData.count}
-                                                      betLoading={betLoading}
-                                                      increaseCount={increaseCount}
-                                                      decreaseCount={decreaseCount}
-                                                      handleClose={handleBackclose}
-                                                      setBetSlipData={setBetSlipData}
-                                                      handleButtonValues={handleButtonValues}
-                                                      isMatchCoin={isMatchCoin}
-                                                    />
-                                                  )}
+                          commList?.Selection_id ===
+                          betSlipData?.selectionId && (
+                            <PlaceBetMobile
+                              openBets={openBets}
+                              closeRow={closeRow}
+                              matchName={inplayMatch?.matchName}
+                              betSlipData={betSlipData}
+                              placeBet={placeBet}
+                              errorMessage={errorMessage}
+                              successMessage={successMessage}
+                              count={betSlipData.count}
+                              betLoading={betLoading}
+                              increaseCount={increaseCount}
+                              decreaseCount={decreaseCount}
+                              handleClose={handleBackclose}
+                              setBetSlipData={setBetSlipData}
+                              handleButtonValues={handleButtonValues}
+                              isMatchCoin={isMatchCoin}
+                            />
+                          )}
                       </div>
                     ))}
                 </div>
@@ -355,7 +394,8 @@ const NormalFancyComponent = ({
           </>
         ) : null}
       </div>
-    )
+      )
+    </>
   );
 };
 
