@@ -106,7 +106,7 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) =>
             {
                 isModalOpen && (
                     <div onClick={()=>{setIsModalOpen(false)}}  className="fixed overflow-auto inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50">
-                        <div className="bg-white w-[500px]  rounded-lg shadow-lg mt-8">       
+                        <div className="bg-white w-[500px]  rounded-lg shadow-lg mt-8 mb-2">       
                             <div className='flex justify-between rounded-t-lg bg-[var(--primary)] items-center'>
                             <div className=' p-4  text-[18px] font-semibold text-white'>{marketType=="Bookmaker" ? "Bookmaker" : marketType=="Match Odds" ? "Match " : "Bookmaker"} Rules</div>
                             <button onClick={()=>{setIsModalOpen(false)}} className="flex items-center bg-white text-black  justify-center    text-[16px] font-semibold px-2 py-0.5 mr-3">
