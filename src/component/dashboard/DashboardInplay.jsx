@@ -417,7 +417,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                     <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
                   </span>
 
-                  <div className="bg-[#E9EFF8] w-[20%] sm:w-[10%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[20%] sm:w-[12%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
                     <div className="text-[10px]">
                       {moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
