@@ -45,7 +45,7 @@ const TossDataComponent = ({
             <MatchDetailsHeaderSection marketType={"toss_data"} minMax={{ min: 100, max: formatNumber(isTossCoin?.max) }}>
               
               
-              <div className="flex whitespace-normal max-w-full border-b border-gray-300">
+              <div className="flex whitespace-normal max-w-full border-b border-gray-200">
                 <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
                  
                 </div>
@@ -53,16 +53,16 @@ const TossDataComponent = ({
                   <span className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"></span>
                   <span className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"></span>
                   <span className="lg:col-span-1 col-span-3 rounded-md">
-                    <div className="py-1 flex justify-center items-center bg-[#8DD2F0]">
+                    <div className="py-1 flex justify-center items-center">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Back</span>
                       </div>
                     </div>
                   </span>
                   <span className="lg:col-span-1 col-span-3 rounded-md">
-                    <div className="py-1 flex justify-center items-center bg-[#FEAFB2]">
+                    <div className="py-1 flex justify-center items-center">
                       <div className="text-center leading-3">
-                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Lay</span>
+                        <span className="text-xs uppercase text-gray-800 font-bold">Lay</span>
                       </div>
                     </div>
                   </span>
@@ -79,7 +79,7 @@ const TossDataComponent = ({
                     <>
                       <div
                         key={index}
-                        className="relative border-b border-gray-300 flex decoration-none whitespace-normal max-w-full"
+                        className="relative border-b border-gray-200 flex decoration-none whitespace-normal max-w-full"
                       >
                     
                         <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getSportMatchList } from "../../redux/reducers/sport_reducer";
 import RulesModal from "../rulesModal/RulesModal";
 import { FaBullseye, FaSearch } from "react-icons/fa";
-import {  BiLockAlt } from "react-icons/bi";
+import { BiLockAlt } from "react-icons/bi";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
 import { BsBarChart, BsBarChartSteps, BsBoxArrowRight, BsCardText } from "react-icons/bs";
 import BonusRules from "../bonusRules/BonusRules";
@@ -256,7 +256,9 @@ const AppHeader = ({ setSidebarOpen }) => {
                               </div>
                             </div>
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
-                              <div className=" rounded-xl border p-[3px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
+                              <div
+                                onClick={() => navigate("/bonus-list")}
+                                className=" rounded-xl border p-[3px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
                                 AWAITING BONUS : 0.00
                               </div>
                               <div
@@ -373,8 +375,8 @@ const AppHeader = ({ setSidebarOpen }) => {
             return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
           })?.length > 0 && (
               <div className="lg:hidden flex relative">
-                <div className="absolute left-0 top-0 z-[50] bg-white px-[10px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
-                  <img src="/header/play-icon.png" className="w-[28px] h-[28px]" />
+                <div className="absolute left-0 top-0 z-10 bg-white px-[8px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
+                  <img src="/header/play-icon.png" className="w-[26px] h-[26px]" />
                 </div>
                 <div className="bg-[url('/header/popular-img.png')] bg-cover bg-center w-full">
                   <LiveMatches matchList={matchData} />

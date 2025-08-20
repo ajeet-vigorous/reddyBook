@@ -38,7 +38,6 @@ function Signup({ setShowLogin }) {
   };
 
   const handleOnSubmit = async (e) => {
-    alert("1122")
     e.preventDefault();
 
     if (!user.mobileNo || user.mobileNo.length !== 10) {
@@ -129,9 +128,9 @@ function Signup({ setShowLogin }) {
   return (
     <>
       <div className="fixed inset-0 z-50 flex justify-center items-center bg-[var(--secondary)]">
-        <div className=" absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2  bg-[#212121] bg-cover bg-center font-sans  w-[430px] max-w-[430px] min-h-[90%] max-h-[90%] p-0  flex flex-col justify-center rounded-[10px] border-2 border-white">
+        <div className="bg-[#212121] bg-cover bg-center font-sans  w-[430px] max-w-[430px] min-h-[90%] max-h-[90%] p-0  flex flex-col justify-center rounded-[10px] border-2 border-white mx-1">
 
-          <div className="w-[100%] px-[15px] mx-auto">
+          <div className="w-[100%] px-[0px] mx-auto">
 
             <div className="flex items-center justify-center">
               <img src={settings.logo1} alt="Reddy-Book" className="h-[60px] w-[180px]" />

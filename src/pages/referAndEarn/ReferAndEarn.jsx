@@ -38,13 +38,13 @@ const ReferAndEarn = () => {
                         </div>
                     </div>
 
-                    <div className="w-[78%] mx-auto">
+                    <div className="lg:w-[78%] mx-auto">
                         <div className="bg-black text-center mt-3 rounded-md">
-                            <div className="w-full py-2 text-[16px] font-[400] text-white">
+                            <div className="py-2 text-[16px] font-[400] text-white">
                                 Don’t wait, start making HUGE PROFITS NOW! Use my special code{" "}
                                 {clientUserData?.data?.referralCode} to Sign-Up & Get a  Referral Bonus!
                             </div>
-                            <div className="w-full py-2 text-[20px] font-[500] text-white  overflow-x-auto">
+                            <div className="py-2 text-[20px] font-[500] text-white  overflow-x-auto">
                                 {hostname}/{clientUserData?.data?.referralCode}
                             </div>
                         </div>

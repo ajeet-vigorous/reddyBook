@@ -1056,9 +1056,9 @@ const ViewMatches = () => {
 
             </div> */}
 
-            <div className="flex flex-col xl:flex-row text-black  h-full  w-100 gap-x-1">
+            <div className="flex flex-col xl:flex-row text-black h-full w-100 gap-x-1.5">
                 {/* {(matchTab === 1 || matchTab === 3) && ( */}
-                <div className="w-full xl:w-2/3 overflow-y-auto !pb-[60px]">
+                <div className="w-full xl:w-2/3 overflow-y-auto xl:pb-[60px]">
                     <div className="">
                         {/* {matchTab === 3 && ( */}
                         {/* <div className="xl:hidden block">

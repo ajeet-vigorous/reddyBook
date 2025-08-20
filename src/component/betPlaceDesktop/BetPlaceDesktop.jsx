@@ -482,7 +482,7 @@ export function BetPlaceDesktop(props) {
                       </div>
                     </div> */}
                     <div className="text-red-600 text-xs font-semibold  pl-2">
-                      min Bet :{isMatchCoin?.min} max Bet :{isMatchCoin?.max}
+                      Min Bet: {isMatchCoin?.min} Max Bet: {isMatchCoin?.max}
                     </div>
                     <div className="grid grid-cols-2 gap-1 p-1">
                       <div>

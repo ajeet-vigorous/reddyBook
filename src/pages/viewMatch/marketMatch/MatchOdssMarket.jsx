@@ -68,7 +68,7 @@ const MatchOddsComponent = ({
                   )
                 }
               >
-                <div className="flex whitespace-normal max-w-full border-b border-gray-300">
+                <div className="flex whitespace-normal max-w-full border-b border-gray-200">
                   <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2"></div>
 
                   <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
@@ -100,7 +100,7 @@ const MatchOddsComponent = ({
                   element.runners.map((elementtemp, index) => (
                     <>
                       <div
-                        className="flex whitespace-normal max-w-full border-b border-gray-300"
+                        className="flex whitespace-normal max-w-full border-b border-gray-200"
                         key={index}
                       >
                         <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">

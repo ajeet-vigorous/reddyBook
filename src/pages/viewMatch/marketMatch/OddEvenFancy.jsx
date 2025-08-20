@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BlinkingComponent from '../BlinkingComponent';
 import PlaceBetMobile from '../../../component/betplaceMobile/PlaceBetMobile';
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 
 const OddEvenFancyComponent = ({
   inplayMatch,
@@ -14,7 +15,8 @@ const OddEvenFancyComponent = ({
   formatNumber,
   handleFancyPositionModal,
   betplaceSection,
-  isMatchCoin
+  isMatchCoin,
+  marketType
 }) => {
   const {
     betSlipData,
@@ -30,74 +32,120 @@ const OddEvenFancyComponent = ({
     setBetSlipData,
     handleButtonValues,
   } = betplaceSection;
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    setIsBookmarked(bookmarks.includes(marketType));
+  }, [marketType]);
+
+  const toggleBookmark = () => {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    let updatedBookmarks;
+
+    if (isBookmarked) {
+      updatedBookmarks = bookmarks.filter(item => item !== marketType);
+    } else {
+      updatedBookmarks = [...bookmarks, marketType];
+    }
+
+    localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
+    setIsBookmarked(!isBookmarked);
+    showTempNotification();
+  };
+
+  // Show temporary notification
+  const showTempNotification = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 2000);
+  };
+
   return (
     inplayMatch?.isFancy && (activeTab === "fancy" || activeTab === "all") && (
       <div>
         {OddEvenFancy && OddEvenFancy?.length > 0 ? (
           <>
-           
-
-            
-           <div className="grid xl:grid-cols-1 grid-cols-1">
-                  <div className={`border-b border-gray-300 bg-white relative flex decoration-none whitespace-normal max-w-full`}>
-                    <div className="xl:w-[58%] w-[65%] flex px-2">
-                      <div className="w-full bg-white leading-3 flex items-center">
-                        <span className="lg:hidden flex z-20 pr-1">
-                          <span className="text-black flex items-center justify-center"></span>
-                        </span>
-                        <span className="text-xs truncate">
-                          <span className="text-sm truncate"></span>
-                          <br />
-                          <p></p>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
-                      <span className="lg:block hidden bg-white">
-                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
-                          <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">No</span>
-                          </div>
-                        </div>
-                      </span>
-                      <span className="lg:hidden block">
-                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
-                          <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">No</span>
-                          </div>
-                        </div>
-                      </span>
-                      <span className="lg:block hidden bg-white">
-                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
-                          <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
-                          </div>
-                        </div>
-                      </span>
-                      <span className="lg:hidden block">
-                        <div className={`py-1.5 flex justify-center items-center bg-white`}>
-                          <div className='text-center leading-3'>
-                            <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
-                          </div>
-                        </div>
-                      </span>
-                      <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
-                    </div>
+            {showNotification && (
+              <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
+                {isBookmarked ? 'Added to bookmarks!' : 'Removed from bookmarks!'}
+              </div>
+            )}
+            <div className="grid xl:grid-cols-1 grid-cols-1">
+              <div className={`border-b border-gray-200 bg-white relative flex decoration-none whitespace-normal max-w-full`}>
+                <div className="xl:w-[70%] w-[65%] flex px-2">
+                  <div className="w-full bg-white leading-3 flex items-center">
+                    <span className="lg:hidden flex z-20 pr-1">
+                      <span className="text-black flex items-center justify-center"></span>
+                    </span>
+                    <span className="text-xs truncate">
+                      <span className="text-sm truncate"></span>
+                      <br />
+                      <p></p>
+                    </span>
                   </div>
                 </div>
+                <div className="xl:w-[30%] w-[35%] grid grid-cols-2 xl:grid-cols-4">
+                  <span className="lg:block hidden bg-white">
+                    <div className={`py-1.5 flex justify-center items-center bg-white`}>
+                      <div className='text-center leading-3'>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
+                      </div>
+                    </div>
+                  </span>
+                  <span className="lg:hidden block">
+                    <div className={`py-1.5 flex justify-center items-center bg-white`}>
+                      <div className='text-center leading-3'>
+                        <span className="text-xs uppercase text-gray-800 font-bold">No</span>
+                      </div>
+                    </div>
+                  </span>
+                  <span className="lg:block hidden bg-white">
+                    <div className={`py-1.5 flex justify-center items-center bg-white`}>
+                      <div className='text-center leading-3'>
+                        <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
+                      </div>
+                    </div>
+                  </span>
+                  <span className="lg:hidden block">
+                    <div className={`py-1.5 flex justify-center items-center bg-white`}>
+                      <div className='text-center leading-3'>
+                        <span className="text-xs uppercase text-gray-800 font-bold">yes</span>
+                      </div>
+                    </div>
+                  </span>
+                  <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
+                </div>
+              </div>
+            </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col">
               {OddEvenFancy?.map((commList, index) => (
                 <div key={index}>
-                  <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal bg-white max-w-full">
-                    <div className="xl:w-[58%] bg-white w-[65%] flex px-2">
-                      <div className="w-full leading-3 flex items-center">
+                  <div className="border-b border-gray-200 relative flex decoration-none whitespace-normal bg-white max-w-full">
+                    <div className="xl:w-[70%] bg-white w-[65%] flex px-2">
+                      <div className="w-full leading-3 flex items-center space-x-1">
                         <span className="lg:hidden flex z-20 pr-1">
                           <span
                             onClick={() => handleFancyPositionModal({ positionData: commList })}
                             className="text-black flex items-center justify-center cursor-pointer"
                           ></span>
                         </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // toggleBookmark();
+                          }}
+                          className="ml-2 focus:outline-none"
+                          aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                        >
+                          {isBookmarked ? (
+                            <FaBookmark size={12} className='text-[var(--primary)]' />
+                          ) : (
+                            <FaRegBookmark size={12} className='text-[var(--primary)]' />
+                          )}
+                        </button>
                         <span className="text-xs truncate">
                           <span className="text-[13px] truncate text-[#333333]">
                             {commList.session_name}
@@ -121,7 +169,7 @@ const OddEvenFancyComponent = ({
                         </span>
                       </div>
                     </div>
-                    <div className="xl:w-[42%] w-[35%] grid grid-cols-2 xl:grid-cols-3">
+                    <div className="xl:w-[30%] w-[35%] grid grid-cols-2 xl:grid-cols-4">
                       <span
                         className="lg:block hidden cursor-pointer"
                         onClick={() => {
@@ -244,7 +292,7 @@ const OddEvenFancyComponent = ({
                           boderColors={"border-[#489bbd]"}
                         />
                       </span>
-                      <span className="xl:flex items-center bg-white text-end px-2 w-full justify-end hidden  text-[#097C93] font-bold text-[9px] xl:text-[11px] 2xl:text-[13px] overflow-hidden ">
+                      <span className="col-span-2 xl:flex items-center bg-white text-end px-2 w-full justify-end hidden text-[#000000]/75 font-[400] text-[12px] overflow-hidden ">
                         Min:100
                         <br />
                         Max:{formatNumber(commList?.max)}
@@ -254,7 +302,7 @@ const OddEvenFancyComponent = ({
                         (commList.running_status === "SUSPENDED" ||
                           commList.running_status === "CLOSE" ||
                           commList.running_status === "Ball Running") ? (
-                        <div className="xl:w-[42%] lg:w-1/2 w-[35%] bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 px-0.5 right-0 h-full absolute flex justify-center items-center ">
+                        <div className="xl:w-[42%] lg:w-1/2 w-[35%] bg-white/80 border-l-red-500 border-[0.5px] border-r-red-500 px-0.5 right-0 h-full absolute flex justify-center items-center ">
                           <div className="2xl:px-14 lg:px-14 py-2 px-2  text-nowrap rounded font-bold bg-transparent opacity-90">
                             <span className="text-red-500 xl:text-lg text-sm font-bold uppercase">
                               {commList.running_status}
@@ -268,26 +316,26 @@ const OddEvenFancyComponent = ({
                     <div className="px-1 text-[#097c93] text-left text-[11px] w-full">{commList?.remark}</div>
                   }
                   {betSlipData?.oddsType === "fancy" &&
-                                                                    commList?.Selection_id ===
-                                                                      betSlipData?.selectionId && (
-                                                                      <PlaceBetMobile
-                                                                        openBets={openBets}
-                                                                        closeRow={closeRow}
-                                                                        matchName={inplayMatch?.matchName}
-                                                                        betSlipData={betSlipData}
-                                                                        placeBet={placeBet}
-                                                                        errorMessage={errorMessage}
-                                                                        successMessage={successMessage}
-                                                                        count={betSlipData.count}
-                                                                        betLoading={betLoading}
-                                                                        increaseCount={increaseCount}
-                                                                        decreaseCount={decreaseCount}
-                                                                        handleClose={handleBackclose}
-                                                                        setBetSlipData={setBetSlipData}
-                                                                        handleButtonValues={handleButtonValues}
-                                                                        isMatchCoin={isMatchCoin}
-                                                                      />
-                                                                    )}
+                    commList?.Selection_id ===
+                    betSlipData?.selectionId && (
+                      <PlaceBetMobile
+                        openBets={openBets}
+                        closeRow={closeRow}
+                        matchName={inplayMatch?.matchName}
+                        betSlipData={betSlipData}
+                        placeBet={placeBet}
+                        errorMessage={errorMessage}
+                        successMessage={successMessage}
+                        count={betSlipData.count}
+                        betLoading={betLoading}
+                        increaseCount={increaseCount}
+                        decreaseCount={decreaseCount}
+                        handleClose={handleBackclose}
+                        setBetSlipData={setBetSlipData}
+                        handleButtonValues={handleButtonValues}
+                        isMatchCoin={isMatchCoin}
+                      />
+                    )}
                 </div>
               ))}
             </div>

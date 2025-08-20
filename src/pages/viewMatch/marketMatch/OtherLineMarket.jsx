@@ -25,7 +25,7 @@ const OtherMarketsComponent = ({
           <div key={index}>
             <MatchDetailsHeaderSection marketType={element.marketType} minMax={{ min: 100, max: formatNumber(isTieCoin?.max) }}>
             
-            <div className="flex whitespace-normal max-w-full border-b border-gray-300">
+            <div className="flex whitespace-normal max-w-full border-b border-gray-200">
               <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
                 
               </div>

@@ -90,10 +90,10 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                   className="flex items-center justify-start py-1 space-x-1 w-full"
                 >
                   <div className="flex flex-col uppercase w-[60%] sm:w-[35%] px-2">
-                    <span className="text-[12px] font-semibold text-gray-900 hover:underline">
+                    <span className="text-[12px] font-semibold text-gray-900 hover:underline truncate">
                       {element?.matchName}
                     </span>
-                    <span className="text-[10px] font-[500] text-[#838383]">
+                    <span className="text-[10px] font-[500] text-[#838383] truncate">
                       ({element?.seriesName || "No Series"})
                     </span>
                   </div>

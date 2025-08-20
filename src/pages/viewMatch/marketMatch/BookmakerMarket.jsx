@@ -60,7 +60,7 @@ const BookmakerComponent = ({
             
              marketType={`Bookmaker`} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
               {/* (${inplayMatch?.matchName + " - " + inplayMatch?.seriesName}) */}
-              <div className="flex  whitespace-normal max-w-full border-b border-gray-300">
+              <div className="flex  whitespace-normal max-w-full border-b border-gray-200">
                 <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
 
                 </div>
@@ -91,7 +91,7 @@ const BookmakerComponent = ({
 
                 <>
 
-                  <div key={index} className="relative border-b border-gray-300 flex decoration-none whitespace-normal max-w-full">
+                  <div key={index} className="relative border-b border-gray-200 flex decoration-none whitespace-normal max-w-full">
                     <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex">
                       <div className="w-full leading-3 flex items-center capitalize text-[#333333]">
                         <span className="text-[13px] px-2 font-bold">
@@ -330,7 +330,7 @@ const BookmakerComponent = ({
             <MatchDetailsHeaderSection marketType={"Bookmaker 2"} minMax={{ min: 100, max: formatNumber(isMatchCoin?.max) }}>
 
 
-              <div className="flex whitespace-normal max-w-full border-b border-gray-300">
+              <div className="flex whitespace-normal max-w-full border-b border-gray-200">
                 <div className="w-1/2 flex px-2">
 
                 </div>
@@ -359,7 +359,7 @@ const BookmakerComponent = ({
 
               {bookmaker2Fancy.map((commList, index) => (
                 <>
-                  <div key={index} className="relative border-b border-gray-300 flex decoration-none whitespace-normal max-w-full">
+                  <div key={index} className="relative border-b border-gray-200 flex decoration-none whitespace-normal max-w-full">
                     <div className="w-1/2 flex">
                       <div className="w-full leading-3 flex items-center capitalize text-[#333333]">
                         <span className="text-[13px] px-2 font-bold">

@@ -57,7 +57,7 @@ body {
   animation: marqueeLeftToRight 0.9s linear infinite;
 }
 
-.scrollbar::-webkit-scrollbar {
+/* .scrollbar::-webkit-scrollbar {
   width: 80px !important;
 }
 
@@ -68,34 +68,12 @@ body {
 
 .scrollbar::-webkit-scrollbar-track {
   background: transparent !important;
-}
+} */
 
 .scrollbar {
   scrollbar-width: thin !important;
   scrollbar-color: #aab7cf transparent !important;
-  z-index: 0 !important;
 }
-
-
-/* red */
-.scrollbar-red::-webkit-scrollbar {
-  width: 80px !important;
-}
-
-.scrollbar-red::-webkit-scrollbar-thumb {
-  background-color: white !important;
-  border-radius: 4px !important;
-}
-
-.scrollbar-red::-webkit-scrollbar-track {
-  background: transparent !important;
-}
-
-.scrollbar-red {
-  scrollbar-width: thin !important;
-  scrollbar-color: #C10930 transparent !important;
-}
-
 
 .invertimage {
   filter: invert(100%) brightness(100%);

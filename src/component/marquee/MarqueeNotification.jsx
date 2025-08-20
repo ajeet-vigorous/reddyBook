@@ -37,7 +37,9 @@ function MarqueeNotification() {
                     </div> */}
                     <div className="w-[100%]">
                         <div className=" px-1 py-[2px] font-[700] tracking-wide animate-[marquee_30s_linear_infinite]  text-black text-[12px] whitespace-nowrap uppercase  ">
-                            🏏 THE HUNDRED WOMEN'S & MEN'S CUP WINNER🏆 AND FANCY MARKET STARTED IN OUR EXCHANGE 🏏 🎾 ATP TORONTO & WTA MONTREAL 🏆 CUP WINNER BETS STARTED IN OUR EXCHANGE 🎾 🏏 OUR EXCLUSIVE PREMIUM MARKET FOR (SRL) IS NOW STARTED IN OUR EXCHANGE 🏏 DREAM BIG WIN BIG
+                            {clientdomainSettingData?.clientNotification !== undefined && clientdomainSettingData?.clientNotification !== null ? clientdomainSettingData?.clientNotification :
+                                "🏏 THE HUNDRED WOMEN'S & MEN'S CUP WINNER🏆 AND FANCY MARKET STARTED IN OUR EXCHANGE 🏏 🎾 ATP TORONTO & WTA MONTREAL 🏆 CUP WINNER BETS STARTED IN OUR EXCHANGE 🎾 🏏 OUR EXCLUSIVE PREMIUM MARKET FOR (SRL) IS NOW STARTED IN OUR EXCHANGE 🏏 DREAM BIG WIN BIG "
+                            }
                         </div>
                         <style>
                             {`

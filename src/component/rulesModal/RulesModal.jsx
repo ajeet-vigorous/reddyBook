@@ -19,12 +19,12 @@ export default function RulesModal(props) {
 
     return (
 
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={() => setModalFalse()}>
-            <div  className="w-full h-full flex items-start justify-center pt-5 overflow-y-auto">
-                <div onClick={(e) => e.stopPropagation()} className="xl:w-[45%] lg:w-[80%] w-full bg-white text-black rounded shadow-md">
-                    <div className="border border-gray-300 rounded-none bg-white">
-                        <div className=" w-full h-full bg-[var(--darkcolor)] flex justify-between px-2 py-2 items-center">
-                            <h2 className="text-white font-semibold text-[20px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 " onClick={() => setModalFalse()}>
+            <div  className="w-full h-full flex items-start justify-center pt-7 overflow-y-auto rounded-t-lg">
+                <div onClick={(e) => e.stopPropagation()} className="xl:w-[800px] p-0 lg:w-[500px] mx-2 w-full bg-white text-black rounded-t-lg shadow-md">
+                    <div className="rounded-t-lg bg-white">
+                        <div className=" w-full h-full bg-[var(--darkcolor)] flex justify-between px-2 py-2 items-center rounded-t-lg">
+                            <h2 className="text-white font-[400] text-[22px] tracking-wide">
                                 Rules
                             </h2>
                             <span onClick={() => setModalFalse()}>
@@ -37,14 +37,14 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(1)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Horse Racing
                                     </button>
 
                                     {showRules === 1 && (
                                         <>
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-0 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300 text-[17px]'>
                                                     <div className='text-red-500 p-3'>
                                                         Genral
@@ -148,7 +148,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(2)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Handball
                                     </button>
@@ -158,7 +158,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Handball
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -185,7 +185,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(3)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Table Tennis
                                     </button>
@@ -194,7 +194,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Table Tennis
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match odds: -Predict which player will win the match. In the event of any of the named players in a match changing before the match starts then all bets are void. In the event of a match starting but not being completed, all bets will be void.
@@ -214,7 +214,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(4)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Basketball
                                     </button>
@@ -223,7 +223,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Basketball
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match Odds :- Predict which team will be the winner. There must be 5 minutes or less of scheduled game time left for bets to have action.
@@ -246,7 +246,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(5)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Vollyball
                                     </button>
@@ -255,7 +255,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Vollyball
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -275,7 +275,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(6)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Ice Hockey
                                     </button>
@@ -284,7 +284,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Ice Hockey
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -307,7 +307,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(7)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Football
                                     </button>
@@ -316,7 +316,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Football
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -342,7 +342,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(8)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Tennis
                                     </button>
@@ -351,7 +351,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Tennis
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match odds: -Predict which player will win the match. In the event of any of the named players in a match changing before the match starts then all bets are void. In the event of a match starting but not being completed, all bets will be void.
@@ -371,7 +371,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(9)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Snooker
                                     </button>
@@ -380,7 +380,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Snooker
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match Odds :- Predict which team will be the winner. There must be 5 minutes or less of scheduled game time left for bets to have action.
@@ -403,7 +403,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(10)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         E-Games
                                     </button>
@@ -412,7 +412,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             E-Games
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -432,7 +432,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(11)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Fustal
                                     </button>
@@ -441,7 +441,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Fustal
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -464,7 +464,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white ">
                                     <button
                                         onClick={() => toggleSection(12)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Big Bash League
                                     </button>
@@ -473,7 +473,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Big Bash League
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -499,7 +499,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(13)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Lunch Favourite
                                     </button>
@@ -508,7 +508,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Lunch Favourite
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match odds: -Predict which player will win the match. In the event of any of the named players in a match changing before the match starts then all bets are void. In the event of a match starting but not being completed, all bets will be void.
@@ -528,7 +528,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(14)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Politics
                                     </button>
@@ -537,7 +537,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Politics
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match Odds :- Predict which team will be the winner. There must be 5 minutes or less of scheduled game time left for bets to have action.
@@ -560,7 +560,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(15)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Bookmaker
                                     </button>
@@ -569,7 +569,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Bookmaker
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -589,7 +589,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(16)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Teenpatti
                                     </button>
@@ -598,7 +598,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Teenpatti
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -621,7 +621,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(17)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Cricket Casino
                                     </button>
@@ -630,7 +630,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             CricketCasino
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -656,7 +656,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(18)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Fancy Market 1
                                     </button>
@@ -665,7 +665,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Fancy Market 1
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match odds: -Predict which player will win the match. In the event of any of the named players in a match changing before the match starts then all bets are void. In the event of a match starting but not being completed, all bets will be void.
@@ -685,7 +685,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(19)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Football Fancy
                                     </button>
@@ -694,7 +694,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Football Fancy
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match Odds :- Predict which team will be the winner. There must be 5 minutes or less of scheduled game time left for bets to have action.
@@ -717,7 +717,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(20)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         IPL
                                     </button>
@@ -726,7 +726,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             IPL
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -746,7 +746,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(21)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Kabaddi
                                     </button>
@@ -755,7 +755,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Kabaddi
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -778,13 +778,13 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(22)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         World Cup
                                     </button>
                                     {showRules === 22 && (
                                         <>
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -807,7 +807,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(23)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Khado
                                     </button>
@@ -816,7 +816,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Khado
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -842,7 +842,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(24)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Election
                                     </button>
@@ -851,7 +851,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Election
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match odds: -Predict which player will win the match. In the event of any of the named players in a match changing before the match starts then all bets are void. In the event of a match starting but not being completed, all bets will be void.
@@ -871,7 +871,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(25)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Fancy
                                     </button>
@@ -880,7 +880,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Fancy
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-black p-2 leading-none'>
                                                         Match Odds :- Predict which team will be the winner. There must be 5 minutes or less of scheduled game time left for bets to have action.
@@ -903,7 +903,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(26)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Match
                                     </button>
@@ -912,7 +912,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Match
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match
@@ -932,7 +932,7 @@ export default function RulesModal(props) {
                                 <div className=" border border-white">
                                     <button
                                         onClick={() => toggleSection(27)}
-                                        className="w-full text-left bg-[var(--darkred)]  text-white font-semibold px-4 py-2"
+                                        className="w-full text-left bg-[var(--darkred)]  text-white font-[400] px-4 py-2"
                                     >
                                         Binary
                                     </button>
@@ -941,7 +941,7 @@ export default function RulesModal(props) {
                                             {/* <h2 className="text-white bg-[var(--secondary)] m-2 text-xl colour_sky px-2 py-1">
                                             Binary
                                         </h2> */}
-                                            <div className='md:px-5 px-0 py-2'>
+                                            <div className='md:px-2 px-0 py-2'>
                                                 <div className='border-2 border-gray-300 divide-y-2 divide-gray-300'>
                                                     <div className='text-red-500 p-2'>
                                                         Match

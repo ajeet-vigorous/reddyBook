@@ -27,7 +27,7 @@ const Fancy1FancyComponent = ({
             </header>
 
             <div className="grid xl:grid-cols-2 grid-cols-1">
-              <div className="xl:flex hidden relative decoration-none border-b border-gray-300 whitespace-normal max-w-full">
+              <div className="xl:flex hidden relative decoration-none border-b border-gray-200 whitespace-normal max-w-full">
                 <div className="xl:w-[58%] w-[65%] flex px-2">
                   <div className="w-full leading-3 flex items-center">
                     <span className="lg:hidden flex z-20 pr-1">
@@ -72,7 +72,7 @@ const Fancy1FancyComponent = ({
                   <span className="xl:flex items-center text-end px-1 w-full justify-end hidden z-20 text-cyan-500 text-[9px] 2xl:text-[13px] overflow-hidden"></span>
                 </div>
               </div>
-              <div className="border-b border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
+              <div className="border-b border-gray-200 relative flex decoration-none whitespace-normal max-w-full">
                 <div className="xl:w-[58%] w-[65%] flex px-2">
                   <div className="w-full leading-3 flex items-center">
                     <span className="lg:hidden flex z-20 pr-1">
@@ -122,7 +122,7 @@ const Fancy1FancyComponent = ({
             <div className="grid xl:grid-cols-2 grid-cols-1">
               {Fancy1Fancy?.map((commList, index) => (
                 <div key={index}>
-                  <div className="border-b bg-white border-gray-300 relative flex decoration-none whitespace-normal max-w-full">
+                  <div className="border-b bg-white border-gray-200 relative flex decoration-none whitespace-normal max-w-full">
                     <div className="xl:w-[58%] w-[65%] flex px-2">
                       <div className="w-full leading-3 flex items-center">
                         <span className="lg:hidden flex z-20 pr-1">

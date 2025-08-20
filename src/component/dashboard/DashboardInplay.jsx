@@ -382,7 +382,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
           <div className="lg:flex w-full">
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
               <div className="flex items-center justify-start w-full bg-white">
-                <a
+                <div
 
                   // onClick={() => {
                   //   localStorage.getItem('token')
@@ -401,40 +401,40 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                   }}
 
                   // href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
-                  className="flex items-center justify-start py-1 space-x-1 w-full"
+                  className="cursor-pointer flex items-center justify-start py-1 space-x-1 w-full"
                 >
-                  <div className="flex flex-col uppercase w-[50%] sm:w-[32%] px-2">
-                    <span className="text-[12px] font-semibold text-gray-900 hover:underline">
+                  <div className="flex flex-col uppercase w-[40%] sm:w-[32%] md:w-[30%] px-2">
+                    <span className="text-[12px] font-semibold text-gray-900 hover:underline truncate">
                       {element?.matchName}
                     </span>
-                    <span className="text-[10px] font-[500] text-[#838383]">
+                    <span className="text-[10px] font-[500] text-[#838383] truncate">
                       ({element?.seriesName || "No Series"})
                     </span>
                   </div>
 
-                  <span className="w-[20%] sm:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold text-[13px] tracking-wide">
+                  <span className="w-[15%] sm:w-[15%] md:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold sm:text-[13px] text-[10px] tracking-wide">
                     <p className="pt-2">LIVE</p>
                     <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
                   </span>
 
-                  <div className="bg-[#E9EFF8] w-[20%] sm:w-[12%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[15%] sm:w-[12%] md:w-[10%] lg:w-[25%] xl:w-[13%] 2xl:w-[10%] text-[#FF0000] sm:text-[11px] text-[8px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
-                    <div className="text-[10px]">
+                    <div className="sm:text-[10px] text-[8px]">
                       {moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
 
-              <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
-                {element?.isTv &&<img src={"/dashbaord/score-tv-icon.svg"} className="w-[15px] h-[15px]" />}
-                {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[12px] h-[12px]" />}
-                {element?.isToss && (
-                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
+              <div className="flex justify-end items-center space-x-1.5 cursor-pointer pr-3">
+                {element?.isTv &&<img src={"/dashbaord/score-tv-icon.svg"} className="w-[14px] h-[14px]" />}
+                {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[10px] h-[10px]" />}
+                {element?.isBookmaker && (
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     BM
                   </span>
-                )} {element?.isBookmaker && (
-                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
+                )} {element?.isToss && (
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     T
                   </span>
                 )}
