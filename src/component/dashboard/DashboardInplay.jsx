@@ -395,7 +395,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                     if (localStorage.getItem("token")) {
                       window.location.href = `/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`;
                     } else {
-                      // openModal();
+                      openModal();
                       localStorage.setItem("unauthorized", true);
                     }
                   }}
@@ -462,6 +462,8 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
           </div>
         </div>
       ))}
+      
+      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
     </div>
   );
 }

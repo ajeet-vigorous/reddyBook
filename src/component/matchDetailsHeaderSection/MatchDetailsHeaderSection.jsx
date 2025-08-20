@@ -13,8 +13,6 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) =>
         setIsBookmarked(bookmarks.includes(marketType));
     }, [marketType]);
   
-    console.log(marketType)
-
     // Handle bookmark toggle
     const toggleBookmark = () => {
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');

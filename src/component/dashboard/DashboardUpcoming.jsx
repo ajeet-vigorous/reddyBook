@@ -1,6 +1,8 @@
 import { LiaDesktopSolid } from "react-icons/lia";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import Login from "../login/Login";
+import { useState } from "react";
 
 function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
   const { gameId } = useParams();
@@ -17,6 +19,16 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
       const bTime = moment(b.matchDate, "DD-MM-YYYY HH:mm:ss");
       return aTime - bTime;
     });
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+    const openModal = () => {
+      setIsLoginOpen(true);
+    }
+  
+    const closeModal = () => {
+      setIsLoginOpen(false);
+    };
+  
 
   // ⛔ No upcoming matches
   if (!filteredMatches || filteredMatches.length === 0) {
@@ -66,7 +78,15 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
               <div className="flex items-center justify-start w-full bg-white">
                 <a
-                  href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
+                  onClick={() => {
+                    if (localStorage.getItem("token")) {
+                      window.location.href=`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`
+                    } else {
+                      openModal();
+                      localStorage.setItem("unauthorized", true);
+                    }
+                  }}
+               
                   className="flex items-center justify-start py-1 space-x-1 w-full"
                 >
                   <div className="flex flex-col uppercase w-[60%] sm:w-[35%] px-2">
@@ -123,6 +143,8 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
           </div>
         </div>
       ))}
+      
+      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
     </div>
   );
 }
