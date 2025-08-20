@@ -106,7 +106,7 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) =>
             {
                 isModalOpen && (
                     <div onClick={()=>{setIsModalOpen(false)}}  className="fixed overflow-auto inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50">
-                        <div className="bg-white w-[500px]  rounded-t-lg shadow-lg mt-8">       
+                        <div className="bg-white w-[500px]  rounded-lg shadow-lg mt-8">       
                             <div className='flex justify-between rounded-t-lg bg-[var(--primary)] items-center'>
                             <div className=' p-4  text-[18px] font-semibold text-white'>{marketType=="Bookmaker" ? "Bookmaker" : marketType=="Match Odds" ? "Match " : "Bookmaker"} Rules</div>
                             <button onClick={()=>{setIsModalOpen(false)}} className="flex items-center bg-white text-black  justify-center    text-[16px] font-semibold px-2 py-0.5 mr-3">
@@ -118,27 +118,27 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) =>
                             {
                                 (marketType === "Bookmaker" || marketType === "toss_data" || marketType === "Tied_Match") && (
                                     <div className="p-4">
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">      Due to any reason any team will be getting advantage or disadvantage we are not concerned.  </div> 
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">      Due to any reason any team will be getting advantage or disadvantage we are not concerned.  </div> 
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">Company reserves the right to suspend/void any id/bets if the same is found to be illegitimate. For example incase of vpn/robot-use/multiple entry from same IP/ multiple bets at the same time (Punching) and others. Note : only winning bets will be voided.</div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">Company reserves the right to suspend/void any id/bets if the same is found to be illegitimate. For example incase of vpn/robot-use/multiple entry from same IP/ multiple bets at the same time (Punching) and others. Note : only winning bets will be voided.</div>
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">We will simply compare both teams 25 overs score higher score team will be declared winner in ODI (25 over comparison)</div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">We will simply compare both teams 25 overs score higher score team will be declared winner in ODI (25 over comparison)</div>
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">We will simply compare both teams 10 overs higher score team will be declared winner in T20 matches (10 over comparison)</div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">We will simply compare both teams 10 overs higher score team will be declared winner in T20 matches (10 over comparison)</div>
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">Any query about the result or rates should be contacted within 7 days of the specific event, the same will not be considered valid post 7 days from the event.  </div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">Any query about the result or rates should be contacted within 7 days of the specific event, the same will not be considered valid post 7 days from the event.  </div>
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">If two team ends up with equal points, then result will be given based on the official point table</div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">If two team ends up with equal points, then result will be given based on the official point table</div>
 
-                                 <div className="border-b text-rose-600 py-[6px] border-b-gray-100">Tennis:- Advance fancy market</div>
+                                 <div className="border-b text-rose-600 py-[8px] border-b-gray-100">Tennis:- Advance fancy market</div>
 
-                                 <div className="border-b py-[6px] border-b-gray-100">If the second set is not completed all bets regarding this market will be voided</div>
+                                 <div className="border-b py-[8px] text-slate-600 border-b-gray-100">If the second set is not completed all bets regarding this market will be voided</div>
 
-                                 <div className="border-b py-[6px] border-b-gray-100">If a player retires after completion of second set, then the market will be settled as three sets</div>
+                                 <div className="border-b py-[8px] text-slate-600 border-b-gray-100">If a player retires after completion of second set, then the market will be settled as three sets</div>
 
-                                 <div className="border-b py-[6px] text-rose-600 border-b-gray-100">Virtual Cricket</div>
+                                 <div className="border-b py-[8px] text-rose-600 border-b-gray-100">Virtual Cricket</div>
 
-                                 <div className="border-b py-[6px] border-b-gray-100">At any situation if the video gets interrupted/stopped then the same cannot be continued due to any technical issues bookmaker market will be voided</div>     
+                                 <div className="border-b py-[8px] text-slate-600 border-b-gray-100">At any situation if the video gets interrupted/stopped then the same cannot be continued due to any technical issues bookmaker market will be voided</div>     
                                     </div>
                                 )
                             }         
@@ -146,15 +146,15 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax ,cashOut }) =>
                             {
                                 marketType === "Match Odds" && (
                                     <div className="p-4">
-                                        <div className=" text-[21px] font-semibold text-[#6D081D] py-[6px] ">CRICKET</div>
-                                        <div className="border-b text-[15px] text-slate-800  py-[6px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- In the event of match not being completed or tied all bets will be void.</div>
-                                        <div className="text-[21px] font-semibold text-[#6D081D]  py-[6px] ">TENNIS</div>
-                                        <div className="border-b  text-[15px] text-slate-800  py-[6px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- If 1st set has been not completed at the time of the retirement or disqualification, then all bets relating to that individual match will be void.</div>
-                                        <div className="text-[21px] font-semibold text-[#6D081D]  py-[6px] ">FOOTBALL</div>
+                                        <div className=" text-[21px] font-semibold text-[#6D081D] py-[8px] ">CRICKET</div>
+                                        <div className="border-b text-[15px] text-slate-800  py-[8px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- In the event of match not being completed or tied all bets will be void.</div>
+                                        <div className="text-[21px] font-semibold text-[#6D081D]  py-[8px] ">TENNIS</div>
+                                        <div className="border-b  text-[15px] text-slate-800  py-[8px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- If 1st set has been not completed at the time of the retirement or disqualification, then all bets relating to that individual match will be void.</div>
+                                        <div className="text-[21px] font-semibold text-[#6D081D]  py-[8px] ">FOOTBALL</div>
     
-                                        <div className="border-b  text-[15px] text-slate-800 py-[6px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- All bets apply to the relevant full 'regular time' period including stoppage time. Any extra-time and/or penalty shoot-out is not included. For the cancellation of a goal, due to VAR, bets matched between the time of the goal being scored and the time at which the video assistant referee finishes the review will be voided. For the cancellation of a red card, due to VAR, bets matched after the time at which the video assistant referee commences the review will be voided.</div>
-<div className="border-b text-[15px] text-slate-800 py-[6px] border-b-gray-100">
-<div className="text-[21px] font-semibold text-[#6D081D]  py-[6px] ">FOOTBALL</div>
+                                        <div className="border-b  text-[15px] text-slate-800 py-[8px] border-b-gray-100"> <span className="text-[16px] font-semibold text-black">Match Odds</span> :- All bets apply to the relevant full 'regular time' period including stoppage time. Any extra-time and/or penalty shoot-out is not included. For the cancellation of a goal, due to VAR, bets matched between the time of the goal being scored and the time at which the video assistant referee finishes the review will be voided. For the cancellation of a red card, due to VAR, bets matched after the time at which the video assistant referee commences the review will be voided.</div>
+<div className="border-b text-[15px] text-slate-800 py-[8px] border-b-gray-100">
+<div className="text-[21px] font-semibold text-[#6D081D]  py-[8px] ">FOOTBALL</div>
 <span className="text-[16px] font-semibold text-black">Under_Over Goals  </span>:- In the event of a match starting but not being completed, all bets will be void, unless the specific market outcome is already determined
 </div>
                                     </div>
