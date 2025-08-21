@@ -30,7 +30,7 @@ const Layout = () => {
 
         <section className="w-full h-screen flex flex-col overflow-hidden relative">
             <div className="shrink-0 z-10 lg:bg-white bg-black">
-                <div className="lg:h-[60px] h-[140px] ">
+                <div className="">
                     <AppHeader setSidebarOpen={setIsSidebarOpen} />
                 </div>
                 <div>
@@ -40,7 +40,7 @@ const Layout = () => {
 
             <div className="flex flex-1 overflow-hidden relative">
                 <div className={`${isSidebarOpen ? 'fixed' : 'hidden'} 
-                lg:relative lg:block inset-0 lg:inset-auto lg:w-[250px] w-[55%] h-screen lg:h-auto z-20 lg:z-auto bg-white overflow-y-auto scrollbar`}>
+                lg:relative lg:block inset-0 lg:inset-auto lg:w-[250px] w-[55%] h-screen lg:h-auto z-20 lg:z-auto bg-white overflow-y-auto scrollbar-hide`}>
                     <AppSidebar
                         isSidebarOpen={isSidebarOpen}
                         setIsSidebarOpen={setIsSidebarOpen}

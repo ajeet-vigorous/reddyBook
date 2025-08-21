@@ -34,7 +34,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
   if (!filteredMatches || filteredMatches.length === 0) {
     return (
       <>
-        <div className="lg:flex hidden justify-between py-0 w-full border-b border-t border-[#f8f8f8]">
+        <div className="lg:flex hidden justify-between items-center py-0 w-full border-b border-t border-[#f8f8f8]">
           <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
             {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
             {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
@@ -42,11 +42,11 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
             <p>{sportName}</p>
             <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
           </div>
-          <p className="w-[50%] grid grid-cols-3 text-center text-sm font-bold">
+          <div className="w-[50%] grid grid-cols-3 text-center text-sm font-bold">
             <span>1</span>
             <span>X</span>
             <span>2</span>
-          </p>
+          </div>
         </div>
         <div className="border-b px-3 py-1 text-[13px] bg-white">No Upcoming Matches Found</div>
       </>
@@ -76,7 +76,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
         <div className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5" key={index}>
           <div className="lg:flex w-full">
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
-              <div className="flex items-center justify-start w-full bg-white">
+              <div className="flex items-center justify-start sm:w-full w-[80%] bg-white">
                 <a
                   onClick={() => {
                     if (localStorage.getItem("token")) {
@@ -89,7 +89,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                
                   className="flex items-center justify-start py-1 space-x-1 w-full"
                 >
-                  <div className="flex flex-col uppercase w-[60%] sm:w-[35%] px-2">
+                  <div className="flex flex-col uppercase w-[45%] sm:w-[50%] px-2">
                     <span className="text-[12px] font-semibold text-gray-900 hover:underline truncate">
                       {element?.matchName}
                     </span>
@@ -98,7 +98,7 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                     </span>
                   </div>
 
-                  <div className="bg-[#E9EFF8] w-[30%] sm:w-[10%] text-[#FF0000] sm:text-xs text-[10px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[35%] sm:w-[20%] md:w-[25%]  text-[#FF0000] sm:text-xs text-[10px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
                     <div className="text-[10px]">
                       {moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
@@ -107,15 +107,15 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                 </a>
               </div>
 
-              <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
-                {element?.isTv && <img src={"/dashbaord/score-tv-icon.svg"} className="w-[15px] h-[15px]" />}
-                {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[12px] h-[12px]" />}
+              <div className="flex items-center justify-end space-x-1.5 cursor-pointer pr-3 sm:w-full w-[20%]">
+                {element?.isTv && <img src={"/dashbaord/score-tv-icon.svg"} className="w-[14px] h-[14px]" />}
+                {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[10px] h-[10px]" />}
                 {element?.isToss && (
-                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     BM
                   </span>
                 )} {element?.isBookmaker && (
-                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center w-[20px] h-[20px] text-[9px] p-2">
+                  <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     T
                   </span>
                 )}

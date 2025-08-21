@@ -133,7 +133,17 @@ const AppHeader = ({ setSidebarOpen }) => {
       {rulesModalOpen ? <RulesModal setModalFalse={setModalFalse} /> : null}
       {bonusModalOpen ? <BonusRules setBonusFalse={setBonusFalse} /> : null}
 
-      <div className="">
+      <div
+        className={`lg:h-[60px] ${matchData?.filter(element => {
+          if (!element?.matchDate) return false;
+          const inputMoment = moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A");
+          const currentMoment = moment().add(60, "minutes");
+          return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
+        })?.length > 0
+          ? "h-[140px]"
+          : "h-[100px]"
+          }`}
+      >
         <div className="">
           <div className="flex justify-between items-center lg:px-0 px-2 mx-auto 2xl:w-[67%] md:w-[90%] w-full py-0">
             <div className="flex justify-start items-center lg:space-x-5 py-3">
@@ -223,8 +233,8 @@ const AppHeader = ({ setSidebarOpen }) => {
                                     : "0"}
                                 </p>
                               </div>
-                              <p className="text-[11px]">(inclusive bonus)</p>
-                              <div className="flex justify-start items-center space-x-8">
+                              <p className="text-[10px]">(inclusive bonus)</p>
+                              <div className="flex justify-start items-center space-x-10">
                                 <p>Net Exposure</p>
                                 <p className="font-bold">
                                   {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
@@ -258,12 +268,12 @@ const AppHeader = ({ setSidebarOpen }) => {
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
                               <div
                                 onClick={() => navigate("/bonus-list")}
-                                className=" rounded-xl border p-[3px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
-                                AWAITING BONUS : 0.00
+                                className=" rounded-xl border p-[4px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
+                                AWAITING BONUS : 1000
                               </div>
                               <div
                                 onClick={() => navigate("/refer-and-earn")}
-                                className=" rounded-xl border p-[3px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
+                                className=" rounded-xl border p-[4px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
                                 REFER AND EARN
                               </div>
 
@@ -384,16 +394,18 @@ const AppHeader = ({ setSidebarOpen }) => {
               </div>
             )}
 
-
-          <div className="px-2 mt-1.5">
-            <div className="relative lg:hidden block w-full">
-              <input
-                placeholder="Search Events"
-                className="w-full text-sm text-white bg-transparent border border-grey-50 shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-10 py-[5px] rounded-[2px] transition duration-300"
-              />
-              <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm" />
+          <div className="px-2 mt-1">
+            <div className="lg:hidden block w-full">
+              <div className="relative flex items-center w-full">
+                <input
+                  placeholder="Search Events"
+                  className="w-full text-sm text-white bg-transparent border border-[#4d4d4d] shadow-[0_0_10px_0_rgba(1,41,112,0.15)] px-2 pr-8 py-[5px] rounded-[2px] transition duration-300"
+                />
+                <FaSearch className="absolute right-2 text-[#4d4d4d] text-sm pointer-events-none" />
+              </div>
             </div>
           </div>
+
         </div>
       </div >
 

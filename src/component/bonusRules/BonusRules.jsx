@@ -20,15 +20,15 @@ export default function BonusRules(props) {
     return (
         <>
             <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black bg-opacity-50">
-                <div className="w-full h-full flex items-start justify-center py-6 overflow-y-auto">
-                    <div className="xl:w-[45%] lg:w-[80%] w-full bg-white text-black rounded shadow-md">
-                        <div className="border border-gray-300 rounded-none bg-white">
-                            <div className=" w-full h-full bg-[var(--darkcolor)] flex justify-between px-2 py-2 items-center">
-                                <h2 className="text-white font-semibold text-[20px]">
+                <div className="w-full h-full flex items-start justify-center py-6 overflow-y-auto rounded-t-lg">
+                    <div className="xl:w-[45%] lg:w-[80%] mx-2 w-full text-black rounded-t-lg shadow-md">
+                        <div className="rounded-t-lg bg-white">
+                            <div className=" w-full h-full bg-[var(--darkcolor)] flex justify-between rounded-t-lg px-2 py-2 items-center">
+                                <h2 className="text-white font-[400] text-[22px] tracking-wide">
                                     Bonus Rules
                                 </h2>
                                 <span onClick={() => setBonusFalse()}>
-                                    <RiCloseFill size={24} className='text-white cursor-pointer' />
+                                    <RiCloseFill size={20} className='text-white cursor-pointer' />
                                 </span>
                             </div>
                             <div className="px-[10px] py-[9px] text-sm text-[#222] space-y-2 leading-relaxed">
@@ -103,7 +103,6 @@ export default function BonusRules(props) {
                                     =&gt; Management reserves right to modify or cancel this promotion at any time.
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </div>

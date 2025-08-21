@@ -100,7 +100,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
           {Object.keys(groupedBySeries)?.map((el, index) => {
             return (
               <>
-                <div onClick={() => setSubTab(el)} className={`border border-[var(--secondary)]  ${subTab === el ? "bg-[var(--secondary)] px-5 py-1 text-white" : "bg-[#cccc] px-5 py-1 text-black"}`} key={index}>
+                <div onClick={() => setSubTab(el)} className={`cursor-pointer text-[14px] hover:bg-[var(--secondary)] ${subTab === el ? "bg-[var(--secondary)] px-5 py-[4px] text-white" : "px-5 py-[4px] text-white"}`} key={index}>
                   {el}
                 </div>
               </>
@@ -110,7 +110,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
         <div className="bg-[#F2F2F2]">
           {groupedBySeries[subTab] && functiongroupbyRacingmatch(groupedBySeries[subTab])?.length > 0 ? (
             functiongroupbyRacingmatch(groupedBySeries[subTab])?.map((match, index) => (
-              <div key={index} className="flex xl:items-center p-1.5 xl:justify-start md:grid md:grid-cols-[0.5fr_1.5fr]  xl:flex-row flex-col items-start justify-between gap-1 my-0.5 border-b border-gray-300">
+              <div key={index} className="flex xl:items-center p-1.5 xl:justify-start md:grid md:grid-cols-[0.5fr_1.5fr]  xl:flex-row flex-col items-start justify-between gap-1 border-b border-gray-300">
                 <div className="flex flex-row justify-start items-center gap-2">
                   <FaTv className="text-black" />
                   <div className="xl:min-w-[400px] text-[13px] min-w-full font-[600] uppercase">{match?.key}</div>
@@ -120,7 +120,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                   {match?.value?.map((allMatchTime, newindex) => (
                     <div onClick={() => {
                       window.location.href = `/sport-view-racing/${allMatchTime?.marketId}/${allMatchTime?.eventId}/${allMatchTime?.sportId}`
-                    }} key={newindex} className="bg-[var(--darkcolor)] rounded-[4px] text-white px-3 py-1 text-[14px] text-center cursor-pointer">
+                    }} key={newindex} className="bg-[var(--darkcolor)] rounded-[4px] text-white px-2.5 py-[4px] text-[13px] text-center cursor-pointer">
                       {moment(allMatchTime?.matchDate, 'YYYY-MM-DD HH:mm:ss', true).isValid() ? (
                         moment(allMatchTime.matchDate, 'YYYY-MM-DD HH:mm:ss').format("HH:mm")
                       ) : null}
@@ -151,7 +151,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
     if (!filteredMatches || filteredMatches.length === 0) {
       content = (
         <>
-          <div className="lg:flex hidden justify-between px-1.5 py-1 w-full border-b border-t border-[#C6D2D8]">
+          <div className="lg:flex hidden items-center justify-between w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
               {sportName}
               <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>

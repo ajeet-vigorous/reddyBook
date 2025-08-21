@@ -54,8 +54,8 @@ const SubHeader = ({ setSidebarOpen }) => {
               <div
                 key={item.id}
                 onClick={() => handleClick(item)}
-                className={`group px-[18px] uppercase relative flex flex-col justify-center items-center w-full 
-                  ${isActive ? "bg-[var(--secondary)] h-[45px] text-white" : "h-[44px] lg:text-white text-black"}
+                className={`group px-[22px] uppercase tracking-wide relative flex flex-col justify-center items-center w-full 
+                  ${isActive ? "bg-[var(--primary)] h-[45px] text-white" : "h-[44px] lg:text-white text-black"}
                   ${isClickable ? "cursor-pointer" : "cursor-not-allowed opacity-60"}
                   lg:border-none border-l-[1px] border-[#eee]`}
               >
