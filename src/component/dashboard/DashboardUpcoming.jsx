@@ -86,21 +86,20 @@ function DashboardUpcoming({ activeTab, matchlistItems, sportName }) {
                       localStorage.setItem("unauthorized", true);
                     }
                   }}
-               
-                  className="flex items-center justify-start py-1 space-x-1 w-full"
+                  className="flex items-center justify-start py-1 space-x-1 w-full cursor-pointer"
                 >
                   <div className="flex flex-col uppercase w-[45%] sm:w-[50%] px-2">
-                    <span className="text-[12px] font-semibold text-gray-900 hover:underline truncate">
+                    <span className="text-[11px] font-semibold text-gray-900 hover:underline truncate">
                       {element?.matchName}
                     </span>
-                    <span className="text-[10px] font-[500] text-[#838383] truncate">
+                    <span className="text-[9px] font-[500] text-[#838383] truncate">
                       ({element?.seriesName || "No Series"})
                     </span>
                   </div>
 
-                  <div className="bg-[#E9EFF8] w-[35%] sm:w-[20%] md:w-[25%]  text-[#FF0000] sm:text-xs text-[10px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[20%] sm:w-[20%] md:w-[18%] lg:w-[20%] text-[#FF0000] sm:text-[11px] text-[8px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
-                    <div className="text-[10px]">
+                    <div className="sm:text-[10px] text-[8px]">
                       {moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
                     </div>
                   </div>

@@ -111,7 +111,7 @@ const AccountSatement = () => {
       <div className="w-full min-h-screen flex">
         <div className="border w-full">
           <div className='bg-[var(--darkcolor)] uppercase text-black py-1 px-1.5'>
-            <h2 className='text-[14px] text-white'>Account Statement</h2>
+            <h2 className='text-[13px] text-white'>Account Statement</h2>
           </div>
           <div className="mt-1.5 border-1 border-gray-400 space-y-2">
             {/* desktop view */}
@@ -157,8 +157,8 @@ const AccountSatement = () => {
               </div>
             </div>
             {/* mobile view */}
-            <div className="flex flex-col bg-white md:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
-              <div className="flex w-full justify-center items-center  gap-2">
+            <div className="flex p-1 flex-col bg-white md:hidden justify-center items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-6">
+              <div className="flex w-full justify-center items-center  gap-1">
                 <div className="">
                   <DatePicker
                     selected={payloadData?.fromDate}
@@ -182,7 +182,7 @@ const AccountSatement = () => {
                   />
                 </div>
               </div>
-              <div className="flex gap-2 w-full">
+              <div className="flex gap-1 w-full">
                 <select
                   className="px-3 py-[2px] text-md bg-transparent border bg-white w-1/2 border-gray-400 rounded-md focus:outline-none text-[#495057] placeholder-text-gray-500"
                   onChange={handleSelectChange}

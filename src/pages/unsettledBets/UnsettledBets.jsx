@@ -32,7 +32,7 @@ const UnsettledBets = ({ }) => {
         <div className="w-full min-h-screen flex">
             <div className="border w-full">
                 <div className='bg-[var(--darkcolor)] uppercase text-black py-1 px-1.5'>
-                    <h2 className='text-[14px] text-white'>Unsettled Bets</h2>
+                    <h2 className='text-[13px] text-white'>Unsettled Bets</h2>
                 </div>
 
                 <div className="overflow-hidden mt-2">

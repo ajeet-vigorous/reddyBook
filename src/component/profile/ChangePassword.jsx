@@ -157,11 +157,11 @@ const ChangePassword = () => {
 
                             <div className="italic text-xs mt-4 space-y-1">
                                 <p>
-                                    <span className="font-semibold">Note:</span>
+                                    <span className="font-semibold">Note: </span>
                                     The New Password field must be at least 6 characters
                                 </p>
                                 <p>
-                                    <span className="font-semibold">Note:</span>
+                                    <span className="font-semibold">Note: </span>
                                     The New Password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number
                                 </p>
                             </div>
@@ -170,7 +170,7 @@ const ChangePassword = () => {
                                 <button
                                     type="button"
                                     onClick={() => changePassword()}
-                                    className="px-3 py-1.5 font-normal text-base text-white bg-[var(--secondary)] rounded-md border border-transparent shadow-sm hover:bg-white hover:text-black hover:border-[var(--secondary)] transition-colors duration-150 ease-in-out select-none w-full mt-1 flex items-center justify-center gap-2">
+                                    className="px-3 py-1.5 font-normal text-[15px] text-white tracking-wide bg-[var(--secondary)] rounded-md border border-transparent shadow-sm hover:bg-white hover:text-black hover:border-[var(--secondary)] transition-colors duration-150 ease-in-out select-none w-full mt-1 flex items-center justify-center gap-2">
                                     Change Password
                                 </button>
                             </div>

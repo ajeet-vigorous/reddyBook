@@ -204,9 +204,6 @@ const InplaySport = ({ }) => {
           />
         </div>
         <Providers filterSection={"providers"} name={"Casino Provider"} providersData={groupCasinoList?.providerList} />
-
-
-
       </div>
     </>
   )

@@ -99,7 +99,7 @@ const StakeSettings = () => {
                             className="hover:bg-[var(--primary)] bg-[var(--secondary)] border rounded-[.375rem] w-full my-4 py-2"
                             onClick={handleSubmit}
                         >
-                            <span className="text-white w-full font-[600] tracking-wider text-[16px] px-[19px] py-[20px]">
+                            <span className="text-white w-full font-[600] tracking-wider text-[15px] px-[19px] py-[20px]">
                                 SAVE
                             </span>
                         </button>

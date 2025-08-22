@@ -150,12 +150,12 @@ const AppHeader = ({ setSidebarOpen }) => {
               <img onClick={() => {
                 navigate("/dashboard");
               }}
-                src={settings.logo} className="w-[107px] h-[37px] lg:block hidden" />
+                src={settings.logo} className="w-[107px] h-[37px] lg:block hidden cursor-pointer" />
               <img
                 onClick={() => {
                   navigate("/dashboard");
                 }}
-                src={settings.logo1} className="w-[100px] h-[34px] lg:hidden block" />
+                src={settings.logo1} className="w-[100px] h-[34px] lg:hidden cursor-pointer block" />
               <div className="relative w-full lg:block hidden">
                 <input
                   placeholder="Search Events"
@@ -165,7 +165,7 @@ const AppHeader = ({ setSidebarOpen }) => {
               </div>
               <div
                 onClick={() => setModalTrue()}
-                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[12px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer">
+                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[10px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer">
                 Rules
               </div>
 
@@ -175,10 +175,10 @@ const AppHeader = ({ setSidebarOpen }) => {
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 -space-x-3 ">
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
-                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] md:-mt-[2px] -mt-5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">BAL</span>
+                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">BAL</span>
                     </div>
-                    <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
+                    <span className="font-bold md:text-[12px] text-[11px] lg:text-black text-white">
                       {balance && balance.coins
                         ? Number(balance.coins).toFixed(2)
                         : "0"}
@@ -190,10 +190,10 @@ const AppHeader = ({ setSidebarOpen }) => {
                     }}
                     className="text-center cursor-pointer">
                     <div className="flex  justify-center items-center relative">
-                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] md:-mt-[2px] -mt-5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:left-9 md:top-1.5 -top-2 text-white md:text-[13px] text-[12px] tracking-wide font-semibold">EXP</span>
+                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5" src='/header/inner-balexpo-red.png' />
+                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">EXP</span>
                     </div>
-                    <span className="font-bold md:text-[13px] text-[12px] lg:text-black text-white">
+                    <span className="font-bold md:text-[12px] text-[11px] lg:text-black text-white">
                       {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
                     </span>
                   </div>
@@ -278,7 +278,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                               </div>
 
                             </div>
-                            <div className=" bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
+                            <div className=" capitalize font-normal bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
                               <div
                                 onClick={() => navigate("/dashboard")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
@@ -360,7 +360,7 @@ const AppHeader = ({ setSidebarOpen }) => {
               </>
             ) : (
               <>
-                <div className="uppercase flex space-x-[2px]">
+                <div className="flex space-x-[2px]">
                   <div
                     onClick={() => {
                       navigate("/signup");
@@ -394,7 +394,7 @@ const AppHeader = ({ setSidebarOpen }) => {
               </div>
             )}
 
-          <div className="px-2 mt-1">
+          <div className="px-3 mt-1">
             <div className="lg:hidden block w-full">
               <div className="relative flex items-center w-full">
                 <input

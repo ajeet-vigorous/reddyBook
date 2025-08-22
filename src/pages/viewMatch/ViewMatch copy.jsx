@@ -99,7 +99,7 @@ const ViewMatches = () => {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
-    document.title = `${inplayMatch?.matchName} | BPEXCH`;
+    document.title = `${inplayMatch?.matchName} | ReddyBook`;
 
 
     useEffect(() => {

@@ -108,7 +108,7 @@ if (payloadData?.statementFor) {
       <div className="w-full min-h-screen flex">
         <div className="border w-full">
           <div className='bg-[var(--darkcolor)] uppercase text-black py-1 px-1.5'>
-            <h2 className='text-[14px] text-white'>Profit Loss Total P/L : IR 0</h2>
+            <h2 className='text-[13px] text-white'>Profit Loss Total P/L : IR 0</h2>
           </div>
           <div className="mt-1.5 border-1 border-gray-400 space-y-2">
             {/* desktop view */}

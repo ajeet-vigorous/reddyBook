@@ -10,7 +10,7 @@ import { apiCall } from "../../config/HTTP";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
 import { message } from "antd";
-import { FaTv } from "react-icons/fa";
+import { FaTimes, FaTv } from "react-icons/fa";
 import MatchDetailsHeaderSection from "../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection";
 import CashOutSystem from "./CashoutTesting";
 
@@ -67,6 +67,7 @@ const ViewMatchRacing = () => {
     const [matchOddsSelected, setMatchOddsSelected] = useState([])
 
     const { marketId, eventId, sportId } = useParams();
+    const [activeBets, setActiveBets] = useState("oddsBetData");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -76,7 +77,18 @@ const ViewMatchRacing = () => {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
-    document.title = `${inplayMatch?.matchName} | BPEXCH`;
+    document.title = `${inplayMatch?.matchName} | ReddyBook`;
+
+
+    const [open, setOpen] = useState(false);
+
+    const handleBets = () => {
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    };
 
 
     useEffect(() => {
@@ -832,7 +844,7 @@ const ViewMatchRacing = () => {
                 </div>
             )} */}
 
-            <div className="xl:hidden block">
+            {/* <div className="xl:hidden block">
                 {inplayMatch &&
                     inplayMatch?.matchName ? (
                     <div className="bg-[var(--secondary)] item-center px-2 py-1 flex justify-between">
@@ -840,8 +852,52 @@ const ViewMatchRacing = () => {
                         <span className="text-white text-[12px] font-semibold"> {inplayMatch?.matchDate}</span>
                     </div>
                 ) : null}
+            </div> */}
+
+            <div className="xl:hidden block">
+                {inplayMatch &&
+                    inplayMatch?.matchName ? (
+                    <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
+                        <div className="flex flex-col uppercase">
+                            <span className="text-white text-[14px] font-[400]">{inplayMatch?.matchName}</span>
+                            <span className="text-white text-[8px] font-[400]">({inplayMatch?.matchDate})</span>
+                        </div>
+                        <div className="flex justify-end items-center gap-1.5">
+                            <div
+                                onClick={() => setFullScreen((state) => !state)}
+                                className="text-white bg-button rounded-sm py-1 text-xs font-semibold cursor-pointer"
+                            >
+                                {fullscreen ? "HS" : "FS"}
+                            </div>
+                            <span
+                                onClick={() => handleScore()}
+                                className="text-white  font-semibold">
+                                <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                            </span>
+                            <span className="bg-[var(--primary)] text-white px-[3px] py-[3px] tracking-wide rounded-[3px] uppercase text-[12px]"
+                                onClick={() => handleBets()}>Bets</span>
+                            <span onClick={() => {
+                                handelTvModal();
+                            }} className='text-white'><img src={"/dashbaord/score-tv-icon.svg"} className="w-[18px] h-[18px] invertimage" /></span>
+
+                        </div>
+                    </div>
+                ) : null}
+                <div className="xl:hidden block">
+                    {inplayMatch?.isTv ? <>
+                        {tvShow && <div className="bg-white w-full h-48">
+                            <div className="details">
+                                <div className={`w-full relative md:text-sm text-[10px]`}>
+                                    <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
+                                </div>
+                            </div>
+                        </div>}
+                    </>
+                        : null}
+                </div>
             </div>
-            <div className="flex justify-between items-center xl:hidden whitespace-nowrap w-full border-t-2 border-black/30 bg-[#0088cca5] text-white">
+
+            {/* <div className="flex justify-between items-center xl:hidden whitespace-nowrap w-full border-t-2 border-black/30 bg-[#0088cca5] text-white">
                 <button
                     onClick={() => handleMatchClick(1)}
                     className={` ${matchTab === 1 ? "border-t-2" : ""} border-white px-3 py-2 text-center uppercase shadow-xl w-1/2 text-[12px] font-bold  cursor-pointer`}>
@@ -853,202 +909,221 @@ const ViewMatchRacing = () => {
                     <span className=''>Matched Bets</span>
                 </button>
 
-            </div>
-            <div className="md:flex justify-center text-black h-screen w-100 gap-x-1">
-                {(matchTab === 1) && (
-                    <div className="xl:w-[calc(100%-402px)] 2xl:w-[calc(100%-452px)] w-full">
-                        <div className="">
+            </div> */}
+            <div className="md:flex justify-center text-black h-screen w-100 gap-x-2">
+                {/* {(matchTab === 1) && ( */}
+                <div className="xl:w-[calc(100%-402px)] 2xl:w-[calc(100%-452px)] w-full">
+                    <div className="">
 
-                            {/* <div className="horse-banner"><img src="https://versionobj.ecoassetsservice.com/v38/static/front/img/10.png" className="img-fluid" /><div className="horse-banner-detail"><div className="text-success">{finalSocket['Match Odds']?.status ?? ""}</div><div className="horse-timer"><span>{timeLeft}&nbsp;</span></div><div className="time-detail"><p>{inplayMatch?.countryCode}  &gt;  {inplayMatch?.matchName}</p><h5><span>{inplayMatch?.matchDate}</span><span> </span></h5></div></div></div> */}
+                        {/* <div className="horse-banner"><img src="https://versionobj.ecoassetsservice.com/v38/static/front/img/10.png" className="img-fluid" /><div className="horse-banner-detail"><div className="text-success">{finalSocket['Match Odds']?.status ?? ""}</div><div className="horse-timer"><span>{timeLeft}&nbsp;</span></div><div className="time-detail"><p>{inplayMatch?.countryCode}  &gt;  {inplayMatch?.matchName}</p><h5><span>{inplayMatch?.matchDate}</span><span> </span></h5></div></div></div> */}
 
-                            {/* ---------------------------------------------------------match odds counts starts------------------------------------------------------------- */}
-                            {matchOddsSelected?.length > 1 &&
-                                <>
-                                    <header className="mt-1">
-                                        <div className=" bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
-                                            <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold ">
-                                                Combined
-                                            </div>
-                                            <button disabled className="bg-[var(--success-color)] opacity-35  text-sm text-white px-3 py-1">Cashout</button>
-
+                        {/* ---------------------------------------------------------match odds counts starts------------------------------------------------------------- */}
+                        {matchOddsSelected?.length > 1 &&
+                            <>
+                                <header className="mt-1">
+                                    <div className=" bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
+                                        <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold ">
+                                            Combined
                                         </div>
-                                    </header>
-                                    <div className={`  flex whitespace-normal max-w-full border-b border-gray-300 `}>
-                                        <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                                            <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
-                                            </div>
-                                        </div>
-                                        <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                <div className={`py-1 flex justify-center items-center ${`bg-[#8DD2F0]`}`}>
-                                                    <div className='text-center leading-3'>
-                                                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span><br />
-                                                    </div>
-                                                </div>
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                <div className={`py-1 flex justify-center items-center ${`bg-[#FEAFB2]`}`}>
-                                                    <div className='text-center leading-3'>
-                                                        <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Lay</span><br />
-                                                    </div>
-                                                </div>
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                        <button disabled className="bg-[var(--success-color)] opacity-35  text-sm text-white px-3 py-1">Cashout</button>
 
-                                            </span>
-
-
+                                    </div>
+                                </header>
+                                <div className={`  flex whitespace-normal max-w-full border-b border-gray-300 `}>
+                                    <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
+                                        <div className="w-full py-1 leading-3 flex items-center text-xs text-[#097c93]">
                                         </div>
                                     </div>
-                                    <div className={`  flex whitespace-normal max-w-full border-b border-gray-300`}>
-                                        <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                                            <div className="w-full py-1 leading-3 flex items-center text-[#333333]">
-                                                <span class="text-[13px] font-bold flex items-center gap-2">
-                                                    <span> {matchOddsSelected?.join('+')}<br />
-                                                    </span>
+                                    <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md  ">
+                                            <div className={`py-1 flex justify-center items-center ${`bg-[#8DD2F0]`}`}>
+                                                <div className='text-center leading-3'>
+                                                    <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Back</span><br />
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md  ">
+                                            <div className={`py-1 flex justify-center items-center ${`bg-[#FEAFB2]`}`}>
+                                                <div className='text-center leading-3'>
+                                                    <span className="2xl:text-[16px] lg:text-[16px] text-xs text-gray-800 font-bold">Lay</span><br />
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+
+                                        </span>
+
+
+                                    </div>
+                                </div>
+                                <div className={`  flex whitespace-normal max-w-full border-b border-gray-300`}>
+                                    <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
+                                        <div className="w-full py-1 leading-3 flex items-center text-[#333333]">
+                                            <span class="text-[13px] font-bold flex items-center gap-2">
+                                                <span> {matchOddsSelected?.join('+')}<br />
                                                 </span>
-                                            </div>
-                                        </div>
-                                        <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 ">
-                                            <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
-                                                <BlinkingComponent
-                                                    color={"bg-[#E6F2FC]"}
-                                                    blinkColor={"bg-[#00B2FF]"}
-                                                    hoverColor={"bg-sky-600"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
-                                                <BlinkingComponent
-                                                    color={"bg-[#E6F2FC]"}
-                                                    blinkColor={"bg-[#00B2FF]"}
-                                                    hoverColor={"bg-sky-600"}
-                                                />
-                                            </span>
-                                            <span className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer">
-                                                <BlinkingComponent
-                                                    color={"bg-[#8DD2F0]"}
-                                                    blinkColor={"bg-[#00B2FF]"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer">
-                                                <BlinkingComponent
-                                                    color={"bg-[#8DD2F0]"}
-                                                    blinkColor={"bg-[#00B2FF]"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md lg:hidden  cursor-pointer">
-                                                <BlinkingComponent
-                                                    color={"bg-[#FEAFB2]"}
-                                                    blinkColor={"bg-[#FE7A7F]"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer">
-                                                <BlinkingComponent
-                                                    color={"bg-[#FEAFB2]"}
-                                                    blinkColor={"bg-[#FE7A7F]"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
-                                                <BlinkingComponent
-                                                    color={"bg-[#FCE3E4]"}
-                                                    blinkColor={"bg-[#CDEBEB]"}
-                                                />
-                                            </span>
-                                            <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
-                                                <BlinkingComponent
-                                                    color={"bg-[#FCE3E4]"}
-                                                    blinkColor={"bg-[#CDEBEB]"}
-                                                />
                                             </span>
                                         </div>
                                     </div>
-                                </>
-                            }
-                            {/* ---------------------------------------------------------match odds counts end ------------------------------------------------------------- */}
-                             <div className=" block">
-                                                        {inplayMatch &&
-                                                            inplayMatch?.matchName ? (
-                                                            <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
-                                                                <div className="flex flex-col uppercase">
-                                                                    <span className="text-white text-[14px] font-[400]">{inplayMatch?.matchName}</span>
-                                                                    <span className="text-white text-[8px] font-[400]">({inplayMatch?.matchDate})</span>
-                                                                </div>
-                                                                <div className="flex justify-end items-center gap-1.5">
-                            
-                                                                    <span
-                                                                        // onClick={() => handleScore()}
-                                                                        className="text-white  font-semibold">
-                                                                        <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
-                                                                    </span>
-                                                                    {/* <span onClick={() => {
-                                                                        handelTvModal();
-                                                                    }} className='text-white'><FaTv size={18} /></span> */}
-                                                                    <span className="bg-[var(--primary)] xl:hidden block text-white px-[3px] py-[3px] tracking-wide rounded-[3px] uppercase text-[12px]"
-                                                                        // onClick={() => handleBets()}
-                                                                        >
-                                                                            Bets</span>
-                                                                </div>
-                                                            </div>
-                                                        ) : null}
-                                                        <div className="xl:hidden block">
-                                                            {inplayMatch?.isTv ? <>
-                                                                {tvShow && <div className="bg-white w-full h-48">
-                                                                    <div className="details">
-                                                                        <div className={`w-full relative md:text-sm text-[10px]`}>
-                                                                            <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>}
-                                                            </>
-                                                                : null}
-                                                        </div>
-                                                    </div>
+                                    <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 ">
+                                        <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
+                                            <BlinkingComponent
+                                                color={"bg-[#E6F2FC]"}
+                                                blinkColor={"bg-[#00B2FF]"}
+                                                hoverColor={"bg-sky-600"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
+                                            <BlinkingComponent
+                                                color={"bg-[#E6F2FC]"}
+                                                blinkColor={"bg-[#00B2FF]"}
+                                                hoverColor={"bg-sky-600"}
+                                            />
+                                        </span>
+                                        <span className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer">
+                                            <BlinkingComponent
+                                                color={"bg-[#8DD2F0]"}
+                                                blinkColor={"bg-[#00B2FF]"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer">
+                                            <BlinkingComponent
+                                                color={"bg-[#8DD2F0]"}
+                                                blinkColor={"bg-[#00B2FF]"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md lg:hidden  cursor-pointer">
+                                            <BlinkingComponent
+                                                color={"bg-[#FEAFB2]"}
+                                                blinkColor={"bg-[#FE7A7F]"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer">
+                                            <BlinkingComponent
+                                                color={"bg-[#FEAFB2]"}
+                                                blinkColor={"bg-[#FE7A7F]"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                            <BlinkingComponent
+                                                color={"bg-[#FCE3E4]"}
+                                                blinkColor={"bg-[#CDEBEB]"}
+                                            />
+                                        </span>
+                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden">
+                                            <BlinkingComponent
+                                                color={"bg-[#FCE3E4]"}
+                                                blinkColor={"bg-[#CDEBEB]"}
+                                            />
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        }
+                        {/* ---------------------------------------------------------match odds counts end ------------------------------------------------------------- */}
+                        <div className="xl:block hidden">
+                            {inplayMatch &&
+                                inplayMatch?.matchName ? (
+                                <div className="bg-[var(--darkcolor)] item-center px-2 py-1.5 flex justify-between">
+                                    <span className="text-white text-[14px] font-semibold">{inplayMatch?.matchName}</span>
+                                    <span className="text-white text-[14px] font-semibold">({inplayMatch?.matchDate})</span>
+                                    <div className="flex space-x-1 justify-end items-center">
+                                        <div
+                                            onClick={() => setFullScreen((state) => !state)}
+                                            className="text-white bg-button rounded-sm px-2 py-1 text-xs font-semibold cursor-pointer"
+                                        >
+                                            {fullscreen ? "HS" : "FS"}
+                                        </div>
+                                        <span
+                                            onClick={() => handleScore()}
+                                            className="text-white font-semibold cursor-pointer">
+                                            <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                                        </span>
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
 
-                            {inplayMatch?.isMatchOdds && (activeTab === "all") ? (
-                                <>
-                               
-                                 <MatchDetailsHeaderSection
-                                                            marketType={inplayMatch?.marketName}
-                                                            minMax={{ min: 100, max: (isMatchCoin?.max) }}
-                                                            // cashOut={
-                                                            //   element?.runners?.length > 0 && (
-                                                            //     <CashOutSystem
-                                                            //       marketList={element.runners.map((runner) => ({
-                                                            //         selectionid: runner.selectionId,
-                                                            //         team_name: runner.selectionName,
-                                                            //         lgaai: runner.ex?.availableToBack?.[0]?.price || 0,
-                                                            //         khaai: runner.ex?.availableToLay?.[0]?.price || 0,
-                                                            //         selectionName: runner.selectionName,
-                                                            //         ex: {
-                                                            //           availableToBack: runner.ex?.availableToBack || [],
-                                                            //           availableToLay: runner.ex?.availableToLay || [],
-                                                            //         },
-                                                            //       }))}
-                                                            //       positionObj={positionObj}
-                                                            //       handleBackOpen={handleBackOpen}
-                                                            //       toggleRowVisibility={toggleRowVisibility}
-                                                            //       marketId={element.marketId}
-                                                            //       betFor={"matchOdds"}
-                                                            //       oddsType={element.marketType}
-                                                            //     />
-                                                            //   )
-                                                            // }
-                                                          >
+                        {/* <div className="xl:block hidden">
+                            {inplayMatch &&
+                                inplayMatch?.matchName ? (
+                                <div className="bg-[var(--darkcolor)] item-center px-2 py-1 flex justify-between items-center">
+                                    <div className="flex flex-col uppercase">
+                                        <span className="text-white text-[14px] font-[400]">{inplayMatch?.matchName}</span>
+                                        <span className="text-white text-[8px] font-[400]">({inplayMatch?.matchDate})</span>
+                                    </div>
+                                    <div className="flex justify-end items-center gap-1.5">
+
+                                        <span
+                                            className="text-white  font-semibold">
+                                            <img src={"/scorecard-icon.webp"} className="w-[25px] h-[25px] invertimage" />
+                                        </span>
+                                      
+                                        <span className="bg-[var(--primary)] xl:hidden block text-white px-[3px] py-[3px] tracking-wide rounded-[3px] uppercase text-[12px]"
+                                        >
+                                            Bets</span>
+                                    </div>
+                                </div>
+                            ) : null}
+                            <div className="xl:hidden block">
+                                {inplayMatch?.isTv ? <>
+                                    {tvShow && <div className="bg-white w-full h-48">
+                                        <div className="details">
+                                            <div className={`w-full relative md:text-sm text-[10px]`}>
+                                                <iframe src={inplayMatch && inplayMatch.tvUrl ? inplayMatch.tvUrl : ""} title=" " loading='lazy' className="w-[100%] h-[200px]" />
+                                            </div>
+                                        </div>
+                                    </div>}
+                                </>
+                                    : null}
+                            </div>
+                        </div> */}
+
+                        {inplayMatch?.isMatchOdds && (activeTab === "all") ? (
+                            <>
+
+                                <MatchDetailsHeaderSection
+                                    marketType={inplayMatch?.marketName}
+                                    minMax={{ min: 100, max: (isMatchCoin?.max) }}
+                                // cashOut={
+                                //   element?.runners?.length > 0 && (
+                                //     <CashOutSystem
+                                //       marketList={element.runners.map((runner) => ({
+                                //         selectionid: runner.selectionId,
+                                //         team_name: runner.selectionName,
+                                //         lgaai: runner.ex?.availableToBack?.[0]?.price || 0,
+                                //         khaai: runner.ex?.availableToLay?.[0]?.price || 0,
+                                //         selectionName: runner.selectionName,
+                                //         ex: {
+                                //           availableToBack: runner.ex?.availableToBack || [],
+                                //           availableToLay: runner.ex?.availableToLay || [],
+                                //         },
+                                //       }))}
+                                //       positionObj={positionObj}
+                                //       handleBackOpen={handleBackOpen}
+                                //       toggleRowVisibility={toggleRowVisibility}
+                                //       marketId={element.marketId}
+                                //       betFor={"matchOdds"}
+                                //       oddsType={element.marketType}
+                                //     />
+                                //   )
+                                // }
+                                >
 
 
                                     {Object.values(finalSocket).map((element, index) => element.marketType === "Match Odds" && (
                                         <>
 
-                                     
 
-                                        <div className="" key={index}>
-                                            {/* <header className="mt-1">
+
+                                            <div className="" key={index}>
+                                                {/* <header className="mt-1">
                                                 <div className=" bg-[var(--secondary)] items-center flex justify-between relative z-0 py-1 px-2">
                                                     <div className="flex text-white align-items-center h-100 uppercase text-[14px] font-semibold ">
                                                         Match_Odds
@@ -1056,91 +1131,275 @@ const ViewMatchRacing = () => {
 
                                                 </div>
                                             </header> */}
-                                            <div className={`  flex whitespace-normal max-w-full border-b border-gray-300 `}>
-                                                <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex ">
+                                                <div className={`  flex whitespace-normal max-w-full border-b border-gray-300 `}>
+                                                    <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex ">
 
-                                                    <div className="w-full py-1 bg-white leading-3 flex items-center text-xs text-[#097c93]">
-                                                        <span className="text-[12px] font-bold">
-                                                            {/* Max: {isMatchCoin?.max} */}
+                                                        <div className="w-full py-1 bg-white leading-3 flex items-center text-xs text-[#097c93]">
+                                                            <span className="text-[12px] font-bold">
+                                                                {/* Max: {isMatchCoin?.max} */}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
+                                                        <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
+
                                                         </span>
+                                                        <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
+                                                        </span>
+                                                        <span className="lg:col-span-1 col-span-3 rounded-md  ">
+                                                            <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
+                                                                <div className='text-center leading-3'>
+                                                                    <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Back</span><br />
+
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                        <span className="lg:col-span-1 col-span-3 rounded-md  ">
+                                                            <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
+                                                                <div className='text-center leading-3'>
+                                                                    <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Lay</span><br />
+
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                        <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
+
+                                                        </span>
+                                                        <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
+
+                                                        </span>
+
+
                                                     </div>
                                                 </div>
 
-                                                <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
-                                                    <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
 
-                                                    </span>
-                                                    <span className="lg:col-span-1 bg-white col-span-2   lg:block hidden">
-                                                    </span>
-                                                    <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                        <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
-                                                            <div className='text-center leading-3'>
-                                                                <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Back</span><br />
-
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span className="lg:col-span-1 col-span-3 rounded-md  ">
-                                                        <div className={`py-1 flex justify-center items-center ${`bg-white`}`}>
-                                                            <div className='text-center leading-3'>
-                                                                <span className="2xl:text-[16px] lg:text-[12px] text-xs text-gray-800 ">Lay</span><br />
-
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
-
-                                                    </span>
-                                                    <span className="lg:col-span-1 col-span-2 bg-white lg:block hidden">
-
-                                                    </span>
+                                                {element && element.runners && element.runners.length > 0 ? element.runners.map((elementtemp, index) => (
+                                                    <>
 
 
-                                                </div>
-                                            </div>
-                                           
+                                                        <div
+                                                            className={`  flex whitespace-normal bg-white max-w-full border-b border-gray-300 relative`}
+                                                            key={index}
+                                                        >
+                                                            <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
+                                                                {/* w-11/12  */}
+                                                                <div className="w-full py-1 flex flex-col leading-3 justify-center items-start text-[#333333]">
+                                                                    <div className="text-[13px] font-bold flex  items-center gap-2">
+                                                                        {sportId == 7 &&
+                                                                            <>
+                                                                                <div><input checked={matchOddsSelected.includes(index + 1)} onClick={() => { handleCheckboxClick(index + 1) }} type="checkbox" className="!bg-white h-4 w-4" /></div>
+                                                                                <span>({index + 1}) </span>
+                                                                            </>
+                                                                        }
+                                                                        <span> {elementtemp.selectionName} <br />
 
-                                            {element && element.runners && element.runners.length > 0 ? element.runners.map((elementtemp, index) => (
-                                                <>
-                                                
-                                               
-                                                    <div
-                                                        className={`  flex whitespace-normal bg-white max-w-full border-b border-gray-300 relative`}
-                                                        key={index}
-                                                    >
-                                                        <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
-                                                            {/* w-11/12  */}
-                                                            <div className="w-full py-1 flex flex-col leading-3 justify-center items-start text-[#333333]">
-                                                                <div className="text-[13px] font-bold flex  items-center gap-2">
-                                                                    {sportId == 7 &&
-                                                                        <>
-                                                                    <div><input checked={matchOddsSelected.includes(index + 1)} onClick={() => { handleCheckboxClick(index + 1) }} type="checkbox" className="!bg-white h-4 w-4" /></div>
-                                                                            <span>({index + 1}) </span>
-                                                                        </>
-                                                                    }
-                                                                    <span> {elementtemp.selectionName} <br />
-                                                                    
-                                                                        <div key={index} className={positionObj[elementtemp.selectionId] > 0 ? 'text-green-500 !mt-2' : positionObj[elementtemp.selectionId] < 0 ? 'text-red-500 !mt-2' : 'black'} >
-                                                                            {/* {returnDataObject[elementtemp.selectionId] !== 0 ? returnDataObject[elementtemp.selectionId] : "-"} */}
+                                                                            <div key={index} className={positionObj[elementtemp.selectionId] > 0 ? 'text-green-500 !mt-2' : positionObj[elementtemp.selectionId] < 0 ? 'text-red-500 !mt-2' : 'black'} >
+                                                                                {/* {returnDataObject[elementtemp.selectionId] !== 0 ? returnDataObject[elementtemp.selectionId] : "-"} */}
 
-                                                                            {positionObj[elementtemp.selectionId] ? (Math.floor(Number(positionObj[elementtemp.selectionId]) * 100) / 100).toFixed(2) : ''}
+                                                                                {positionObj[elementtemp.selectionId] ? (Math.floor(Number(positionObj[elementtemp.selectionId]) * 100) / 100).toFixed(2) : ''}
 
-                                                                        </div>
-                                                                    </span>
-                                                                   
+                                                                            </div>
+                                                                        </span>
 
 
+
+                                                                    </div>
+                                                                    <div className="text-[13px]  flex  items-center gap-1  ">   <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"> <span className="text-[13px] font-bold flex  items-center gap-2">Jockey:</span> {elementtemp?.jockeyName}</div> <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"><span className="text-[13px] font-bold flex  items-center gap-2">Age:</span> {elementtemp?.age}</div></div>
                                                                 </div>
-                                                                <div className="text-[13px]  flex  items-center gap-1  ">   <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"> <span className="text-[13px] font-bold flex  items-center gap-2">Jockey:</span> {elementtemp?.jockeyName}</div> <div className="text-[13px]  flex  items-center gap-2 bg-gray-100 px-2 py-1.5 rounded-md"><span className="text-[13px] font-bold flex  items-center gap-2">Age:</span> {elementtemp?.age}</div></div>
+
+
                                                             </div>
 
+                                                            <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 relative">
 
-                                                        </div>
+                                                                {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
+                                                                    className={`w-full h-full  absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 lg:flex     hidden justify-center items-center `}
+                                                                >
+                                                                    <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
+                                                                        <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
+                                                                            {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>}
+                                                                {elementtemp && elementtemp.ex && elementtemp.ex.availableToBack && elementtemp.ex.availableToBack.length > 0 ? (
+                                                                    <>
+                                                                        {elementtemp.ex.availableToBack.slice(1).map((tempData, index) => (
+                                                                            <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
+                                                                                <BlinkingComponent
+                                                                                    price={tempData.price}
+                                                                                    size={tempData.size}
+                                                                                    color={"bg-[#E6F2FC]"}
+                                                                                    blinkColor={"bg-[#00B2FF]"}
+                                                                                    hoverColor={"bg-sky-600"}
+                                                                                />
+                                                                            </span>
 
-                                                        <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6 relative">
+                                                                        ))}
+                                                                    </>
+                                                                ) : null}
+
+                                                                {elementtemp && elementtemp.ex && elementtemp.ex.availableToBack && elementtemp.ex.availableToBack.length > 0 ? (
+                                                                    <>
+                                                                        {elementtemp.ex.availableToBack.slice(0, 1).map((tempData, index) => (
+                                                                            <>
+
+                                                                                <span className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer"
+                                                                                    onClick={() => {
+                                                                                        handleBackOpen({
+                                                                                            data: tempData,
+                                                                                            type: "Yes",
+                                                                                            odds: tempData.price,
+                                                                                            name: elementtemp.selectionName,
+                                                                                            nameOther: element.runners,
+                                                                                            betFor: "matchOdds",
+                                                                                            oddsType: element.marketType,
+                                                                                            betType: "L",
+                                                                                            selectionId: elementtemp.selectionId,
+                                                                                            teamData: tempData.price,
+                                                                                            betfairMarketId: element.marketId,
+                                                                                            price: elementtemp.ex.availableToLay[0].price,
+                                                                                            size: elementtemp.ex.availableToLay[0].size,
+                                                                                            position: returnDataObject,
+                                                                                            newPosition: returnDataObject
+                                                                                        });
+
+                                                                                    }}
+                                                                                >
+                                                                                    <BlinkingComponent
+                                                                                        price={tempData.price}
+                                                                                        size={tempData.size}
+                                                                                        color={"bg-[#8DD2F0]"}
+                                                                                        blinkColor={"bg-[#00B2FF]"}
+                                                                                    />
+                                                                                </span>
+                                                                                <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
+                                                                                    onClick={() => {
+
+                                                                                        handleBackOpen({
+                                                                                            data: tempData,
+                                                                                            type: "Yes",
+                                                                                            odds: tempData.price,
+                                                                                            name: elementtemp.selectionName,
+                                                                                            nameOther: element.runners,
+                                                                                            betFor: "matchOdds",
+                                                                                            oddsType: element.marketType,
+                                                                                            betType: "L",
+                                                                                            selectionId: elementtemp.selectionId,
+                                                                                            teamData: tempData.price,
+                                                                                            betfairMarketId: element.marketId,
+                                                                                            price: elementtemp.ex.availableToLay[0].price,
+                                                                                            size: elementtemp.ex.availableToLay[0].size,
+                                                                                            position: returnDataObject,
+                                                                                            newPosition: returnDataObject
+                                                                                        })
+                                                                                    }}
+                                                                                >
+                                                                                    <BlinkingComponent
+                                                                                        price={tempData.price}
+                                                                                        size={tempData.size}
+                                                                                        color={"bg-[#8DD2F0]"}
+                                                                                        blinkColor={"bg-[#00B2FF]"}
+                                                                                    />
+                                                                                </span>
+                                                                            </>
+
+                                                                        ))}
+                                                                    </>
+                                                                ) : null}
+
+                                                                {elementtemp &&
+                                                                    elementtemp.ex &&
+                                                                    elementtemp.ex.availableToLay &&
+                                                                    elementtemp.ex.availableToLay.length >
+                                                                    0 ? (
+                                                                    elementtemp.ex.availableToLay.map(
+                                                                        (tempData, index) => (
+                                                                            <>
+                                                                                {index === 0 ? (
+                                                                                    <>
+                                                                                        <span className="lg:col-span-1 col-span-3 rounded-md lg:hidden  cursor-pointer"
+                                                                                            onClick={() => {
+                                                                                                toggleRowVisibility(elementtemp.selectionId);
+                                                                                                handleBackOpen({
+                                                                                                    data: tempData,
+                                                                                                    type: "No",
+                                                                                                    odds: tempData.price,
+                                                                                                    name: elementtemp.selectionName,
+                                                                                                    nameOther: element.runners,
+                                                                                                    betFor: "matchOdds", oddsType: element.marketType,
+                                                                                                    betType: "K",
+                                                                                                    selectionId: elementtemp.selectionId,
+                                                                                                    teamData: tempData.price,
+                                                                                                    betfairMarketId: element.marketId,
+                                                                                                    price: elementtemp.ex.availableToBack[0].price,
+                                                                                                    size: elementtemp.ex.availableToBack[0].size,
+                                                                                                    position: returnDataObject,
+                                                                                                    newPosition: returnDataObject
+                                                                                                })
+                                                                                            }}
+                                                                                        >
+                                                                                            <BlinkingComponent
+                                                                                                price={tempData.price}
+                                                                                                size={tempData.size}
+                                                                                                color={"bg-[#FEAFB2]"}
+                                                                                                blinkColor={"bg-[#FE7A7F]"}
+                                                                                            />
+                                                                                        </span>
+
+                                                                                        <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
+                                                                                            onClick={() => {
+
+                                                                                                handleBackOpen({
+
+                                                                                                    data: tempData,
+                                                                                                    type: "No",
+                                                                                                    odds: tempData.price,
+                                                                                                    name: elementtemp.selectionName,
+                                                                                                    nameOther: element.runners,
+                                                                                                    betFor: "matchOdds", oddsType: element.marketType,
+                                                                                                    betType: "K",
+                                                                                                    selectionId: elementtemp.selectionId,
+                                                                                                    teamData: tempData.price,
+                                                                                                    betfairMarketId: element.marketId,
+                                                                                                    price: elementtemp.ex.availableToBack[0].price,
+                                                                                                    size: elementtemp.ex.availableToBack[0].size,
+                                                                                                    position: returnDataObject,
+                                                                                                    newPosition: returnDataObject
+                                                                                                })
+                                                                                            }}
+                                                                                        >
+                                                                                            <BlinkingComponent
+                                                                                                price={tempData.price}
+                                                                                                size={tempData.size}
+                                                                                                color={"bg-[#FEAFB2]"}
+                                                                                                blinkColor={"bg-[#FE7A7F]"}
+                                                                                            />
+                                                                                        </span>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <>
+                                                                                        <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden"
+
+                                                                                        >
+                                                                                            <BlinkingComponent
+                                                                                                price={tempData.price}
+                                                                                                size={tempData.size}
+                                                                                                color={"bg-[#FCE3E4]"}
+                                                                                                blinkColor={"bg-[#CDEBEB]"}
+                                                                                            />
+                                                                                        </span>
+                                                                                    </>
+
+                                                                                )}
+                                                                            </>
+                                                                        )
+                                                                    )) : null}
+                                                            </div>
 
                                                             {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
-                                                                className={`w-full h-full  absolute bg-white/50 border-l-red-500 border-[0.5px] border-r-red-500 lg:flex     hidden justify-center items-center `}
+                                                                className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center `}
                                                             >
                                                                 <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
                                                                     <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
@@ -1148,206 +1407,21 @@ const ViewMatchRacing = () => {
                                                                     </span>
                                                                 </div>
                                                             </div>}
-                                                            {elementtemp && elementtemp.ex && elementtemp.ex.availableToBack && elementtemp.ex.availableToBack.length > 0 ? (
-                                                                <>
-                                                                    {elementtemp.ex.availableToBack.slice(1).map((tempData, index) => (
-                                                                        <span className="lg:col-span-1 col-span-3 rounded-md  lg:block hidden">
-                                                                            <BlinkingComponent
-                                                                                price={tempData.price}
-                                                                                size={tempData.size}
-                                                                                color={"bg-[#E6F2FC]"}
-                                                                                blinkColor={"bg-[#00B2FF]"}
-                                                                                hoverColor={"bg-sky-600"}
-                                                                            />
-                                                                        </span>
-
-                                                                    ))}
-                                                                </>
-                                                            ) : null}
-
-                                                            {elementtemp && elementtemp.ex && elementtemp.ex.availableToBack && elementtemp.ex.availableToBack.length > 0 ? (
-                                                                <>
-                                                                    {elementtemp.ex.availableToBack.slice(0, 1).map((tempData, index) => (
-                                                                        <>
-
-                                                                            <span className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer"
-                                                                                onClick={() => {
-                                                                                    handleBackOpen({
-                                                                                        data: tempData,
-                                                                                        type: "Yes",
-                                                                                        odds: tempData.price,
-                                                                                        name: elementtemp.selectionName,
-                                                                                        nameOther: element.runners,
-                                                                                        betFor: "matchOdds",
-                                                                                        oddsType: element.marketType,
-                                                                                        betType: "L",
-                                                                                        selectionId: elementtemp.selectionId,
-                                                                                        teamData: tempData.price,
-                                                                                        betfairMarketId: element.marketId,
-                                                                                        price: elementtemp.ex.availableToLay[0].price,
-                                                                                        size: elementtemp.ex.availableToLay[0].size,
-                                                                                        position: returnDataObject,
-                                                                                        newPosition: returnDataObject
-                                                                                    });
-
-                                                                                }}
-                                                                            >
-                                                                                <BlinkingComponent
-                                                                                    price={tempData.price}
-                                                                                    size={tempData.size}
-                                                                                    color={"bg-[#8DD2F0]"}
-                                                                                    blinkColor={"bg-[#00B2FF]"}
-                                                                                />
-                                                                            </span>
-                                                                            <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
-                                                                                onClick={() => {
-
-                                                                                    handleBackOpen({
-                                                                                        data: tempData,
-                                                                                        type: "Yes",
-                                                                                        odds: tempData.price,
-                                                                                        name: elementtemp.selectionName,
-                                                                                        nameOther: element.runners,
-                                                                                        betFor: "matchOdds",
-                                                                                        oddsType: element.marketType,
-                                                                                        betType: "L",
-                                                                                        selectionId: elementtemp.selectionId,
-                                                                                        teamData: tempData.price,
-                                                                                        betfairMarketId: element.marketId,
-                                                                                        price: elementtemp.ex.availableToLay[0].price,
-                                                                                        size: elementtemp.ex.availableToLay[0].size,
-                                                                                        position: returnDataObject,
-                                                                                        newPosition: returnDataObject
-                                                                                    })
-                                                                                }}
-                                                                            >
-                                                                                <BlinkingComponent
-                                                                                    price={tempData.price}
-                                                                                    size={tempData.size}
-                                                                                    color={"bg-[#8DD2F0]"}
-                                                                                    blinkColor={"bg-[#00B2FF]"}
-                                                                                />
-                                                                            </span>
-                                                                        </>
-
-                                                                    ))}
-                                                                </>
-                                                            ) : null}
-
-                                                            {elementtemp &&
-                                                                elementtemp.ex &&
-                                                                elementtemp.ex.availableToLay &&
-                                                                elementtemp.ex.availableToLay.length >
-                                                                0 ? (
-                                                                elementtemp.ex.availableToLay.map(
-                                                                    (tempData, index) => (
-                                                                        <>
-                                                                            {index === 0 ? (
-                                                                                <>
-                                                                                    <span className="lg:col-span-1 col-span-3 rounded-md lg:hidden  cursor-pointer"
-                                                                                        onClick={() => {
-                                                                                            toggleRowVisibility(elementtemp.selectionId);
-                                                                                            handleBackOpen({
-                                                                                                data: tempData,
-                                                                                                type: "No",
-                                                                                                odds: tempData.price,
-                                                                                                name: elementtemp.selectionName,
-                                                                                                nameOther: element.runners,
-                                                                                                betFor: "matchOdds", oddsType: element.marketType,
-                                                                                                betType: "K",
-                                                                                                selectionId: elementtemp.selectionId,
-                                                                                                teamData: tempData.price,
-                                                                                                betfairMarketId: element.marketId,
-                                                                                                price: elementtemp.ex.availableToBack[0].price,
-                                                                                                size: elementtemp.ex.availableToBack[0].size,
-                                                                                                position: returnDataObject,
-                                                                                                newPosition: returnDataObject
-                                                                                            })
-                                                                                        }}
-                                                                                    >
-                                                                                        <BlinkingComponent
-                                                                                            price={tempData.price}
-                                                                                            size={tempData.size}
-                                                                                            color={"bg-[#FEAFB2]"}
-                                                                                            blinkColor={"bg-[#FE7A7F]"}
-                                                                                        />
-                                                                                    </span>
-
-                                                                                    <span className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
-                                                                                        onClick={() => {
-
-                                                                                            handleBackOpen({
-
-                                                                                                data: tempData,
-                                                                                                type: "No",
-                                                                                                odds: tempData.price,
-                                                                                                name: elementtemp.selectionName,
-                                                                                                nameOther: element.runners,
-                                                                                                betFor: "matchOdds", oddsType: element.marketType,
-                                                                                                betType: "K",
-                                                                                                selectionId: elementtemp.selectionId,
-                                                                                                teamData: tempData.price,
-                                                                                                betfairMarketId: element.marketId,
-                                                                                                price: elementtemp.ex.availableToBack[0].price,
-                                                                                                size: elementtemp.ex.availableToBack[0].size,
-                                                                                                position: returnDataObject,
-                                                                                                newPosition: returnDataObject
-                                                                                            })
-                                                                                        }}
-                                                                                    >
-                                                                                        <BlinkingComponent
-                                                                                            price={tempData.price}
-                                                                                            size={tempData.size}
-                                                                                            color={"bg-[#FEAFB2]"}
-                                                                                            blinkColor={"bg-[#FE7A7F]"}
-                                                                                        />
-                                                                                    </span>
-                                                                                </>
-                                                                            ) : (
-                                                                                <>
-                                                                                    <span className="lg:col-span-1 col-span-2 rounded-md  lg:block hidden"
-
-                                                                                    >
-                                                                                        <BlinkingComponent
-                                                                                            price={tempData.price}
-                                                                                            size={tempData.size}
-                                                                                            color={"bg-[#FCE3E4]"}
-                                                                                            blinkColor={"bg-[#CDEBEB]"}
-                                                                                        />
-                                                                                    </span>
-                                                                                </>
-
-                                                                            )}
-                                                                        </>
-                                                                    )
-                                                                )) : null}
                                                         </div>
+                                                    </>
+                                                )) : null}
 
-                                                        {(elementtemp?.status === "REMOVED" || finalSocket["Match Odds"]?.status === "SUSPENDED" || finalSocket["Match Odds"]?.status === "CLOSED") && <div
-                                                            className={`w-full h-full  absolute  flex  bg-[var(--suspended-color)]    lg:hidden justify-center items-center `}
-                                                        >
-                                                            <div className="2xl:px-14 lg:px-14 py-2 px-2 text-nowrap  rounded font-bold bg-transparent  opacity-90 ">
-                                                                <span className="text-red-500 xl:text-lg  text-sm font-bold  uppercase ">
-                                                                    {elementtemp?.status === "REMOVED" ? "REMOVED" : "SUSPENDED"}
-                                                                </span>
-                                                            </div>
-                                                        </div>}
-                                                    </div>
-                                                </>
-                                            )) : null}
-                                          
-                                        </div>
+                                            </div>
                                         </>))}
-                                        </MatchDetailsHeaderSection>
-                                </>
-                            ) : null}
-                        </div>
+                                </MatchDetailsHeaderSection>
+                            </>
+                        ) : null}
                     </div>
-                    
-                )}
-                <div className="space-y-1.5 xl:w-[402px]  2xl:w-[452px] sticky top-0  lg:h-[calc(100vh-400px)] xl:block hidden p-1">
+                </div>
+                {/* )} */}
+                <div className="space-y-1.5 xl:w-[402px]  2xl:w-[452px] sticky top-0  lg:h-[calc(100vh-400px)] xl:block hidden">
                     <div>
-                        <div className="bg-black cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
+                        <div className="bg-[var(--darkcolor)] rounded-[5px] cursor-pointer flex justify-between items-center py-1.5 px-4 text-white text-sm font-semibold" onClick={() => handelTvModal()}>
                             <span>Live Match</span>
                             <button className="flex justify-end space-x-2 font-semibold" > </button>
                         </div>
@@ -1362,12 +1436,12 @@ const ViewMatchRacing = () => {
                         </>
                             : null}
                     </div>
-                    <div>
-                        {!betShow && (
-                            <>
-                                <div className="bg-black flex justify-start items-center rounded-md py-1.5 px-4 text-white text-sm font-semibold ">
+                    <div className="mt-1">
+                         <div className="bg-[var(--darkcolor)] rounded-t-md  flex justify-start items-center py-1.5 px-4 text-white text-sm font-semibold">
                                     <span>Place Bet </span>
                                 </div>
+                        {!betShow && (
+                            <>                               
                                 <BetPlaceDesktop
                                     openBets={openBets}
                                     closeRow={closeRow}
@@ -1387,103 +1461,149 @@ const ViewMatchRacing = () => {
                         )}
                     </div>
 
-                    <div className=" ">
-                        <div className="bg-black rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
-                            <span> My Bets</span>
+                    <div className="mt-1">
+                        <div className="bg-[var(--darkcolor)] rounded-t-md py-1.5 px-4 font-bold text-white text-sm">
+                            <span>My Bets</span>
                         </div>
-                        <div className="overflow-hidden w-full  border border-[#C6D2D8]">
-                            <div className="max-w-full overflow-auto ">
-                                <div className="inline-block min-w-full ">
-                                    <div className="overflow-hidden w-full ">
-                                        <table className="min-w-full capitalize">
+                        <div className="flex justify-between items-center border-x border-t border-[#C6D2D8] bg-white w-full">
+                            {["oddsBetData", "UnsettleBets", "fancyBetData"]?.map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setActiveBets(tab)}
+                                    className={`px-4 py-2 uppercase text-[12px] font-[600] w-full ${activeBets === tab
+                                        ? " text-[var(--secondary)] border-b-2 border-b-[var(--secondary)] bg-gray-50"
+                                        : "hover:text-[var(--secondary)] text-black"
+                                        }`}
+                                >
+                                    {tab === "oddsBetData"
+                                        ? "MATCHED"
+                                        : tab === "UnsettleBets"
+                                            ? "Unsettle"
+                                            : tab === "fancyBetData"
+                                                ? "Fancy"
+                                                : "-"}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="overflow-hidden w-full border border-[#C6D2D8] border-t-0">
+                            <div className="max-w-full overflow-auto">
+                                <div className="min-w-full">
+                                    <div className="overflow-hidden w-full">
+                                        <table className="min-w-full capitalize border border-[#f8f8f8]">
                                             <thead>
-                                                <tr className="w-full text-black text-[0.8125rem] font-semibold bg-[#CCCCCC] text-left">
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Matched Bets
+                                                <tr className="w-full text-black/80 text-[14px] font-[400] bg-[#ffffff] text-left border border-[#f8f8f8]">
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Selname</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Odds</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Stake</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">
+                                                        Date/Time
                                                     </th>
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Odds
-                                                    </th>
-                                                    <th className="px-[6px] py-1 whitespace-nowrap">
-                                                        Stake
-                                                    </th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {oddsBetData && oddsBetData.length > 0 ? (
-                                                    oddsBetData.map((element, index) => (
-                                                        <tr
-                                                            key={index}
-                                                            className={`w-full text-black text-[0.8125rem] border-b border-t divide-x-2 divide-white text-left ${element?.type === "K"
-                                                                ? "match_bg_pink_index-0"
-                                                                : "match_bg_blue_index-0"
-                                                                }`}
-                                                        >
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                <div>
-                                                                    {element.teamName} <br />
-                                                                    <span className="font-bold">
-                                                                        {element.marketName}
-                                                                    </span>
-                                                                </div>
+                                                {/* Odds Bets */}
+                                                {activeBets === "oddsBetData" &&
+                                                    (oddsBetData?.length > 0 ? (
+                                                        oddsBetData.map((element, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className={`w-full text-[#333333] text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
+                                                                    ? "bg-[var(--matchKhai)]"
+                                                                    : "bg-[var(--matchLagai)]"
+                                                                    }`}
+                                                            >
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    <div>
+                                                                        {element?.teamName} <br />
+                                                                        <span className="font-bold">
+                                                                            {element?.marketName}
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.odds}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.amount}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.date}
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan={4} className="text-center py-2 text-sm">
+                                                                No Odds Bet found!
                                                             </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element &&
-                                                                    element.oddsType === "matchOdds"
-                                                                    ? parseFloat(Number(element.odds) + 1)
-                                                                        .toFixed(2)
-                                                                        .replace(/\.?0+$/, "")
-                                                                    : element &&
-                                                                        (element.oddsType === "bookmaker" ||
-                                                                            element.oddsType === "toss")
-                                                                        ? parseFloat(element.odds * 100)
-                                                                            .toFixed(2)
-                                                                            .replace(/\.?0+$/, "")
-                                                                        : parseFloat(element.odds)
-                                                                            .toFixed(2)
-                                                                            .replace(/\.?0+$/, "")}
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element.amount}
-                                                            </td>
-
-                                                        </tr>
-                                                    ))
-                                                ) : (
-                                                    <tr className="flex justify-center w-full text-sm">
-                                                        <td>No records Found</td>
-                                                    </tr>
-                                                )}
-                                            </tbody>
-                                            {fancyBetData && fancyBetData.length > 0 ? (
-                                                <tbody>
-                                                    {fancyBetData.map((element, index) => (
-                                                        <tr
-                                                            key={index}
-                                                            className={`w-full text-black text-[0.8125rem] border-b border-t text-left divide-x-2 divide-white ${element?.type === "N"
-                                                                ? "match_bg_pink_index-0"
-                                                                : "match_bg_blue_index-0"
-                                                                }`}
-                                                        >
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                <div>
-                                                                    <span className="font-midume text-xs">
-                                                                        {element.sessionName}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element.odds}
-                                                            </td>
-                                                            <td className="px-[6px] py-1 whitespace-nowrap">
-                                                                {element.amount}
-                                                            </td>
-
                                                         </tr>
                                                     ))}
-                                                </tbody>
-                                            ) : null}
+
+                                                {/* Fancy Bets */}
+                                                {activeBets === "fancyBetData" &&
+                                                    (fancyBetData?.length > 0 ? (
+                                                        fancyBetData.map((element, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x divide-white ${element?.type === "N"
+                                                                    ? "bg-[var(--matchKhai)]"
+                                                                    : "bg-[var(--matchLagai)]"
+                                                                    }`}
+                                                            >
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    <span className="font-medium text-xs">
+                                                                        {element?.sessionName}
+                                                                    </span>
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.odds}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.amount}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.date}
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan={4} className="text-center py-2 text-sm">
+                                                                No Fancy Bets found!
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+
+                                                {/* Unsettle Bets */}
+                                                {activeBets === "UnsettleBets" &&
+                                                    (fancyBetData?.length > 0 ? (
+                                                        fancyBetData.map((element, index) => (
+                                                            <tr
+                                                                key={index}
+                                                                className="w-full text-[#333333] text-[0.8125rem] border-b border-t text-left"
+                                                            >
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.name}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.odds}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.amount}
+                                                                </td>
+                                                                <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                    {element?.date}
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan={4} className="text-center py-2 text-sm">
+                                                                No Unsettle Bets found!
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -1491,7 +1611,7 @@ const ViewMatchRacing = () => {
                         </div>
                     </div>
                 </div>
-                {matchTab === 2 && (
+                {/* {matchTab === 2 && (
                     <div className=" ">
                         <div className="bg-[var(--secondary)] rounded-t-sm py-1.5 px-4 font-bold text-white text-sm">
                             <span> My Bets</span>
@@ -1595,12 +1715,171 @@ const ViewMatchRacing = () => {
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
 
 
 
             </div>
-            
+
+            <>
+                {open && (
+                    <div className="fixed inset-0 bg-black/70 flex justify-center items-start z-50">
+                        <div className="bg-white w-full max-w-3xl rounded-md shadow-lg md:m-4 m-3 p-0">
+                            <div className="rounded-t-md py-4 px-4 font-normal text-black/90 text-sm border-b border-[#dee2e6] flex justify-between items-center">
+                                <span className="text-[20px]">Open Bets</span>
+                                <button onClick={closeModal} className="text-black/90 text-md">
+                                    <FaTimes />
+                                </button>
+                            </div>
+                            <div className="flex justify-between items-center border-x border-t border-[#C6D2D8] bg-white w-full">
+                                {["oddsBetData", "UnsettleBets", "fancyBetData"]?.map((tab) => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveBets(tab)}
+                                        className={`px-4 py-2 uppercase text-[12px] font-[600] w-full ${activeBets === tab
+                                            ? " text-[var(--secondary)] border-b-2 border-b-[var(--secondary)] bg-gray-50"
+                                            : "hover:text-[var(--secondary)] text-black"
+                                            }`}
+                                    >
+                                        {tab === "oddsBetData"
+                                            ? "MATCHED"
+                                            : tab === "UnsettleBets"
+                                                ? "Unsettle"
+                                                : tab === "fancyBetData"
+                                                    ? "Fancy"
+                                                    : "-"}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="overflow-hidden w-full p-0 !m-0">
+                                <div className="max-w-full overflow-auto ">
+                                    <div className="min-w-full ">
+                                        <div className="overflow-hidden w-full ">
+                                            <table className="min-w-full capitalize border border-[#f8f8f8]">
+                                                <thead>
+                                                    <tr className="w-full text-black/80 text-[14px] font-[400] bg-[#ffffff] text-left border border-[#f8f8f8]">
+                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Selname</th>
+                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Odds</th>
+                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Stake</th>
+                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">
+                                                            Date/Time
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {/* Odds Bets */}
+                                                    {activeBets === "oddsBetData" &&
+                                                        (oddsBetData?.length > 0 ? (
+                                                            oddsBetData.map((element, index) => (
+                                                                <tr
+                                                                    key={index}
+                                                                    className={`w-full text-[#333333] text-[0.8125rem] border-b border-t divide-x divide-white text-left ${element?.type === "K"
+                                                                        ? "bg-[var(--matchKhai)]"
+                                                                        : "bg-[var(--matchLagai)]"
+                                                                        }`}
+                                                                >
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        <div>
+                                                                            {element?.teamName} <br />
+                                                                            <span className="font-bold">
+                                                                                {element?.marketName}
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.odds}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.amount}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.date}
+                                                                    </td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td colSpan={4} className="text-center py-2 text-sm">
+                                                                    No Odds Bet found!
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+
+                                                    {/* Fancy Bets */}
+                                                    {activeBets === "fancyBetData" &&
+                                                        (fancyBetData?.length > 0 ? (
+                                                            fancyBetData.map((element, index) => (
+                                                                <tr
+                                                                    key={index}
+                                                                    className={`w-full text-[#333333] text-[0.8125rem] border-b border-t text-left divide-x divide-white ${element?.type === "N"
+                                                                        ? "bg-[var(--matchKhai)]"
+                                                                        : "bg-[var(--matchLagai)]"
+                                                                        }`}
+                                                                >
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        <span className="font-medium text-xs">
+                                                                            {element?.sessionName}
+                                                                        </span>
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.odds}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.amount}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.date}
+                                                                    </td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td colSpan={4} className="text-center py-2 text-sm">
+                                                                    No Fancy Bets found!
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+
+                                                    {/* Unsettle Bets */}
+                                                    {activeBets === "UnsettleBets" &&
+                                                        (fancyBetData?.length > 0 ? (
+                                                            fancyBetData.map((element, index) => (
+                                                                <tr
+                                                                    key={index}
+                                                                    className="w-full text-[#333333] text-[0.8125rem] border-b border-t text-left"
+                                                                >
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.name}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.odds}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.amount}
+                                                                    </td>
+                                                                    <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
+                                                                        {element?.date}
+                                                                    </td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td colSpan={4} className="text-center py-2 text-sm">
+                                                                    No Unsettle Bets found!
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </>
+
         </div >
     );
 };

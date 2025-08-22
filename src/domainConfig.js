@@ -1,4 +1,4 @@
-const GrandExchangeSettings = {
+const ReddyBookSettings = {
   title: "ReddyBook | India’s Most Trusted Online Cricket Betting Id Provider",
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddyBook-logo.png",
@@ -65,10 +65,9 @@ const SaffronExchSettings = {
 
 
 const domainSettings = {
-  "grandexchange.com": GrandExchangeSettings,
+  "grandexchange.com": ReddyBookSettings,
   "safffronexchange.com": SaffronExchSettings,
-
-  "localhost:3000": GrandExchangeSettings,
+  "localhost:3000": ReddyBookSettings,
 
 };
 

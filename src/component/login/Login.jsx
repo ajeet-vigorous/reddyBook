@@ -123,7 +123,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                 </div>
                 {/* Input Fields */}
                 <div className="mb-4">
-                  <label className=" text-[12px] mb-1 font-medium text-gray-200">
+                  <label className=" text-[10px] mb-1 font-[600] text-gray-200">
                     USERNAME / MOBILE NUMBER
                   </label>
                   <input
@@ -132,11 +132,12 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                     className="bg-[#00427C] w-full flex-grow p-2 rounded-md focus:bg-[var(--primary)] focus:border-white text-white placeholder-gray-400 focus:border-button focus:border outline-none text-center"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
                   />
                 </div>
 
                 <div className="mb-4">
-                  <label className=" text-[12px] mb-1 font-medium text-gray-200">
+                  <label className=" text-[10px] mb-1 font-[600] text-gray-200">
                     PASSWORD
                   </label>
                   <input
@@ -145,6 +146,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                     className="bg-[#00427C] w-full flex-grow p-2 rounded-md focus:bg-[var(--primary)] focus:border-white text-white placeholder-gray-400 focus:border-button focus:border outline-none text-center"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
                   />
                 </div>
 

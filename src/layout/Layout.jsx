@@ -47,7 +47,7 @@ const Layout = () => {
                     />
                 </div>
 
-                <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)]  ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
+                <div className={`flex-1 overflow-y-auto bg-[var(--backgroundmain)] ${isSidebarOpen ? 'lg:ml-[0px] fixed inset-0 lg:static' : ''}`}>
                     <div className="lg:p-4 p-1 h-full">
                         <AppContent />
                     </div>

@@ -42,7 +42,7 @@ const SubHeader = ({ setSidebarOpen }) => {
 
   return (
     <>
-      <div className="lg:bg-[var(--darkcolor)] bg-white lg:text-white text-black flex font-normal text-[12px]">
+      <div className="lg:bg-[var(--darkcolor)] bg-white lg:text-white text-black flex font-normal">
         <div
           className="items-center flex overflow-x-auto whitespace-nowrap scrollbar-height-0 px-0"
           style={{ scrollbarWidth: "none" }}
@@ -60,7 +60,7 @@ const SubHeader = ({ setSidebarOpen }) => {
                   lg:border-none border-l-[1px] border-[#eee]`}
               >
                 <img className="w-[18px] h-[18px]" src={item.icon} alt={item.label} />
-                <span>{item.label}</span>
+                <span className="text-[11px]">{item.label}</span>
               </div>
             );
           })}

@@ -45,7 +45,7 @@ const MatchDetailsHeaderSection = ({ children, marketType, minMax, cashOut }) =>
     }
 
     return (
-        <section className="mb-4 border-b border-gray-200 pb-2 my-1 ">
+        <section className="mb-4 border-b border-gray-200 pb-0 my-1 ">
             {/* Notification */}
             {showNotification && (
                 <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">

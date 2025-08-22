@@ -151,7 +151,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
     if (!filteredMatches || filteredMatches.length === 0) {
       content = (
         <>
-          <div className="lg:flex hidden items-center justify-between w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
+          <div className="flex items-center justify-between w-full bg-[#e9eff8] border-b border-t border-[#C6D2D8]">
             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2">
               {sportName}
               <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
@@ -162,8 +162,8 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
               <span>2</span>
             </p>
           </div>
-          <div className="border-b  px-3 py-1 text-[13px]">
-            No Records found!
+          <div className="border-b px-3 py-1.5 font-[500] text-[#444444] text-[13px] bg-white text-center">
+            No real-time records found!
           </div>
         </>
       );
@@ -182,7 +182,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
               <div className="flex justify-end items-center gap-2 pr-1">
                 <div
                   onClick={() => setIsLive(!isLive)}
-                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  className={`rounded-xl text-xs font-[600] tracking-wide md:px-3 px-2.5 py-[3px] cursor-pointer transition-colors duration-300
                   ${isLive ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
                 >
                   {isLive ? "- LIVE" : "+ LIVE"}
@@ -190,7 +190,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
                 <div
                   onClick={() => setIsVirtual(!isVirtual)}
-                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  className={`rounded-xl text-xs font-[600] tracking-wide md:px-3 px-2.5 py-[3px] cursor-pointer transition-colors duration-300
                   ${isVirtual ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
                 >
                   {isVirtual ? "- VIRTUAL" : "+ VIRTUAL"}
@@ -198,7 +198,7 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
 
                 <div
                   onClick={() => setIsPremium(!isPremium)}
-                  className={`rounded-xl text-xs font-[500] tracking-wide md:px-3.5 px-2.5 py-[2px] cursor-pointer transition-colors duration-300
+                  className={`rounded-xl text-xs font-[600] tracking-wide md:px-3 px-2.5 py-[3px] cursor-pointer transition-colors duration-300
                   ${isPremium ? "bg-green-600 text-white" : "bg-transparent border border-[var(--primary)]  text-[var(--primary)]"}`}
                 >
                   {isPremium ? "- Premium" : "+ Premium"}
@@ -228,10 +228,10 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                         className="flex items-center justify-start py-1 space-x-1 w-full"
                       >
                         <div className="flex flex-col uppercase w-full sm:w-[32%] px-2">
-                          <span className="text-[12px] font-semibold text-gray-900 hover:underline">
+                          <span className="text-[11px] font-semibold text-gray-900 hover:underline truncate">
                             {element?.matchName}
                           </span>
-                          <span className="text-[10px] font-[500] text-[#838383]">
+                          <span className="text-[9px] font-[500] text-[#838383] truncate">
                             ({element?.seriesName ? element?.seriesName : "No Series"})
                           </span>
                         </div>

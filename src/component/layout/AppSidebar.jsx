@@ -9,6 +9,7 @@ import CasinoSlider from "../casinoSlider/CasinoSlider";
 import { SPORTSCONSTANT } from "../../config/global";
 import settings from "../../domainConfig";
 import { FaTimes } from "react-icons/fa";
+import Login from "../login/Login";
 
 const organizeData = (data) => {
   if (!data) return [];
@@ -63,6 +64,17 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [openRaceId, setOpenRaceId] = useState(null);
   const [racingData, setRacingData] = useState([]);
 
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const openModal = () => {
+    setIsLoginOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsLoginOpen(false);
+  };
+
+
   useEffect(() => {
     let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
     setMatchData(matchListData);
@@ -107,9 +119,9 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   //   }
   // };
   // console.log("openKeys", openKeys);
- 
+
   const handleClick = (index, e) => {
-  
+
     e.stopPropagation();
     if (openKeys.includes(index)) {
       setOpenKeys(openKeys.filter((key) => key !== index));
@@ -117,7 +129,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       setOpenKeys([...openKeys, index]);
     }
     const clickedItem = SPORTSCONSTANT[index];
-  
+
 
     if (clickedItem?.text === "Casino") {
       navigate("/all-casino");
@@ -179,6 +191,8 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <>
+      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
+
       <div className="hidden lg:block">
         <div>
           <CgClose
@@ -190,10 +204,15 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               <div className="text-white md:relative ">
                 <div className="">
                   <div
-                    onClick={() => {
-                      navigate("/market-analysis");
+                    onClick={(e) => {
+                      if (localStorage.getItem("token")) {
+                        navigate("/market-analysis");
+                      } else {
+                        openModal();
+                        localStorage.setItem("unauthorized", true);
+                      }
                     }}
-                    className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
+                    className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
                   >
                     <p>
                       <img
@@ -211,29 +230,28 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     const racingDataSidebar =
                       menuItem.count == "7"
                         ? matchData?.filter(
-                            (race) => race.sportId == Number(menuItem.count)
-                          )
+                          (race) => race.sportId == Number(menuItem.count)
+                        )
                         : [];
                     const greyhoundDataSidebar =
                       menuItem.count == "4339"
                         ? matchData?.filter(
-                            (race) => race.sportId == Number(menuItem.count)
-                          )
+                          (race) => race.sportId == Number(menuItem.count)
+                        )
                         : [];
-                        const recingGreyhopund = menuItem.count == "4339" ? greyhoundDataSidebar : menuItem.count == "7" ? racingDataSidebar : [];
+                    const recingGreyhopund = menuItem.count == "4339" ? greyhoundDataSidebar : menuItem.count == "7" ? racingDataSidebar : [];
 
                     return (
                       <div
                         key={index}
-                        className={`text-[#343435]  py-0 my-0 transition-[max-height] duration-300 ease-in ${
-                          clickedOutside1 === true
-                            ? "max-h-auto bg-[#fffff]"
-                            : "max-h-0 bg-[#fffff]"
-                        }`}
+                        className={`text-[#343435]  py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
+                          ? "max-h-auto bg-[#fffff]"
+                          : "max-h-0 bg-[#fffff]"
+                          }`}
                       >
                         <div className="cursor-pointer border-b-[1px] border-[#eceaea]">
                           <div
-                            className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                            className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
                             onClick={(e) => handleClick(index, e)}
                           >
                             <div className="flex justify-start items-center space-x-4">
@@ -266,10 +284,19 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                   recingGreyhopund?.map((item) => (
                                     <div
                                       key={item._id}
-                                      className="bg-[#f6f9ff] text-xs font-[500]  py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
-                                      onClick={() => {
-                                        handleResponseGameotherDetails(item);
-                                        sidebartoggle();
+                                      className="bg-[#f6f9ff] text-xs font-[600]  py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                      // onClick={() => {
+                                      //   handleResponseGameotherDetails(item);
+                                      //   sidebartoggle();
+                                      // }}
+                                      onClick={(e) => {
+                                        if (localStorage.getItem("token")) {
+                                          handleResponseGameotherDetails(item);
+                                          sidebartoggle();
+                                        } else {
+                                          openModal();
+                                          localStorage.setItem("unauthorized", true);
+                                        }
                                       }}
                                     >
                                       🎮 {item.matchName} {item.matchId}
@@ -292,10 +319,20 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     className="cursor-pointer border-b-[1px] border-[#eceaea]"
                                   >
                                     <div
-                                      className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
-                                      onClick={(e) =>
-                                        handleClick1(index, seriesIndex, e)
-                                      }
+                                      className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[11px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                                      // onClick={(e) =>
+                                      //   handleClick1(index, seriesIndex, e)
+                                      // }
+
+                                      onClick={(e) => {
+                                        if (localStorage.getItem("token")) {
+                                          handleClick1(index, seriesIndex, e)
+                                          sidebartoggle();
+                                        } else {
+                                          openModal();
+                                          localStorage.setItem("unauthorized", true);
+                                        }
+                                      }}
                                     >
                                       <span className="px-2 py-0 my-0">
                                         {series.seriesName}
@@ -318,13 +355,17 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             {series.data.map((item) => (
                                               <li
                                                 key={item._id}
-                                                className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
+                                                className="bg-[#f6f9ff] text-[11px] font-[600] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
                                                 onClick={(e) => {
-                                                  handleResponseGameotherDetails(
-                                                    item
-                                                  );
-                                                  sidebartoggle();
+                                                  if (localStorage.getItem("token")) {
+                                                    handleResponseGameotherDetails(item);
+                                                    sidebartoggle();
+                                                  } else {
+                                                    openModal();
+                                                    localStorage.setItem("unauthorized", true);
+                                                  }
                                                 }}
+
                                               >
                                                 <span className="flex items-center space-x-1">
                                                   <p>🎮</p>
@@ -356,7 +397,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   {/* <div className="text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in">
                     <div className="cursor-pointer divide-y-[1px] divide-[#f1f1f1] border-b-[1px] border-[#eceaea]">
                       <div
-                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
+                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
                         onClick={() => handleRacing(7)}
                       >
                         <div className="flex justify-start items-center space-x-4">
@@ -383,7 +424,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             racingData.map((item) => (
                               <div
                                 key={item._id}
-                                className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                className="bg-[#f6f9ff] text-xs font-[600] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
                                 onClick={() => {
                                   handleResponseGameotherDetails(item);
                                   sidebartoggle();
@@ -401,7 +442,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       )}
 
                       <div
-                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
+                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
                         onClick={() => handleRacing(4339)}
                       >
                         <div className="flex justify-start items-center space-x-4">
@@ -428,7 +469,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             racingData.map((item) => (
                               <div
                                 key={item._id}
-                                className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                className="bg-[#f6f9ff] text-xs font-[600] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
                                 onClick={() => {
                                   handleResponseGameotherDetails(item);
                                   sidebartoggle();
@@ -447,7 +488,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     </div>
                   </div> */}
 
-                  <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
+                  <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                     <p>
                       <img
                         src={"/subHeader/wp.png"}
@@ -484,10 +525,15 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <div className="text-white md:relative ">
               <div className="">
                 <div
-                  onClick={() => {
-                    navigate("/market-analysis");
-                  }}
-                  className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
+                 onClick={(e) => {
+                      if (localStorage.getItem("token")) {
+                        navigate("/market-analysis");
+                      } else {
+                        openModal();
+                        localStorage.setItem("unauthorized", true);
+                      }
+                    }}
+                  className="border-b-[1px] border-[#eceaea] hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer "
                 >
                   <p>
                     <img
@@ -508,16 +554,15 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   return (
                     <div
                       key={index}
-                      className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${
-                        clickedOutside1 === true
-                          ? "max-h-auto bg-[#fffff]"
-                          : "max-h-0 bg-[#fffff]"
-                      }`}
+                      className={`text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in ${clickedOutside1 === true
+                        ? "max-h-auto bg-[#fffff]"
+                        : "max-h-0 bg-[#fffff]"
+                        }`}
                     >
                       <div className="cursor-pointer">
                         {/* Sport Header */}
                         <div
-                          className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center border-b-[1px] border-[#eceaea]"
+                          className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center border-b-[1px] border-[#eceaea]"
                           onClick={(e) => {
                             if (isRacingCategory) {
                               // If racing, just toggle
@@ -580,10 +625,19 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     className="cursor-pointer border-b-[1px] border-[#eceaea]"
                                   >
                                     <div
-                                      className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
-                                      onClick={(e) =>
-                                        handleClick1(index, seriesIndex, e)
-                                      }
+                                      className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-0.5 inline-flex justify-between bg-white items-center"
+                                      // onClick={(e) =>
+                                      //   handleClick1(index, seriesIndex, e)
+                                      // }
+                                      onClick={(e) => {
+                                        if (localStorage.getItem("token")) {
+                                          handleClick1(index, seriesIndex, e)
+                                          sidebartoggle();
+                                        } else {
+                                          openModal();
+                                          localStorage.setItem("unauthorized", true);
+                                        }
+                                      }}
                                     >
                                       <span className="px-2 py-0 my-0">
                                         {series.seriesName}
@@ -606,12 +660,21 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             {series.data.map((item) => (
                                               <li
                                                 key={item._id}
-                                                className="bg-[#f6f9ff] text-xs font-[500] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
-                                                onClick={(e) => {
-                                                  handleResponseGameotherDetails(
-                                                    item
-                                                  );
-                                                  sidebartoggle();
+                                                className="bg-[#f6f9ff] text-xs font-[600] relative py-[8px] my-0 pl-8 text-[#343435] hover:text-[var(--primary)] w-full space-x-0.5 inline-flex items-center cursor-pointer"
+                                                // onClick={(e) => {
+                                                //   handleResponseGameotherDetails(
+                                                //     item
+                                                //   );
+                                                //   sidebartoggle();
+                                                // }}
+                                                 onClick={(e) => {
+                                                  if (localStorage.getItem("token")) {
+                                                    handleResponseGameotherDetails(item);
+                                                    sidebartoggle();
+                                                  } else {
+                                                    openModal();
+                                                    localStorage.setItem("unauthorized", true);
+                                                  }
                                                 }}
                                               >
                                                 <span className="flex items-center space-x-1">
@@ -642,7 +705,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   );
                 })}
 
-                <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[500] tracking-normal text-[13px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
+                <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                   <p>
                     <img
                       src={"/subHeader/wp.png"}

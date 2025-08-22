@@ -338,7 +338,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
       <>
         <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
         <section>
-          <div className="lg:flex hidden justify-between py-0 w-full border-b border-t bg-[#e9eff8] border-[#f8f8f8]">
+          <div className="flex justify-between py-0 w-full border-b border-t bg-[#e9eff8] border-[#f8f8f8]">
             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
               {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
               {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
@@ -381,7 +381,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
         <div className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5" key={index}>
           <div className="lg:flex w-full">
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
-              <div className="flex items-center justify-start w-full bg-white">
+              <div className="flex items-center justify-start sm:w-full w-[80%] bg-white">
                 <div
 
                   // onClick={() => {
@@ -403,21 +403,21 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                   // href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                   className="cursor-pointer flex items-center justify-start py-1 space-x-1 w-full"
                 >
-                  <div className="flex flex-col uppercase w-[40%] sm:w-[32%] md:w-[30%] px-2">
-                    <span className="text-[12px] font-semibold text-gray-900 hover:underline truncate">
+                  <div className="flex flex-col uppercase w-[40%] sm:w-[32%] md:w-[40%] px-2">
+                    <span className="text-[11px] font-semibold text-gray-900 hover:underline truncate">
                       {element?.matchName}
                     </span>
-                    <span className="text-[10px] font-[500] text-[#838383] truncate">
+                    <span className="text-[9px] font-[500] text-[#838383] truncate">
                       ({element?.seriesName || "No Series"})
                     </span>
                   </div>
 
-                  <span className="w-[15%] sm:w-[15%] md:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold sm:text-[13px] text-[10px] tracking-wide">
+                  <span className="w-[15%] sm:w-[15%] md:w-[16%] flex flex-col items-center justify-center text-[#03B37F] font-bold sm:text-[12px] text-[10px] tracking-wide">
                     <p className="pt-2">LIVE</p>
                     <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
                   </span>
 
-                  <div className="bg-[#E9EFF8] w-[15%] sm:w-[12%] md:w-[10%] lg:w-[25%] xl:w-[13%] 2xl:w-[10%] text-[#FF0000] sm:text-[11px] text-[8px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                  <div className="bg-[#E9EFF8] w-[18%] sm:w-[20%] md:w-[18%] lg:w-[25%] xl:w-[23%] 2xl:w-[20%] text-[#FF0000] sm:text-[11px] text-[8px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
                     <div>{moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
                     <div className="sm:text-[10px] text-[8px]">
                       {moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
@@ -426,7 +426,7 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                 </div>
               </div>
 
-              <div className="flex justify-end items-center space-x-1.5 cursor-pointer pr-3">
+              <div className="flex justify-end items-center space-x-1.5 cursor-pointer pr-3  sm:w-full w-[20%]">
                 {element?.isTv &&<img src={"/dashbaord/score-tv-icon.svg"} className="w-[14px] h-[14px]" />}
                 {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[10px] h-[10px]" />}
                 {element?.isBookmaker && (
