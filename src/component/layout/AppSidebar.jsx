@@ -132,11 +132,11 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
 
     if (clickedItem?.text === "Casino") {
-      navigate("/all-casino");
+      navigate("/casino/99998?name=all&gameName=dragon tiger");
       return;
     }
     if (clickedItem?.text === "Sports Book") {
-      navigate("/sports-book");
+      navigate("/iframe-casino/550000");
       return;
     }
     if (clickedItem?.text === "Horse Racing") {

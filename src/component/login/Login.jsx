@@ -75,14 +75,9 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
 
   // Handle login with demo credentials
   const handleDemoLogin = () => {
-    const demoCredentials = {
-      username: "C1000",
-      password: "1122",
-      isClient: true,
-      host: window.location.host,
-    };
+   const reqData = settings?.demoCredentials
 
-    dispatch(login(demoCredentials))
+    dispatch(login(reqData))
       .then((data) => {
         if (!data.error) {
           closeModal();

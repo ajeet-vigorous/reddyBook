@@ -67,3 +67,60 @@ export const apiCall = async (method, path, payload) => {
         }
     }
 };
+
+
+async function decryptResponse(response) {
+  if (response.data.dataEncrupt && response.data.dataEncrupt == true) {
+    if (response.data) {
+      let encruptedData = response.data.data
+      const bytes = CryptoJS.AES.decrypt(encruptedData, import.meta.env.VITE_SECRET_KEY
+      );
+      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+      if (decryptedData && decryptedData != null && decryptedData != "" && decryptedData != undefined) {
+        response.data.data = JSON.parse(decryptedData)
+      }
+    }
+  }
+
+
+  return response.data;
+}
+
+export const httpPost = async (url, params, isNotify) => {
+  try {
+    let headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: authHeader().Authorization,
+    };
+    const result = await axios({
+      method: "POST",
+      url: baseUrl.BACKEND_URL + url,
+      data: { ...params },
+      headers: headers,
+    });
+
+    // await invalidToken(result);
+    await decryptResponse(result);
+    if (result.data) {
+      if (result.data.error && isNotify) {
+        // error(result.message)
+        //alert(result.data.message)
+      } else if (isNotify && !result.data.error) {
+        // toast.success(result.data.message)
+        // alert(result.data.message)
+      }
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    // message.error(err?.response?.data?.message)
+    message.error(err?.response?.data?.message);
+    // setTimeout(() => message.dismiss(toastId), 1000);
+    if (err?.request?.status) {
+      invalidHeadres(err.request.status);
+    }
+    return result
+  }
+};

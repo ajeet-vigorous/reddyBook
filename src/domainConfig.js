@@ -4,11 +4,7 @@ const ReddyBookSettings = {
   logo: "/logo/reddyBook-logo.png",
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://socket.trovetown.co/",
-  // apiurl: "https://apidiamond.trovetown.co/v1/",
-  // apiurl: 'https://api.reddyplus100.com/v1/',
-  // apiurl: "https://api.10xbpexch.com/v1/",
-  apiurl: 'https://api.10xbpexch.com/v1/',
-  // apiurl: 'https://api.bpexchanges.com/v1/',
+  apiurl: 'https://api.criecbet99.club/v1/',
   domainName: "reddybook",
   colors: {
     "--primary": "#C10930",
@@ -30,6 +26,7 @@ const ReddyBookSettings = {
     username: "demo",
     password: "1122",
     isClient: true,
+    isDemoClient: true,
     host: window.location.host,
   }
 };
@@ -56,7 +53,7 @@ const SaffronExchSettings = {
   demoCredentials: {
     username: "Demo1",
     password: "1122",
-    isClient: true,
+    isDemoClient: true,
     host: window.location.host,
   }
 

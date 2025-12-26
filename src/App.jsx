@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import settings from './domainConfig'
 import { getDomainSettingData, getInternationalGroupCasinoList, getMatchList } from './redux/reducers/user_reducer'
+import AuthRoute from './config/Auth'
+import IframeCasino from './pages/IframeCasino/IframeCasino'
+import IframeCasinonew from './pages/IframeCasino/IframeCasinonew'
+import IframeQtech from './pages/IframeCasino/IframeQtech'
 
 
 
@@ -110,6 +114,9 @@ function App() {
           <Routes>
 
             <Route path="*" element={<Layout />} />
+            <Route path="/iframe-casino/:gameId?" element={<AuthRoute element={<IframeCasino />} />} />
+            <Route path="/iframe-casino-new/:provider?/:gameId?" element={<AuthRoute element={<IframeCasinonew />} />} />
+            <Route path="/iframe-qtech-casino/:gameId?" element={<AuthRoute element={<IframeQtech />} />} />
           </Routes>
         </BrowserRouter>
       </BalanceProvider>

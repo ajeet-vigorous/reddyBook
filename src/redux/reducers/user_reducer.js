@@ -236,14 +236,14 @@ const userSlice = createSlice({
       })
 
       .addCase(getUserBalance.pending, (state) => {
-        state.loading = true;
+        
       })
       .addCase(getUserBalance.fulfilled, (state, action) => {
-        state.loading = false;
+
         state.userBalance = action.payload?.data;
       })
       .addCase(getUserBalance.rejected, (state, action) => {
-        state.loading = false;
+   
         state.error = action.payload;
       })
 

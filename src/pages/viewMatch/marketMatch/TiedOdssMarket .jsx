@@ -3,6 +3,7 @@ import BlinkingComponent from '../BlinkingComponent';
 import CashOutSystem from '../CashoutTesting';
 import MatchDetailsHeaderSection from '../../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection';
 import PlaceBetMobile from '../../../component/betplaceMobile/PlaceBetMobile';
+import FormateValueNumber from '../../../component/FormateValueNumber/FormateValueNumber';
 
 const TiedOddsComponent = ({
   inplayMatch,
@@ -124,168 +125,226 @@ const TiedOddsComponent = ({
                             </div>
 
                             <div className="lg:w-1/2 xl:w-[42%] w-[35%] grid grid-cols-6">
-                              {/* Available to Back (non-clickable) */}
-                              {elementtemp?.ex?.availableToBack?.length > 0 &&
-                                elementtemp.ex.availableToBack.slice(1).map((tempData, index) => (
-                                  <span key={index} className="lg:col-span-1 col-span-3 rounded-md lg:block hidden">
-                                    <BlinkingComponent
-                                      price={tempData.price}
-                                      size={tempData.size}
-                                      color={"bg-[#E6F2FC]"}
-                                      blinkColor={"bg-[#00B2FF]"}
-                                      hoverColor={"bg-sky-600"}
-                                    />
-                                  </span>
-                                ))
-                              }
+                              {(() => {
+                                    const availableToBack = elementtemp.ex?.availableToBack || [];
+                                    const paddedBack = [...availableToBack];
+                                    while (paddedBack.length < 3) {
+                                      paddedBack.push({ price: 0, size: 0 });
+                                    }
 
-                              {/* First Available to Back (clickable) */}
-                              {elementtemp?.ex?.availableToBack?.length > 0 &&
-                                elementtemp.ex.availableToBack.slice(0, 1).map((tempData, index) => (
-                                  <React.Fragment key={index}>
-                                    <span
-                                      className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer"
-                                      onClick={() => {
-                                        handleBackOpen({
-                                          data: tempData,
-                                          type: "Yes",
-                                          odds: tempData.price,
-                                          name: elementtemp.selectionName,
-                                          nameOther: element.runners,
-                                          betFor: "tiedMatch",
-                                          oddsType: element.marketType,
-                                          betType: "L",
-                                          selectionId: elementtemp.selectionId,
-                                          teamData: tempData.price,
-                                          betfairMarketId: element.marketId,
-                                          price: elementtemp.ex.availableToLay[0].price,
-                                          size: elementtemp.ex.availableToLay[0].size,
-                                          position: returnDataObject,
-                                          newPosition: returnDataObject
-                                        });
-                                      }}
-                                    >
-                                      <BlinkingComponent
-                                        price={tempData.price}
-                                        size={tempData.size}
-                                        color={"bg-[#8DD2F0]"}
-                                        blinkColor={"bg-[#00B2FF]"}
-                                      />
-                                    </span>
-
-                                    <span
-                                      className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
-                                      onClick={() => {
-                                        handleBackOpen({
-                                          data: tempData,
-                                          type: "Yes",
-                                          odds: tempData.price,
-                                          name: elementtemp.selectionName,
-                                          nameOther: element.runners,
-                                          betFor: "tiedMatch",
-                                          oddsType: element.marketType,
-                                          betType: "L",
-                                          selectionId: elementtemp.selectionId,
-                                          teamData: tempData.price,
-                                          betfairMarketId: element.marketId,
-                                          price: elementtemp.ex.availableToLay[0].price,
-                                          size: elementtemp.ex.availableToLay[0].size,
-                                          position: returnDataObject,
-                                          newPosition: returnDataObject
-                                        });
-                                      }}
-                                    >
-                                      <BlinkingComponent
-                                        price={tempData.price}
-                                        size={tempData.size}
-                                        color={"bg-[#8DD2F0]"}
-                                        blinkColor={"bg-[#00B2FF]"}
-                                      />
-                                    </span>
-                                  </React.Fragment>
-                                ))
-                              }
-
-                              {/* Available to Lay */}
-                              {elementtemp?.ex?.availableToLay?.length > 0 &&
-                                elementtemp.ex.availableToLay.map((tempData, index) => (
-                                  <React.Fragment key={index}>
-                                    {index === 0 ? (
+                                    return (
                                       <>
-                                        <span
-                                          className="lg:col-span-1 col-span-3 rounded-md lg:hidden cursor-pointer"
-                                          onClick={() => {
-                                            toggleRowVisibility(elementtemp.selectionId);
-                                            handleBackOpen({
+                                        {/* Extra 2 Back items (index 1, 2) - reverse order, desktop only */}
+                                        {paddedBack.slice(1).reverse().map((tempData, idx) => {
+                                          const matchedTrade = elementtemp.ex.tradedVolume?.find(
+                                            (trade) => trade.price === tempData.price
+                                          );
+                                          const displaySize = matchedTrade ? matchedTrade.size : tempData.size;
+                                          const backColors = [
+                                            "bg-[#b2d6f0]",  // Box 1
+                                            "bg-[#92c9f0]"   // Box 2
+                                          ];
+                                        
+                                          const bgColor = backColors[idx] || "bg-[var(--matchLagai)]";
+                                          return (
+                                            <span
+                                              key={`back-extra-${elementtemp.selectionId}-${idx}`}
+                                              className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"
+                                              onClick={() =>  handleBackOpen({
                                               data: tempData,
-                                              type: "No",
+                                              type: "Yes",
                                               odds: tempData.price,
                                               name: elementtemp.selectionName,
                                               nameOther: element.runners,
-                                              betFor: "tiedMatch",
+                                              betFor: "tiedMatch", // ← Confirm if this is correct
                                               oddsType: element.marketType,
-                                              betType: "K",
+                                              betType: "L",
                                               selectionId: elementtemp.selectionId,
                                               teamData: tempData.price,
                                               betfairMarketId: element.marketId,
-                                              price: elementtemp.ex.availableToBack[0].price,
-                                              size: elementtemp.ex.availableToBack[0].size,
+                                              price: elementtemp.ex.availableToLay?.[0]?.price,
+                                              size: elementtemp.ex.availableToLay?.[0]?.size,
                                               position: returnDataObject,
-                                              newPosition: returnDataObject
-                                            });
-                                          }}
-                                        >
-                                          <BlinkingComponent
-                                            price={tempData.price}
-                                            size={tempData.size}
-                                            color={"bg-[#FEAFB2]"}
-                                            blinkColor={"bg-[#FE7A7F]"}
-                                          />
-                                        </span>
+                                              newPosition: returnDataObject,
+                                            })}
+                                            >
+                                              <BlinkingComponent
+                                                price={tempData.price || 0}
+                                                size={FormateValueNumber(displaySize) || 0}
+                                                color={bgColor}
+                                                blinkColor="bg-[#00B2FF]"
+                                                hoverColor="bg-sky-600"
+                                              />
+                                            </span>
+                                          );
+                                        })}
 
-                                        <span
-                                          className="lg:col-span-1 col-span-3 rounded-md lg:block hidden cursor-pointer"
-                                          onClick={() => {
+                                        {/* First Back item (index 0) - special, clickable */}
+                                        {paddedBack.slice(0, 1).map((tempData, idx) => {
+                                          const matchedTrade = elementtemp.ex.tradedVolume?.find(
+                                            (trade) => trade.price === tempData.price
+                                          );
+                                          const displaySize = matchedTrade ? matchedTrade.size : tempData.size;
+                                          const backColors = [
+                                            "bg-[var(--matchLagai)]",  // Box 1
+                                            "bg-[#9d2c9f0]"   // Box 2
+                                          ];
+                                        
+                                          const bgColor = backColors[idx] || "bg-[var(--matchLagai)]";
+                                          const handleClick = () => {
+                                            handleBackOpen({
+                                              data: tempData,
+                                              type: "Yes",
+                                              odds: tempData.price,
+                                              name: elementtemp.selectionName,
+                                              nameOther: element.runners,
+                                              betFor: "tiedMatch", // ← Confirm if this is correct
+                                              oddsType: element.marketType,
+                                              betType: "L",
+                                              selectionId: elementtemp.selectionId,
+                                              teamData: tempData.price,
+                                              betfairMarketId: element.marketId,
+                                              price: elementtemp.ex.availableToLay?.[0]?.price,
+                                              size: elementtemp.ex.availableToLay?.[0]?.size,
+                                              position: returnDataObject,
+                                              newPosition: returnDataObject,
+                                            });
+                                          };
+
+                                          return (
+                                            <React.Fragment key={`back-main-${elementtemp.selectionId}`}>
+                                              {/* Mobile View */}
+                                              <span
+                                                className="col-span-3 lg:hidden block cursor-pointer"
+                                                onClick={handleClick}
+                                              >
+                                                <BlinkingComponent
+                                                  price={tempData.price || 0}
+                                                  size={FormateValueNumber(displaySize) || 0}
+                                                  color= {bgColor}
+                                                  blinkColor="bg-[#00B2FF]"
+                                                />
+                                              </span>
+
+                                              {/* Desktop View */}
+                                              <span
+                                                className="lg:col-span-1 col-span-3 rounded-md lg:block hidden"
+                                                onClick={() => {
+                                                  toggleRowVisibility(elementtemp.selectionId);
+                                                  handleClick}}
+                                              >
+                                                <BlinkingComponent
+                                                  price={tempData.price || 0}
+                                                  size={FormateValueNumber(displaySize) || 0}
+                                                  color="bg-[var(--matchLagai)]"
+                                                  blinkColor="bg-[#00B2FF]"
+                                                />
+                                              </span>
+                                            </React.Fragment>
+                                          );
+                                        })}
+                                      </>
+                                    );
+                                  })()}
+
+                                                               {(() => {
+                                    const availableToLay = elementtemp.ex?.availableToLay || [];
+                                    const paddedLay = [...availableToLay];
+                                    while (paddedLay.length < 3) {
+                                      paddedLay.push({ price: 0, size: 0 });
+                                    }
+
+                                    return (
+                                      <>
+                                        {paddedLay.map((tempData, layIdx) => {
+                                          const matchedTrade = elementtemp.ex.tradedVolume?.find(
+                                            (trade) => trade.price === tempData.price
+                                          );
+                                          const displaySize = matchedTrade ? matchedTrade.size : tempData.size;
+                                          const isFirst = layIdx === 0;
+                                          const key = `lay-${elementtemp.selectionId}-${layIdx}`;
+                                          const backColors = [
+                                            "bg-[#f8bcc8]",  // Box 1
+                                            "bg-[#f6cdd6]"   // Box 2
+                                          ];
+                                        
+                                          const bgColor = backColors[layIdx - 1] || "bg-[var(--matchLagai)]";
+                                          const handleClick = () => {
                                             handleBackOpen({
                                               data: tempData,
                                               type: "No",
                                               odds: tempData.price,
                                               name: elementtemp.selectionName,
                                               nameOther: element.runners,
-                                              betFor: "tiedMatch",
+                                              betFor: "tiedMatch", // Confirm if correct
                                               oddsType: element.marketType,
                                               betType: "K",
                                               selectionId: elementtemp.selectionId,
                                               teamData: tempData.price,
                                               betfairMarketId: element.marketId,
-                                              price: elementtemp.ex.availableToBack[0].price,
-                                              size: elementtemp.ex.availableToBack[0].size,
+                                              price: elementtemp.ex.availableToBack?.[0]?.price,
+                                              size: elementtemp.ex.availableToBack?.[0]?.size,
                                               position: returnDataObject,
-                                              newPosition: returnDataObject
+                                              newPosition: returnDataObject,
                                             });
-                                          }}
-                                        >
-                                          <BlinkingComponent
-                                            price={tempData.price}
-                                            size={tempData.size}
-                                            color={"bg-[#F9C8D3]"}
-                                            blinkColor={"bg-[#FE7A7F]"}
-                                          />
-                                        </span>
+                                          };
+
+                                          if (isFirst) {
+                                            return (
+                                              <React.Fragment key={key}>
+                                                {/* Mobile: First Lay */}
+                                                <span
+                                                  className="rounded-md md:col-start-4 col-span-3 lg:hidden block"
+                                                  onClick={() => {
+                                                    
+                                                    handleClick();
+                                                  }}
+                                                >
+                                                  <BlinkingComponent
+                                                    price={tempData.price || 0}
+                                                    size={FormateValueNumber(displaySize) || 0}
+                                                    color="bg-[var(--matchKhai)]"
+                                                    blinkColor="bg-[#FE7A7F]"
+                                                  />
+                                                </span>
+
+                                                {/* Desktop: First Lay */}
+                                                <span
+                                                  className="lg:col-span-1 col-span-3 rounded-md lg:block hidden"
+                                                  onClick={() => {
+                                                    toggleRowVisibility(elementtemp.selectionId);
+                                                    handleClick}}
+                                                >
+                                                  <BlinkingComponent
+                                                    price={tempData.price || 0}
+                                                    size={FormateValueNumber(displaySize) || 0}
+                                                    color="bg-[var(--matchKhai)]"
+                                                    blinkColor="bg-[#FE7A7F]"
+                                                  />
+                                                </span>
+                                              </React.Fragment>
+                                            );
+                                          }
+
+                                          // Other Lay items (index 1, 2) – Desktop only
+                                          return (
+                                            <span
+                                              key={key}
+                                              className="lg:col-span-1 col-span-2 rounded-md lg:block hidden"
+                                                onClick={handleClick}
+                                            >
+                                              <BlinkingComponent
+                                                price={tempData.price || 0}
+                                                size={FormateValueNumber(displaySize) || 0}
+                                                color={bgColor}
+                                                blinkColor="bg-[#CDEBEB]"
+                                              />
+                                            </span>
+                                          );
+                                        })}
                                       </>
-                                    ) : (
-                                      <span className="lg:col-span-1 col-span-2 rounded-md lg:block hidden">
-                                        <BlinkingComponent
-                                          price={tempData.price}
-                                          size={tempData.size}
-                                          color={"bg-[#FCE3E4]"}
-                                          blinkColor={"bg-[#CDEBEB]"}
-                                        />
-                                      </span>
-                                    )}
-                                  </React.Fragment>
-                                ))
-                              }
+                                    );
+                                  })()}
                             </div>
                           </div>
                           {betSlipData?.oddsType === "Tied Match" && elementtemp?.selectionId === betSlipData?.selectionId && <PlaceBetMobile

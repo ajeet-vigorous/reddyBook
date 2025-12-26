@@ -12,11 +12,13 @@ import PopularGame from "../../component/dashboard/groupCasino/PopularGame";
 import LiveCasino from "../../component/dashboard/groupCasino/LiveGames";
 import useGroupCasinoList from "../../component/IntGroupCasinoList/IntGroupCasinoList";
 import MarqueeNotification from "../../component/marquee/MarqueeNotification";
-import Trending from "../../component/dashboard/groupCasino/Trending";
+import TrendingGames from "../../component/dashboard/groupCasino/Trending";
 import Providers from "../../component/dashboard/Providers";
 import DashboardInplay from "../../component/dashboard/DashboardInplay";
 import DashboardUpcoming from "../../component/dashboard/DashboardUpcoming";
-
+import CasinoGames from '../../component/CasinoJson/NewLunch.json'
+import ReddybookCasino from '../../component/CasinoJson/Reddybook.json'
+import GameSlider from "../../component/casinoSlider/GameSlider";
 
 export const sportlistArray = [
   {
@@ -170,10 +172,26 @@ const Dashboard = ({ }) => {
     setMatchData(matchListData);
   }, [sportMatchList]);
 
+const highlightWithCDN = (CasinoGames?.highlight_casino || []).map(game => ({
+  ...game,
+  url_thumb: game.url_thumb?.startsWith("http")
+    ? game.url_thumb
+    : `https://speedcdn.io/${game.url_thumb}`
+}))
+const combinedGames = [
+  ...highlightWithCDN,
+  ...(ReddybookCasino || [])
+];
+
+
 
   return (
     <>
       <div className="h-full overflow-y-auto ">
+        <div className="md:hidden block">
+         <GameSlider  data={combinedGames}/>
+         <TrendingGames name={"New Launch"} data={CasinoGames?.new_launch} />
+         </div>
         <div className="lg:block hidden ">
           <MarqueeNotification />
         </div>
@@ -197,7 +215,7 @@ const Dashboard = ({ }) => {
             sportName="Tennis"
           />
         </div>
-        <Providers filterSection={"providers"} name={"Casino Provider"} providersData={groupCasinoList?.providerList} />
+        <Providers filterSection={"providers"} name={"Casino Provider"} data={CasinoGames?.our_provider} />
 
         <div className="p-2 bg-[#008000]">
           <div className="flex space-x-2 items-center">
