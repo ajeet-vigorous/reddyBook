@@ -222,12 +222,12 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
               >
                 <div className="lg:flex w-full">
                   <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
-                    <div className="flex items-center justify-start w-full bg-white">
+                    <div className="flex items-center justify-start w-1/2 bg-white">
                       <a
                         href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                         className="flex items-center justify-start py-1 space-x-1 w-full"
                       >
-                        <div className="flex flex-col uppercase w-full sm:w-[32%] px-2">
+                        <div className="flex flex-col uppercase w-[70%] sm:w-[32%] px-2">
                           <span className="text-[11px] font-semibold text-gray-900 hover:underline truncate">
                             {element?.matchName}
                           </span>
@@ -237,12 +237,15 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                         </div>
 
                         {isInplay && (
-                          <span className="w-full sm:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold text-[13px] tracking-wide">
+                          <span className="w-[30%] sm:w-[15%] flex flex-col items-center justify-center text-[#03B37F] font-bold text-[13px] tracking-wide">
                             <p className="pt-2">LIVE</p>
                             <span className="block w-8 h-[2px] bg-[#03B37F] mt-[4px] animate-marquee-left-to-right"></span>
                           </span>
                         )}
-                        <div className="bg-[#E9EFF8] w-full sm:w-[10%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
+                       
+                      </a>
+                    </div>
+                     <div className="bg-[#E9EFF8] w-[20%] sm:w-[10%] text-[#FF0000] text-xs font-normal px-2 py-1 rounded-sm text-center leading-tight">
                           {element?.matchDate && (
                             <>
                               <div>{moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
@@ -252,8 +255,6 @@ function InplayMatches({ activeTab, matchlistItems, sportName }) {
                             </>
                           )}
                         </div>
-                      </a>
-                    </div>
 
                     <div className="flex items-center space-x-1.5 cursor-pointer pr-3">
                       {element?.isTv && <LiaDesktopSolid size={16} />}
