@@ -14,11 +14,11 @@ export const SPORTSCONSTANT = [
     count: "2",
     icon: "/subHeader/menu-2.png",
   },
-  {
-    text: 'Politics',
-    count: "2003",
-    icon: "/subHeader/menu-2378961.png",
-  },
+  // {
+  //   text: 'Politics',
+  //   count: "2003",
+  //   icon: "/subHeader/menu-2378961.png",
+  // },
   {
     text: "Casino",
     count: 0,
@@ -41,61 +41,61 @@ export const SPORTSCONSTANT = [
     icon: "/subHeader/menu-4339.png",
   },
 
-  {
-    text: "Binary",
-    count: 0,
-    icon: "/subHeader/menu-99990.png",
-  },
-  {
-    text: "Kabaddi",
-    count: 0,
-    icon: "/subHeader/menu-99994.png",
-  },
-  {
-    text: "Basketball",
-    count: 0,
-    icon: "/subHeader/menu-7522.png",
-  },
-  {
-    text: "Baseball",
-    count: 0,
-    icon: "/subHeader/menu-7511.png",
-  },
-  {
-    text: "Table Tennis",
-    count: 0,
-    icon: "/subHeader/menu-20.png",
-  },
-  {
-    text: "Volleyball",
-    count: 0,
-    icon: "/subHeader/menu-998917.png",
-  },
-  {
-    text: "Ice hockey",
-    count: 0,
-    icon: "/subHeader/menu-7524.png",
-  },
-  {
-    text: "Rugby",
-    count: 0,
-    icon: "/subHeader/menu-5.png",
-  },
-  {
-    text: "Mixed Martial Arts",
-    count: 0,
-    icon: "/subHeader/menu-26420387.png",
-  },
-  {
-    text: "Darts",
-    count: 0,
-    icon: "/subHeader/menu-3503.png",
-  },
-  {
-    text: "Futsal",
-    count: 0,
-    icon: "/subHeader/menu-29.png",
-  },
+  // {
+  //   text: "Binary",
+  //   count: 0,
+  //   icon: "/subHeader/menu-99990.png",
+  // },
+  // {
+  //   text: "Kabaddi",
+  //   count: 0,
+  //   icon: "/subHeader/menu-99994.png",
+  // },
+  // {
+  //   text: "Basketball",
+  //   count: 0,
+  //   icon: "/subHeader/menu-7522.png",
+  // },
+  // {
+  //   text: "Baseball",
+  //   count: 0,
+  //   icon: "/subHeader/menu-7511.png",
+  // },
+  // {
+  //   text: "Table Tennis",
+  //   count: 0,
+  //   icon: "/subHeader/menu-20.png",
+  // },
+  // {
+  //   text: "Volleyball",
+  //   count: 0,
+  //   icon: "/subHeader/menu-998917.png",
+  // },
+  // {
+  //   text: "Ice hockey",
+  //   count: 0,
+  //   icon: "/subHeader/menu-7524.png",
+  // },
+  // {
+  //   text: "Rugby",
+  //   count: 0,
+  //   icon: "/subHeader/menu-5.png",
+  // },
+  // {
+  //   text: "Mixed Martial Arts",
+  //   count: 0,
+  //   icon: "/subHeader/menu-26420387.png",
+  // },
+  // {
+  //   text: "Darts",
+  //   count: 0,
+  //   icon: "/subHeader/menu-3503.png",
+  // },
+  // {
+  //   text: "Futsal",
+  //   count: 0,
+  //   icon: "/subHeader/menu-29.png",
+  // },
 
 
   // {

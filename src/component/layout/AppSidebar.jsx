@@ -404,7 +404,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   })}
                   
 
-                  <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
+                  {/* <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                     <p>
                       <img
                         src={"/subHeader/wp.png"}
@@ -412,7 +412,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       />
                     </p>
                     <span className="">Whatsapp Support</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -663,7 +663,7 @@ const racingDataSidebar =
                   );
                 })}
 
-                <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
+                {/* <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                   <p>
                     <img
                       src={"/subHeader/wp.png"}
@@ -671,7 +671,7 @@ const racingDataSidebar =
                     />
                   </p>
                   <span className="">Whatsapp Support</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
