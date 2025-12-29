@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { FaRegCalendar } from "react-icons/fa6";
 
 const AccountSatement = () => {
-  const [payloadData, setPayloadData] = useState({
+   const [payloadData, setPayloadData] = useState({
     fromDate: moment().subtract(7, "days").format("YYYY-MM-DD"),
     toDate: moment().format("YYYY-MM-DD"),
     statementFor: "",
@@ -209,16 +209,15 @@ const AccountSatement = () => {
                         <tr className="text-left text-[12px] lg:bg-transparent text-[#212529]  font-semibold border border-[#c7c8ca]/50">
                           <th className="px-3 py-2 border whitespace-nowrap border-[#c7c8ca]/50">No</th>
                           <th className="px-3 py-2 border border-[#c7c8ca]/50">Date</th>
-                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Total</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Credit</th>
+                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Debit</th>
                           <th className="px-3 py-2 border border-[#c7c8ca]/50">Balance</th>
-                          <th className="px-3 py-2 border border-[#c7c8ca]/50">D/C</th>
                           <th className="px-3 py-2 border border-[#c7c8ca]/50">Description</th>
-                          <th className="px-3 py-2 border border-[#c7c8ca]/50">Details</th>
                         </tr>
                       </thead>
                       <tbody>
                         {finalData && finalData.length > 0 ? (
-                          finalData?.map((element, index) => (
+                          finalData.map((element, index) => (
                             <tr
                               className={index % 2 === 0 ? "bg-[#F2F2F2] text-[12px]" : "bg-[#E6E6E6] text-[12px]"}
                               key={index}
@@ -230,40 +229,36 @@ const AccountSatement = () => {
                                   .format("YYYY/MM/DD hh:mm:ss")}
                               </td>
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 text-green-600">
+                                {element?.amount > 0
+                                  ? Number.parseFloat(element?.amount).toFixed(2)
+                                  : element?.amount === 0
+                                    ? Number.parseFloat(0).toFixed(2)
+                                    : "-"}
+                              </td>
+
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-red-600">
+                                {element?.amount < 0
+                                  ? "-" + Number.parseFloat(Math.abs(element?.amount)).toFixed(2)
+                                  : element?.amount === 0
+                                    ? Number.parseFloat(Math.abs(0)).toFixed(2)
+                                    : "-"}
+                              </td>
+
+                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-black">
                                 {Number.parseFloat(element?.balance).toFixed(2)}
                               </td>
-                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-green-600">
-                                {Number.parseFloat(element?.balance).toFixed(2)}
-                              </td>
-                              <td className="px-3 py-2 border border-[#c7c8ca]/50 text-black flex space-x-2">
-                                <p className="text-green-600">
-                                  ( {element?.amount > 0
-                                    ? Number.parseFloat(element?.amount).toFixed(2)
-                                    : element?.amount === 0
-                                      ? Number.parseFloat(0).toFixed(2)
-                                      : "-"})
-                                </p>
-                                <p>/</p>
-                                <p className="text-red-600">
-                                  ({element?.amount < 0
-                                    ? "-" + Number.parseFloat(Math.abs(element?.amount)).toFixed(2)
-                                    : element?.amount === 0
-                                      ? Number.parseFloat(Math.abs(0)).toFixed(2)
-                                      : "-"})
-                                </p>
-                              </td>
-                              <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.remark}</td>
                               <td className="px-3 py-2 border border-[#c7c8ca]/50 whitespace-nowrap">{element?.remark}</td>
                             </tr>
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={7} className=" text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left">
-                              No Data Found
+                            <td colSpan={6} className="py-2 border border-[#c7c8ca] text-center">
+                              No records found.
                             </td>
                           </tr>
                         )}
                       </tbody>
+                     
                     </table>
                   </div>
                 </div>
@@ -288,12 +283,18 @@ const AccountSatement = () => {
                 >
                   Previous Page
                 </button>
+                  <span>Page {pageNumber} of {totalPages}  </span>
                 <button
                   className="px-3 py-1 border text-black text-sm"
                   onClick={() => setPageNumber(pageNumber + 1)}
                 >
                   Next Page
                 </button>
+                <input
+                  onChange={(e) => { setPaginationPage(e.target.value) }}
+                  value={paginationPage}
+                  className='border p-1 w-12'></input>
+            
                 {/* <button
                   className="px-3 py-1 border text-black text-sm"
                   onClick={() => { setPageNumber(totalPages); setPaginationPage(totalPages) }}

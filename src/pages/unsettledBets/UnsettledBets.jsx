@@ -68,7 +68,7 @@ const UnsettledBets = ({ }) => {
                                                     <td className="px-3 py-2 border border-[#c7c8ca]/50 ">
                                                         {moment(element?.createdAt).format("DD-MM-YYYY HH:mm:ss A")}
                                                     </td>
-                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.amount / 100}</td>
+                                                    <td className="px-3 py-2 border border-[#c7c8ca]/50">{element?.amount}</td>
                                                 </tr>
                                             ))
                                         ) : (
@@ -84,7 +84,7 @@ const UnsettledBets = ({ }) => {
                                     </tbody>
                                     <tr className="">
                                         <td colSpan="6" className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-right">Total Liability</td>
-                                        <td className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left"><p className="text-left">{totalAmount / 100}</p></td>
+                                        <td className="text-[13px] p-2 border border-[#c7c8ca]/50 bg-white text-left"><p className="text-left">{totalAmount}</p></td>
                                     </tr>
                                 </table>
                             </div>

@@ -44,9 +44,17 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const [sidebar, sidebartoggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   const handleResponseGameotherDetails = (data) => {
-    window.location.href = `/sport-view/${data.marketId}/${data.eventId}`;
-  };
+  if (data.sportId == 7 || data.sportId == 4339) {
+     window.location.href = `/sport-view-racing/${data.marketId}/${data.eventId}/${data?.sportId}`
+  
+  } else {
+    
+    window.location.href = `/sport-view/${data.marketId}/${data.eventId}/${data?.sportId}`;
+  }
+};
   const { sportMatchList } = useSelector((state) => state.sport);
   const modalRef = useRef();
   const [clickedOutside, setClickedOutside] = useState(true);
@@ -299,7 +307,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         }
                                       }}
                                     >
-                                      🎮 {item.matchName} {item.matchId}
+                                      🎮 {(item?.sportId == 7 || item?.sportId == 4339) ? <span>{item?.sportName} &nbsp; ({item?.countryCode})</span> : item.matchName}
                                     </div>
                                   ))
                                 ) : (
@@ -369,7 +377,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                               >
                                                 <span className="flex items-center space-x-1">
                                                   <p>🎮</p>
-                                                  <p>{item.matchName}</p>
+                                                <p> {(item?.sportId == 7 || item?.sportId == 4339) ? <span>{item?.sportName} &nbsp; ({item?.countryCode})</span> : item.matchName}</p>
                                                 </span>
                                               </li>
                                             ))}
@@ -394,99 +402,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       </div>
                     );
                   })}
-                  {/* <div className="text-[#343435] overflow-hidden py-0 my-0 transition-[max-height] duration-300 ease-in">
-                    <div className="cursor-pointer divide-y-[1px] divide-[#f1f1f1] border-b-[1px] border-[#eceaea]">
-                      <div
-                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
-                        onClick={() => handleRacing(7)}
-                      >
-                        <div className="flex justify-start items-center space-x-4">
-                          <span>
-                            <img
-                              src="/subHeader/menu-7.png"
-                              alt="Horse Racing"
-                              className="w-[18px] h-[18px]"
-                            />
-                          </span>
-                          <span>Horse Racing</span>
-                        </div>
-                        <span>
-                          {openRaceId === 7 ? (
-                            <BiUpArrow className="w-[10px] h-[10px]" />
-                          ) : (
-                            <BiDownArrow className="w-[10px] h-[10px]" />
-                          )}
-                        </span>
-                      </div>
-                      {openRaceId === 7 && (
-                        <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
-                          {racingData.length > 0 ? (
-                            racingData.map((item) => (
-                              <div
-                                key={item._id}
-                                className="bg-[#f6f9ff] text-xs font-[600] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
-                                onClick={() => {
-                                  handleResponseGameotherDetails(item);
-                                  sidebartoggle();
-                                }}
-                              >
-                                🎮 {item.matchName}
-                              </div>
-                            ))
-                          ) : (
-                            <div className="py-2 px-4 text-xs text-gray-500 italic">
-                              No Match available!
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      <div
-                        className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[13px] px-3 py-[10px] my-0 w-full inline-flex justify-between bg-white items-center"
-                        onClick={() => handleRacing(4339)}
-                      >
-                        <div className="flex justify-start items-center space-x-4">
-                          <span>
-                            <img
-                              src="/subHeader/menu-4339.png"
-                              alt="Greyhound Racing"
-                              className="w-[18px] h-[18px]"
-                            />
-                          </span>
-                          <span>Greyhound Racing</span>
-                        </div>
-                        <span>
-                          {openRaceId === 4339 ? (
-                            <BiUpArrow className="w-[10px] h-[10px]" />
-                          ) : (
-                            <BiDownArrow className="w-[10px] h-[10px]" />
-                          )}
-                        </span>
-                      </div>
-                      {openRaceId === 4339 && (
-                        <div className="bg-[#f6f9ff] divide-y divide-[#eceaea]">
-                          {racingData.length > 0 ? (
-                            racingData.map((item) => (
-                              <div
-                                key={item._id}
-                                className="bg-[#f6f9ff] text-xs font-[600] relative py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
-                                onClick={() => {
-                                  handleResponseGameotherDetails(item);
-                                  sidebartoggle();
-                                }}
-                              >
-                                🎮 {item.matchName}
-                              </div>
-                            ))
-                          ) : (
-                            <div className="py-2 px-4 text-xs text-gray-500 italic">
-                              No Match available!
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div> */}
+                  
 
                   <div className="hover:bg-[#FFF6EE] hover:text-[var(--primary)] text-[var(--secondary)] font-[600] tracking-normal text-[12px] px-3 py-[10px] my-0 ml-0 w-full space-x-4 inline-flex justify-start bg-white items-center cursor-pointer ">
                     <p>
@@ -547,7 +463,19 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   const sport = filteredData?.find(
                     (sport) => sport.sportId.toString() === menuItem.count
                   );
-
+const racingDataSidebar =
+                      menuItem.count == "7"
+                        ? matchData?.filter(
+                          (race) => race.sportId == Number(menuItem.count)
+                        )
+                        : [];
+                    const greyhoundDataSidebar =
+                      menuItem.count == "4339"
+                        ? matchData?.filter(
+                          (race) => race.sportId == Number(menuItem.count)
+                        )
+                        : [];
+                    const recingGreyhopund = menuItem.count == "4339" ? greyhoundDataSidebar : menuItem.count == "7" ? racingDataSidebar : [];
                   // Special case: Racing category
                   const isRacingCategory = menuItem.text === "Racing"; // You can change this name to match your actual data
 
@@ -613,10 +541,40 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                           </div>
                         )}
 
+                      {(menuItem?.count === "4339" || menuItem?.count === "7") &&
+                            openKeys.includes(index) && (
+                              <div className="bg-[#f6f9ff]  divide-y divide-[#eceaea]">
+                                {recingGreyhopund.length > 0 ? (
+                                  recingGreyhopund?.map((item) => (
+                                    <div
+                                      key={item._id}
+                                      className="bg-[#f6f9ff] text-xs font-[600]  py-[8px] pl-8 text-[#343435] hover:text-[var(--primary)] cursor-pointer"
+                                      // onClick={() => {
+                                      //   handleResponseGameotherDetails(item);
+                                      //   sidebartoggle();
+                                      // }}
+                                      onClick={(e) => {
+                                        if (localStorage.getItem("token")) {
+                                          handleResponseGameotherDetails(item);
+                                          sidebartoggle();
+                                        } else {
+                                          openModal();
+                                          localStorage.setItem("unauthorized", true);
+                                        }
+                                      }}
+                                    >
+                                      🎮 {(item?.sportId == 7 || item?.sportId == 4339) ? <span>{item?.sportName} &nbsp; ({item?.countryCode})</span> : item.matchName}
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="py-2 px-4 text-xs text-gray-500 italic">
+                                    No Match available!
+                                  </div>
+                                )}
+                              </div>
+                            )}
                         {/* If this is NOT racing, render the normal sport series */}
-                        {!isRacingCategory &&
-                          sport &&
-                          openKeys.includes(index) && (
+                        {sport && menuItem?.count !== "4339" && menuItem?.count !== "7" && openKeys.includes(index) && (
                             <div className="py-0 my-0 divide-y-[1px] divide-[#f1f1f1] bg-[#f6f9ff]">
                               {sport?.series.length > 0 ? (
                                 sport.series.map((series, seriesIndex) => (
@@ -640,7 +598,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                       }}
                                     >
                                       <span className="px-2 py-0 my-0">
-                                        {series.seriesName}
+                                       {series.seriesName}
                                       </span>
                                       <span>
                                         {openKeys1[
@@ -679,7 +637,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                               >
                                                 <span className="flex items-center space-x-1">
                                                   <p>🎮</p>
-                                                  <p>{item.matchName}</p>
+                                                 <p> {(item?.sportId == 7 || item?.sportId == 4339) ? <span>{item?.sportName} &nbsp; ({item?.countryCode})</span> : item.matchName}</p>
                                                 </span>
                                               </li>
                                             ))}

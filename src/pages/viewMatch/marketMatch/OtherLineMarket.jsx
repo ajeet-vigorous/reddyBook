@@ -18,11 +18,23 @@ const OtherMarketsComponent = ({
 
   return (
     <>
-      {Object.values(otherFinalSocket).map((element, index) => 
-        element.marketType !== "Tied Match" && 
-        element.marketType !== "Match Odds" && 
-        element.marketType !== "To Win the Toss" && 
-        element.marketType !== "Completed Match" && (
+                  {Object.values(otherFinalSocket).filter(item => {
+    const t = item.marketType.trim();
+    return !/(Line|Total)$/.test(t) && t !== "Match Odds (Inc. Tie)";
+  }).sort((a, b) => {
+ const isFirstA = a.marketType.includes("1st Innings");
+                const isFirstB = b.marketType.includes("1st Innings");
+                if (isFirstA && !isFirstB) return -1;
+                if (!isFirstA && isFirstB) return 1;
+                const numA = parseFloat(a.marketType.match(/(\d+(?:\.\d+)?)\s*Overs/)?.[1]) || 0;
+                const numB = parseFloat(b.marketType.match(/(\d+(?:\.\d+)?)\s*Overs/)?.[1]) || 0;
+
+                
+                return numA - numB;
+  }).map(
+                        (element, index) =>
+                          element.marketType !== "Tied Match" && element.marketType !== "Match Odds" && element.marketType !== "To Win the Toss" 
+                        && element.marketType !== "Completed Match" && element.marketType !== "Half Time" && element.marketType !== "Match Odds Including Tie"  && (
           <div key={index}>
             <MatchDetailsHeaderSection marketType={element.marketType} minMax={{ min: 100, max: formatNumber(isTieCoin?.max) }}>
             

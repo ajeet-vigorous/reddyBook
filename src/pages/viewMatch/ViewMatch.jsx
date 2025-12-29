@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -42,10 +42,16 @@ const ViewMatches = () => {
     const [matchScoreDetails, setMatchScoreDetails] = useState({});
     const [matchDetailsForSocketNew, setMatchDetailsForSocketNew] = useState({});
     const [finalSocket, setFinalSocketDetails] = useState({});
+    const [openBetList, setOpenBetList] = useState([]);
     const [otherFinalSocket, setOtherFinalSocketDetails] = useState({});
     const [isOpenRightSidebar, setIsOpenRightSidebar] = useState(false);
     const [hiddenRows, setHiddenRows] = useState([]);
     const [active, setActive] = useState(false);
+      const [dataLoadingStates, setDataLoadingStates] = useState({
+        matchData: false,
+        socketData: false,
+        betLists: false,
+    });
     const [isFixed, setIsFixed] = useState(false);
     const [buttonValue, setbuttonValue] = useState(false);
     const [betSlipData, setBetSlipData] = useState({
@@ -159,8 +165,8 @@ const ViewMatches = () => {
         setDataFromLocalstorage()
         setMatchDataFromLocalstorage()
         const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible' && isConnected && inplayMatch?.data?.socketUrl) {
-                callSocket(inplayMatch?.data?.socketUrl);
+            if (document.visibilityState === 'visible' && isConnected && inplayMatch?.data) {
+                callSocket(inplayMatch?.data);
             } else if (document.visibilityState === 'hidden') {
                 cleanupWebSocket();
             }
@@ -316,7 +322,7 @@ const ViewMatches = () => {
                 const data = inplayMatchResponse?.data;
 
                 if (inplayMatchResponse?.data?.socketPerm) {
-                    callSocket(inplayMatchResponse?.data?.socketUrl, inplayMatchResponse.data?.sportId);
+                    callSocket(inplayMatchResponse?.data, inplayMatchResponse.data?.sportId);
                 } else {
                     callCache(inplayMatchResponse?.data?.cacheUrl);
                 }
@@ -376,14 +382,100 @@ const ViewMatches = () => {
     }, [inplayMatch]);
 
 
-    const callSocket = async (socketUrl, matchId) => {
+    // const callSocket = async (socketUrl, matchId) => {
 
 
-        if (socketState && socketState.connected) {
-            return;
+    //     if (socketState && socketState.connected) {
+    //         return;
+    //     }
+    //     try {
+    //         const socket = io.connect(socketUrl, {
+    //             transports: ["websocket"],
+    //             reconnection: true,
+    //             reconnectionDelay: 1000,
+    //             reconnectionDelayMax: 5000,
+    //             reconnectionAttempts: 99,
+    //         });
+
+    //         socket.emit(`marketByEvent`, eventId);
+    //         socket.on(eventId, (data) => {
+    //             localStorage.setItem(`${eventId}_MatchOddsData`, data)
+    //             setMatchDetailsForSocketNew(JSON.parse(data));
+    //             setIsConnected(true);
+    //             filterData(JSON.parse(data));
+    //         });
+
+    //         if (matchId === 4 || matchId === 999) {
+    //             socket.emit("JoinRoom", marketId);
+    //             socket.on(marketId, (data) => {
+    //                 localStorage.setItem(`${marketId}_BookmakerData`, data);
+    //                 setMatchScoreDetails(JSON.parse(data).result);
+    //             });
+    //         }
+
+
+
+    //         socket.on('disconnect', () => {
+    //             setIsConnected(false);
+    //         });
+
+    //         setSocketState(socket);
+
+    //     }
+
+    //     catch (error) {
+    //         console.error("Error in socket connection:", error);
+    //     }
+    // };
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = useState(false);
+
+    const isAllDataLoaded = useMemo(() => {
+        return Object.values(dataLoadingStates).every(state => state === true);
+    }, [dataLoadingStates]);
+
+    const showLoader = useMemo(() => {
+        if (hasInitiallyLoaded) {
+            return false;
         }
+        return isLoading || !isAllDataLoaded;
+    }, [isLoading, isAllDataLoaded, hasInitiallyLoaded]);
+
+ const callSocket = async (socketUrl, matchId) => {
         try {
-            const socket = io.connect(socketUrl, {
+            if (socketState?.connected) {
+                setDataLoadingStates(prev => ({ ...prev, socketData: true }));
+                if (!hasInitiallyLoaded) {
+                    setHasInitiallyLoaded(true);
+                }
+                return;
+            }
+
+            let socketBetFair = null;
+            if (socketUrl?.betfairSocketUrl) {
+                socketBetFair = io.connect(socketUrl.betfairSocketUrl, {
+                    transports: ["websocket"],
+                    reconnection: true,
+                    reconnectionDelay: 1000,
+                    reconnectionDelayMax: 5000,
+                    reconnectionAttempts: 99,
+                });
+
+                socketBetFair.emit("marketByEvent", eventId);
+                
+                socketBetFair.on(eventId, (data) => {
+                    localStorage.setItem(`${eventId}_MatchOddsData`, typeof data === "string" ? data : JSON.stringify(data));
+                    const parsed = typeof data === "string" ? JSON.parse(data) : data;
+                    setMatchDetailsForSocketNew(parsed);
+                    setIsConnected(true);
+                    filterData(parsed);
+                    setDataLoadingStates(prev => ({ ...prev, socketData: true }));
+                    if (!hasInitiallyLoaded) {
+                        setHasInitiallyLoaded(true);
+                    }
+                });
+            }
+
+            const socket = io.connect(socketUrl.socketUrl, {
                 transports: ["websocket"],
                 reconnection: true,
                 reconnectionDelay: 1000,
@@ -391,34 +483,40 @@ const ViewMatches = () => {
                 reconnectionAttempts: 99,
             });
 
-            socket.emit(`marketByEvent`, eventId);
+            socket.emit("marketByEvent", eventId);
+            
             socket.on(eventId, (data) => {
-                localStorage.setItem(`${eventId}_MatchOddsData`, data)
-                setMatchDetailsForSocketNew(JSON.parse(data));
+                localStorage.setItem(`${eventId}_MatchOddsData`, typeof data === "string" ? data : JSON.stringify(data));
+                const parsed = typeof data === "string" ? JSON.parse(data) : data;
+                setMatchDetailsForSocketNew(parsed);
                 setIsConnected(true);
-                filterData(JSON.parse(data));
+                filterData(parsed);
+                setDataLoadingStates(prev => ({ ...prev, socketData: true }));
+                if (!hasInitiallyLoaded) {
+                    setHasInitiallyLoaded(true);
+                }
             });
 
-            if (matchId === 4 || matchId === 999) {
+            if (matchId == 4 || matchId == 999) {
                 socket.emit("JoinRoom", marketId);
                 socket.on(marketId, (data) => {
-                    localStorage.setItem(`${marketId}_BookmakerData`, data);
-                    setMatchScoreDetails(JSON.parse(data).result);
+                    localStorage.setItem(`${marketId}_BookmakerData`, typeof data === "string" ? data : JSON.stringify(data));
+                    const parsed = typeof data === "string" ? JSON.parse(data) : data;
+                    setMatchScoreDetails(parsed.result);
                 });
             }
 
-
-
-            socket.on('disconnect', () => {
+            socket.on("disconnect", () => {
                 setIsConnected(false);
             });
 
             setSocketState(socket);
-
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error("Error in socket connection:", error);
+            setDataLoadingStates(prev => ({ ...prev, socketData: true }));
+            if (!hasInitiallyLoaded) {
+                setHasInitiallyLoaded(true);
+            }
         }
     };
 
@@ -450,6 +548,8 @@ const ViewMatches = () => {
             console.error("Error fetching cache data:", error);
         }
     };
+
+    
 
 
     const filterData = (matchDetailsForSocketNew) => {
@@ -496,6 +596,40 @@ const ViewMatches = () => {
         }
     };
 
+
+        useEffect(() => {
+  if (inplayMatch?.socketPerm != false) return;
+  const UrlBaseMarket = inplayMatch?.otherMarketCacheUrl || `https://cache.10xbpexch.com/v2/api/dataByEventId?eventId=${eventId}`;
+  const intervalId = setInterval(() => {
+    axios.get(UrlBaseMarket).then((response) => {
+        if (response?.data) {
+          localStorage.setItem(
+            `${eventId}_MatchOddsData`,
+            JSON.stringify(response.data?.data)
+          );
+             filterData(response?.data?.data);
+          
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, 1000);
+
+  return () => clearInterval(intervalId);
+}, [eventId, inplayMatch?.socketPerm]);
+
+   const hasRedirectedRef = useRef(false);
+
+  useEffect(() => {
+  if (
+    inplayMatch?.status === "COMPLETED" &&
+    !hasRedirectedRef.current
+  ) {
+    hasRedirectedRef.current = true;
+    window.location.href = "/dashboard";
+  }
+}, [inplayMatch?.status]);
     const handleScore = () => {
         setIsScorecardOpen((prev) => !prev);
     }
@@ -594,101 +728,197 @@ const ViewMatches = () => {
     };
 
 
+    // const placeBet = async () => {
+    //     if (betSlipData.stake <= 0) {
+    //         return;
+    //     }
+
+
+
+    //     try {
+    //         const betObject = {
+    //             "odds": betSlipData.count + "",
+    //             "amount": betSlipData.stake,
+    //             "selectionId": betSlipData.selectionId + "",
+    //             "marketId": marketId + "",
+    //             "eventId": eventId,
+    //             "betFor": betSlipData.betFor + "",
+    //             "run": betSlipData.run ? betSlipData.run + "" : "0",
+    //             "oddsType": betSlipData.oddsType === "Match Odds" ? "matchOdds" : betSlipData.oddsType === "Tied Match" ? "tiedMatch" : betSlipData.oddsType + "",
+    //             "type": betSlipData.betType + "",
+    //         };
+    //         if (betSlipData.oddsType === "fancy") {
+    //             const allowedFancyTypes = ['khado', 'fancy1', 'oddeven', 'meter', 'Over By Over'];
+    //             betObject["fancyType"] = allowedFancyTypes.includes(betSlipData.fancyType)
+    //                 ? betSlipData.fancyType + ""
+    //                 : "Normal";
+    //         } else if (betSlipData.oddsType === "bookmaker") {
+    //             console.log("::--");
+
+    //         } else {
+    //             betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
+    //         }
+    //         setBetLoading(true)
+
+    //         if (betSlipData.oddsType === "fancy") {
+    //             let saveBetOdds = await apiCall("POST", "sports/sessionBetPlaced", betObject);
+    //             setBetLoading(true)
+    //             setBetShow(false)
+    //             setBetShowM(false)
+    //             if (!saveBetOdds.error) {
+
+    //                 setSuccessMessage(saveBetOdds?.message)
+    //                 message.success(saveBetOdds?.message, 2);
+
+    //                 await fetchBetLists()
+    //                 await matchOddsPos()
+    //                 setBetLoading(false)
+
+    //             } else {
+    //                 setBetLoading(false)
+
+    //                 message.error("Sorry, your bet couldn't be placed. " + saveBetOdds?.message, 2);
+    //             }
+    //         } else {
+    //             let saveBetOdds = await apiCall("POST", "sports/oddBetPlaced", betObject);
+
+    //             setBetLoading(true)
+    //             setBetShow(false);
+    //             setBetShowM(false);
+    //             setSuccessMessage(saveBetOdds?.message);
+
+
+    //             if (!saveBetOdds.error) {
+    //                 setBetLoading(false)
+    //                 message.success(saveBetOdds?.message, 2);
+
+    //                 await fetchBetLists()
+    //                 await matchOddsPos()
+
+    //             } else {
+
+    //                 setBetLoading(false)
+    //                 message.error("Sorry, your bet couldn't be placed.", 2);
+    //             }
+    //         }
+
+    //     } catch (error) {
+    //         setBetLoading(false)
+    //         console.error('Error placing bet:', error.data.message);
+    //         setErrorMessage(error.data.message);
+    //         message.error('Error placing bet: ' + error.data.message, 2);
+    //     } finally {
+    //         setBetLoading(false)
+    //         handleBackclose()
+    //         closeRow()
+    //         openBets()
+    //     }
+    // };
+
+        const getOpenBets = async () => {
+        const resData = {
+            marketId: marketId,
+        };
+        const openBetResponse = await apiCall("POST", "sports/getOpenBetsBymarketId", resData);
+        if(openBetResponse && openBetResponse.data){
+            setOpenBetList(openBetResponse.data)
+        }
+    }
+
     const placeBet = async () => {
+
         if (betSlipData.stake <= 0) {
             return;
         }
 
-
-
         try {
             const betObject = {
-                "odds": betSlipData.count + "",
-                "amount": betSlipData.stake,
-                "selectionId": betSlipData.selectionId + "",
-                "marketId": marketId + "",
-                "eventId": eventId,
-                "betFor": betSlipData.betFor + "",
-                "run": betSlipData.run ? betSlipData.run + "" : "0",
-                "oddsType": betSlipData.oddsType === "Match Odds" ? "matchOdds" : betSlipData.oddsType === "Tied Match" ? "tiedMatch" : betSlipData.oddsType + "",
-                "type": betSlipData.betType + "",
+                odds: betSlipData.count + "",
+                amount: betSlipData.stake,
+                selectionId: betSlipData.selectionId + "",
+                marketId: marketId + "",
+                eventId: eventId,
+                betFor: betSlipData.betFor + "",
+                run: betSlipData.run ? betSlipData.run + "" : "0",
+                oddsType: betSlipData.oddsType === "Match Odds"
+                        ? "matchOdds"
+                        : betSlipData.oddsType === "Tied Match"
+                            ? "tiedMatch"
+                            : betSlipData.oddsType + "",
+                type: betSlipData.betType + "",
             };
-            if (betSlipData.oddsType === "fancy") {
-                const allowedFancyTypes = ['khado', 'fancy1', 'oddeven', 'meter', 'Over By Over'];
-                betObject["fancyType"] = allowedFancyTypes.includes(betSlipData.fancyType)
-                    ? betSlipData.fancyType + ""
-                    : "Normal";
-            } else if (betSlipData.oddsType === "bookmaker") {
-                console.log("::--");
 
+            let gtype = "";
+            if (betSlipData.oddsType === "fancy") {
+                betObject["fancyType"] = betSlipData?.data?.fancyType;
+                gtype = betSlipData?.data?.gtype;
+
+                if (gtype == "oddeven" || gtype == "cricketcasino" || gtype == "betfair") {
+                    betObject["gtype"] = gtype || "cricket";
+                }
+            } else if (betSlipData.oddsType === "bookmaker") {
             } else {
                 betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
             }
 
-            // if (betSlipData.oddsType === "bookmaker" || betSlipData.oddsType === "fancy") {
-            //     // Do something if needed
-            //     console.log(betSlipData?.data?.fancyType, "betSlipData");
-            // } else {
-            //     betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
-            // }
-            setBetLoading(true)
+            setBetLoading(true);
+            let saveBetOdds;
 
             if (betSlipData.oddsType === "fancy") {
-                let saveBetOdds = await apiCall("POST", "sports/sessionBetPlaced", betObject);
-                setBetLoading(true)
+                const specialGtypes = ['khado', 'fancy1', 'oddeven', 'meter', 'Over By Over', 'cricketcasino'];
+                if (specialGtypes.includes(gtype)) {saveBetOdds = await apiCall("POST", "sports/meterKhadoOddEvenCricketCassinoBetPlace", betObject);
+                } else {
+                    saveBetOdds = await apiCall("POST","sports/sessionBetPlaced", betObject);
+                }
                 setBetShow(false)
                 setBetShowM(false)
+                setBetLoading(false);
                 if (!saveBetOdds.error) {
-
-                    setSuccessMessage(saveBetOdds?.message)
-                    message.success(saveBetOdds?.message, 2);
-
-                    await fetchBetLists()
-                    await matchOddsPos()
-                    setBetLoading(false)
-
+                    message.success("Success! Your bet has been placed");
+                    await fetchBetLists();
+                    await matchOddsPos();
                 } else {
-                    setBetLoading(false)
-
-                    message.error("Sorry, your bet couldn't be placed. " + saveBetOdds?.message, 2);
+                    message.error("Sorry, your bet couldn't be placed.");
                 }
             } else {
-                let saveBetOdds = await apiCall("POST", "sports/oddBetPlaced", betObject);
-
-                setBetLoading(true)
-                setBetShow(false);
-                setBetShowM(false);
-                setSuccessMessage(saveBetOdds?.message);
-
-
+                saveBetOdds = await apiCall("POST", "sports/oddBetPlaced", betObject);
+                setBetShow(true);
+                setBetLoading(false);
                 if (!saveBetOdds.error) {
-                    setBetLoading(false)
-                    message.success(saveBetOdds?.message, 2);
-
+                    if(saveBetOdds.message != "open bet success"){
+                        message.success(saveBetOdds.message || "Success! Your bet has been placed", 1);
+                    }
+                    
+                    setSuccessMessage(saveBetOdds?.message)
                     await fetchBetLists()
                     await matchOddsPos()
-
-                } else {
-
                     setBetLoading(false)
-                    message.error("Sorry, your bet couldn't be placed.", 2);
+
+                    if(betSlipData.oddsType == "Match Odds"){
+                        await getOpenBets();
+                    }
+                } else {
+                    message.error("Sorry! your bet couldn't be placed.");
                 }
             }
-
         } catch (error) {
-            setBetLoading(false)
-            console.error('Error placing bet:', error.data.message);
-            setErrorMessage(error.data.message);
-            message.error('Error placing bet: ' + error.data.message, 2);
+
+            message.error(error?.data?.message)
         } finally {
             setBetLoading(false)
             handleBackclose()
             closeRow()
             openBets()
+            setBetSlipData({
+                stake: "0",
+                count: 0,
+                teamname: "",
+                teamData: null,
+            });
+            setHiddenRows([]);
+            dispatch(getUserBalance());
         }
     };
-
-
 
     const fetchBetLists = async () => {
         try {
@@ -708,7 +938,7 @@ const ViewMatches = () => {
                 setFancyBetData(filteredFancyBetData)
                 setOddsBetData(sortedOddsBetData)
                 setPositionBetData(userBetHistory.data)
-                // return { fancyBetData: filteredFancyBetData, oddsBetData: sortedOddsBetData };
+      
             }
         } catch (error) {
             console.error('Error fetching bet lists:', error);
@@ -1389,16 +1619,14 @@ const ViewMatches = () => {
                         <div className="overflow-hidden w-full border border-[#C6D2D8] border-t-0">
                             <div className="max-w-full overflow-auto">
                                 <div className="min-w-full">
-                                    <div className="overflow-hidden w-full">
+                                    <div className="overflow-auto w-full">
                                         <table className="min-w-full capitalize border border-[#f8f8f8]">
                                             <thead>
-                                                <tr className="w-full text-black/80 text-[14px] font-[400] bg-[#ffffff] text-left border border-[#f8f8f8]">
-                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Selname</th>
-                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Odds</th>
+                                                <tr className="w-full text-black/80 text-[11px] uppercase font-[400] bg-[#ffffff] text-left border border-[#f8f8f8]">
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">{activeBets === "oddsBetData" ? "Market" : "Session"} Name</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">{activeBets === "oddsBetData" ? "Odds" : "Run"}</th>
                                                     <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Stake</th>
-                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">
-                                                        Date/Time
-                                                    </th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap"> Date/Time</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1415,20 +1643,31 @@ const ViewMatches = () => {
                                                             >
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                     <div>
-                                                                        {element?.teamName} <br />
+                                                                        {element?.teamName} [{element?.oddsType}] <br />
                                                                         <span className="font-bold">
                                                                             {element?.marketName}
                                                                         </span>
                                                                     </div>
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.odds}
+                                                                    {element && element?.oddsType === "matchOdds"
+                                                                    ? parseFloat(Number(element?.odds) + 1)
+                                                                        .toFixed(2)
+                                                                        .replace(/\.?0+$/, "")
+                                                                    : element &&
+                                                                        (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
+                                                                        ? parseFloat(element?.odds * 100)
+                                                                            .toFixed(2)
+                                                                            .replace(/\.?0+$/, "")
+                                                                        : parseFloat(element?.odds)
+                                                                            .toFixed(2)
+                                                                            .replace(/\.?0+$/, "")}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                     {element?.amount}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.date}
+                                                                       {moment(element?.date).format("YYYY-MM-DD hh:mm A")}
                                                                 </td>
                                                             </tr>
                                                         ))
@@ -1457,13 +1696,13 @@ const ViewMatches = () => {
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.odds}
+                                                                    {element?.run}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                     {element?.amount}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.date}
+                                                                         {moment(element?.date).format("YYYY-MM-DD hh:mm A")}
                                                                 </td>
                                                             </tr>
                                                         ))
@@ -1474,8 +1713,6 @@ const ViewMatches = () => {
                                                             </td>
                                                         </tr>
                                                     ))}
-
-                                                {/* Unsettle Bets */}
                                                 {activeBets === "UnsettleBets" &&
                                                     (fancyBetData?.length > 0 ? (
                                                         fancyBetData.map((element, index) => (
@@ -1487,13 +1724,13 @@ const ViewMatches = () => {
                                                                     {element?.name}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.odds}
+                                                                    {element?.run}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                     {element?.amount}
                                                                 </td>
                                                                 <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                    {element?.date}
+                                                                     {moment(element?.date).format("YYYY-MM-DD hh:mm A")}
                                                                 </td>
                                                             </tr>
                                                         ))
@@ -1547,16 +1784,14 @@ const ViewMatches = () => {
                             <div className="overflow-hidden w-full p-0 !m-0">
                                 <div className="max-w-full overflow-auto ">
                                     <div className="min-w-full ">
-                                        <div className="overflow-hidden w-full ">
+                                        <div className="overflow-auto w-full ">
                                             <table className="min-w-full capitalize border border-[#f8f8f8]">
                                                 <thead>
                                                     <tr className="w-full text-black/80 text-[14px] font-[400] bg-[#ffffff] text-left border border-[#f8f8f8]">
-                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Selname</th>
-                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Odds</th>
-                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Stake</th>
-                                                        <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">
-                                                            Date/Time
-                                                        </th>
+                                                       <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">{activeBets === "oddsBetData" ? "Market" : "Session"} Name</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">{activeBets === "oddsBetData" ? "Odds" : "Run"}</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap">Stake</th>
+                                                    <th className="px-[6px] py-1 border border-[#f8f8f8] whitespace-nowrap"> Date/Time</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1573,20 +1808,31 @@ const ViewMatches = () => {
                                                                 >
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                         <div>
-                                                                            {element?.teamName} <br />
+                                                                            {element?.teamName} [{element?.oddsType}] <br />
                                                                             <span className="font-bold">
                                                                                 {element?.marketName}
                                                                             </span>
                                                                         </div>
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                        {element?.odds}
+                                                                       {element && element?.oddsType === "matchOdds"
+                                                                    ? parseFloat(Number(element?.odds) + 1)
+                                                                        .toFixed(2)
+                                                                        .replace(/\.?0+$/, "")
+                                                                    : element &&
+                                                                        (element?.oddsType === "bookmaker" || element?.oddsType === "toss")
+                                                                        ? parseFloat(element?.odds * 100)
+                                                                            .toFixed(2)
+                                                                            .replace(/\.?0+$/, "")
+                                                                        : parseFloat(element?.odds)
+                                                                            .toFixed(2)
+                                                                            .replace(/\.?0+$/, "")}
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                         {element?.amount}
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                        {element?.date}
+                                                                         {moment(element?.date).format("YYYY-MM-DD hh:mm A")}
                                                                     </td>
                                                                 </tr>
                                                             ))
@@ -1611,17 +1857,17 @@ const ViewMatches = () => {
                                                                 >
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                         <span className="font-medium text-xs">
-                                                                            {element?.sessionName}
+                                                                            {element?.sessionName} [Fancy-{element?.fancyType}]
                                                                         </span>
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                        {element?.odds}
+                                                                        {element?.run}
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
                                                                         {element?.amount}
                                                                     </td>
                                                                     <td className="px-[6px] border border-[#f8f8f8] py-1 whitespace-nowrap">
-                                                                        {element?.date}
+                                                                         {moment(element?.date).format("YYYY-MM-DD hh:mm A")}
                                                                     </td>
                                                                 </tr>
                                                             ))
