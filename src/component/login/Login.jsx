@@ -181,7 +181,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                   className={` flex justify-center items-center space-x-1 w-full text-[16px] mx-auto mt-1.5 mb-[5px] py-1.5   text-white rounded-[10px]`}>
                   {/* <p>Download APK</p> */}
                  
-                  <img src= {settings.logo1} alt="logo" width={100}/>
+                  <img src= {settings.logo} alt="logo" width={100}/>
                 </button>
 
                 <div className="text-white text-[13px] text-center mt-4">

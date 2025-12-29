@@ -425,7 +425,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         <div className="flex justify-between items-center border-b-[1px] border-[#eceaea] py-1 px-2">
           <div></div>
           <div>
-            <img src={settings.logo1} className="w-[70px] h-[24px]" />
+            <img src={settings.logo} className="w-[70px] h-[24px]" />
           </div>
           <div>
             <button

@@ -155,7 +155,7 @@ const AppHeader = ({ setSidebarOpen }) => {
                 onClick={() => {
                   navigate("/dashboard");
                 }}
-                src={settings.logo1} className="w-[100px] h-[34px] lg:hidden cursor-pointer block" />
+                src={settings.logo} className="w-[100px] h-[34px] lg:hidden cursor-pointer block" />
               <div className="relative w-full lg:block hidden">
                 <input
                   placeholder="Search Events"

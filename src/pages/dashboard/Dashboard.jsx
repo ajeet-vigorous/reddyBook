@@ -168,8 +168,9 @@ const Dashboard = ({ }) => {
   const [matchData, setMatchData] = useState([]);
 
   useEffect(() => {
-    let matchListData = matchlistLocal ? matchlistLocal : sportMatchList;
-    setMatchData(matchListData);
+    const localData = localStorage.getItem("matchList");
+  const parsedData = localData ? JSON.parse(localData) : sportMatchList;
+    setMatchData(parsedData);
   }, [sportMatchList]);
 
 const highlightWithCDN = (CasinoGames?.highlight_casino || []).map(game => ({
@@ -184,6 +185,7 @@ const combinedGames = [
 ];
 
 
+console.log(matchData, "matchDatamatchDatamatchData");
 
   return (
     <>

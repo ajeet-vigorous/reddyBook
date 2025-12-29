@@ -133,7 +133,7 @@ function Signup({ setShowLogin }) {
           <div className="w-[100%] px-[0px] mx-auto">
 
             <div className="flex items-center justify-center">
-              <img src={settings.logo1} alt="Reddy-Book" className="h-[60px] w-[180px]" />
+              <img src={settings.logo} alt="Reddy-Book" className="h-[60px] w-[180px]" />
             </div>
 
             <div className="space-y-5 lg:p-10 p-4 pb-0 bg-transparent border-none shadow-none transition-all duration-300 ease-in-out ">

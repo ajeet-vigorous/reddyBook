@@ -16,7 +16,7 @@ function ForgotModal({ closeFModal }) {
         <div className="bg-[var(--secondary)] top-7 w-[500px] shadow-lg rounded-md relative mx-2 ">
           <div className="rounded-[10px] border-2 border-white px-6 py-20 m-7 bg-[#212121]">
             <div className="flex justify-center items-center p-4">
-              <img src={settings.logo1} className="w-[180px] h-[60px]" />
+              <img src={settings.logo} className="w-[180px] h-[60px]" />
             </div>
 
             <div className="md:flex w-full">
