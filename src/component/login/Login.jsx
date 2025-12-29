@@ -148,6 +148,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                 <div className="">
                   <label className="inline-flex items-center space-x-2">
                     <input
+                    checked
                       type="checkbox"
                       className="form-checkbox text-blue-600 rounded-sm"
                     />
@@ -175,20 +176,21 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                   className=" w-full mb-2 bg-white text-black font-semibold text-[13px] uppercase tracking-wide border border-[var(--primary)] rounded-[10px] py-[7px] px-[15px] shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms]  ease-in-out cursor-pointer">
                   Login With Demo ID
                 </button>
-
+{/* bg-[var(--secondary)] border border-[var(--primary)] */}
                 <button
-                  className={` flex justify-center items-center space-x-1 w-full text-[16px] mx-auto mt-1.5 mb-[5px] py-1.5 bg-[var(--secondary)] border border-[var(--primary)] text-white rounded-[10px]`}>
-                  <p>Download APK</p>
-                  <ImAndroid size={18} />
+                  className={` flex justify-center items-center space-x-1 w-full text-[16px] mx-auto mt-1.5 mb-[5px] py-1.5   text-white rounded-[10px]`}>
+                  {/* <p>Download APK</p> */}
+                 
+                  <img src= {settings.logo1} alt="logo" width={100}/>
                 </button>
 
                 <div className="text-white text-[13px] text-center mt-4">
                   <div className="flex justify-center items-center space-x-1">
                     <p>Powered by </p><p className="text-[var(--primary)]">{settings.domainName}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     reddybook.clubofficial@gmail.com
-                  </div>
+                  </div> */}
                 </div>
 
               </form>
