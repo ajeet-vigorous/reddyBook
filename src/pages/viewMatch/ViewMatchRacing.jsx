@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { io } from "socket.io-client";
 import BlinkingComponent from "./BlinkingComponent";
-import moment from "moment";
-import { apiCall } from "../../config/HTTP";
+import moment from "moment-timezone";
+import { apiCall, httpPost } from "../../config/HTTP";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
 import { message } from "antd";
@@ -66,7 +66,8 @@ const ViewMatchRacing = () => {
     const [isScorecardOpen, setIsScorecardOpen] = useState(true);
     const [fullscreen, setFullScreen] = useState(false);
     const [matchOddsSelected, setMatchOddsSelected] = useState([])
-
+       const [combindedFlag, setCombindedFlag] = useState(false);
+    const [openBetList, setOpenBetList] = useState([]);
     const { marketId, eventId, sportId } = useParams();
     const [activeBets, setActiveBets] = useState("oddsBetData");
 
@@ -525,21 +526,102 @@ const ViewMatchRacing = () => {
 
 
     // bets Palce Modal write 
+    const handleBackOpen = (data, isCombined = false) => {
+  if (data?.odds <= 0) return;
 
-    const handleBackOpen = (data) => {
-        // setBetPlaceModalMobile(true)
-        if (data) {
-            setBetShow(false);
-            setBetShowM(false);
-            setBetSlipData({
-                ...data,
-                stake: '0',
-                count: data.odds,
-                teamname: data.name,
-                teamData: data.teamData
-            });
-        }
-    };
+    if ((inplayMatch?.countryCode != 'GB' && inplayMatch?.countryCode != "IE") && inplayMatch?.sportId == 7 && data?.inplayCheck === true && data?.statusCheck === 'OPEN') {
+      message.error("Inplay Bets are Not Allowed");
+      return;
+    }
+  const oneClickBetss = localStorage.getItem("oneClickStatus")
+    ? JSON.parse(localStorage.getItem("oneClickStatus"))
+    : false;
+
+  
+  // one-click ke hisaab se stake decide
+  const stakeValue = oneClickBetss ? oneBetAmountlocal : '0';
+
+  // one-click true ho to betslip hide
+  if (oneClickBetss) {
+   
+    setBetShowM(false);
+  }
+   setBetShow(false);
+  
+  // if (
+  //   (inplayMatch?.countryCode !== 'GB' &&
+  //     inplayMatch?.countryCode !== 'IE') &&
+  //   inplayMatch?.sportId === 7 &&
+  //   data?.inplayCheck === true &&
+  //   data?.statusCheck === 'OPEN'
+  // ) {
+  //   message.error("Inplay Bets are Not Allowed");
+  //   return;
+  // }
+
+  const matchDateStr = inplayMatch?.matchDate;
+  if (!moment(matchDateStr, 'YYYY-MM-DD HH:mm:ss').isValid()) {
+   
+    return;
+  }
+
+  const matchTime = moment.tz(matchDateStr, 'YYYY-MM-DD HH:mm:ss', 'Asia/Kolkata');
+  const currentTime = moment().tz('Asia/Kolkata');
+  const diffInMinutes = matchTime.diff(currentTime, 'minutes');
+
+  if (diffInMinutes > 36) {
+    message.error("Bets Not Accepted At This Time");
+    return;
+  }
+
+  if (isCombined) {
+    setCombindedFlag(true);
+
+    const matchOddsData = finalSocket['Match Odds'];
+    if (!matchOddsData?.runners) {
+      message.error("Invalid combined bet data");
+      return;
+    }
+
+    const selectedRunners = matchOddsData.runners.filter(
+      (_, index) => matchOddsSelected.includes(index + 1)
+    );
+
+    const selectionIds = selectedRunners.map(r => r.selectionId);
+    const teamNames = selectedRunners.map(r => r.selectionName).join('+');
+
+    setBetSlipData({
+      stake: stakeValue,
+      count: data.odds,
+      teamname: teamNames,
+      teamData: data.odds,
+      betFor: "matchOdds",
+      oddsType: "Match Odds",
+      betType: data.type === "Yes" ? "L" : "K",
+      selectionId: selectionIds,
+      betfairMarketId: matchOddsData.marketId,
+      price: data.odds,
+      size: data.size,
+      position: returnDataObject,
+      newPosition: returnDataObject,
+      isCombined: true
+    });
+
+  } else {
+    setCombindedFlag(false);
+
+    setBetSlipData({
+      ...data,
+      stake: stakeValue,
+      count: data.odds,
+      teamname: data.name
+    });
+  }
+};
+
+
+
+
     const handleBackclose = () => {
 
 
@@ -607,25 +689,34 @@ const ViewMatchRacing = () => {
         }
     };
 
+       const getOpenBets = async () => {
+      const resData = {
+        marketId: marketId,
+      };
+      const openBetResponse = await httpPost("sports/getOpenBetsBymarketId", resData);
+      if (openBetResponse && openBetResponse.data) {
+        setOpenBetList(openBetResponse.data)
+  
+      }
+    }
+
 const placeBetCombind = async () => {
+
   try {
     // Calculate combined odds
-    const result = calculateCombinedOdds(matchOddsSelected);
-    if (!result) return message.error("Unable to calculate combined odds.");
+         const result = calculateCombinedOddsW(matchOddsSelected);
 
+    if (!result) return message.error("Unable to calculate combined odds.");
     const { odds, totalInverse } = result;
 
-    // Display combined odds
-    // setCombinedOddsDisplay(totalInverse);
 
-    // Calculate distributed stakes
     let stakePerRace = matchOddsSelected.map((raceIndex, i) => {
       return betSlipData.stake * (1 / odds[i]) / totalInverse;
     });
 
     setBetLoading(true);
 
-    // Prepare all API promises
+
     const betPromises = matchOddsSelected.map((raceIndex, i) => {
       const stakeForRace = stakePerRace[i];
 
@@ -656,14 +747,13 @@ const placeBetCombind = async () => {
         betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
       }
 
-      // Return API Promise
+   
       return apiCall("POST", "sports/oddBetPlaced", betObject);
     });
 
-    // Run all bets in parallel 🔥
+
     const responses = await Promise.all(betPromises);
 
-    // Check results
     responses.forEach((res, i) => {
       if (!res.error) {
         console.log(`Bet placed for race ${matchOddsSelected[i]}`);
@@ -672,13 +762,13 @@ const placeBetCombind = async () => {
       }
     });
 
-    // After all bets processed
+
     setBetLoading(false);
     setBetShow(false);
     setBetShowM(false);
     setSuccessMessage("All bets placed successfully!");
-
-    dispatch(getActiveBetsCount());
+ message.success("All bets placed successfully!");
+    // dispatch(getActiveBetsCount());
     openBets();
     dispatch(getUserBalance());
     await fetchBetLists();
@@ -693,12 +783,12 @@ const placeBetCombind = async () => {
       await getOpenBets();
     }
   } catch (error) {
+     message.error(error?.data?.message || "Bet failed");
     setBetLoading(false);
     console.error("Error placing bet:", error);
     setErrorMessage(error?.data?.message || "Bet failed");
   }
 };
-
 
   const placeBet = async () => {
 
@@ -729,8 +819,9 @@ const placeBetCombind = async () => {
       setBetShow(false);
       setBetShowM(false);
       setSuccessMessage(saveBetOdds?.message);
-      dispatch(getActiveBetsCount());
+    //   dispatch(getActiveBetsCount());
       if (!saveBetOdds.error) {
+        message.success(saveBetOdds?.message)
         setMatchOddsSelected([])
         setBetLoading(false);
         openBets();
@@ -741,15 +832,19 @@ const placeBetCombind = async () => {
             await getOpenBets();
           }
       } else {
+         message.error(saveBetOdds?.message);
         console.log("Sorry! your bet couldn't be placed.");
         setBetLoading(false);
       }
     } catch (error) {
+         message.error(error.data?.message || "Error placing bet");
       setBetLoading(false);
       console.error('Error placing bet:', error.data.message);
       setErrorMessage(error.data.message);
     }
   };
+
+
     const fetchBetLists = async () => {
         try {
 
@@ -854,7 +949,7 @@ const placeBetCombind = async () => {
     }, [inplayMatch]);
 
 
-      const handleCheckboxClick = (itemId) => {
+  const handleCheckboxClick = (itemId) => {
     setMatchOddsSelected((prev) => {
       if (prev.includes(itemId)) {
         return prev.filter((id) => id !== itemId);
@@ -865,15 +960,38 @@ const placeBetCombind = async () => {
     });
   };
 
-  const calculateCombinedOdds = (selectedRaces, type = 'back') => {
+
+    const calculateCombinedOdds = (type = 'back') => {
+    try {
+      if (matchOddsSelected.length < 2) return null;
+
+      const matchOddsData = finalSocket['Match Odds'];
+      if (!matchOddsData || !matchOddsData.runners) return null;
+
+      let totalProbability = 0;
+      const selectedRunners = matchOddsData.runners.filter((_, index) => matchOddsSelected.includes(index + 1));
+
+      selectedRunners.forEach((runner) => {
+        const odds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
+        if (odds && !isNaN(odds)) {
+          totalProbability += 1 / odds;
+        }
+      });
+
+      if (totalProbability === 0) return null;
+      const combinedOdds = (1 / totalProbability) - 1;
+      return Math.round(combinedOdds * 100) / 100;
+    } catch (error) {
+      console.error('Error calculating combined odds:', error);
+      return null;
+    }
+  };
+
+
+  const calculateCombinedOddsW = (selectedRaces, type = 'back') => {
 
   
   try {
-
-    // Ensure array
- 
-
-
     if (selectedRaces.length < 2) return null;
 
     const matchOddsData = finalSocket['Match Odds'];
@@ -882,9 +1000,12 @@ const placeBetCombind = async () => {
     let totalInverse = 0;
     let odds = [];
 
+
+
     selectedRaces?.forEach((raceIndex) => {
       const runner = matchOddsData.runners[raceIndex - 1];
        const raceOdds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
+
 
       if (raceOdds && !isNaN(raceOdds)) {
         odds.push(raceOdds);
@@ -911,33 +1032,6 @@ const placeBetCombind = async () => {
   }
 };
 
- const calculateCombinedOddsW = (type = 'back') => {
-    try {
-      if (matchOddsSelected.length < 2) return null;
- 
-      const matchOddsData = finalSocket['Match Odds'];
-      if (!matchOddsData || !matchOddsData.runners) return null;
- 
-      let totalProbability = 0;
-      const selectedRunners = matchOddsData.runners.filter((_, index) => matchOddsSelected.includes(index + 1));
- 
-      selectedRunners.forEach((runner) => {
-        const odds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
-        if (odds && !isNaN(odds)) {
-          totalProbability += 1 / odds;
-        }
-      });
- 
-      if (totalProbability === 0) return null;
-      const combinedOdds = (1 / totalProbability) - 1;
-      return Math.round(combinedOdds * 100) / 100; // Round to 2 decimal places
-    } catch (error) {
-      console.error('Error calculating combined odds:', error);
-      return null;
-    }
-  };
-
-
  const combinedBackOdds = [
     calculateCombinedOdds('back'),
     calculateCombinedOddsW('back')
@@ -947,6 +1041,10 @@ const combinedLayOdds = [
     calculateCombinedOdds('lay'),
     calculateCombinedOddsW('lay')
 ];
+
+
+
+
 
     return (isLoading ? <span className="animate-spin h-5 w-5"></span> :
         <div>
@@ -1110,6 +1208,7 @@ const combinedLayOdds = [
                     </span>
                     <span
                       className="md:col-span-3 sm:col-span-3 rounded-md col-span-3 lg:hidden block cursor-pointer"
+                      
                       onClick={() =>
                         handleBackOpen(
                           {
@@ -1210,6 +1309,25 @@ const combinedLayOdds = [
                     </span>
                   </div>
                 </div>
+
+                {betSlipData?.oddsType === "Match Odds" && betSlipData?.isCombined &&  <PlaceBetMobile
+                openBets={openBets}
+                closeRow={closeRow}
+                matchName={inplayMatch?.matchName}
+                betSlipData={betSlipData}
+                placeBet={combindedFlag ? placeBetCombind  : placeBet}
+                errorMessage={errorMessage}
+                successMessage={successMessage}
+                count={betSlipData.count}
+                betLoading={betLoading}
+                increaseCount={increaseCount}
+                decreaseCount={decreaseCount}
+                handleClose={handleBackclose}
+                setBetSlipData={setBetSlipData}
+                handleButtonValues={handleButtonValues}
+                isMatchCoin={isMatchCoin}
+                matchOddsSelected={matchOddsSelected}
+            />}
               </>
             )}
                         {/* ---------------------------------------------------------match odds counts end ------------------------------------------------------------- */}
@@ -1399,7 +1517,8 @@ const combinedLayOdds = [
 
 
                                                         <div
-                                                            className={`  flex whitespace-normal bg-white max-w-full border-b border-gray-300 relative`}
+                                                            className={`relative flex whitespace-normal max-w-full ${element?.status === 'CLOSED' && elementtemp?.status === 'WINNER' ? 'bg-[#b7f776]' : ''
+                                  }`}
                                                             key={index}
                                                         >
                                                             <div className="lg:w-1/2 xl:w-[58%] w-[65%] flex px-2">
@@ -1737,13 +1856,13 @@ const combinedLayOdds = [
                                                                 </div>
                                                             </div>}
                                                         </div>
-                                                                                   {betSlipData?.oddsType === "Match Odds" && elementtemp?.selectionId ===
+                           {betSlipData?.oddsType === "Match Odds" && elementtemp?.selectionId ===
                           betSlipData?.selectionId &&  <PlaceBetMobile
                 openBets={openBets}
                 closeRow={closeRow}
                 matchName={inplayMatch?.matchName}
                 betSlipData={betSlipData}
-                placeBet={placeBet}
+                placeBet={combindedFlag ? placeBetCombind  : placeBet}
                 errorMessage={errorMessage}
                 successMessage={successMessage}
                 count={betSlipData.count}
@@ -1798,7 +1917,7 @@ const combinedLayOdds = [
                                     closeRow={closeRow}
                                     matchName={inplayMatch?.matchName}
                                     betSlipData={betSlipData}
-                                    placeBet={placeBet}
+                                    placeBet={combindedFlag ? placeBetCombind  : placeBet}
                                     errorMessage={errorMessage}
                                     successMessage={successMessage}
                                     count={betSlipData.count}
@@ -1807,6 +1926,7 @@ const combinedLayOdds = [
                                     decreaseCount={decreaseCount}
                                     handleButtonValues={handleButtonValues}
                                     isMatchCoin={minMaxCoins}
+                                    matchOddsSelected={matchOddsSelected}
                                 />
                             </>
                         )}
