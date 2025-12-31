@@ -5,6 +5,7 @@ import { FaAngleDown, FaAngleUp, FaCircle, FaMinus, FaPlus } from "react-icons/f
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import StakeSettings from "../profile/StakeSettings";
+import BetPlaceCounter from "../betPlaceCounter/BetPlaceCounter";
 
 export const betChipsData = {
   1000: 1000,
@@ -530,7 +531,7 @@ export function BetPlaceDesktop(props) {
       </table>
       {betLoading && (
         <div className="absolute top-0 left-0 h-full w-full flex justify-center items-center bg-[#ffffffc5] ">
-          <span className="loaderbetPlace"></span>
+             <BetPlaceCounter />
         </div>
       )}
       {editStake && (

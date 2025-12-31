@@ -185,8 +185,6 @@ const combinedGames = [
 ];
 
 
-console.log(matchData, "matchDatamatchDatamatchData");
-
   return (
     <>
       <div className="h-full overflow-y-auto ">

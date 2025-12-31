@@ -3,7 +3,7 @@ const ReddyBookSettings = {
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddyBook-logo.png",
   logo1: "/logo/silver-reddyBook.png",
-  SOCKET_URL: "https://socket.trovetown.co/",
+  SOCKET_URL: "https://api.criecbet99.club/",
   apiurl: 'https://api.criecbet99.club/v1/',
   domainName: "reddybook",
   colors: {

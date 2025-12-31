@@ -26,6 +26,7 @@ import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
 import { MdScore } from "react-icons/md";
 import { fancyTabs, premiumTabs } from "./matchconstants";
+import { getUserBalance } from "../../redux/reducers/user_reducer";
 
 
 

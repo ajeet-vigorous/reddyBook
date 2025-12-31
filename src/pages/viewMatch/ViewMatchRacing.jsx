@@ -70,7 +70,7 @@ const ViewMatchRacing = () => {
     const [openBetList, setOpenBetList] = useState([]);
     const { marketId, eventId, sportId } = useParams();
     const [activeBets, setActiveBets] = useState("oddsBetData");
-
+    const [combinedOdds, setCombinedOddsDisplay] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

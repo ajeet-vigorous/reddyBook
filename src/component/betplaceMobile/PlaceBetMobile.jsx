@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { FaCircle, FaMinus, FaPlus } from 'react-icons/fa';
 import { IoCloseSharp } from 'react-icons/io5';
 import StakeSettings from '../profile/StakeSettings';
+import BetPlaceCounter from '../betPlaceCounter/BetPlaceCounter';
 
 export const betChipsData = {
     "1000": 1000,
@@ -208,7 +209,7 @@ export default function PlaceBetMobile(props) {
                 : "bg-[var(--matchLagai)]"
                 } `}>
                 {betLoading && <div className='absolute top-0 left-0 h-full w-full flex justify-center items-center bg-[#ffffffc5] '>
-                    <span className="loaderbetPlace"></span>
+                     <BetPlaceCounter />
                 </div>
                 }
                 {/* <div className=" w-full  h-full flex justify-between bg-[var(--primary)] pt-1.5 pb-3 px-2 items-center">
