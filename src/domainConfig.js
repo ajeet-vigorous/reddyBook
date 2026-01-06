@@ -31,18 +31,22 @@ const ReddyBookSettings = {
   }
 };
 
-const SaffronExchSettings = {
-  title: "SAFFRRONEXCH",
-  favicon: "/favicon/favicon-32x32.png",
-  logo: "/logo/safronlogo.png",
-  SOCKET_URL: "https://socket.trovetown.co/",
-  apiurl: "https://api.plx99.com/v1/",
-  domainName: "SAFFRRONEXCH",
+const Reddywin888Settings = {
+  title: "ReddyWin888 | India’s Most Trusted Online Cricket Betting Id Provider",
+  favicon: "/favicon/favicon.ico",
+  logo: "/logo/reddywin888.png",
+  logo1: "/logo/reddywin888.png",
+  SOCKET_URL: "https://api.reddywin888.com/",
+  apiurl: 'https://api.reddywin888.com/v1/',
+  domainName: "ReddyWin888",
   colors: {
-    "--primary": "#AE4600",
-    "--secondary": "#B97242",
-    "--matchLagai": "#72bbef",
-    "--matchKhai": "#FAA9BA",
+    "--primary": "#C10930",
+    "--secondary": "#6D081D",
+    "--darkcolor": "#343435",
+    "--darkred": "#8b0000",
+    "--backgroundmain": "#dfe8e9",
+    "--matchLagai": "#94dfff",
+    "--matchKhai": "#f9c8d3",
     "--result-color": "#355e3b",
     "--rule-bg": '#CCCCCC',
     "--sports-tab": '#266894',
@@ -51,20 +55,19 @@ const SaffronExchSettings = {
     "--success-color": "#086f3f"
   },
   demoCredentials: {
-    username: "Demo1",
+    username: "demo",
     password: "1122",
+    isClient: true,
     isDemoClient: true,
     host: window.location.host,
   }
-
-
 };
 
 
 const domainSettings = {
-  "grandexchange.com": ReddyBookSettings,
-  "safffronexchange.com": SaffronExchSettings,
-  "localhost:3000": ReddyBookSettings,
+  "reddyexch.co": ReddyBookSettings,
+  "reddywin888.com": Reddywin888Settings,
+  "localhost:3000": Reddywin888Settings,
 
 };
 
