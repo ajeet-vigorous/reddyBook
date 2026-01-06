@@ -36,8 +36,8 @@ const Reddywin888Settings = {
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddywin888.png",
   logo1: "/logo/reddywin888.png",
-  SOCKET_URL: "https://api.reddywin888.com/",
-  apiurl: 'https://api.reddywin888.com/v1/',
+  SOCKET_URL: "https://api.criecbet99.club/",
+  apiurl: 'https://api.criecbet99.club/v1/',
   domainName: "ReddyWin888",
   colors: {
     "--primary": "#C10930",
