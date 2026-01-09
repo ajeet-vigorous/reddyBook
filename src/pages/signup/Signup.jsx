@@ -257,10 +257,11 @@ const countryList = [
   name="countryCode"
   value={user.countryCode}
   onChange={handleOnChange}
-  className="h-[35px] px-2 bg-[var(--darkcolor)] border-b border-gray-300 text-white text-[13px] text-center rounded-none outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white"
+  
+  className="h-[45px] px-2 bg-[var(--darkcolor)] border-b border-gray-300 text-white text-[13px] text-center rounded-none outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white"
 >
   {countryList.map((country, index) => (
-    <option key={index} value={country.code}>
+    <option key={index} value={country.code} >
       {country.flag} {country.code}
     </option>
   ))}
