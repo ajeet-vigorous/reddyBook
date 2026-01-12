@@ -4,7 +4,7 @@ import { message } from "antd";
 import { useSelector } from "react-redux";
 import settings from "../../domainConfig";
 import { apiCall } from "../../config/HTTP";
-import { BsEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { BsEyeFill, BsFillEyeSlashFill, BsTelephoneInbound } from "react-icons/bs";
 
 function Signup() {
   const navigate = useNavigate();
@@ -74,15 +74,15 @@ const handleSelectCode = (code) => {
     //   return;
     // }
 
-    // if (!/[a-z]/.test(user.password)) {
-    //   setErrors({ ...errors, password: "Password must contain at least one lowercase letter" });
-    //   return;
-    // }
+    if (!/[a-z]/.test(user.password)) {
+      setErrors({ ...errors, password: "Password must contain at least one lowercase letter" });
+      return;
+    }
 
-    // if (!/\d/.test(user.password)) {
-    //   setErrors({ ...errors, password: "Password must contain at least one digit" });
-    //   return;
-    // } 
+    if (!/\d/.test(user.password)) {
+      setErrors({ ...errors, password: "Password must contain at least one digit" });
+      return;
+    }
 
     if (isOtpEnabled && !otpEnabled) {
       message.warning("Please request and enter OTP before proceeding.");
@@ -120,7 +120,7 @@ const handleSelectCode = (code) => {
           otp: "",
         });
         setTimeout(()=>{
-         window.location.href = "/dashboard";
+         window.location.href = "/login";
         }, 1000)
       } else {
         message.error("Registration failed. Please check your details.");
@@ -285,11 +285,9 @@ const countryList = [
             <div className="flex items-center justify-center">
               <img src={settings.logo} alt="Reddy-Book" className="h-[60px] w-[180px]" />
             </div>
-            
 
-            <div className="space-y-5 lg:p-10 p-4 pb-0 bg-transparent border-none shadow-none transition-all duration-300 ease-in-out ">
-              {/* Form Inputs (Same as before) */}
-               <div>
+              <div className="space-y-3 md:px-4 px-2 text-white">
+              <div>
                 {/* <label>Name</label> */}
                 <input
                   type="text"
@@ -297,13 +295,14 @@ const countryList = [
                   value={user.name}
                   onChange={handleOnChange}
                   onKeyPress={handleKeyPress}
-                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
+                  className="w-full bg-transparent border-b-2 border-gray-400 p-1.5"
                   placeholder="Enter Name"
                 />
                 {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
               </div>
 
-               <div>
+              {/* Username */}
+              <div>
                 {/* <label>Username</label> */}
                 <input
                   type="text"
@@ -311,56 +310,75 @@ const countryList = [
                   value={user.username}
                   onChange={handleOnChange}
                   onKeyPress={handleKeyPress}
-                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
+                  className="w-full bg-transparent border-b-2 border-gray-400 p-1.5"
                   placeholder="Enter Username"
                 />
                 {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
               </div>
 
-              <div className="mb-4 relative">
-                <div className="relative flex items-center">
-                  {/* Country code select dropdown */}
-                  <select
-  name="countryCode"
-  value={user.countryCode}
-  onChange={handleOnChange}
-  
-  className="h-[45px] px-2 bg-[var(--darkcolor)] border-b border-gray-300 text-white text-[13px] text-center rounded-none outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white"
->
-  {countryList.map((country, index) => (
-    <option key={index} value={country.code} >
-      {country.flag} {country.code}
-    </option>
-  ))}
-</select>
+              {/* Mobile + OTP */}
+              <div className="relative">
+                {/* <label>Mobile Number</label> */}
+                <div className="flex  w-full gap-1">
+                  <div className="relative w-[80px] text-white text-sm">
+  {/* Selected Code Display */}
+  <div
+    className="bg-[#0f2462] border-b-2 border--b-gray-600 p-2 rounded cursor-pointer flex justify-between items-center"
+    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+  >
+    +{countryCode}
+    <svg
+      className={`w-4 h-4 ml-1 transform transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
 
+  {/* Dropdown Menu */}
+  {isDropdownOpen && (
+    <ul className="absolute z-50 bg-[#fff] border-b-2 border-gray-600 mt-1 rounded w-full">
+      {["91", "92"].map((code) => (
+        <li
+          key={code}
+          onClick={() => handleSelectCode(code)}
+          className={`p-2 cursor-pointer hover:bg-[#333] ${
+            countryCode === code ? "bg-[#0f2462]" : " text-black"
+          }`}
+        >
+          +{code}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
 
                   <input
-                    type="number"
-                    id="mobile"
+                    type="tel"
                     name="mobileNo"
                     value={user.mobileNo}
                     onChange={handleOnChange}
-                    placeholder="Mobile No"
-                    className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-start text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
-                </div>
-                   {isOtpEnabled && (
+                    onKeyPress={handleKeyPress}
+                    className="w-full bg-transparent text-start border-b-2 border-gray-400 p-1.5"
+                    placeholder="Enter Mobile No"
+                  />
+                  {isOtpEnabled && (
                     <button
                       type="button"
                       onClick={handleGetOtp}
-                      className="text-white absolute top-1 right-1 bg-[var(--primary)] text-xs px-3 py-2 rounded"
+                      className="text-black absolute top-1 right-1 bg-[var(--primary)] text-xs px-3 py-2 rounded"
                     >
                       GET OTP
                     </button>
                   )}
-
-                {/* Validation error */}
-                {errors.mobileNo && (
-                  <div className="mt-1 text-xs text-[#FF0000]">{errors.mobileNo}</div>
-                )}
+                </div>
+                {errors.mobileNo && <p className="text-red-500 text-sm">{errors.mobileNo}</p>}
               </div>
 
-               {isOtpEnabled && (
+              {/* OTP input (conditional) */}
+              {isOtpEnabled && (
                 <div>
                   {/* <label>OTP</label> */}
                   <input
@@ -368,7 +386,7 @@ const countryList = [
                     name="otp"
                     value={user.otp}
                     onChange={handleOnChange}
-                    className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
+                    className="w-full bg-transparent border-b-2 border-gray-400 p-1.5"
                     placeholder="Enter OTP"
                     disabled={!otpEnabled}
                   />
@@ -376,66 +394,51 @@ const countryList = [
                 </div>
               )}
 
+              {/* Password */}
+              <div>
+                {/* <label>Password</label> */}
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={user.password}
+                    onChange={handleOnChange}
+                    className="w-full bg-transparent border-b-2 border-gray-400 p-1.5 pr-10"
+                    placeholder="Password"
+                    disabled={isOtpEnabled && !otpEnabled}
+                  />
+                  <button type="button" onClick={toggleShowPassword} className="absolute right-2 top-2 text-white">
+                    {showPassword ? <BsFillEyeSlashFill size={20} /> : <BsEyeFill size={20} />}
+                  </button>
+                </div>
+                {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+              </div>
 
-
-                  <div>
-                              {/* <label>Password</label> */}
-                              <div className="relative">
-                                <input
-                                  type={showPassword ? "text" : "password"}
-                                  name="password"
-                                  value={user.password}
-                                  onChange={handleOnChange}
-                                   className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
-                                  placeholder="Password"
-                                  disabled={isOtpEnabled && !otpEnabled}
-                                />
-                                <button type="button" onClick={toggleShowPassword} className="absolute right-2 top-2 text-white">
-                                  {showPassword ? <BsFillEyeSlashFill size={20} /> : <BsEyeFill size={20} />}
-                                </button>
-                              </div>
-                              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-                            </div>
-
-              <div className="relative">
+              {/* Referral Code */}
+              <div>
+                {/* <label>Referral Code (Optional)</label> */}
                 <input
                   type="text"
                   name="referralCode"
-                  id="referralCode"
+                  placeholder="Referral Code (Optional)"
                   value={user.referralCode}
                   onChange={handleOnChange}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Referral Code"
-                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white " />
-
-              </div>
-              {errors.referralCode && <div className="text-[#FF0000] text-sm mb-1">{errors.referralCode}</div>}
-
-              <div className=" text-[8px] text-white">
-                By continuing you will receive a one-time verification code to your phone number by SMS.
+                  className="w-full bg-transparent border-b-2 border-gray-400 p-1.5"
+                  disabled={!!refferId}
+                />
               </div>
 
+              {/* Submit */}
               <button
-                type="submit"
-                onClick={handleOnSubmit}
+                className={`w-full py-2 rounded font-bold ${user.name && user.mobileNo && user.password && user.username ? "bg-[#1A3DA6]" : "bg-[#4f76eb]"} ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                 disabled={loading}
-                className={` w-full block mx-auto mt-5 bg-[var(--primary)] border border-[var(--primary)] text-white text-sm uppercase leading-[3rem] rounded 
-                  ${loading ? "opacity-50 cursor-not-allowed" : ""} `}>
-                {loading ? "Loading..." : "Signup"}
+                onClick={handleOnSubmit}
+              >
+                {loading ? <div className="w-6 h-6 border-4 border-white border-dashed rounded animate-spin m-auto"></div> : "SIGNUP"}
               </button>
-
-              <div className="text-white flex justify-start items-center space-x-4">
-                <p>Already have account?</p>
-                <div
-                  onClick={() => {
-                    navigate("/dashboard", { state: { showLogin: true } });
-                  }}
-                  className="mt-1 text-[var(--primary)] text-[15px] uppercase font-[900] flex justify-center items-center cursor-pointer">
-                  LOG IN
-                </div>
-              </div>
-
             </div>
+
+        
 
 
           </div>
