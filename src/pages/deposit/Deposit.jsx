@@ -39,6 +39,7 @@ function Deposit() {
             );
             if (bankDetailsUserData?.data) {
             
+                console.log(bankDetailsUserData, "bankDetailsUserDatabankDetailsUserDatabankDetailsUserData");
                 
                 setBankAcountData(bankDetailsUserData?.data?.account);
                 setBankAcountUpi(bankDetailsUserData?.data?.upi);
@@ -222,6 +223,8 @@ const utr = payAccountFiel.utrNo?.toString();
     };
 
     const handleMethodClick = (method) => {
+        console.log(bankAcountUpi,bankAcountUpi?.[method], "bankAcountUpi");
+        
         setUpiViewModal(true);
         const filteredData = bankAcountUpi?.[method];
         setShowAccount(filteredData ? { filteredData } : {});
@@ -437,16 +440,15 @@ const matchlistLocal = localStorage.getItem("matchList")
                             <div>
                                 <span className="text-sm font-semibold mt-4">Method 2</span>
                                 <div className="grid grid-cols-4 md:grid-cols-5 gap-1">
+                                    {console.log(bankAcountUpi,selectedMethod,paymentImage,  "filteredDatafilteredData")
+                                    }
                                     {bankAcountUpi && Object.keys(bankAcountUpi).map((method) => (
                                         <div
                                             key={method}
                                             onClick={() => handleMethodClick(method)}
                                             className="flex flex-row justify-center items-center mt-4 rounded-md border border-gray-300 p-2 w-[66px] h-auto"
                                         >
-                                            {paymentImage
-                                                .filter(item => item.method === selectedMethod)
-                                                .map((item, index) => (
-                                                    method === item.title && (
+                                            {paymentImage.filter(item => item.method === selectedMethod).map((item, index) => (method === item.title && (
                                                         <img
                                                             key={index}
                                                             src={item.imgs}
@@ -470,7 +472,7 @@ const matchlistLocal = localStorage.getItem("matchList")
                                                 >
                                                     <div className="font-semibold text-gray-800">
                                                         <span className="text-sm text-gray-800 break-all">
-                                                            {showAccount?.filteredData[0]?.upiId}
+                                                            {showAccount?.filteredData?.upiId}
                                                         </span>
                                                     </div>
                                                     <button
@@ -494,7 +496,7 @@ const matchlistLocal = localStorage.getItem("matchList")
                                                 >
                                                     <div className="font-semibold text-gray-800">
                                                         <span className="text-sm text-gray-800 break-all">
-                                                            {showAccount?.filteredData[0]?.mobNo}
+                                                            {showAccount?.filteredData?.mobNo}
                                                         </span>
                                                     </div>
                                                     <button
@@ -513,7 +515,7 @@ const matchlistLocal = localStorage.getItem("matchList")
                                         <div className="w-full flex py-4 px-4 gap-2 flex-col justify-center items-center">
                                             <span className="text-[12px] font-semibold capitalize">{selectedMethod} QR Code</span>
                                             <img
-                                                src={showAccount?.filteredData[0]?.image}
+                                                src={showAccount?.filteredData?.image}
                                                 alt="QR Code"
                                                 title="QR Code"
                                                 className="md:h-60 h-52 md:w-[250px] w-60"
