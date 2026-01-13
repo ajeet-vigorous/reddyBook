@@ -3,6 +3,7 @@ import axios from "axios";
 import { domainName } from "./Auth";
 import settings from "../domainConfig";
 import CryptoJS from "crypto-js";
+import { message } from "antd";
 
 
 
@@ -122,5 +123,40 @@ export const httpPost = async (url, params, isNotify) => {
       invalidHeadres(err.request.status);
     }
     return result
+  }
+};
+
+
+export const httpPostFormData = async (url, data, isNotify) => {
+  try {
+    const result = await axios({
+      method: "POST",
+      url: baseUrl.BACKEND_URL + url,
+      data: data,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  await decryptResponse(result);
+    if (result?.data) {
+      if (!result.data.error) {
+        message.success(result?.data.message);
+        return result.data;
+      } else {
+        message.error(result?.data.message || "Something went wrong.");
+        return result;
+      }
+    } else {
+      message.error("No response data received.");
+      return result;
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    message.error(err?.response?.data?.message || err?.message || "An error occurred");
+    if (err?.request?.status) {
+      invalidHeadres(err.request.status);
+    }
+
+    return null;
   }
 };

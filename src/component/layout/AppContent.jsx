@@ -20,7 +20,8 @@ import IframeCasinonew from '../../pages/IframeCasino/IframeCasinonew'
 import IframeQtech from '../../pages/IframeCasino/IframeQtech'
 import CasinoListByProviderName from '../../pages/casinoListByProviderName/CasinoListByProviderName'
 import AllCasinoLists from '../../pages/allCasino/AllCasinoList'
-
+import Deposit from '../../pages/deposit/Deposit'
+import WithDraw from '../../pages/WithDraw/WithDraw'
 
 const AppContent = () => {
   return (
@@ -32,6 +33,8 @@ const AppContent = () => {
       <Route path="/profile/:tab?" element={<Profile />} />
       <Route path='/ac-statement' element={<AccountSatement />} />
       <Route path='/all-casino' element={<AllCasino />} />
+            <Route path='/deposit' element={<Deposit />} />
+      <Route path='/withdraw' element={<WithDraw />} />
       <Route path='/sports-book' element={<SportsBook />} />
       <Route path='/market-analysis' element={<MarketAnalysis />} />
       <Route path='/refer-and-earn' element={<ReferAndEarn />} />

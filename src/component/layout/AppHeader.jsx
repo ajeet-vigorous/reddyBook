@@ -265,6 +265,20 @@ const AppHeader = ({ setSidebarOpen }) => {
                                 </p>
                               </div>
                             </div>
+                            <div className=" py-2 px-4 border-b text-[13px] border-black bg-white capitalize text-center flex gap-1 ">
+                              <div
+                                onClick={() => navigate("/deposit")}
+                                className=" rounded-xl border py-1  w-1/2 border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
+                                Deposit
+                              </div>
+                              <div
+                                onClick={() => navigate("/withdraw")}
+                                className=" rounded-xl border py-1 w-1/2  bg-[var(--primary)] text-[13px] text-white cursor-pointer">
+                                withdrawal
+                              </div>
+
+                            </div>
+
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
                               <div
                                 onClick={() => navigate("/bonus-list")}
