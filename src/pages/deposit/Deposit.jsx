@@ -38,8 +38,6 @@ function Deposit() {
                 "website/getBankDetailsByUserId"
             );
             if (bankDetailsUserData?.data) {
-            
-                console.log(bankDetailsUserData, "bankDetailsUserDatabankDetailsUserDatabankDetailsUserData");
                 
                 setBankAcountData(bankDetailsUserData?.data?.account);
                 setBankAcountUpi(bankDetailsUserData?.data?.upi);
@@ -223,7 +221,7 @@ const utr = payAccountFiel.utrNo?.toString();
     };
 
     const handleMethodClick = (method) => {
-        console.log(bankAcountUpi,bankAcountUpi?.[method], "bankAcountUpi");
+   
         
         setUpiViewModal(true);
         const filteredData = bankAcountUpi?.[method];
@@ -440,8 +438,7 @@ const matchlistLocal = localStorage.getItem("matchList")
                             <div>
                                 <span className="text-sm font-semibold mt-4">Method 2</span>
                                 <div className="grid grid-cols-4 md:grid-cols-5 gap-1">
-                                    {console.log(bankAcountUpi,selectedMethod,paymentImage,  "filteredDatafilteredData")
-                                    }
+                                   
                                     {bankAcountUpi && Object.keys(bankAcountUpi).map((method) => (
                                         <div
                                             key={method}

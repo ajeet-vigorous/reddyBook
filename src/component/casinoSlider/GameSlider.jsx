@@ -1,10 +1,16 @@
+import { message } from "antd";
 import React from "react";
 
-const GameSlider = ({ data }) => {
+const GameSlider = ({ data, userInfo }) => {
   const handleImageClick = (img) => {
     let productParam = img?.product === "all" ? img?.product : img?.category;
     let catParam = img?.product === "all" ? img?.category : "all";
-    window.location.href = `/casino/99998?name=${productParam}&gameName=${catParam}`;
+                        if(userInfo.data.isDemoClient){
+ message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+    }else{
+             window.location.href = `/casino/99998?name=${productParam}&gameName=${catParam}`;
+    }
+  
   };
 
   return (

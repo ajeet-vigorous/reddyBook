@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsListNested } from "react-icons/bs";
 import MarqueeNotification from "../marquee/MarqueeNotification";
-
+import { domainName } from "../../config/Auth";
+import { message } from "antd";
+let userInfo = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
 const menuItems = [
   { id: 1, icon: "/subHeader/menu-home.png", label: "Home", url: "/", inplay: false },
   { id: 2, icon: "/subHeader/menu-inplay.png", label: "In-play", url: `sports_book`, inplay: true },
@@ -10,8 +12,8 @@ const menuItems = [
   { id: 4, icon: "/subHeader/menu-1.png", label: "Football", url: `in-play/1`, inplay: true },
   { id: 5, icon: "/subHeader/menu-2.png", label: "Tennis", url: `in-play/2`, inplay: true },
   // { id: 6, icon: "/subHeader/menu-2378961.png", label: "Politics", url: `in-play/999`, inplay: false },
-  { id: 7, icon: "/subHeader/menu-99998.png", label: "Casino", url: "casino/99998?name=all&gameName=dragon tiger", inplay: false },
-  { id: 8, icon: "/subHeader/menu-99991.png", label: "Sports Book", url:'/iframe-casino/550000', inplay: false },
+  { id: 7, icon: "/subHeader/menu-99998.png", label: "Casino", url: "casino/99998?name=all&gameName=dragon tiger", inplay: false, isDemo: userInfo?.data?.isDemoClient },
+  { id: 8, icon: "/subHeader/menu-99991.png", label: "Sports Book", url:'/iframe-casino/550000', inplay: false, isDemo: userInfo?.data?.isDemoClient },
   { id: 9, icon: "/subHeader/menu-7.png", label: "Horse Racing", url: `in-play/7`, inplay: false },
   { id: 10, icon: "/subHeader/menu-4339.png", label: "Greyhound Racing", url: `in-play/4339`, inplay: false },
   // { id: 12, icon: "/subHeader/menu-99990.png", label: "Binary", inplay: false },
@@ -34,7 +36,12 @@ const SubHeader = ({ setSidebarOpen }) => {
 
   const handleClick = (item) => {
     if (item.url) {
-      navigate(item.url);
+          if(item.isDemo){
+ message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+    }else{
+    navigate(item.url);
+    }
+      // navigate(item.url);
       setActiveBar(item.id);
       setNavbarOpen(!navbarOpen);
     }

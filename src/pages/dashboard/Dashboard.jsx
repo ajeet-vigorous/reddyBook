@@ -19,6 +19,7 @@ import DashboardUpcoming from "../../component/dashboard/DashboardUpcoming";
 import CasinoGames from '../../component/CasinoJson/NewLunch.json'
 import ReddybookCasino from '../../component/CasinoJson/Reddybook.json'
 import GameSlider from "../../component/casinoSlider/GameSlider";
+import { domainName } from "../../config/Auth";
 
 export const sportlistArray = [
   {
@@ -166,6 +167,7 @@ const Dashboard = ({ }) => {
     : [];
 
   const [matchData, setMatchData] = useState([]);
+  let userID = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
 
   useEffect(() => {
     const localData = localStorage.getItem("matchList");
@@ -189,8 +191,8 @@ const combinedGames = [
     <>
       <div className="h-full overflow-y-auto ">
         <div className="md:hidden block">
-         <GameSlider  data={combinedGames}/>
-         <TrendingGames name={"New Launch"} data={CasinoGames?.new_launch} />
+         <GameSlider  data={combinedGames} userInfo={userID}/>
+         <TrendingGames name={"New Launch"} data={CasinoGames?.new_launch} userInfo={userID}/>
          </div>
         <div className="lg:block hidden ">
           <MarqueeNotification />
@@ -215,7 +217,7 @@ const combinedGames = [
             sportName="Tennis"
           />
         </div>
-        <Providers filterSection={"providers"} name={"Casino Provider"} data={CasinoGames?.our_provider} />
+        <Providers filterSection={"providers"} name={"Casino Provider"} data={CasinoGames?.our_provider} userInfo={userID}/>
 
         <div className="p-2 bg-[#008000]">
           <div className="flex space-x-2 items-center">

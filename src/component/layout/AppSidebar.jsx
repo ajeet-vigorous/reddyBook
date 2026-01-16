@@ -10,6 +10,8 @@ import { SPORTSCONSTANT } from "../../config/global";
 import settings from "../../domainConfig";
 import { FaTimes } from "react-icons/fa";
 import Login from "../login/Login";
+import { message } from "antd";
+import { domainName } from "../../config/Auth";
 
 const organizeData = (data) => {
   if (!data) return [];
@@ -127,7 +129,7 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   //   }
   // };
   // console.log("openKeys", openKeys);
-
+let userInfo = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
   const handleClick = (index, e) => {
 
     e.stopPropagation();
@@ -140,12 +142,23 @@ const AppSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
 
     if (clickedItem?.text === "Casino") {
+      if(userInfo?.data?.isDemoClient){
+ message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+      }else{
       navigate("/casino/99998?name=all&gameName=dragon tiger");
-      return;
+            return;
+      }
+
+
     }
     if (clickedItem?.text === "Sports Book") {
+            if(userInfo?.data?.isDemoClient){
+ message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+      }else{
       navigate("/iframe-casino/550000");
       return;
+      }
+   
     }
     if (clickedItem?.text === "Horse Racing") {
       setOpenRaceId(7);

@@ -3,12 +3,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { message } from "antd";
 
-function TrendingGames({ name, data }) {
+function TrendingGames({ name, data,userInfo }) {
     const navigate = useNavigate();
 
+
+
+    
     const handleResponseCasino = (product) => {
-      navigate(`/iframe-casino-new/${product?.product}/${product?.id}`)
+                    if(userInfo.data.isDemoClient){
+ message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+    }else{
+          navigate(`/iframe-casino-new/${product?.product}/${product?.id}`)
+    }
+      // navigate(`/iframe-casino-new/${product?.product}/${product?.id}`)
     };
 
 
