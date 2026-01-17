@@ -134,7 +134,17 @@ async function getUserLedger(data) {
   }
 }
 
-
+async function getDepositWithdraw(data) {
+  try {
+    const response = await apiCall("POST", "website/getDepositWithdrawList", data);
+    if (response && response?.data) {
+      return response?.data;
+    }
+  } catch (error) {
+    console.error("report", error);
+    return Promise.reject(error);
+  }
+}
 export const userServices = {
   getUserStatement,
   userUpdate,
@@ -146,4 +156,5 @@ export const userServices = {
   getInternationalGroupCasinoList,
   getCasinoListByProviderName,
   getUserLedger,
+  getDepositWithdraw,
 }

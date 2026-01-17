@@ -162,6 +162,19 @@ export const getUserLedger = createAsyncThunk(
   }
 );
 
+export const getDepositWithdraw = createAsyncThunk(
+  "/user/getDepositWithdraw",
+  async (reportData, { rejectWithValue }) => {
+    try {
+      const response = await userServices.getDepositWithdraw(reportData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -318,6 +331,18 @@ const userSlice = createSlice({
         state.userLegderList = action.payload?.data;
       })
       .addCase(getUserLedger.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getDepositWithdraw.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDepositWithdraw.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getDepositWithdrawData = action.payload;
+      })
+      .addCase(getDepositWithdraw.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

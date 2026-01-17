@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { apiCall } from "../../config/HTTP";
 import { Link } from "react-router-dom";
 import { message } from "antd";
+import { getDepositWithdraw } from "../../redux/reducers/user_reducer";
+import { useDispatch, useSelector } from "react-redux";
+import DepositWithdrawCom from "../depositWithdraw/DepositWithdraw";
 
 
 const WithDraw = () => {
@@ -31,13 +34,18 @@ const WithDraw = () => {
   const [activeAmount, setActiveAmount] = useState(null);
 
   useEffect(() => {
+         let reqData = {
+    reqType: "withdraw"
+     }
+          dispatch(getDepositWithdraw(reqData))
     getBankDetails();
   }, []);
-
+  const dispatch = useDispatch();
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
+      const {getDepositWithdrawData} = useSelector(state => state.user)
   const handleEWalletTabChange = (tab) => {
     setEWalletTab(tab);
   };
@@ -518,6 +526,9 @@ const matchlistLocal = localStorage.getItem("matchList")
       )}
 
     </div>
+      <div className="w-full">
+          <DepositWithdrawCom data={getDepositWithdrawData} />
+        </div>
     </>
   );
 };

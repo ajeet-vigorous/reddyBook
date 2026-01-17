@@ -67,7 +67,7 @@ const Reddywin888Settings = {
 const domainSettings = {
   "reddyexch.co": ReddyBookSettings,
   "reddywin888.com": Reddywin888Settings,
-  "localhost:3000": Reddywin888Settings,
+  "localhost:3000": ReddyBookSettings,
 
 };
 
