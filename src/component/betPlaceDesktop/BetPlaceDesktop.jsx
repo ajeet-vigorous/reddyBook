@@ -286,7 +286,11 @@ export function BetPlaceDesktop(props) {
                     <button className="h-9 py-[5px] px-1.5 text-white font-bold cursor-pointer bg-[#024F99]" onClick={decreaseCount}>
                       <FiMinus size={13} />
                     </button>
-                    <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-9">{count && count ? count : 0}</div>
+                    <div className=" flex justify-center items-center text-left py-[17px] text-sm w-full h-9">
+                      {/* {count && count ? count : 0} */}
+
+                       {betSlipData.oddsType === "fancy" ? betSlipData.run : count}
+                    </div>
                     <button className="h-9 flex justify-center items-center px-1.5 font-bold text-white cursor-pointer bg-[#024F99]" onClick={increaseCount}>
                       <GoPlus size={13} />
                     </button>

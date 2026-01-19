@@ -12,7 +12,7 @@ const BetPlaceCounter = () => {
         }
         return prevCount + 1;
       });
-    }, 500);
+    }, 1000);
 
     return () => clearInterval(interval); 
   }, []);
