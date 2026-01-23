@@ -18,7 +18,6 @@
 //     (element) => element.sportId == activeTab
 //   ).sort((a, b) => moment(a.matchDate, "DD-MM-YYYY HH:mm:ss").isBefore(moment(b.matchDate, "DD-MM-YYYY HH:mm:ss")) ? -1 : 1);
 
-
 //   const isInplayMatch = (match) => {
 //     const matchMoment = moment(match?.matchDate, "DD-MM-YYYY HH:mm:ss A");
 //     const currentMoment = moment().add(60, 'minutes');
@@ -63,7 +62,6 @@
 //   useEffect(() => {
 //     setSubTab()
 //   }, [activeTab]);
-
 
 //   if (activeTab == 4339 || activeTab == 7) {
 //     content = (
@@ -298,7 +296,6 @@
 
 // export default InplayMatches;
 
-
 /* eslint-disable react/prop-types */
 import { LiaDesktopSolid } from "react-icons/lia";
 import moment from "moment";
@@ -312,12 +309,11 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
 
   const openModal = () => {
     setIsLoginOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsLoginOpen(false);
   };
-
 
   // Filter only matches for the current active sport tab
   const filteredMatches = matchlistItems
@@ -325,7 +321,9 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
     ?.filter((match) => {
       // Match is in-play if current time is after match start time
       const matchTime = moment(match.matchDate, "DD-MM-YYYY HH:mm:ss A");
-      return moment().isSameOrAfter(matchTime);
+      const currentMoment = moment().add(60, "minutes");
+      return currentMoment.isSameOrAfter(matchTime);
+      // return moment().isSameOrAfter(matchTime);
     })
     ?.sort((a, b) => {
       const aTime = moment(a.matchDate, "DD-MM-YYYY HH:mm:ss");
@@ -337,13 +335,23 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
   if (!filteredMatches || filteredMatches.length === 0) {
     return (
       <>
-        <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
+        <Login
+          isOpen={isLoginOpen}
+          closeModal={closeModal}
+          setIsLoginOpen={setIsLoginOpen}
+        />
         <section>
           <div className="flex justify-between py-0 w-full border-b border-t bg-[#e9eff8] border-[#f8f8f8]">
             <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
-              {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
-              {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
-              {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
+              {sportName === "Cricket" && (
+                <img src="/subHeader/menu-4.png" className="w-4 h-4" />
+              )}
+              {sportName === "Soccer" && (
+                <img src="/subHeader/menu-1.png" className="w-4 h-4" />
+              )}
+              {sportName === "Tennis" && (
+                <img src="/subHeader/menu-2.png" className="w-4 h-4" />
+              )}
               <p>{sportName}</p>
               <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
             </div>
@@ -353,7 +361,9 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
               <span>2</span>
             </p>
           </div>
-          <div className="border-b px-3 py-1 text-[13px] bg-white">No In-Play Records found!</div>
+          <div className="border-b px-3 py-1 text-[13px] bg-white">
+            No In-Play Records found!
+          </div>
         </section>
       </>
     );
@@ -364,9 +374,15 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
       <div className="flex justify-between items-center w-full bg-[#e9eff8] border-b border-t border-[#f8f8f8]">
         <div className="lg:w-[50%] w-full sm:flex items-center lg:space-x-24 lg:justify-start justify-between">
           <div className="relative text-sm bg-[var(--primary)] w-[180px] font-bold text-white py-1.5 px-2 flex justify-start items-center space-x-1">
-            {sportName === "Cricket" && <img src='/subHeader/menu-4.png' className="w-4 h-4" />}
-            {sportName === "Soccer" && <img src='/subHeader/menu-1.png' className="w-4 h-4" />}
-            {sportName === "Tennis" && <img src='/subHeader/menu-2.png' className="w-4 h-4" />}
+            {sportName === "Cricket" && (
+              <img src="/subHeader/menu-4.png" className="w-4 h-4" />
+            )}
+            {sportName === "Soccer" && (
+              <img src="/subHeader/menu-1.png" className="w-4 h-4" />
+            )}
+            {sportName === "Tennis" && (
+              <img src="/subHeader/menu-2.png" className="w-4 h-4" />
+            )}
             <p>{sportName}</p>
             <span className="absolute top-0 right-[-15px] w-0 h-0 border-t-[32px] border-t-[var(--primary)] border-r-[15px] border-r-transparent"></span>
           </div>
@@ -379,12 +395,14 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
       </div>
 
       {filteredMatches?.map((element, index) => (
-        <div className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5" key={index}>
+        <div
+          className="divide-y divide-[#f8f8f8] border-b border-[#f8f8f8] md:pb-0 pb-1.5"
+          key={index}
+        >
           <div className="lg:flex w-full">
             <div className="lg:w-[50%] w-full flex justify-between items-center bg-white">
               <div className="flex items-center justify-start sm:w-full w-[80%] bg-white">
                 <div
-
                   // onClick={() => {
                   //   localStorage.getItem('token')
                   //     ? window.location.href = `/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`
@@ -400,7 +418,6 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                       localStorage.setItem("unauthorized", true);
                     }
                   }}
-
                   // href={`/sport-view/${element?.marketId}/${element?.eventId}/${element?.sportId}`}
                   className="cursor-pointer flex items-center justify-start py-1 space-x-1 w-full"
                 >
@@ -419,22 +436,41 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                   </span>
 
                   <div className="bg-[#E9EFF8] w-[18%] sm:w-[20%] md:w-[18%] lg:w-[25%] xl:w-[23%] 2xl:w-[20%] text-[#FF0000] sm:text-[11px] text-[8px] font-normal px-2 py-1 rounded-sm text-center leading-tight">
-                    <div>{moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('DD MMM')}</div>
+                    <div>
+                      {moment(
+                        element?.matchDate,
+                        "DD-MM-YYYY HH:mm:ss A",
+                      ).format("DD MMM")}
+                    </div>
                     <div className="sm:text-[10px] text-[8px]">
-                      {moment(element?.matchDate, "DD-MM-YYYY HH:mm:ss A").format('hh:mm A')}
+                      {moment(
+                        element?.matchDate,
+                        "DD-MM-YYYY HH:mm:ss A",
+                      ).format("hh:mm A")}
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="flex justify-end items-center space-x-1.5 cursor-pointer pr-3  sm:w-full w-[20%]">
-                {element?.isTv &&<img src={"/dashbaord/score-tv-icon.svg"} className="w-[14px] h-[14px]" />}
-                {element?.isFancy && <img src='/dashbaord/f-icon.png' className="w-[10px] h-[10px]" />}
+                {element?.isTv && (
+                  <img
+                    src={"/dashbaord/score-tv-icon.svg"}
+                    className="w-[14px] h-[14px]"
+                  />
+                )}
+                {element?.isFancy && (
+                  <img
+                    src="/dashbaord/f-icon.png"
+                    className="w-[10px] h-[10px]"
+                  />
+                )}
                 {element?.isBookmaker && (
                   <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     BM
                   </span>
-                )} {element?.isToss && (
+                )}{" "}
+                {element?.isToss && (
                   <span className="font-bold bg-[var(--primary)] flex justify-center items-center text-white rounded-full text-center sm:w-[18px] w-[16px] h-[16px] sm:h-[18px] sm:text-[9px] text-[8px] p-2">
                     T
                   </span>
@@ -448,8 +484,11 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
                 return (
                   <div key={i} className="relative w-full h-full ">
                     <div
-                      className={`${isLagai ? "bg-[var(--matchLagai)]" : "bg-[var(--matchKhai)]"
-                        } p-1 flex border-[1px] border-white/40 flex-col justify-center items-center text-center w-full h-full text-sm font-semibold text-gray-900`}
+                      className={`${
+                        isLagai
+                          ? "bg-[var(--matchLagai)]"
+                          : "bg-[var(--matchKhai)]"
+                      } p-1 flex border-[1px] border-white/40 flex-col justify-center items-center text-center w-full h-full text-sm font-semibold text-gray-900`}
                     >
                       <p>{(Math.random() * 100).toFixed()}</p>
                       <p className="text-[10px] lg:block hidden text-gray-600">
@@ -463,8 +502,12 @@ function DashboardInplay({ activeTab, matchlistItems, sportName }) {
           </div>
         </div>
       ))}
-      
-      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
+
+      <Login
+        isOpen={isLoginOpen}
+        closeModal={closeModal}
+        setIsLoginOpen={setIsLoginOpen}
+      />
     </div>
   );
 }

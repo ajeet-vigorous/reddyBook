@@ -30,7 +30,7 @@ function Deposit() {
     utrNo: "",
     img: "",
   });
-const { getDepositWithdrawData } = useSelector((state) => state.user);
+  const { getDepositWithdrawData } = useSelector((state) => state.user);
   const domainSetting = (() => {
     try {
       const storedData = localStorage.getItem("clientdomainSetting");
@@ -158,10 +158,25 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
     }
   };
   const validateAmount = () => {
-    if (!payAccountFiel.amount || payAccountFiel.amount < 500) {
-      setError({ amount: "Amount must be at least 500" });
+    const amount = Number(payAccountFiel.amount);
+    const minAmount = Number(allDetailsByUser?.account?.fromAmount);
+    const maxAmount = Number(allDetailsByUser?.account?.toAmount);
+
+    if (!amount) {
+      setError({ amount: "Amount is required" });
       return false;
     }
+
+    if (amount < minAmount) {
+      setError({ amount: `Amount must be at least ${minAmount}` });
+      return false;
+    }
+
+    if (amount > maxAmount) {
+      setError({ amount: `Amount must not exceed ${maxAmount}` });
+      return false;
+    }
+
     setError({});
     return true;
   };
@@ -367,13 +382,12 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
             )}
             {flowStep !== 1 && (
               <span className="text-xs text-gray-500 mt-1 flex gap-2 items-center">
-                <BiInfoCircle /> Redeposit bonus is applicable on deposits above
-                ₹1000
+                {`Amount value should be between ₹${allDetailsByUser?.account?.fromAmount} and ₹${allDetailsByUser?.account?.toAmount}`}
               </span>
             )}
-            <span className="text-xs text-gray-500 mt-1 block">
+            {/* <span className="text-xs text-gray-500 mt-1 block">
               Amount value should be between ₹500 and ₹500000
-            </span>
+            </span> */}
           </div>
           <div className=" px-4">
             <a
@@ -502,10 +516,14 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
                               opacity: 0.9,
                             }}
                           >
+                            {console.log(
+                              bankAcountData,
+                              "bankAcountDatabankAcountDatabankAcountData",
+                            )}
                             <div className="flex justify-between gap-2 mb-3">
                               <div className="flex justify-start gap-2 ">
                                 <span className="text-[13px] text-[#222222]">
-                                  Branch Name :
+                                  Bank Name :
                                 </span>
                                 <span className="text-[13px] font-[400]">
                                   {bankAcountData?.branchName}
@@ -695,10 +713,7 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
                                                     </button> */}
                             </div>
                           </div>
-                          <div className="mt-2 ">
-                            {/* <div className="flex items-center justify-between mb-3">
-                                                    <span className="text-sm font-semibold text-gray-800">Method 3 (Copy payment details)</span>
-                                                </div> */}
+                          {/* <div className="mt-2 ">
                             <div
                               style={{
                                 backgroundImage: 'url("/manual-pg.png")',
@@ -725,23 +740,9 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
                                     )
                                   }
                                 />
-
-                                {/* <span
-        className="absolute top-6 right-0 bg-black text-white text-xs px-2 py-1 rounded
-                   opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-    >
-        Copied!
-    </span> */}
                               </div>
-                              {/* <button
-                                                        onClick={() => navigator.clipboard.writeText(showAccount?.filteredData?.mobNo)}
-                                                        className="flex items-center text-[#116257] rounded-lg transition-all duration-200 hover:shadow-lg active:scale-95"
-                                                    >
-                                                            <FaCopy />
-                                                  
-                                                    </button> */}
                             </div>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="w-full flex py-4 px-4 justify-center gap-2 ">
@@ -841,6 +842,10 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
                 </div>
 
                 <div className="md:w-1/2 w-full">
+                  <div className="uppercase text-sm text-red-600 text-center w-full">
+                    {" "}
+                    {`min ₹${allDetailsByUser?.account?.fromAmount} max ₹${allDetailsByUser?.account?.toAmount}`}{" "}
+                  </div>
                   <div className="grid md:grid-cols-1 gap-3 mb-6">
                     <div>
                       <label className="block text-[13px] text-[#212529] mb-2">
@@ -965,6 +970,7 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
                   </div>
                 </div>
               </div>
+
               {/* )} */}
             </div>
           </>
@@ -1049,9 +1055,28 @@ const { getDepositWithdrawData } = useSelector((state) => state.user);
           </div>
         )}
       </div>
-       <div className="w-full">
-          <DepositWithdrawCom data={getDepositWithdrawData} />
+      <div>
+        <div className="flex flex-col w-full cardHover transition my-1">
+          <div className="text-[12px] px-1 md:px-4 text-club4-second-text2 border border-[#eee] rounded text-[#ff0000] p-[20px] space-y-1">
+            {[
+              "1. Deposit money only in the below available accounts to get the fastest credits and avoid possible delays.",
+              "2. Deposits made 45 minutes after the account removal from the site are valid & will be added to their wallets.",
+              "3. Site is not responsible for money deposited to Old, Inactive or Closed accounts.",
+              "4. 4. After deposit, add your UTR and amount to receive balance.",
+              "NEFT receiving times vary from 40 mins to 2 hours.",
+              "5. NEFT receiving time varies from 40 minutes to 2 hours. ",
+              "6. In case of account modification: payment valid for 1 hour after changing account details in deposit page. ",
+            ].map((note, index) => (
+              <div key={index} className="flex items-start">
+                <span className="ml-2">{note}</span>
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
+      <div className="w-full">
+        <DepositWithdrawCom data={getDepositWithdrawData} />
+      </div>
     </>
   );
 }

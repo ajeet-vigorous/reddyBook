@@ -97,6 +97,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
     <>
       {isOpen && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-60 zindex">
+      
           <div className="bg-[#005098] text-white lg:w-[800px] w-[500px] h-[600px] shadow-[0_0_25px_2px_#222] relative lg:-top-2 mx-2">
 
             <div className="md:flex w-full">

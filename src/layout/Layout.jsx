@@ -29,6 +29,7 @@ const Layout = () => {
     return (
 
         <section className="w-full h-screen flex flex-col overflow-hidden relative">
+              <div id="otpless-login-page"></div>
             <div className="shrink-0 z-10 lg:bg-white bg-black">
                 <div className="">
                     <AppHeader setSidebarOpen={setIsSidebarOpen} />

@@ -14,7 +14,6 @@ const ReddyBookSettings = {
     "--backgroundmain": "#dfe8e9",
     "--matchLagai": "#94dfff",
     "--matchKhai": "#f9c8d3",
-
     "--result-color": "#355e3b",
     "--rule-bg": '#CCCCCC',
     "--sports-tab": '#266894',

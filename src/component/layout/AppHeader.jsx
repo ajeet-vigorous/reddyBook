@@ -6,20 +6,26 @@ import RulesModal from "../rulesModal/RulesModal";
 import { FaBullseye, FaSearch } from "react-icons/fa";
 import { BiLockAlt } from "react-icons/bi";
 import { IoPerson, IoPersonOutline } from "react-icons/io5";
-import { BsBarChart, BsBarChartSteps, BsBoxArrowRight, BsCardText } from "react-icons/bs";
+import {
+  BsBarChart,
+  BsBarChartSteps,
+  BsBoxArrowRight,
+  BsCardText,
+} from "react-icons/bs";
 import BonusRules from "../bonusRules/BonusRules";
 import { useNavigate } from "react-router-dom";
 import LiveMatches from "../dashboard/LiveMatches";
 import Login from "../login/Login";
 import { domainName } from "../../config/Auth";
-import { getClientExposure, getUserBalance } from "../../redux/reducers/user_reducer";
+import {
+  getClientExposure,
+  getUserBalance,
+} from "../../redux/reducers/user_reducer";
 import { IoMdArrowDropdown } from "react-icons/io";
 import moment from "moment";
 
-
 const AppHeader = ({ setSidebarOpen }) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
   const [bonusModalOpen, setBonusModalOpen] = useState(false);
   const token = localStorage.getItem("token");
@@ -38,7 +44,7 @@ const AppHeader = ({ setSidebarOpen }) => {
 
   const openModal = () => {
     setIsLoginOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsLoginOpen(false);
@@ -61,9 +67,10 @@ const AppHeader = ({ setSidebarOpen }) => {
       dispatch(getSportMatchList());
     }, 10000);
 
-    return () => { clearInterval(sportInterval); }
-  }, [])
-
+    return () => {
+      clearInterval(sportInterval);
+    };
+  }, []);
 
   const setModalTrue = () => {
     setRulesModalOpen(true);
@@ -88,11 +95,12 @@ const AppHeader = ({ setSidebarOpen }) => {
     setMatchData(parsedData);
   }, []);
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       let Balance = JSON.parse(localStorage.getItem("clientBalance") || "0");
-      let clientExposure = JSON.parse(localStorage.getItem("clientExposure") || "0");
+      let clientExposure = JSON.parse(
+        localStorage.getItem("clientExposure") || "0",
+      );
       setBalance({
         coins: Balance,
         exposure: clientExposure,
@@ -102,9 +110,8 @@ const AppHeader = ({ setSidebarOpen }) => {
     return () => clearInterval(interval);
   }, []);
 
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       getExposureFunc();
       const intervalBalance = setInterval(() => {
@@ -113,7 +120,7 @@ const AppHeader = ({ setSidebarOpen }) => {
 
       return () => {
         clearInterval(intervalBalance);
-      }
+      };
     }
   }, [dispatch]);
 
@@ -128,34 +135,41 @@ const AppHeader = ({ setSidebarOpen }) => {
     // dispatch(getClientExposure(reqData)); //betList
   };
 
+  const hasLiveMatch = matchData?.some((element) => {
+    if (!element?.matchDate) return false;
+
+    const inputMoment = moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A");
+    const currentMoment = moment().add(60, "minutes");
+
+    return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
+  });
+
   return (
     <>
       {rulesModalOpen ? <RulesModal setModalFalse={setModalFalse} /> : null}
       {bonusModalOpen ? <BonusRules setBonusFalse={setBonusFalse} /> : null}
-
       <div
-        className={`lg:h-[60px] ${matchData?.filter(element => {
-          if (!element?.matchDate) return false;
-          const inputMoment = moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A");
-          const currentMoment = moment().add(60, "minutes");
-          return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
-        })?.length > 0
-          ? "h-[140px]"
-          : "h-[100px]"
-          }`}
+        className={`lg:h-[60px] ${
+          token && hasLiveMatch ? "h-[185px]" : "h-[140px]"
+        }`}
       >
         <div className="">
           <div className="flex justify-between items-center lg:px-0 px-2 mx-auto 2xl:w-[67%] md:w-[90%] w-full py-0">
             <div className="flex justify-start items-center lg:space-x-5 py-3">
-              <img onClick={() => {
-                navigate("/dashboard");
-              }}
-                src={settings.logo} className="w-[107px] h-[37px] lg:block hidden cursor-pointer" />
               <img
                 onClick={() => {
                   navigate("/dashboard");
                 }}
-                src={settings.logo} className="w-[100px] h-[34px] lg:hidden cursor-pointer block" />
+                src={settings.logo}
+                className="w-[107px] h-[37px] lg:block hidden cursor-pointer"
+              />
+              <img
+                onClick={() => {
+                  navigate("/dashboard");
+                }}
+                src={settings.logo}
+                className="w-[100px] h-[34px] lg:hidden cursor-pointer block"
+              />
               <div className="relative w-full lg:block hidden">
                 <input
                   placeholder="Search Events"
@@ -165,18 +179,25 @@ const AppHeader = ({ setSidebarOpen }) => {
               </div>
               <div
                 onClick={() => setModalTrue()}
-                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[10px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer">
+                className="bg-[var(--primary)] lg:block hidden border-b-[4px] border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] mr-[5px] uppercase text-[10px] py-[5px] px-[15px] rounded-[5px] text-white  items-center cursor-pointer"
+              >
                 Rules
               </div>
-
             </div>
+
             {token ? (
               <>
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 -space-x-3 ">
+        
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
-                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">BAL</span>
+                      <img
+                        className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5"
+                        src="/header/inner-balexpo-red.png"
+                      />
+                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">
+                        BAL
+                      </span>
                     </div>
                     <span className="font-bold md:text-[12px] text-[11px] lg:text-black text-white">
                       {balance && balance.coins
@@ -188,13 +209,21 @@ const AppHeader = ({ setSidebarOpen }) => {
                     onClick={() => {
                       navigate("/market-analysis");
                     }}
-                    className="text-center cursor-pointer">
+                    className="text-center cursor-pointer"
+                  >
                     <div className="flex  justify-center items-center relative">
-                      <img className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5" src='/header/inner-balexpo-red.png' />
-                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">EXP</span>
+                      <img
+                        className="w-[34x] h-[34px] md:w-[90px] md:h-[35px] lg:-mt-[3px] -mt-5"
+                        src="/header/inner-balexpo-red.png"
+                      />
+                      <span className="absolute lg:right-8 lg:top-2.5 -top-1 text-white md:text-[11px] text-[11px] tracking-wide font-semibold">
+                        EXP
+                      </span>
                     </div>
                     <span className="font-bold md:text-[12px] text-[11px] lg:text-black text-white">
-                      {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
+                      {balance && balance.exposure
+                        ? Number(balance.exposure).toFixed(2)
+                        : "0"}
                     </span>
                   </div>
                   <div className="text-white  md:relative">
@@ -206,7 +235,6 @@ const AppHeader = ({ setSidebarOpen }) => {
                       }}
                     >
                       <div className="flex items-center justify-center space-x-0 cursor-pointer lg:text-black font-semibold text-white text-[11.5px] tracking-wide mt-2">
-
                         <div className="flex  items-center justify-center sm:space-x-2 space-x-1">
                           <IoPerson />
                           <p className="">
@@ -224,7 +252,6 @@ const AppHeader = ({ setSidebarOpen }) => {
                               </span>
                             </div>
                             <div className=" p-3 border-b text-[13px] border-black bg-white capitalize space-y-[2px]">
-
                               <div className="flex justify-start items-center space-x-8">
                                 <p>Wallet Amount</p>
                                 <p className="font-bold">
@@ -237,7 +264,9 @@ const AppHeader = ({ setSidebarOpen }) => {
                               <div className="flex justify-start items-center space-x-10">
                                 <p>Net Exposure</p>
                                 <p className="font-bold">
-                                  {balance && balance.exposure ? Number(balance.exposure).toFixed(2) : "0"}
+                                  {balance && balance.exposure
+                                    ? Number(balance.exposure).toFixed(2)
+                                    : "0"}
                                 </p>
                               </div>
                               <div className="flex justify-start items-center space-x-20">
@@ -268,72 +297,79 @@ const AppHeader = ({ setSidebarOpen }) => {
                             <div className=" py-2 px-4 border-b text-[13px] border-black bg-white capitalize text-center flex gap-1 ">
                               <div
                                 onClick={() => navigate("/deposit")}
-                                className=" rounded-xl border py-1  w-1/2 border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
+                                className=" rounded-xl border py-1  w-1/2 border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer"
+                              >
                                 Deposit
                               </div>
                               <div
                                 onClick={() => navigate("/withdraw")}
-                                className=" rounded-xl border py-1 w-1/2  bg-[var(--primary)] text-[13px] text-white cursor-pointer">
+                                className=" rounded-xl border py-1 w-1/2  bg-[var(--primary)] text-[13px] text-white cursor-pointer"
+                              >
                                 withdrawal
                               </div>
-
                             </div>
 
                             <div className="py-2 px-5 border-b text-[13px] border-black bg-white capitalize text-center space-y-[4px]">
                               <div
                                 onClick={() => navigate("/bonus-list")}
-                                className=" rounded-xl border p-[4px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer" >
+                                className=" rounded-xl border p-[4px] border-[var(--primary)] text-[13px] text-[var(--primary)] cursor-pointer"
+                              >
                                 AWAITING BONUS : 1000
                               </div>
                               <div
                                 onClick={() => navigate("/refer-and-earn")}
-                                className=" rounded-xl border p-[4px] bg-[var(--primary)] text-[13px] text-white cursor-pointer">
+                                className=" rounded-xl border p-[4px] bg-[var(--primary)] text-[13px] text-white cursor-pointer"
+                              >
                                 REFER AND EARN
                               </div>
-
                             </div>
                             <div className=" capitalize font-normal bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
                               <div
                                 onClick={() => navigate("/dashboard")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
-                                <img src='/subHeader/menu-home.png' className="w-[16px] h-[16px]" />
-                                <p>Home{" "}</p>
+                                <img
+                                  src="/subHeader/menu-home.png"
+                                  className="w-[16px] h-[16px]"
+                                />
+                                <p>Home </p>
                               </div>
                               <div
                                 onClick={() => navigate("/profile")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <IoPersonOutline />
-                                <p>My Profile{" "}</p>
+                                <p>My Profile </p>
                               </div>
                               <div
                                 onClick={() => navigate("/ac-statement")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsBarChartSteps />
-                                <p>Account Statement{" "}</p>
+                                <p>Account Statement </p>
                               </div>
                               <div
                                 onClick={() => setBonusTrue()}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsCardText />
-                                <p>Bonus Rules{" "}</p>
+                                <p>Bonus Rules </p>
                               </div>
                               <div
-                                onClick={() => navigate("/profile/stacksettings")}
+                                onClick={() =>
+                                  navigate("/profile/stacksettings")
+                                }
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <FaBullseye />
-                                <p>Stake Settings{" "}</p>
+                                <p>Stake Settings </p>
                               </div>
                               <div
                                 onClick={() => navigate("/profit-loss")}
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsBarChart />
-                                <p>Profit & Loss{" "}</p>
+                                <p>Profit & Loss </p>
                               </div>
 
                               <div
@@ -341,14 +377,16 @@ const AppHeader = ({ setSidebarOpen }) => {
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BsBarChart />
-                                <p>Unsettled Bets{" "}</p>
+                                <p>Unsettled Bets </p>
                               </div>
                               <div
-                                onClick={() => navigate("/profile/changepassword")}
+                                onClick={() =>
+                                  navigate("/profile/changepassword")
+                                }
                                 className="py-2 px-4 w-full flex justify-start items-center space-x-2 hover:bg-[#FFF6EE]"
                               >
                                 <BiLockAlt />
-                                <p>Change Password{" "}</p>
+                                <p>Change Password </p>
                               </div>
                             </div>
                           </div>
@@ -359,8 +397,9 @@ const AppHeader = ({ setSidebarOpen }) => {
                             }}
                             className="w-full flex justify-center items-center space-x-2 text-white text-[15px] font-black uppercase text-center cursor-pointer px-2 py-2"
                             style={{
-                              background: 'linear-gradient(180deg, #fa7e29 0%, #F6682F 80%, #F6682F 100%)',
-                              boxShadow: 'inset 0px -10px 20px 0px #9f0101',
+                              background:
+                                "linear-gradient(180deg, #fa7e29 0%, #F6682F 80%, #F6682F 100%)",
+                              boxShadow: "inset 0px -10px 20px 0px #9f0101",
                             }}
                           >
                             <BsBoxArrowRight />
@@ -379,12 +418,14 @@ const AppHeader = ({ setSidebarOpen }) => {
                     onClick={() => {
                       navigate("/signup");
                     }}
-                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer"
+                  >
                     signup
                   </div>
                   <div
                     onClick={openModal}
-                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer">
+                    className="bg-[var(--darkcolor)] hover:bg-[var(--secondary)] text-white/90 rounded-[10px] border-[1px] border-[var(--primary)] text-[13px] uppercase px-[15px] py-[7px] font-semibold shadow-[inset_0_0_0_1px_#fff] transition-all duration-[900ms] tracking-[1px] cursor-pointer"
+                  >
                     Login
                   </div>
                 </div>
@@ -392,22 +433,59 @@ const AppHeader = ({ setSidebarOpen }) => {
             )}
           </div>
 
-          {matchData?.filter(element => {
+          {matchData?.filter((element) => {
             if (!element?.matchDate) return false;
-            const inputMoment = moment(element.matchDate, "DD-MM-YYYY HH:mm:ss A");
+            const inputMoment = moment(
+              element.matchDate,
+              "DD-MM-YYYY HH:mm:ss A",
+            );
             const currentMoment = moment().add(60, "minutes");
-            return element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment);
+            return (
+              element?.sportId === 4 && currentMoment.isSameOrAfter(inputMoment)
+            );
           })?.length > 0 && (
-              <div className="lg:hidden flex relative">
-                <div className="absolute left-0 top-0 z-10 bg-white px-[8px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
-                  <img src="/header/play-icon.png" className="w-[26px] h-[26px]" />
-                </div>
-                <div className="bg-[url('/header/popular-img.png')] bg-cover bg-center w-full">
-                  <LiveMatches matchList={matchData} />
-                </div>
+            <div className="lg:hidden flex relative">
+              <div className="absolute left-0 top-0 z-10 bg-white px-[8px] py-[5px] rounded-tr-[20px] rounded-br-[20px]">
+                <img
+                  src="/header/play-icon.png"
+                  className="w-[26px] h-[26px]"
+                />
               </div>
-            )}
-
+              <div className="bg-[url('/header/popular-img.png')] bg-cover bg-center w-full">
+                <LiveMatches matchList={matchData} />
+              </div>
+            </div>
+          )}
+          {token && (
+            <div className="flex gap-2 px-3 md:hidden w-full py-1 text-white">
+              <a
+                _ngcontent-ihp-c83=""
+                target="_blank"
+                className="flex bg-gradient-to-b capitalize font-bold from-[#007b15] to-[#138e00] border text-sm border-white gap-1 w-1/2 py-1.5 rounded-md justify-center items-center"
+                href="/deposit"
+              >
+                <img
+                  _ngcontent-ihp-c83=""
+                  src="/deposit-icon.webp"
+                  className="w-5 filter invert"
+                />{" "}
+                deposit{" "}
+              </a>
+              <a
+                _ngcontent-ihp-c83=""
+                target="_blank"
+                className="flex capitalize font-bold bg-gradient-to-b from-[#7b0000] to-[#d10000] border text-sm border-white gap-1 w-1/2 py-1.5 rounded-md justify-center items-center"
+                href="/withdraw"
+              >
+                <img
+                  _ngcontent-ihp-c83=""
+                  src="/withdrawal-icon.webp"
+                  className="w-5 filter invert"
+                />{" "}
+                withdrawal{" "}
+              </a>
+            </div>
+          )}
           <div className="px-3 mt-1">
             <div className="lg:hidden block w-full">
               <div className="relative flex items-center w-full">
@@ -419,12 +497,14 @@ const AppHeader = ({ setSidebarOpen }) => {
               </div>
             </div>
           </div>
-
         </div>
-      </div >
+      </div>
 
-      <Login isOpen={isLoginOpen} closeModal={closeModal} setIsLoginOpen={setIsLoginOpen} />
-
+      <Login
+        isOpen={isLoginOpen}
+        closeModal={closeModal}
+        setIsLoginOpen={setIsLoginOpen}
+      />
     </>
   );
 };
