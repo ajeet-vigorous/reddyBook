@@ -53,6 +53,7 @@ function Deposit() {
         setAllDetailsByUser(bankDetailsUserData?.data);
         setBankAcountData(bankDetailsUserData?.data?.account);
         setBankAcountUpi(bankDetailsUserData?.data?.upi);
+  
       }
     } catch (error) {
       console.error("Error fetching bank details:", error);
@@ -262,10 +263,10 @@ function Deposit() {
   };
 
   const predefinedValues = [
+    "300",
     "500",
     "1000",
     "2000",
-    "3000",
     "4000",
     "5000",
     "10000",
@@ -392,7 +393,7 @@ function Deposit() {
           <div className=" px-4">
             <a
               passHref={true}
-              href={`https://wa.me/${allDetailsByUser?.whatsappNumber}`}
+              href={`https://wa.me/${allDetailsByUser?.helplineNumber}`}
               title="Whatsapp"
               className=" w-full flex justify-between items-center text-center px-2 bg-[var(--primary)] border border-[var(--primary)] text-white text-xs uppercase leading-[3rem] rounded"
               target="_blank"
@@ -408,12 +409,12 @@ function Deposit() {
             <button
               disabled={
                 !payAccountFiel.amount ||
-                payAccountFiel.amount < 500 ||
+                payAccountFiel.amount < 300 ||
                 payAccountFiel.amount > 500000
               }
               className={`rounded-lg w-full text-sm font-bold uppercase py-3 px-8 transition-all ${
                 !payAccountFiel.amount ||
-                payAccountFiel.amount < 500 ||
+                payAccountFiel.amount < 300 ||
                 payAccountFiel.amount > 500000
                   ? "bg-transparent text-gray-500 cursor-not-allowed border border-gray-300"
                   : "bg-green-800 hover:bg-[--white] hover:text-[--black] text-white hover:border-2 hover:border-green-800"
@@ -483,7 +484,7 @@ function Deposit() {
                   {allDetailsByUser?.crypto &&
                     !isCryptoEmpty(allDetailsByUser.crypto) && (
                       <div
-                        className="flex flex-col items-center px-3 border border-red-600 
+                        className="flex flex-col items-center px-3 border border-gray-300 
                        rounded-lg hover:bg-gray-50 cursor-pointer"
                         onClick={() => {
                           setBankViewModal(false);
@@ -497,6 +498,21 @@ function Deposit() {
                         </div>
                       </div>
                     )}
+
+                  {allDetailsByUser?.whatsappNumber && (
+                    <a
+                      passHref={true}
+                      href={`https://wa.me/${allDetailsByUser?.whatsappNumber}`}
+                      title="Whatsapp"
+                      className="flex justify-center items-center px-3 border border-gray-300 
+                       rounded-lg hover:bg-gray-50 cursor-pointer"
+                      target="_blank"
+                    >
+                      <div className="animation-bounce">
+                        <FaWhatsapp size={30} color="green" />
+                      </div>
+                    </a>
+                  )}
                 </div>
               </>
 
@@ -516,10 +532,6 @@ function Deposit() {
                               opacity: 0.9,
                             }}
                           >
-                            {console.log(
-                              bankAcountData,
-                              "bankAcountDatabankAcountDatabankAcountData",
-                            )}
                             <div className="flex justify-between gap-2 mb-3">
                               <div className="flex justify-start gap-2 ">
                                 <span className="text-[13px] text-[#222222]">

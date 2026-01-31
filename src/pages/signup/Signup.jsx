@@ -295,8 +295,7 @@ function Signup() {
 
             <div className="space-y-5 lg:p-10 p-4 pb-0 bg-transparent border-none shadow-none transition-all duration-300 ease-in-out ">
               {/* Form Inputs (Same as before) */}
-              <div>
-                {/* <label>Name</label> */}
+              {/* <div>
                 <input
                   type="text"
                   name="name"
@@ -309,23 +308,7 @@ function Signup() {
                 {errors.name && (
                   <p className="text-red-500 text-sm">{errors.name}</p>
                 )}
-              </div>
-
-              <div>
-                {/* <label>Username</label> */}
-                <input
-                  type="text"
-                  name="username"
-                  value={user.username}
-                  onChange={handleOnChange}
-                  onKeyPress={handleKeyPress}
-                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
-                  placeholder="Enter Username"
-                />
-                {errors.username && (
-                  <p className="text-red-500 text-sm">{errors.username}</p>
-                )}
-              </div>
+              </div> */}
 
               <div className="mb-4 relative">
                 <div className="relative flex items-center">
@@ -362,8 +345,6 @@ function Signup() {
                     GET OTP
                   </button>
                 )}
-
-                {/* Validation error */}
                 {errors.mobileNo && (
                   <div className="mt-1 text-xs text-[#FF0000]">
                     {errors.mobileNo}
@@ -373,7 +354,6 @@ function Signup() {
 
               {isOtpEnabled && (
                 <div>
-                  {/* <label>OTP</label> */}
                   <input
                     type="text"
                     name="otp"
@@ -388,6 +368,22 @@ function Signup() {
                   )}
                 </div>
               )}
+
+              <div>
+                {/* <label>Username</label> */}
+                <input
+                  type="text"
+                  name="username"
+                  value={user.username}
+                  onChange={handleOnChange}
+                  onKeyPress={handleKeyPress}
+                  className="bg-transparent w-full text-white border-b border-gray-300 rounded-none text-center text-[13px] h-[45px] outline-none focus:outline-none focus:ring-0 focus:bg-black focus:border-[var(--secondary)] focus:text-white "
+                  placeholder="Enter Username"
+                />
+                {errors.username && (
+                  <p className="text-red-500 text-sm">{errors.username}</p>
+                )}
+              </div>
 
               <div>
                 {/* <label>Password</label> */}
@@ -453,17 +449,16 @@ function Signup() {
 
               <a
                 passHref={true}
-                href={`https://wa.me/${domainSetting?.whatsappNumber}`}
+                href={`https://wa.me/${domainSetting?.helplineNumber}`}
                 title="Whatsapp"
                 className=" w-full flex justify-between items-center text-center px-3 border  text-white text-sm uppercase leading-[3rem] rounded"
                 target="_blank"
               >
                 <div> Direct Id via WhatsApp</div>
-                 
-                  <div className="animation-bounce">
-                    <FaWhatsapp size={35} color="green"/>
-                  </div>
-               
+
+                <div className="animation-bounce">
+                  <FaWhatsapp size={35} color="green" />
+                </div>
               </a>
 
               {/* 

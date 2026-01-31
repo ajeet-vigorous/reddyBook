@@ -120,7 +120,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                 {/* Input Fields */}
                 <div className="mb-4">
                   <label className=" text-[10px] mb-1 font-[600] text-gray-200">
-                    USERNAME / MOBILE NUMBER
+                    USERNAME
                   </label>
                   <input
                     type="text"

@@ -171,6 +171,7 @@ const Dashboard = ({}) => {
 
   const [matchData, setMatchData] = useState([]);
   let userID = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
+  const domainData = JSON.parse(localStorage.getItem("clientdomainSetting"));
   const ContactDetails = (() => {
     const data = localStorage.getItem("contact_details");
     try {
@@ -296,7 +297,7 @@ const Dashboard = ({}) => {
             <div className="fixed md:bottom-6 bottom-4 md:right-8  z-30 right-2 mb-8 animate-pulse">
               <a
                 passHref={true}
-                href={`https://wa.me/${ContactDetails?.whatsappNumber}`}
+                href={`https://wa.me/${domainData?.whatsappNumber}`}
                 title="Whatsapp"
                 className="bg-white rounded-full"
                 target="_blank"
