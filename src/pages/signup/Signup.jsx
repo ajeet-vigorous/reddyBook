@@ -54,16 +54,16 @@ function Signup() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!user.mobileNo || user.mobileNo.length !== 10) {
       setErrors({ ...errors, mobileNo: "Mobile number must be 10 digits" });
       return;
     }
 
-    if (!user.name || user.name.length < 3) {
-      setErrors({ ...errors, name: "Name must be at least 3 characters long" });
-      return;
-    }
+    // if (!user.name || user.name.length < 3) {
+    //   setErrors({ ...errors, name: "Name must be at least 3 characters long" });
+    //   return;
+    // }
 
     if (!user.password || user.password.length < 6) {
       setErrors({
@@ -96,7 +96,7 @@ function Signup() {
 
     const payload = {
       domainUrl: window.location.origin,
-      name: user.name.toLowerCase(),
+      // name: user.name.toLowerCase(),
       username: user.username.toLowerCase(),
       mobileNo: `${countryCode}${user.mobileNo}`,
       password: user.password,
