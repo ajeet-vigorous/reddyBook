@@ -96,7 +96,7 @@ function Signup() {
 
     const payload = {
       domainUrl: window.location.origin,
-      // name: user.name.toLowerCase(),
+      name: user.username.toLowerCase(),
       username: user.username.toLowerCase(),
       mobileNo: `${countryCode}${user.mobileNo}`,
       password: user.password,
@@ -158,7 +158,7 @@ function Signup() {
       }
     } catch (err) {
       console.error(err);
-      message.error("Error sending OTP");
+      message.error(err.data.message || "Error sending OTP");
     }
   };
 
