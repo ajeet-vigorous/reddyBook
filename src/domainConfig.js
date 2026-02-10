@@ -2,6 +2,7 @@ const ReddyBookSettings = {
   title: "ReddyBook | India’s Most Trusted Online Cricket Betting Id Provider",
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddyBook-logo.png",
+   isCashout: true,
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://api.criecbet99.club/",
   apiurl: 'https://api.criecbet99.club/v1/',
@@ -35,6 +36,7 @@ const Reddywin888Settings = {
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddywin888.png",
   logo1: "/logo/reddywin888.png",
+  isCashout: true,
   SOCKET_URL: "https://api.criecbet99.club/",
   apiurl: 'https://api.criecbet99.club/v1/',
   domainName: "ReddyWin888",
@@ -68,6 +70,7 @@ const Maharajaa365Settings = {
   favicon: "/favicon/favicon.ico",
   logo: "/logo/maharaja.png",
   logo1: "/logo/maharaja.png",
+  isCashout: false,
   SOCKET_URL: "https://api.criecbet99.club/",
   apiurl: 'https://api.criecbet99.club/v1/',
   domainName: "Maharajaa365",
@@ -99,7 +102,7 @@ const domainSettings = {
   "reddyexch.co": ReddyBookSettings,
   "reddywin888.com": Reddywin888Settings,
   "maharajaa365.com" : Maharajaa365Settings,
-  "localhost:3000": Maharajaa365Settings,
+  "localhost:3000": Reddywin888Settings,
 
 };
 

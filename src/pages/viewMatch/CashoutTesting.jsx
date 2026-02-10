@@ -138,6 +138,7 @@
 
 
 import React, { useEffect, useState, useMemo } from 'react';
+import settings from '../../domainConfig';
 
 const CashOutSystem = (props) => {
   const {
@@ -309,6 +310,7 @@ const CashOutSystem = (props) => {
 
   const isCashoutAvailable = cashoutData && !cashoutPerformed;
 
+  if (!settings.isCashout)  return
   return (
     <button
       onClick={handleCashout}
