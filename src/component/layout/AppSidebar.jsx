@@ -142,22 +142,22 @@ let userInfo = JSON.parse(localStorage.getItem(`user_info_${domainName}`));
 
 
     if (clickedItem?.text === "Casino") {
-      if(userInfo?.data?.isDemoClient){
- message.error("Demo User not allowed to play Casino. Play only with Real ID.");
-      }else{
+//       if(userInfo?.data?.isDemoClient){
+//  message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+//       }else{
       navigate("/casino/99998?name=all&gameName=dragon tiger");
             return;
-      }
+      
 
 
     }
     if (clickedItem?.text === "Sports Book") {
-            if(userInfo?.data?.isDemoClient){
- message.error("Demo User not allowed to play Casino. Play only with Real ID.");
-      }else{
+//             if(userInfo?.data?.isDemoClient){
+//  message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+//       }else{
       navigate("/iframe-casino/550000");
       return;
-      }
+      
    
     }
     if (clickedItem?.text === "Horse Racing") {

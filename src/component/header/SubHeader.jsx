@@ -36,11 +36,11 @@ const SubHeader = ({ setSidebarOpen }) => {
 
   const handleClick = (item) => {
     if (item.url) {
-          if(item.isDemo){
- message.error("Demo User not allowed to play Casino. Play only with Real ID.");
-    }else{
+//           if(item.isDemo){
+//  message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+//     }else{
+    // }
     navigate(item.url);
-    }
       // navigate(item.url);
       setActiveBar(item.id);
       setNavbarOpen(!navbarOpen);

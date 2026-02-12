@@ -19,11 +19,11 @@ import { message } from "antd";
 
 function Providers({ name, data, userInfo }) {
     const handleResponseCasino = (product) => {
-                    if(userInfo.data.isDemoClient){
- message.error("Demo User not allowed to play Casino. Play only with Real ID.");
-    }else{
-            window.location.href = `/casino/99998?name=${product?.category}&gameName=all`;
-    }
+//                     if(userInfo.data.isDemoClient){
+//  message.error("Demo User not allowed to play Casino. Play only with Real ID.");
+//     }else{
+//     }
+    window.location.href = `/casino/99998?name=${product?.category}&gameName=all`;
 
 
     };

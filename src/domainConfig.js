@@ -2,7 +2,7 @@ const ReddyBookSettings = {
   title: "ReddyBook | India’s Most Trusted Online Cricket Betting Id Provider",
   favicon: "/favicon/favicon.ico",
   logo: "/logo/reddyBook-logo.png",
-   isCashout: true,
+  isCashout: true,
   logo1: "/logo/silver-reddyBook.png",
   SOCKET_URL: "https://api.criecbet99.club/",
   apiurl: 'https://api.criecbet99.club/v1/',
@@ -136,8 +136,16 @@ const Gameon247Settings = {
 const domainSettings = {
   "reddyexch.co": ReddyBookSettings,
   "reddywin888.com": Reddywin888Settings,
-  "maharajaa365.com" : Maharajaa365Settings,
-  "gameon247.co" : Gameon247Settings,
+  "maharajaa365.com": Maharajaa365Settings,
+  "gameon247.co": Gameon247Settings,
+
+
+
+
+
+
+
+
   "localhost:3000": Gameon247Settings,
 
 };
