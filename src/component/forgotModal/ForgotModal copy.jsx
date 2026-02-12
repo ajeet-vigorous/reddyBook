@@ -73,19 +73,25 @@ function ForgotModal({ closeFModal }) {
   const changePassword = async () => {
     if (handleValidation()) {
       const data = {
+        mobileNo: user.mobileNo,
+        otp: user.otp,
         password: user.password,
-        confirmPassword: user.confirmPassword,
+        // confirmPassword: user.confirmPassword,
       };
+      console.log(res);
+      return null;
 
-      const res = await apiCall("POST", "user/updateUserPassword", data);
+      const res = await apiCall("POST", "website/forgetPassword", data);
       if (res?.error === false) {
         message.success(res?.message || "OTP sent successfully");
-        window.location.href = "/dashboard"
+        setTimeout(() => {
+
+          window.location.href = "/dashboard";
+        }, 1000)
       } else {
         message.error(res?.message || "Failed to send OTP");
       }
 
-      
       // dispatch(updatePassword(data)).then((req) => {
       //   console.log(res, "ggggggggg");
       //   return null;
