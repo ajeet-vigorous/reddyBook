@@ -158,18 +158,18 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                   </label>
                 </div>
 
-                <div className="text-center my-1 cursor-pointer">
-                  <a
+                <div className="text-center my-1 text-sm cursor-pointer" onClick={openFModal}>
+                  {/* <a
                     passHref={true}
                     href={`https://wa.me/${domainData?.whatsappNumber}`}
                     title="Whatsapp"
                     className="bg-white rounded-full text-white text-sm underline"
                     target="_blank"
-                  >
-                   
-                      <p>Forgot Password? Contact on WhatsApp</p>
-               
-                  </a>
+                  >  */}
+
+                  <p>Forgot Password</p>
+
+                  {/* </a> */}
                 </div>
 
                 <button

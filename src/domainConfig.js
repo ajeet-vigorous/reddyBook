@@ -98,11 +98,47 @@ const Maharajaa365Settings = {
   }
 };
 
+
+
+const Gameon247Settings = {
+  title: "gameon247 | India’s Most Trusted Online Cricket Betting Id Provider",
+  favicon: "/favicon/favicon.ico",
+  logo: "/logo/gameon247.png",
+  logo1: "/logo/gameon247.png",
+  isCashout: true,
+  SOCKET_URL: "https://api.criecbet99.club/",
+  apiurl: 'https://api.criecbet99.club/v1/',
+  domainName: "gameon247",
+  colors: {
+    "--primary": "#C10930",
+    "--secondary": "#6D081D",
+    "--darkcolor": "#343435",
+    "--darkred": "#8b0000",
+    "--backgroundmain": "#dfe8e9",
+    "--matchLagai": "#94dfff",
+    "--matchKhai": "#f9c8d3",
+    "--result-color": "#355e3b",
+    "--rule-bg": '#CCCCCC',
+    "--sports-tab": '#266894',
+    "--suspended-color": 'rgba(0,0,0,0.7)',
+    "--blink-color": "#fdcf13",
+    "--success-color": "#086f3f"
+  },
+  demoCredentials: {
+    username: "demo",
+    password: "1122",
+    isClient: true,
+    isDemoClient: true,
+    host: window.location.host,
+  }
+};
+
 const domainSettings = {
   "reddyexch.co": ReddyBookSettings,
   "reddywin888.com": Reddywin888Settings,
   "maharajaa365.com" : Maharajaa365Settings,
-  "localhost:3000": Reddywin888Settings,
+  "gameon247.co" : Gameon247Settings,
+  "localhost:3000": Gameon247Settings,
 
 };
 
