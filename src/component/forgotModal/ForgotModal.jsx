@@ -71,38 +71,30 @@ function ForgotModal({ closeFModal }) {
   };
 
   const changePassword = async () => {
-    if (handleValidation()) {
-      const data = {
-        mobileNo: user.mobileNo,
-        otp: user.otp,
-        password: user.password,
-        // confirmPassword: user.confirmPassword,
-      };
+  if (!handleValidation()) return;
 
-      const res = await apiCall("POST", "website/forgetPassword", data);
-      if (res?.error === false) {
-        message.success(res?.message || "OTP sent successfully");
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1000);
-      } else {
-        message.error(res?.message || "Failed to send OTP");
-      }
+  try {
+    const data = {
+      mobileNo: user.mobileNo,
+      otp: user.otp,
+      password: user.password,
+    };
+    const res = await apiCall("POST", "website/forgetPassword", data);
+    console.log(res, "API Response");
 
-      // dispatch(updatePassword(data)).then((req) => {
-      //   console.log(res, "ggggggggg");
-      //   return null;
-      //   if (req.meta.requestStatus === "fulfilled") {
-      //     message.success(req?.payload?.message);
-      //     setTimeout(() => {
-      //       navigate("/dashboard");
-      //     }, 1000);
-      //   } else {
-      //     console.error(req?.payload, "Password update failed.");
-      //   }
-      // });
+    if (res?.error === false) {
+      message.success(res?.message || "Password changed successfully");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
+    } else {
+      message.error(res?.message || "Failed to change password");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    message.error(error?.data?.message || "Something went wrong. Please try again.");
+  }
+};
 
   const handleValidation = () => {
     let formIsValid = true;
