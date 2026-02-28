@@ -409,13 +409,13 @@ function Deposit() {
             <button
               disabled={
                 !payAccountFiel.amount ||
-                payAccountFiel.amount < 300 ||
-                payAccountFiel.amount > 500000
+                payAccountFiel.amount < allDetailsByUser?.account?.fromAmount ||
+                payAccountFiel.amount > allDetailsByUser?.account?.toAmount
               }
               className={`rounded-lg w-full text-sm font-bold uppercase py-3 px-8 transition-all ${
                 !payAccountFiel.amount ||
-                payAccountFiel.amount < 300 ||
-                payAccountFiel.amount > 500000
+                payAccountFiel.amount < allDetailsByUser?.account?.fromAmount ||
+                payAccountFiel.amount > allDetailsByUser?.account?.toAmount
                   ? "bg-transparent text-gray-500 cursor-not-allowed border border-gray-300"
                   : "bg-green-800 hover:bg-[--white] hover:text-[--black] text-white hover:border-2 hover:border-green-800"
               }`}
