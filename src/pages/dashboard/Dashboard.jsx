@@ -25,6 +25,7 @@ import ReddybookCasino from "../../component/CasinoJson/Reddybook.json";
 import GameSlider from "../../component/casinoSlider/GameSlider";
 import { domainName } from "../../config/Auth";
 import { apiCall } from "../../config/HTTP";
+import settings from "../../domainConfig";
 
 export const sportlistArray = [
   {
@@ -292,9 +293,9 @@ const Dashboard = ({}) => {
             sportName="Tennis"
           />
         </div>
-        {token && (
+        {(settings.domainName === "gameon247" || token) && (
           <div className="mb-8">
-            <div className="fixed md:bottom-6 bottom-4 md:right-8  z-30 right-2 mb-8 animate-pulse">
+            <div className="fixed md:bottom-6 bottom-4 md:right-8 z-30 right-2 mb-8 animate-pulse">
               <a
                 passHref={true}
                 href={`https://wa.me/${domainData?.whatsappNumber}`}
@@ -302,7 +303,12 @@ const Dashboard = ({}) => {
                 className="bg-white rounded-full"
                 target="_blank"
               >
-                <img src="/wp_support.webp" alt="erer" width={80} height={80} />
+                <img
+                  src="/wp_support.webp"
+                  alt="whatsapp-support"
+                  width={80}
+                  height={80}
+                />
               </a>
             </div>
           </div>

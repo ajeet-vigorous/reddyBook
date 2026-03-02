@@ -305,6 +305,12 @@ function Deposit() {
     //     setCopiedField(null);
     // }, 1500);
   };
+
+  const amount = Number(payAccountFiel.amount);
+const min = Number(allDetailsByUser?.account?.fromAmount);
+const max = Number(allDetailsByUser?.account?.toAmount);
+
+const isDisabled = !amount || amount < min || amount > max;
   return (
     <>
       <div>
@@ -406,23 +412,17 @@ function Deposit() {
             </a>
           </div>
           <div className="flex p-3 justify-end">
-            <button
-              disabled={
-                !payAccountFiel.amount ||
-                payAccountFiel.amount < allDetailsByUser?.account?.fromAmount ||
-                payAccountFiel.amount > allDetailsByUser?.account?.toAmount
-              }
-              className={`rounded-lg w-full text-sm font-bold uppercase py-3 px-8 transition-all ${
-                !payAccountFiel.amount ||
-                payAccountFiel.amount < allDetailsByUser?.account?.fromAmount ||
-                payAccountFiel.amount > allDetailsByUser?.account?.toAmount
-                  ? "bg-transparent text-gray-500 cursor-not-allowed border border-gray-300"
-                  : "bg-green-800 hover:bg-[--white] hover:text-[--black] text-white hover:border-2 hover:border-green-800"
-              }`}
-              onClick={payment}
-            >
-              Continue
-            </button>
+<button
+  disabled={isDisabled}
+  className={`rounded-lg w-full text-sm font-bold uppercase py-3 px-8 transition-all ${
+    isDisabled
+      ? "bg-transparent text-gray-500 cursor-not-allowed border border-gray-300"
+      : "bg-green-800 hover:bg-[--white] hover:text-[--black] text-white hover:border-2 hover:border-green-800"
+  }`}
+  onClick={payment}
+>
+  Continue
+</button>
           </div>
         </div>
 
@@ -1074,8 +1074,7 @@ function Deposit() {
               "1. Deposit money only in the below available accounts to get the fastest credits and avoid possible delays.",
               "2. Deposits made 45 minutes after the account removal from the site are valid & will be added to their wallets.",
               "3. Site is not responsible for money deposited to Old, Inactive or Closed accounts.",
-              "4. 4. After deposit, add your UTR and amount to receive balance.",
-              "NEFT receiving times vary from 40 mins to 2 hours.",
+              "4. After deposit, add your UTR and amount to receive balance.",
               "5. NEFT receiving time varies from 40 minutes to 2 hours. ",
               "6. In case of account modification: payment valid for 1 hour after changing account details in deposit page. ",
             ].map((note, index) => (

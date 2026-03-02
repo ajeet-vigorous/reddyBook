@@ -316,12 +316,12 @@ const AppHeader = ({ setSidebarOpen }) => {
                               >
                                 AWAITING BONUS : 1000
                               </div>
-                              <div
+                              {/* <div
                                 onClick={() => navigate("/refer-and-earn")}
                                 className=" rounded-xl border p-[4px] bg-[var(--primary)] text-[13px] text-white cursor-pointer"
                               >
                                 REFER AND EARN
-                              </div>
+                              </div> */}
                             </div>
                             <div className=" capitalize font-normal bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
                               <div
