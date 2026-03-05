@@ -29,13 +29,27 @@ const WithDraw = () => {
   const [eWalletErrors, setEWalletErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeAmount, setActiveAmount] = useState(null);
-
+  const [allDetailsByUser, setAllDetailsByUser] = useState({});
+  const bankDetailsUserDataFun = async () => {
+    try {
+      const bankDetailsUserData = await apiCall(
+        "POST",
+        "website/getBankDetailsByUserId",
+      );
+      if (bankDetailsUserData?.data) {
+        setAllDetailsByUser(bankDetailsUserData?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching bank details:", error);
+    }
+  };
   useEffect(() => {
     let reqData = {
       reqType: "withdraw",
     };
     dispatch(getDepositWithdraw(reqData));
     getBankDetails();
+    bankDetailsUserDataFun();
   }, []);
   const dispatch = useDispatch();
   const handleTabChange = (tab) => {
@@ -114,14 +128,39 @@ const WithDraw = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const validateBankTransfer = () => {
-    const errors = {};
-    if (!bankAmount) errors.amount = "Amount is required";
-    if (!bankAmount || bankAmount < 300 || bankAmount > 500000) {
-      errors.amount = "Amount must be between ₨300 and ₨5,00,000.";
+  // const validateBankTransfer = () => {
+  //   const errors = {};
+  //   if (!bankAmount) errors.amount = "Amount is required";
+  //   if (!bankAmount || bankAmount < 300 || bankAmount > 500000) {
+  //     errors.amount = "Amount must be between ₨300 and ₨5,00,000.";
+  //   }
+  //   setErrors(errors);
+  //   return Object.keys(errors).length === 0;
+  // };
+
+
+    const validateBankTransfer = () => {
+    const amount = Number(bankAmount);
+    const minAmount = Number(allDetailsByUser?.account?.fromAmount);
+    const maxAmount = Number(allDetailsByUser?.account?.toAmount);
+
+    if (!amount) {
+      setErrors({ amount: "Amount is required" });
+      return false;
     }
-    setErrors(errors);
-    return Object.keys(errors).length === 0;
+
+    if (amount < minAmount) {
+      setErrors({ amount: `Amount must be at least ${minAmount}` });
+      return false;
+    }
+
+    if (amount > maxAmount) {
+      setErrors({ amount: `Amount must not exceed ${maxAmount}` });
+      return false;
+    }
+
+    setErrors({});
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -258,6 +297,13 @@ const WithDraw = () => {
   const matchlistLocal = localStorage.getItem("matchList")
     ? JSON.parse(localStorage.getItem("matchList"))
     : null;
+
+  const amount = Number(bankAmount);
+  const min = Number(allDetailsByUser?.account?.fromAmount);
+  const max = Number(allDetailsByUser?.account?.toAmount);
+
+  const isDisabled = !amount || amount < min || amount > max;
+
   return (
     <>
       <div className="bg-white text-black  md:max-w-5xl w-full mx-auto ">
@@ -563,12 +609,6 @@ const WithDraw = () => {
           </>
         )}
       </div>
-
-      
-
-
-
-
 
       <div>
         <div className="flex flex-col w-full cardHover transition my-1">
