@@ -138,15 +138,7 @@ const domainSettings = {
   "reddywin888.com": Reddywin888Settings,
   "maharajaa365.com": Maharajaa365Settings,
   "gameon247.co": Gameon247Settings,
-
-
-
-
-
-
-
-
-  "localhost:3000": Gameon247Settings,
+  "localhost:3000": ReddyBookSettings,
 
 };
 

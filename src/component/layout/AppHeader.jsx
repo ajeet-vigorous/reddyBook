@@ -13,7 +13,7 @@ import {
   BsCardText,
 } from "react-icons/bs";
 import BonusRules from "../bonusRules/BonusRules";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LiveMatches from "../dashboard/LiveMatches";
 import Login from "../login/Login";
 import { domainName } from "../../config/Auth";
@@ -26,6 +26,7 @@ import moment from "moment";
 
 const AppHeader = ({ setSidebarOpen }) => {
   const dispatch = useDispatch();
+    const location = useLocation();
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
   const [bonusModalOpen, setBonusModalOpen] = useState(false);
   const token = localStorage.getItem("token");
@@ -51,6 +52,19 @@ const AppHeader = ({ setSidebarOpen }) => {
   };
 
   useEffect(() => {
+    if (token && user && user?.data?.userType != "client") {
+      localStorage.clear();
+      window.location.href = "/dashboard";
+    }
+    if (token && settings.domainName === "gameon247" && user?.data?.isPasswordChanged === false) {
+      if (location.pathname !== "/profile/changepassword") {
+        navigate("/profile/changepassword");
+      }
+    }
+  }, [location.pathname]);
+
+  
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (myRef.current && !myRef.current.contains(event.target)) {
         setClickedOutside(false);
@@ -63,6 +77,7 @@ const AppHeader = ({ setSidebarOpen }) => {
   }, []);
 
   useEffect(() => {
+    dispatch(getSportMatchList());
     const sportInterval = setInterval(() => {
       dispatch(getSportMatchList());
     }, 10000);
@@ -188,7 +203,6 @@ const AppHeader = ({ setSidebarOpen }) => {
             {token ? (
               <>
                 <div className="uppercase flex md:space-x-3 sm:space-x-2 -space-x-3 ">
-        
                   <div className="text-center cursor-pointer">
                     <div className="flex justify-center items-center relative">
                       <img
@@ -316,12 +330,12 @@ const AppHeader = ({ setSidebarOpen }) => {
                               >
                                 AWAITING BONUS : 1000
                               </div>
-                              {/* <div
+                              {settings.domainName == 'gameon247' &&<div
                                 onClick={() => navigate("/refer-and-earn")}
                                 className=" rounded-xl border p-[4px] bg-[var(--primary)] text-[13px] text-white cursor-pointer"
                               >
                                 REFER AND EARN
-                              </div> */}
+                              </div>}
                             </div>
                             <div className=" capitalize font-normal bg-white cursor-pointer space-y-1 text-[#212529] text-[12px]">
                               <div
@@ -392,8 +406,8 @@ const AppHeader = ({ setSidebarOpen }) => {
                           </div>
                           <div
                             onClick={() => {
-                              navigate("/dasboard");
                               localStorage.clear();
+                              navigate("/dashboard");
                             }}
                             className="w-full flex justify-center items-center space-x-2 text-white text-[15px] font-black uppercase text-center cursor-pointer px-2 py-2"
                             style={{

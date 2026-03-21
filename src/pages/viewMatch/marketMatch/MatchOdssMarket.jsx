@@ -38,6 +38,8 @@ const MatchOddsComponent = ({
 
   return (
     <>
+    {console.log(betSlipData, "betSlipDatabetSlipDatabetSlipDatabetSlipDatabetSlipDatabetSlipDatabetSlipData")
+    }
       {Object.values(finalSocket).map(
         (element, index) =>
           element.marketType === "Match Odds" && (
@@ -396,8 +398,8 @@ const MatchOddsComponent = ({
                             })()}
                         </div>
                       </div>
-                      {betSlipData?.oddsType === "Match Odds" &&
-                        elementtemp?.selectionId ===
+                      {betSlipData?.oddsType == "Match Odds" &&
+                        elementtemp?.selectionId ==
                           betSlipData?.selectionId && (
                           <PlaceBetMobile
                             openBets={openBets}

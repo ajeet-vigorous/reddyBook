@@ -31,6 +31,7 @@ export default function PlaceBetMobile(props) {
     isFetch,
     isMatchCoin,
   } = props;
+
   const updateStackOnclic = (input) => {
     const numericInput = parseFloat(input);
     if (!isNaN(numericInput)) {
@@ -222,7 +223,6 @@ export default function PlaceBetMobile(props) {
     betSlipData.oldPos = betSlipData.position;
     betSlipData.position = positionArray;
   };
-
   const handleClear = () => {
     setStack(0);
     betSlipData.stake = 0;
@@ -258,9 +258,60 @@ export default function PlaceBetMobile(props) {
                     </div>
                 </div> */}
         <div className="flex  justify-between items-center space-x-1 text-black px-2 pt-2.5">
-          {/* <div className='p-1 font-medium text-[12px] capitalize'>
-                        {betSlipData.name}
-                    </div> */}
+          <div className="p-1 font-medium text-[12px] capitalize">
+            {betSlipData.name}
+          </div>
+          <div className="flex">
+            {Array?.isArray(betSlipData?.nameOther) &&
+            betSlipData.nameOther.length <= 3
+              ? betSlipData?.nameOther?.map((other, index) => (
+                  <React.Fragment key={index}>
+                    <div className="text-sm font-bold pr-2">
+                      {betSlipData.oddsType == "Match Odds" ||
+                      betSlipData.oddsType == "Tied Match" ? (
+                        <span
+                          className={`${
+                            !isNaN(betSlipData.position[other.selectionId]) &&
+                            parseFloat(betSlipData.position[other.selectionId])
+                              .toFixed(2)
+                              .replace(/\.?0+$/, "") < 0
+                              ? "text-red-500"
+                              : "text-green-700"
+                          } font-bold col-12 text-center`}
+                        >
+                          {!isNaN(betSlipData.position[other.selectionId])
+                            ? parseFloat(
+                                betSlipData.position[other.selectionId],
+                              )
+                                .toFixed(2)
+                                .replace(/\.?0+$/, "")
+                            : ""}
+                        </span>
+                      ) : betSlipData.oddsType == "fancy" ? null : (
+                        <span
+                          className={`${
+                            !isNaN(betSlipData.position[other.selectionid]) &&
+                            parseFloat(betSlipData.position[other.selectionid])
+                              .toFixed(2)
+                              .replace(/\.?0+$/, "") < 0
+                              ? "text-red-500"
+                              : "text-green-700"
+                          } font-bold col-12 text-center`}
+                        >
+                          {!isNaN(betSlipData.position[other.selectionid])
+                            ? parseFloat(
+                                betSlipData.position[other.selectionid],
+                              )
+                                .toFixed(2)
+                                .replace(/\.?0+$/, "")
+                            : ""}
+                        </span>
+                      )}
+                    </div>
+                  </React.Fragment>
+                ))
+              : null}
+          </div>
           {/* <div className='text-black text-[12px]'>Profit: 0</div> */}
           {/* <div className="bg-white my-1 rounded flex divide-x divide-gray-300">
                             <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={decreaseCount}>-</span>
@@ -334,7 +385,8 @@ export default function PlaceBetMobile(props) {
               <button
                 key={chip}
                 className="flex px-1.5 py-1 justify-center items-center bg-white text-black !border-0 "
-                onClick={() => updateStackOnclic(item)}
+                // onClick={() => updateStackOnclic(item)}
+                onClick={() => arrayData(item, true)}
               >
                 <span className="text-green-500 text-sm font-[700]"> + </span>{" "}
                 <span className="text-black text-[12px] font-[500]">

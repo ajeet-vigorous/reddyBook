@@ -42,7 +42,7 @@ export function BetPlaceDesktop(props) {
   const myArray = Object.values(betChipsData);
   const modalRef = useRef();
   const [positions, setPositionData] = useState(0);
-  console.log(editStake,'editStake');
+
 
   useEffect(() => {
     if (
@@ -310,7 +310,9 @@ export function BetPlaceDesktop(props) {
               </div>
             </div>
 
-            {/* <td className="text-right ">
+           <td className="text-right ">
+              {console.log(betSlipData, "betSlipDatabetSlipDatabetSlipData")
+        }
               {Array?.isArray(betSlipData?.nameOther) &&
                 betSlipData.nameOther.length <= 3
                 ? betSlipData.nameOther.map((other, index) => (
@@ -362,7 +364,7 @@ export function BetPlaceDesktop(props) {
                   </React.Fragment>
                 ))
                 : null}
-            </td> */}
+            </td> 
           </tr>
           <tr className="">
             <td colSpan={4}>

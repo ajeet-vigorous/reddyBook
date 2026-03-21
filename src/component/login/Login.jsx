@@ -59,7 +59,11 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
         if (!data.error) {
           closeModal();
           if (data?.payload?.userinfo?.data?.isPasswordChanged === false) {
-            window.location.href = "/dashboard";
+            if (settings.domainName === "gameon247") {
+              window.location.href = "/profile/changepassword";
+            } else {
+              window.location.href = "/dashboard";
+            }
             localStorage.setItem("isRedirected", false);
           } else {
             window.location.href = "/dashboard";
@@ -81,6 +85,7 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
       .then((data) => {
         if (!data.error) {
           closeModal();
+          // return null
           window.location.href = "/dashboard";
           // navigate("/dashboard");
         } else {
@@ -158,7 +163,10 @@ function Login({ isOpen, closeModal, setIsLoginOpen }) {
                   </label>
                 </div>
 
-                <div className="text-center my-1 text-sm cursor-pointer" onClick={openFModal}>
+                <div
+                  className="text-center my-1 text-sm cursor-pointer"
+                  onClick={openFModal}
+                >
                   {/* <a
                     passHref={true}
                     href={`https://wa.me/${domainData?.whatsappNumber}`}

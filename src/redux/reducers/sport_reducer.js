@@ -31,7 +31,6 @@ const sportSlice = createSlice({
     builder
       .addCase(getSportMatchList.pending, (state) => {
         state.loading = true;
-        state.sportMatchList = [];
       })
       .addCase(getSportMatchList.fulfilled, (state, action) => {
         state.loading = false;

@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 import BlinkingComponent from "./BlinkingComponent";
 import moment from "moment-timezone";
 import { apiCall, httpPost } from "../../config/HTTP";
+import { setSecureItem, getSecureItem } from "../../global/secureStorage";
 import { BetPlaceDesktop } from "../../component/betPlaceDesktop/BetPlaceDesktop";
 import PlaceBetMobile from "../../component/betplaceMobile/PlaceBetMobile";
 import { message } from "antd";
@@ -14,6 +15,7 @@ import { FaTimes, FaTv } from "react-icons/fa";
 import MatchDetailsHeaderSection from "../../component/matchDetailsHeaderSection/MatchDetailsHeaderSection";
 import CashOutSystem from "./CashoutTesting";
 import FormateValueNumber from "../../component/FormateValueNumber/FormateValueNumber";
+import { getUserBalance } from "../../redux/reducers/user_reducer";
 
 
 
@@ -48,6 +50,13 @@ const ViewMatchRacing = () => {
     const scrollRef = useRef(null);
     const [isConnected, setIsConnected] = useState(false);
     const [socketState, setSocketState] = useState(null);
+    const socketRef = useRef(null);
+    const inplayMatchRef = useRef(null);
+    const cacheIntervalRef = useRef(null);
+    const isConnectedRef = useRef(false);
+    const lastActiveTimeRef = useRef(Date.now());
+    const wakeCheckRef = useRef(null);
+    const heartbeatRef = useRef(null);
     const [positionObj, setPositionObj] = useState({});
     const [positioBetData, setPositionBetData] = useState({});
     const [fancyPositionObj, setFancyPositionObj] = useState({});
@@ -109,48 +118,99 @@ const ViewMatchRacing = () => {
     }, [])
 
 
-    let data = localStorage.getItem(`${marketId}_BookmakerData`)
-    const setDataFromLocalstorage = async (marketId) => {
-        if (data) {
-            setMatchScoreDetails(JSON.parse(data).result);
+    const setDataFromLocalstorage = async () => {
+        const parsed = getSecureItem(`_cachedBookmakerData`);
+        if (parsed) {
+            if (parsed._mid === marketId && parsed.result) {
+                setMatchScoreDetails(parsed.result);
+            }
         } else {
             setMatchScoreDetails("");
         }
     }
 
     const setMatchDataFromLocalstorage = async () => {
-        let data = localStorage.getItem(`${eventId}_MatchOddsData`)
-
-
-        if (!data) {
-            return null
+        const parsed = getSecureItem(`_cachedMatchOddsData`);
+        if (!parsed) {
+            return null;
         }
-        else {
-            setFinalSocketDetails(JSON.parse(data));
+        if (parsed._eid === eventId && parsed.data) {
+            filterData(parsed.data);
         }
     }
 
 
+    // Keep inplayMatchRef in sync so visibility handler always has latest data
+    useEffect(() => {
+        inplayMatchRef.current = inplayMatch;
+    }, [inplayMatch]);
+
     useEffect(() => {
         setDataFromLocalstorage()
         setMatchDataFromLocalstorage()
+
+        // Reconnect socket fresh - used by all resume events
+        const reconnectSocket = () => {
+            const matchData = inplayMatchRef.current;
+            if (matchData) {
+                cleanupWebSocket();
+                if (matchData?.socketPerm) {
+                    callSocket(matchData?.socketUrl, matchData?.sportId);
+                } else {
+                    callCache(matchData?.cacheUrl);
+                }
+            }
+        };
+
+        // When tab becomes visible again (mobile unlock, tab switch)
         const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible' && isConnected && inplayMatch?.data?.socketUrl) {
-                callSocket(inplayMatch?.data?.socketUrl);
+            if (document.visibilityState === 'visible') {
+                const now = Date.now();
+                const sleepDuration = now - lastActiveTimeRef.current;
+                if (!isConnectedRef.current || sleepDuration > 30000) {
+                    reconnectSocket();
+                }
+                lastActiveTimeRef.current = now;
             } else if (document.visibilityState === 'hidden') {
+                lastActiveTimeRef.current = Date.now();
                 cleanupWebSocket();
             }
         };
 
+        // Wake-up detection timer — catches cases where visibilitychange doesn't fire
+        let lastTick = Date.now();
+        wakeCheckRef.current = setInterval(() => {
+            const now = Date.now();
+            const gap = now - lastTick;
+            lastTick = now;
+            if (gap > 10000 && document.visibilityState === 'visible') {
+                if (!isConnectedRef.current || !socketRef.current?.connected) {
+                    reconnectSocket();
+                }
+            }
+        }, 5000);
+
+        // When device comes back online after network loss
+        const handleOnline = () => {
+            if (!isConnectedRef.current) {
+                reconnectSocket();
+            }
+        };
+
         document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('focus', handleVisibilityChange);
 
         setupAsyncActions(marketId);
 
         return () => {
             document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('focus', handleVisibilityChange);
+            if (wakeCheckRef.current) clearInterval(wakeCheckRef.current);
             cleanupWebSocket();
         };
-    }, [eventId, marketId, isConnected]);
+    }, [eventId, marketId]);
 
     const [oddsbetdata, setOddsbetData] = useState();
     const [incomletedFancy, setIncompletedFancy] = useState();
@@ -268,10 +328,22 @@ const ViewMatchRacing = () => {
     };
 
     const cleanupWebSocket = () => {
-        if (socketState) {
-            socketState.disconnect();
-            setSocketState(null);
+        if (socketRef.current) {
+            socketRef.current.removeAllListeners();
+            socketRef.current.disconnect();
+            socketRef.current = null;
         }
+        if (heartbeatRef.current) {
+            clearInterval(heartbeatRef.current);
+            heartbeatRef.current = null;
+        }
+        if (cacheIntervalRef.current) {
+            clearInterval(cacheIntervalRef.current);
+            cacheIntervalRef.current = null;
+        }
+        setSocketState(null);
+        setIsConnected(false);
+        isConnectedRef.current = false;
     };
 
 
@@ -348,47 +420,72 @@ const ViewMatchRacing = () => {
 
 
     const callSocket = async (socketUrl, matchId) => {
-
-
-        if (socketState && socketState.connected) {
-            return;
-        }
         try {
+            // Always clean up old socket before creating new one
+            if (socketRef.current) {
+                socketRef.current.removeAllListeners();
+                socketRef.current.disconnect();
+                socketRef.current = null;
+            }
+            if (heartbeatRef.current) {
+                clearInterval(heartbeatRef.current);
+                heartbeatRef.current = null;
+            }
+
             const socket = io.connect(socketUrl, {
                 transports: ["websocket"],
                 reconnection: true,
+                reconnectionAttempts: Infinity,
                 reconnectionDelay: 1000,
                 reconnectionDelayMax: 5000,
-                reconnectionAttempts: 99,
+                randomizationFactor: 0.5,
+                timeout: 10000,
             });
+            socketRef.current = socket;
 
-            socket.emit(`marketByEvent`, marketId);
-            socket.on(marketId, (data) => {
-                localStorage.setItem(`${eventId}_MatchOddsData`, data)
-                setMatchDetailsForSocketNew(JSON.parse(data));
+            // Subscribe and start heartbeat on connect + reconnect
+            const subscribeAndHeartbeat = () => {
                 setIsConnected(true);
-                filterData(JSON.parse(data));
+                isConnectedRef.current = true;
+                socket.emit(`marketByEvent`, marketId);
+                if (matchId === 4 || matchId === 999) {
+                    socket.emit("JoinRoom", marketId);
+                }
+                if (heartbeatRef.current) clearInterval(heartbeatRef.current);
+                heartbeatRef.current = setInterval(() => {
+                    if (socketRef.current?.connected) socketRef.current.emit("ping");
+                }, 25000);
+            };
+
+            socket.on("connect", subscribeAndHeartbeat);
+            socket.io.on("reconnect", subscribeAndHeartbeat);
+
+            socket.on(marketId, (data) => {
+                const parsed = typeof data === "string" ? JSON.parse(data) : data;
+                setSecureItem(`_cachedMatchOddsData`, { _eid: eventId, data: parsed });
+                setMatchDetailsForSocketNew(parsed);
+                filterData(parsed);
             });
 
             if (matchId === 4 || matchId === 999) {
-                socket.emit("JoinRoom", marketId);
                 socket.on(marketId, (data) => {
-                    localStorage.setItem(`${marketId}_BookmakerData`, data);
-                    setMatchScoreDetails(JSON.parse(data).result);
+                    const parsed = typeof data === "string" ? JSON.parse(data) : data;
+                    setSecureItem(`_cachedBookmakerData`, { _mid: marketId, result: parsed.result });
+                    setMatchScoreDetails(parsed.result);
                 });
             }
 
-
-
-            socket.on('disconnect', () => {
+            socket.on('disconnect', (reason) => {
                 setIsConnected(false);
+                isConnectedRef.current = false;
+                if (heartbeatRef.current) { clearInterval(heartbeatRef.current); heartbeatRef.current = null; }
+                if (reason === "io server disconnect" && socketRef.current) {
+                    socketRef.current.connect();
+                }
             });
 
             setSocketState(socket);
-
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error("Error in socket connection:", error);
         }
     };
@@ -396,10 +493,14 @@ const ViewMatchRacing = () => {
 
     const callCache = async (cacheUrl) => {
         try {
-            const interval = setInterval(async () => {
+            if (cacheIntervalRef.current) {
+                clearInterval(cacheIntervalRef.current);
+            }
+            // Fetch immediately for instant data on reconnect
+            await getMarketCacheUrl(cacheUrl);
+            cacheIntervalRef.current = setInterval(async () => {
                 await getMarketCacheUrl(cacheUrl);
             }, 1000);
-            return () => clearInterval(interval);
         } catch (error) {
             console.error("Error calling cache:", error);
         }
@@ -407,14 +508,12 @@ const ViewMatchRacing = () => {
 
     const getMarketCacheUrl = async (cacheUrl) => {
         try {
-            // if (!cacheUrl) {
-            //   console.error("Cache URL is undefined or null");
-            //   return; // Exit early if cacheUrl is undefin
-            // }
-
+            if (!cacheUrl) return;
             const response = await axios.get(cacheUrl);
-            localStorage.setItem(`${marketId}_BookmakerData`, JSON.stringify(response.data))
-            setMatchScoreDetails(response.data.result);
+            if (response?.data?.result) {
+                setSecureItem(`_cachedBookmakerData`, { _mid: marketId, result: response.data.result });
+                setMatchScoreDetails(response.data.result);
+            }
         } catch (error) {
             console.error("Error fetching cache data:", error);
         }
@@ -527,7 +626,7 @@ const ViewMatchRacing = () => {
 
     // bets Palce Modal write 
     const handleBackOpen = (data, isCombined = false) => {
-  if (data?.odds <= 0) return;
+  if (!data?.odds || data?.odds <= 0) return;
 
     if ((inplayMatch?.countryCode != 'GB' && inplayMatch?.countryCode != "IE") && inplayMatch?.sportId == 7 && data?.inplayCheck === true && data?.statusCheck === 'OPEN') {
       message.error("Inplay Bets are Not Allowed");
@@ -701,78 +800,76 @@ const ViewMatchRacing = () => {
     }
 
 const placeBetCombind = async () => {
-
   try {
     // Calculate combined odds
-         const result = calculateCombinedOddsW(matchOddsSelected);
-
+    const result = calculateCombinedOdds();
     if (!result) return message.error("Unable to calculate combined odds.");
     const { odds, totalInverse } = result;
 
-
+    // Calculate distributed stakes
     let stakePerRace = matchOddsSelected.map((raceIndex, i) => {
       return betSlipData.stake * (1 / odds[i]) / totalInverse;
     });
 
     setBetLoading(true);
 
+    // Single combined bet payload
+    let finalOdds = null;
 
-    const betPromises = matchOddsSelected.map((raceIndex, i) => {
-      const stakeForRace = stakePerRace[i];
+    if (Array.isArray(betSlipData?.odds)) {
+      const validOdds = betSlipData.odds.filter(
+        (odd) => odd !== null && odd !== undefined
+      );
+      finalOdds = validOdds.length > 0 ? validOdds[0] : null;
+    } else {
+      finalOdds = betSlipData?.odds ?? null;
+    }
 
-      const betObject = {
-        odds: odds[i],
-        amount: stakeForRace,
-        selectionId: betSlipData.isCombined
-          ? betSlipData.selectionId[i]
-          : betSlipData.selectionId + "",
-        marketId: marketId + "",
-        eventId: eventId,
-        betFor: betSlipData.betFor + "",
-        run: betSlipData.run ? betSlipData.run + "" : "0",
-        oddsType:
-          betSlipData.oddsType === "Match Odds"
-            ? "matchOdds"
-            : betSlipData.oddsType === "Tied Match"
+    const betObject = {
+      odds: betSlipData?.count,
+      amount: betSlipData.stake,
+      selectionId: betSlipData.isCombined
+        ? betSlipData.selectionId
+        : [betSlipData.selectionId],
+      marketId: marketId + "",
+      eventId: eventId,
+      betFor: betSlipData.betFor + "",
+      run: betSlipData.run ? betSlipData.run + "" : "0",
+      oddsType:
+        betSlipData.oddsType === "Match Odds"
+          ? "matchOdds"
+          : betSlipData.oddsType === "Tied Match"
             ? "tiedMatch"
             : betSlipData.oddsType + "",
-        type: betSlipData.betType + "",
-        isCombined: betSlipData.isCombined || false,
-      };
+      type: betSlipData.betType + "",
+      isCombined: betSlipData.isCombined || false,
+    };
 
-      if (
-        betSlipData.oddsType !== "bookmaker" &&
-        betSlipData.oddsType !== "fancy"
-      ) {
-        betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
-      }
+    if (
+      betSlipData.oddsType !== "bookmaker" &&
+      betSlipData.oddsType !== "fancy"
+    ) {
+      betObject["betfairMarketId"] = betSlipData.betfairMarketId + "";
+    }
 
-   
-      return apiCall("POST", "sports/oddBetPlaced", betObject);
-    });
-
-
-    const responses = await Promise.all(betPromises);
-
-    responses.forEach((res, i) => {
-      if (!res.error) {
-        console.log(`Bet placed for race ${matchOddsSelected[i]}`);
-      } else {
-        console.log(`Bet FAILED for race ${matchOddsSelected[i]}`);
-      }
-    });
-
-
-    setBetLoading(false);
-    setBetShow(false);
-    setBetShowM(false);
-    setSuccessMessage("All bets placed successfully!");
- message.success("All bets placed successfully!");
-    // dispatch(getActiveBetsCount());
-    openBets();
-    dispatch(getUserBalance());
-    await fetchBetLists();
-    await matchOddsPos();
+    // Single API Call
+    const response = await apiCall("POST", "sports/combinedBetPlaceOdds", betObject);
+    if (!response?.error) {
+      setBetLoading(false);
+      setBetShow(false);
+      setBetShowM(false);
+      setSuccessMessage(response.message || "All bets placed successfully!");
+      message.success(response.message || "All bets placed successfully!");
+      setMatchOddsSelected([]);
+      openBets();
+      dispatch(getUserBalance());
+      await fetchBetLists();
+      await matchOddsPos();
+    } else {
+      setBetLoading(false);
+      message.error(response?.message || "Bet failed");
+      setErrorMessage(response?.message || "Bet failed");
+    }
 
     if (
       betSlipData.oddsType === "Match Odds" &&
@@ -783,9 +880,9 @@ const placeBetCombind = async () => {
       await getOpenBets();
     }
   } catch (error) {
-     message.error(error?.data?.message || "Bet failed");
     setBetLoading(false);
     console.error("Error placing bet:", error);
+    message.error(error?.data?.message ||  error?.data?.error?.message || "Bet failed");
     setErrorMessage(error?.data?.message || "Bet failed");
   }
 };
@@ -963,84 +1060,42 @@ const placeBetCombind = async () => {
 
     const calculateCombinedOdds = (type = 'back') => {
     try {
-      if (matchOddsSelected.length < 2) return null;
+      if (!Array.isArray(matchOddsSelected) || matchOddsSelected.length < 2) return null;
 
       const matchOddsData = finalSocket['Match Odds'];
       if (!matchOddsData || !matchOddsData.runners) return null;
 
-      let totalProbability = 0;
+      let totalInverse = 0;
+      let odds = [];
+
       const selectedRunners = matchOddsData.runners.filter((_, index) => matchOddsSelected.includes(index + 1));
 
       selectedRunners.forEach((runner) => {
-        const odds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
-        if (odds && !isNaN(odds)) {
-          totalProbability += 1 / odds;
+        const raceOdds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
+        if (raceOdds && !isNaN(raceOdds)) {
+          odds.push(raceOdds);
+          totalInverse += 1 / raceOdds;
         }
       });
 
-      if (totalProbability === 0) return null;
-      const combinedOdds = (1 / totalProbability) - 1;
-      return Math.round(combinedOdds * 100) / 100;
+      if (totalInverse === 0) return null;
+      const combinedOdds = (1 / totalInverse) - 1;
+      const roundedOdds = Math.round(combinedOdds * 100) / 100;
+      return {
+        odds,
+        combinedOdds: roundedOdds,
+        totalInverse,
+      };
     } catch (error) {
       console.error('Error calculating combined odds:', error);
       return null;
     }
   };
 
-
-  const calculateCombinedOddsW = (selectedRaces, type = 'back') => {
-
-  
-  try {
-    if (selectedRaces.length < 2) return null;
-
-    const matchOddsData = finalSocket['Match Odds'];
-    if (!matchOddsData || !matchOddsData.runners) return null;
-
-    let totalInverse = 0;
-    let odds = [];
-
-
-
-    selectedRaces?.forEach((raceIndex) => {
-      const runner = matchOddsData.runners[raceIndex - 1];
-       const raceOdds = type === 'back' ? runner.ex?.availableToBack?.[0]?.price : runner.ex?.availableToLay?.[0]?.price;
-
-
-      if (raceOdds && !isNaN(raceOdds)) {
-        odds.push(raceOdds);
-        totalInverse += 1 / raceOdds;
-      }
-    });
-
-    if (totalInverse === 0) return null;
-
-    const combinedOdds = (1 / totalInverse) - 1;
-
-
-    setCombinedOddsDisplay(Math.round(combinedOdds * 100) / 100);
-
-    return {
-      odds,
-      combinedOdds: Math.round(combinedOdds * 100) / 100,
-      totalInverse,
-    };
-
-  } catch (error) {
-    console.error("Error calculating combined odds:", error);
-    return null;
-  }
-};
-
- const combinedBackOdds = [
-    calculateCombinedOdds('back'),
-    calculateCombinedOddsW('back')
-];
-
-const combinedLayOdds = [
-    calculateCombinedOdds('lay'),
-    calculateCombinedOddsW('lay')
-];
+  const combinedBackResult = calculateCombinedOdds('back');
+  const combinedLayResult = calculateCombinedOdds('lay');
+  const combinedBackOdds = combinedBackResult?.combinedOdds ?? null;
+  const combinedLayOdds = combinedLayResult?.combinedOdds ?? null;
 
 
 
@@ -1212,10 +1267,10 @@ const combinedLayOdds = [
                       onClick={() =>
                         handleBackOpen(
                           {
-                            odds: combinedBackOdds,
+                            odds: combinedBackOdds < 0 ? 0 : combinedBackOdds,
                             type: "Yes",
                             betType: "L",
-                            size: 100, // Default size, adjust as needed
+                            size: 100,
                             betFor: "matchOdds",
                             oddsType: "Match Odds",
                             betfairMarketId: finalSocket['Match Odds']?.marketId
@@ -1225,7 +1280,7 @@ const combinedLayOdds = [
                       }
                     >
                       <BlinkingComponent
-                        price={combinedBackOdds || '-'}
+                        price={combinedBackOdds < 0 ? 0 : combinedBackOdds || '-'}
                         color={"bg-[#8DD2F0]"}
                         blinkColor={"bg-[#00B2FF]"}
                       />
@@ -1235,10 +1290,10 @@ const combinedLayOdds = [
                       onClick={() =>
                         handleBackOpen(
                           {
-                            odds: combinedBackOdds,
+                            odds: combinedBackOdds < 0 ? 0 : combinedBackOdds,
                             type: "Yes",
                             betType: "L",
-                            size: 100, // Default size, adjust as needed
+                            size: 100,
                             betFor: "matchOdds",
                             oddsType: "Match Odds",
                             betfairMarketId: finalSocket['Match Odds']?.marketId
@@ -1248,7 +1303,7 @@ const combinedLayOdds = [
                       }
                     >
                       <BlinkingComponent
-                        price={combinedBackOdds || '-'}
+                        price={combinedBackOdds < 0 ? 0 : combinedBackOdds || '-'}
                         color={"bg-[#8DD2F0]"}
                         blinkColor={"bg-[#00B2FF]"}
                       />
@@ -1259,7 +1314,7 @@ const combinedLayOdds = [
                       onClick={() =>
                         handleBackOpen(
                           {
-                            odds: combinedLayOdds,
+                            odds: combinedLayOdds < 0 ? 0 : combinedLayOdds,
                             type: "No",
                             betType: "K",
                             size: 100, // Default size, adjust as needed
@@ -1272,7 +1327,7 @@ const combinedLayOdds = [
                       }
                     >
                       <BlinkingComponent
-                        price={combinedLayOdds || '-'}
+                        price={combinedLayOdds < 0 ? 0 : combinedLayOdds || '-'}
                         color={"bg-[#FEAFB2]"}
                         blinkColor={"bg-[#FE7A7F]"}
                       />
@@ -1283,7 +1338,7 @@ const combinedLayOdds = [
                       onClick={() =>
                         handleBackOpen(
                           {
-                            odds: combinedLayOdds,
+                            odds: combinedLayOdds < 0 ? 0 : combinedLayOdds,
                             type: "No",
                             betType: "K",
                             size: 100, // Default size, adjust as needed
@@ -1296,7 +1351,7 @@ const combinedLayOdds = [
                       }
                     >
                       <BlinkingComponent
-                        price={combinedLayOdds || '-'}
+                        price={combinedLayOdds < 0 ? 0 : combinedLayOdds || '-'}
                         color={"bg-[#FEAFB2]"}
                         blinkColor={"bg-[#FE7A7F]"}
                       />
