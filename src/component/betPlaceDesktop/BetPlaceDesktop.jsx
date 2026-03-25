@@ -311,8 +311,7 @@ export function BetPlaceDesktop(props) {
             </div>
 
            <td className="text-right ">
-              {console.log(betSlipData, "betSlipDatabetSlipDatabetSlipData")
-        }
+             
               {Array?.isArray(betSlipData?.nameOther) &&
                 betSlipData.nameOther.length <= 3
                 ? betSlipData.nameOther.map((other, index) => (
