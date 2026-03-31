@@ -1,24 +1,38 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { message } from "antd";
+import Login from "../../login/Login";
 
 function TrendingGames({ name, data, userInfo }) {
   const navigate = useNavigate();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [multiplyModal, setMultiplyModal] = useState({ open: false, gameId: null, product: null });
 
   const handleResponseCasino = (product) => {
-    //                     if(userInfo.data.isDemoClient){
-    //  message.error("Demo User not allowed to play Casino. Play only with Real ID.");
-    //     }else{
-    //     }
-    navigate(`/iframe-casino-new/${product?.product}/${product?.id}`);
-    // navigate(`/iframe-casino-new/${product?.product}/${product?.id}`)
+    if (!localStorage.getItem("token")) {
+      setIsLoginOpen(true);
+      localStorage.setItem("unauthorized", true);
+      return;
+    }
+    const multiply = userInfo?.data?.intCasinoMultiply;
+    if (multiply > 1) {
+      setMultiplyModal({ open: true, gameId: product?.id, product: product?.product, value: multiply });
+    } else {
+      navigate(`/iframe-casino-new/${product?.product}/${product?.id}`);
+    }
   };
 
   return (
     <section>
+      <Login
+        isOpen={isLoginOpen}
+        closeModal={() => setIsLoginOpen(false)}
+        setIsLoginOpen={setIsLoginOpen}
+      />
       <div>
         <div className="text-white text-[16px] font-bold leading-none px-3 h-[29px] flex justify-start items-center uppercase bg-[#C10930]">
           <h2 className="textAnime tracking-tight w-full text-center">
@@ -47,6 +61,50 @@ function TrendingGames({ name, data, userInfo }) {
           </div>
         </div>
       </div>
+
+      {multiplyModal.open && (
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/50"
+          onClick={() => setMultiplyModal({ open: false, gameId: null, product: null })}
+        >
+          <div className="rounded-md w-[340px] text-center overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-[#0b1a3d] p-5 text-white">
+              <p className="text-xl font-bold italic uppercase tracking-wide">Important Note</p>
+              <p className="text-yellow-400 font-bold uppercase text-sm mt-1">Casino Bet Stakes</p>
+              <p className="text-yellow-300 font-bold text-lg mt-1">
+                1 Points = Rs 100
+              </p>
+              <div className="flex gap-3 mt-3 text-sm leading-relaxed">
+                <p className="flex-1 text-gray-200 text-left">
+                  When your account balance is Rs. 100 then it will be shown 1 point when you enter the casino.
+                  Similarly when 1 point is placed then the actual amount is
+                  Rs.100 and all settlements will be done accordingly.
+                </p>
+                <p className="flex-1 text-gray-200 text-left">
+                  जब आपके खाते में 100 रुपये होंगे, तो कैसीनो में प्रवेश करते समय 1 अंक दिखाई देंगे। इसी प्रकार, जब 1 अंक लगाए जाएंगे, तो वास्तविक राशि 100 रुपये होगी और सभी भुगतान उसी के अनुसार किए जाएंगे।
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2 p-3 bg-white">
+              <button
+                className="flex-1 py-2 bg-red-500 text-white font-semibold rounded"
+                onClick={() => setMultiplyModal({ open: false, gameId: null, product: null })}
+              >
+                Cancel
+              </button>
+              <button
+                className="flex-1 py-2 bg-green-600 text-white font-semibold rounded"
+                onClick={() => {
+                  navigate(`/iframe-casino-new/${multiplyModal.product}/${multiplyModal.gameId}`);
+                }}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -35,7 +35,7 @@ const ReddyBookSettings = {
 const Era247Settings = {
   title: "Era247 | India’s Most Trusted Online Cricket Betting Id Provider",
   favicon: "/favicon/favicon.ico",
-  logo: "/logo/Era247-logo.png",
+  logo: "/logo/era247.png",
   isCashout: true,
   logo1: "/logo/silver-Era247.png",
   SOCKET_URL: "https://api.criecbet99.club/",
@@ -172,7 +172,7 @@ const domainSettings = {
   "reddywin888.com": Reddywin888Settings,
   "era247.co": Era247Settings,
   "gameon247.co": Gameon247Settings,
-  "localhost:3000": ReddyBookSettings,
+  "localhost:3000": Gameon247Settings,
 
 };
 
