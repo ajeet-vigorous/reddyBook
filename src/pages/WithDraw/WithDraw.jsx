@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiCall } from "../../config/HTTP";
+import { apiCall, httpPostFormData } from "../../config/HTTP";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import { getDepositWithdraw } from "../../redux/reducers/user_reducer";
@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DepositWithdrawCom from "../depositWithdraw/DepositWithdraw";
 
 const WithDraw = () => {
-  const [activeTab, setActiveTab] = useState("Add Account");
-  const [eWalletTab, setEWalletTab] = useState("Easypaisa");
+  const [activeTab, setActiveTab] = useState("Bank");
   const [accountDetails, setAccountDetails] = useState(null);
   const [formData, setFormData] = useState({
     accountNumber: "",
@@ -17,18 +16,19 @@ const WithDraw = () => {
     bankName: "",
     branchName: "",
   });
-  const [eWalletData, setEWalletData] = useState({
-    name: "",
+  const [upiData, setUpiData] = useState({
+    upiId: "",
     mobileNumber: "",
-    easypaisaUpiId: "", // Separate UPI ID for Easypaisa
-    jazzcashUpiId: "", // Separate UPI ID for JazzCash
   });
+  const [upiQrCode, setUpiQrCode] = useState(null);
+  const [upiQrPreview, setUpiQrPreview] = useState(null);
   const [bankAmount, setBankAmount] = useState("");
-  const [eWalletAmount, setEWalletAmount] = useState("");
+  const [upiAmount, setUpiAmount] = useState("");
   const [errors, setErrors] = useState({});
-  const [eWalletErrors, setEWalletErrors] = useState({});
+  const [upiErrors, setUpiErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeAmount, setActiveAmount] = useState(null);
+  const [upiActiveAmount, setUpiActiveAmount] = useState(null);
   const [allDetailsByUser, setAllDetailsByUser] = useState({});
   const bankDetailsUserDataFun = async () => {
     try {
@@ -57,9 +57,6 @@ const WithDraw = () => {
   };
 
   const { getDepositWithdrawData } = useSelector((state) => state.user);
-  const handleEWalletTabChange = (tab) => {
-    setEWalletTab(tab);
-  };
 
   const getBankDetails = async () => {
     try {
@@ -82,16 +79,41 @@ const WithDraw = () => {
     }));
   };
 
-  const handleEWalletInputChange = (e) => {
+  const handleUpiInputChange = (e) => {
     const { name, value } = e.target;
-    setEWalletData((prevData) => ({
+    setUpiData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    setEWalletErrors((prevErrors) => ({
+    setUpiErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
     }));
+  };
+
+  const handleQrCodeChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUpiQrPreview(URL.createObjectURL(file));
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const fileData = await httpPostFormData("website/fileUpload", formData);
+      if (fileData?.data?.imageUrl) {
+        setUpiQrCode(fileData.data.imageUrl);
+        setUpiErrors((prev) => ({ ...prev, qrCode: "" }));
+      } else {
+        throw new Error("Invalid response from file upload API");
+      }
+    } catch (error) {
+      console.error("Error uploading QR code:", error);
+      setUpiErrors((prev) => ({ ...prev, qrCode: "File upload failed. Please try again." }));
+      setUpiQrPreview(null);
+      setUpiQrCode(null);
+    }
   };
 
   const validateForm = () => {
@@ -102,29 +124,32 @@ const WithDraw = () => {
     if (!formData.accountHolder)
       errors.accountHolder = "Account Holder Name is required";
     if (!formData.bankName) errors.bankName = "Bank Name is required";
-    // if (!formData.branchName) errors.branchName = "Branch Name is required";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const validateEWalletForm = () => {
+  const validateUpiForm = () => {
     const errors = {};
-    if (!eWalletData.name) errors.name = "Name is required";
-
-    // Validate UPI ID based on selected e-wallet tab
-    if (eWalletTab === "Easypaisa" && !eWalletData.easypaisaUpiId) {
-      errors.upiId = "Easypaisa UPI ID is required";
-    } else if (eWalletTab === "JazzCash" && !eWalletData.jazzcashUpiId) {
-      errors.upiId = "JazzCash UPI ID is required";
+    if (!upiData.upiId) errors.upiId = "UPI ID is required";
+    if (!upiData.mobileNumber) errors.mobileNumber = "Mobile Number is required";
+    if (upiData.mobileNumber && upiData.mobileNumber.length !== 10) {
+      errors.mobileNumber = "Mobile Number must be 10 digits";
     }
 
-    if (!eWalletAmount) errors.amount = "Amount is required";
-    if (!eWalletAmount || eWalletAmount < 300 || eWalletAmount > 500000) {
-      errors.amount = "Amount must be between ₨300 and ₨500000.";
+    const amount = Number(upiAmount);
+    const minAmount = Number(allDetailsByUser?.account?.fromAmount) || 300;
+    const maxAmount = Number(allDetailsByUser?.account?.toAmount) || 500000;
+
+    if (!amount) {
+      errors.amount = "Amount is required";
+    } else if (amount < minAmount) {
+      errors.amount = `Amount must be at least ${minAmount}`;
+    } else if (amount > maxAmount) {
+      errors.amount = `Amount must not exceed ${maxAmount}`;
     }
 
-    setEWalletErrors(errors);
+    setUpiErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
@@ -187,49 +212,38 @@ const WithDraw = () => {
     }
   };
 
-  const handleEWalletSubmit = async (e) => {
+  const handleUpiSubmit = async (e) => {
     e.preventDefault();
-    if (!validateEWalletForm()) return;
+    if (!validateUpiForm()) return;
 
     try {
       setIsSubmitting(true);
 
-      // Prepare data based on selected e-wallet tab
       const submitData = {
-        amount: eWalletAmount,
-        wallet: {
-          name: eWalletData.name,
-          walletType: eWalletTab,
-          upiId:
-            eWalletTab === "Easypaisa"
-              ? eWalletData.easypaisaUpiId
-              : eWalletData.jazzcashUpiId,
-        },
+        amount: upiAmount,
+        upiId: upiData.upiId,
+        mobileNumber: upiData.mobileNumber,
+        withdrawType: "upi",
       };
+      if (upiQrCode) {
+        submitData.qrCode = upiQrCode;
+      }
 
       const response = await apiCall("POST", "website/withdrawReq", submitData);
 
       if (response?.error === false) {
-        message.success(
-          `${eWalletTab} transfer request submitted successfully!`,
-        );
-        setEWalletData({
-          ...eWalletData,
-          name: "",
-          mobileNumber: "",
-          easypaisaUpiId: "",
-          jazzcashUpiId: "",
-        });
-        setEWalletAmount("");
+        message.success("UPI withdrawal request submitted successfully!");
+        setUpiData({ upiId: "", mobileNumber: "" });
+        setUpiQrCode(null);
+        setUpiQrPreview(null);
+        setUpiAmount("");
+        setUpiActiveAmount(null);
       } else {
-        message.error(
-          response?.message || `Failed to submit ${eWalletTab} transfer`,
-        );
+        message.error(response?.message || "Failed to submit UPI withdrawal");
       }
     } catch (error) {
       message.error(
-        error?.data?.message ||
-          `Failed to submit ${eWalletTab} transfer. Please try again.`,
+        error?.data?.message || "Failed to submit UPI withdrawal. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -264,23 +278,24 @@ const WithDraw = () => {
     }
   };
 
-  const handleQuickAmountSelect = (selectedAmount, isEWallet = false) => {
-    if (isEWallet) {
-      setEWalletAmount(selectedAmount.toString());
-      setEWalletErrors((prev) => ({ ...prev, amount: "" }));
+  const handleQuickAmountSelect = (selectedAmount, isUpi = false) => {
+    if (isUpi) {
+      setUpiAmount(selectedAmount.toString());
+      setUpiActiveAmount(Number(selectedAmount));
+      setUpiErrors((prev) => ({ ...prev, amount: "" }));
     } else {
       setBankAmount(selectedAmount.toString());
       setActiveAmount(Number(selectedAmount));
-
       setErrors((prev) => ({ ...prev, amount: "" }));
     }
   };
 
-  const handleAmountChange = (e, isEWallet = false) => {
+  const handleAmountChange = (e, isUpi = false) => {
     const value = e.target.value;
-    if (isEWallet) {
-      setEWalletAmount(value);
-      setEWalletErrors((prev) => ({ ...prev, amount: "" }));
+    if (isUpi) {
+      setUpiAmount(value);
+      setUpiActiveAmount(null);
+      setUpiErrors((prev) => ({ ...prev, amount: "" }));
     } else {
       setBankAmount(value);
       setErrors((prev) => ({ ...prev, amount: "" }));
@@ -304,13 +319,45 @@ const WithDraw = () => {
 
   const isDisabled = !amount || amount < min || amount > max;
 
+  const handleUpiReset = () => {
+    setUpiAmount("");
+    setUpiActiveAmount(null);
+    setUpiErrors({});
+  };
+
   return (
     <>
       <div className="bg-white text-black  md:max-w-5xl w-full mx-auto ">
         <div className="mb-2 md:bg-[var(--primary)] bg-[var(--secondary)]">
           <h1 className="text-lg px-2 font-bold text-gray-100">Withdrawal</h1>
         </div>
-        {activeTab === "Add Account" && (
+
+        {/* Bank / UPI Tabs */}
+        <div className="flex text-sm font-semibold px-3 mb-4 gap-2">
+          <button
+            onClick={() => handleTabChange("Bank")}
+            className={`flex-1 py-2.5 rounded-md text-center transition-all ${
+              activeTab === "Bank"
+                ? "md:bg-[var(--primary)] bg-[var(--secondary)] text-white"
+                : "bg-gray-100 text-black border border-gray-300"
+            }`}
+          >
+            Bank
+          </button>
+          <button
+            onClick={() => handleTabChange("UPI")}
+            className={`flex-1 py-2.5 rounded-md text-center transition-all ${
+              activeTab === "UPI"
+                ? "md:bg-[var(--primary)] bg-[var(--secondary)] text-white"
+                : "bg-gray-100 text-black border border-gray-300"
+            }`}
+          >
+            UPI
+          </button>
+        </div>
+
+        {/* ============ BANK TAB ============ */}
+        {activeTab === "Bank" && (
           <>
             <form
               onSubmit={handleSubmit}
@@ -373,24 +420,6 @@ const WithDraw = () => {
                   )}
                 </div>
 
-                {/* <div className="col-span-1">
-                <label className="block text-sm mb-1">Branch</label>
-                <input
-                  type="text"
-                  name="branchName"
-                  value={formData.branchName}
-                  onChange={handleInputChange}
-                  className={`w-full p-2 bg-secondary rounded-md text-white ${errors.branchName ? "border-red-500 border" : ""
-                    }`}
-                  placeholder="Branch"
-                />
-                {errors.branchName && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.branchName}
-                  </p>
-                )}
-              </div> */}
-
                 <div className="col-span-2">
                   <label className="block text-sm mb-1">IFSC Number</label>
                   <input
@@ -433,9 +462,6 @@ const WithDraw = () => {
                       <th scope="col" className="px-6 lg:py-3 py-1.5">
                         Bank Name
                       </th>
-                      {/* <th scope="col" className="px-6 lg:py-3 py-1.5">
-                      Branch Name
-                    </th> */}
                       <th scope="col" className="px-6 lg:py-3 py-1.5">
                         IFSC Code
                       </th>
@@ -452,7 +478,6 @@ const WithDraw = () => {
                       <td className="px-6">
                         {accountDetails?.bankName || "-"}
                       </td>
-                      {/* <td className="px-6">{accountDetails?.branchName || '-'}</td> */}
                       <td className="px-6">
                         {accountDetails?.ifscCode || "-"}
                       </td>
@@ -502,13 +527,6 @@ const WithDraw = () => {
                     {accountDetails?.bankName || "-"}
                   </span>
                 </div>
-
-                {/* <div className="flex items-center px-2 bg-white py-1 dark:bg-gray-800 dark:border-gray-700 text-center text-sm font-bold">
-                <span className="flex-1 text-start">Branch Name</span>
-                <span className="flex-1 text-left pl-4">
-                  {accountDetails?.branchName || '-'}
-                </span>
-              </div> */}
               </div>
             )}
 
@@ -517,28 +535,6 @@ const WithDraw = () => {
               className="px-1 rounded-lg max-w-6xl mx-auto"
             >
               <div className="max-w-6xl uppercase mt-4 mx-auto">
-                {/* <div>
-                <label className="block text-sm mb-1">A/C No.</label>
-                <input
-                  type="text"
-                  className="w-full p-2 bg-secondary rounded-md text-white"
-                  placeholder="Account Number"
-                  value={accountDetails?.accountNumber || ''}
-                  disabled
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1">A/C Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 bg-secondary uppercase rounded-md text-white"
-                  placeholder="Account Name"
-                  value={accountDetails?.accountHolder || ''}
-                  disabled
-                />
-              </div> */}
-
                 <label className="block text-sm mt-5 mb-1 capitalize  md:text-[var(--primary)] text-[var(--secondary)] font-semibold">
                   Select Your Amount{" "}
                 </label>
@@ -548,13 +544,12 @@ const WithDraw = () => {
                       <button
                         key={presetAmount}
                         type="button"
-                        className={`px-4 py-2 text-sm font-bold border border-gray-300 rounded-lg 
+                        className={`px-4 py-2 text-sm font-bold border border-gray-300 rounded-lg
                   ${
                     activeAmount === presetAmount
                       ? " md:bg-[var(--primary)] bg-[var(--secondary)]  text-black"
                       : "bg-white  md:text-[var(--primary)] text-[var(--secondary)] hover:bg-[--primary] hover:text-[--secondary]"
                   }`}
-                        // className="bg-white px-4 py-1 text-sm font-bold hover:bg-[--primary] hover:text-[--secondary] border border-gray-300 rounded-lg  md:text-[var(--primary)] text-[var(--secondary)]"
                         onClick={() =>
                           handleQuickAmountSelect(presetAmount, false)
                         }
@@ -589,7 +584,6 @@ const WithDraw = () => {
                   <div className="absolute top-[53%] left-[10px] text-lg font-bold text-gray-600">
                     ₹
                   </div>
-                  {/* <div className="text-[13px] text-gray-400 capitalize font-semibold mt-1">Available to Withdraw </div> */}
                   {errors.amount && (
                     <span className="text-red-500 text-xs">
                       {errors.amount}
@@ -607,6 +601,153 @@ const WithDraw = () => {
               </button>
             </form>
           </>
+        )}
+
+        {/* ============ UPI TAB ============ */}
+        {activeTab === "UPI" && (
+          <form onSubmit={handleUpiSubmit} className="px-3 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm mb-1">UPI ID *</label>
+                <input
+                  type="text"
+                  name="upiId"
+                  value={upiData.upiId}
+                  onChange={handleUpiInputChange}
+                  className={`w-full p-1.5 border-secondary border-2 bg-white rounded-md text-black ${
+                    upiErrors.upiId ? "border-red-500 border" : ""
+                  }`}
+                  placeholder="e.g. name@upi"
+                />
+                {upiErrors.upiId && (
+                  <p className="text-red-500 text-xs mt-1">{upiErrors.upiId}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Mobile Number *</label>
+                <input
+                  type="tel"
+                  name="mobileNumber"
+                  value={upiData.mobileNumber}
+                  onChange={handleUpiInputChange}
+                  maxLength={10}
+                  className={`w-full p-1.5 border-secondary border-2 bg-white rounded-md text-black ${
+                    upiErrors.mobileNumber ? "border-red-500 border" : ""
+                  }`}
+                  placeholder="10 digit mobile number"
+                />
+                {upiErrors.mobileNumber && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {upiErrors.mobileNumber}
+                  </p>
+                )}
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm mb-1">QR Code (Optional)</label>
+                <div className="flex items-center gap-4">
+                  <label
+                    className="cursor-pointer md:bg-[var(--primary)] bg-[var(--secondary)] text-white px-4 py-1.5 rounded-md text-sm"
+                  >
+                    Upload QR
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleQrCodeChange}
+                      className="hidden"
+                    />
+                  </label>
+                  {upiQrPreview && (
+                    <div className="relative">
+                      <img
+                        src={upiQrPreview}
+                        alt="QR Preview"
+                        className="w-20 h-20 object-cover rounded-md border border-gray-300"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUpiQrCode(null);
+                          setUpiQrPreview(null);
+                        }}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                      >
+                        x
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {upiErrors.qrCode && (
+                  <p className="text-red-500 text-xs mt-1">{upiErrors.qrCode}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="max-w-6xl uppercase mt-4 mx-auto">
+              <label className="block text-sm mt-2 mb-1 capitalize md:text-[var(--primary)] text-[var(--secondary)] font-semibold">
+                Select Your Amount{" "}
+              </label>
+              <div className="grid grid-cols-4 md:grid-cols-6 justify-start gap-1">
+                {[300, 1000, 2000, 5000, 10000, 25000, 500000].map(
+                  (presetAmount) => (
+                    <button
+                      key={presetAmount}
+                      type="button"
+                      className={`px-4 py-2 text-sm font-bold border border-gray-300 rounded-lg
+                ${
+                  upiActiveAmount === presetAmount
+                    ? " md:bg-[var(--primary)] bg-[var(--secondary)] text-black"
+                    : "bg-white md:text-[var(--primary)] text-[var(--secondary)] hover:bg-[--primary] hover:text-[--secondary]"
+                }`}
+                      onClick={() => handleQuickAmountSelect(presetAmount, true)}
+                    >
+                      ₹{presetAmount}
+                    </button>
+                  ),
+                )}
+              </div>
+
+              <div className="relative mt-3 mx-0 md:mx-5">
+                <div className="flex items-center mb-3 justify-between">
+                  <label className="block text-sm capitalize md:text-[var(--primary)] text-[var(--secondary)] font-semibold">
+                    Type Your Amount{" "}
+                  </label>
+                  <Link
+                    onClick={handleUpiReset}
+                    className="underline text-[14px] font-semibold capitalize"
+                  >
+                    Reset
+                  </Link>
+                </div>
+                <input
+                  type="number"
+                  className={`w-full ps-[28px] pe-1.5 py-2 border-black border-2 bg-white rounded-md text-black ${
+                    upiErrors.amount ? "border-red-500" : ""
+                  }`}
+                  placeholder="Amount"
+                  value={upiAmount}
+                  onChange={(e) => handleAmountChange(e, true)}
+                />
+                <div className="absolute top-[53%] left-[10px] text-lg font-bold text-gray-600">
+                  ₹
+                </div>
+                {upiErrors.amount && (
+                  <span className="text-red-500 text-xs">
+                    {upiErrors.amount}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="mx-0 bg-green-800 text-white w-full font-semibold py-3 mt-6 text-sm rounded-md block md:border mb-5 md:border-gray-200"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </form>
         )}
       </div>
 
