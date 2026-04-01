@@ -333,7 +333,7 @@ const WithDraw = () => {
         </div>
 
         {/* Bank / UPI Tabs */}
-        <div className="flex text-sm font-semibold px-3 mb-4 gap-2">
+        {/* <div className="flex text-sm font-semibold px-3 mb-4 gap-2">
           <button
             onClick={() => handleTabChange("Bank")}
             className={`flex-1 py-2.5 rounded-md text-center transition-all ${
@@ -354,7 +354,7 @@ const WithDraw = () => {
           >
             UPI
           </button>
-        </div>
+        </div> */}
 
         {/* ============ BANK TAB ============ */}
         {activeTab === "Bank" && (

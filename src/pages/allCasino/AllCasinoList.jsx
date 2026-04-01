@@ -189,16 +189,16 @@ console.log(userInfo?.data?.intCasinoMultiply, "ssssssssssssssssssss");
               <p className="text-xl font-bold italic uppercase tracking-wide">Important Note</p>
               <p className="text-yellow-400 font-bold uppercase text-sm mt-1">Casino Bet Stakes</p>
               <p className="text-yellow-300 font-bold text-lg mt-1">
-                1 Points = Rs 100
+                1 Points = 100
               </p>
               <div className="flex gap-3 mt-3 text-sm leading-relaxed">
                 <p className="flex-1 text-gray-200 text-left">
-                  When your account balance is Rs. 100 then it will be shown 1 point when you enter the casino.
+                  When your account balance is  100 then it will be shown 1 point when you enter the casino.
                   Similarly when 1 point is placed then the actual amount is
-                  Rs.100 and all settlements will be done accordingly.
+                  100 and all settlements will be done accordingly.
                 </p>
                 <p className="flex-1 text-gray-200 text-left">
-                  जब आपके खाते में 100 रुपये होंगे, तो कैसीनो में प्रवेश करते समय 1 अंक दिखाई देंगे। इसी प्रकार, जब 1 अंक लगाए जाएंगे, तो वास्तविक राशि 100 रुपये होगी और सभी भुगतान उसी के अनुसार किए जाएंगे।
+                  जब आपके खाते में 100 होंगे, तो कैसीनो में प्रवेश करते समय 1 अंक दिखाई देंगे। इसी प्रकार, जब 1 अंक लगाए जाएंगे, तो वास्तविक राशि 100 होगी और सभी भुगतान उसी के अनुसार किए जाएंगे।
                 </p>
               </div>
             </div>
