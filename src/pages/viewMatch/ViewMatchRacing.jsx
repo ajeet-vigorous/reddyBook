@@ -378,16 +378,24 @@ const ViewMatchRacing = () => {
 
 
     useEffect(() => {
+   if (!inplayMatch?.maxMinCoins) return;
 
-        const maxCoinData = inplayMatch?.maxMinCoins
-            ? JSON.parse(inplayMatch?.maxMinCoins)
-            : {
-                maximum_match_bet: null,
-                minimum_match_bet: null,
-                maximum_session_bet: null,
-                minimum_session_bet: null,
-            };
+  let maxCoinData = {};
 
+  try {
+    if (typeof inplayMatch.maxMinCoins === "string") {
+      const fixedString = inplayMatch.maxMinCoins.replace(
+        /(\w+):/g,
+        '"$1":'
+      );
+      maxCoinData = JSON.parse(fixedString);
+    } else {
+      maxCoinData = inplayMatch.maxMinCoins;
+    }
+  } catch (err) {
+    console.error("Parse error:", inplayMatch.maxMinCoins);
+    return;
+  }
 
         setminMaxCoins({
             max: maxCoinData?.maximum_match_bet,

@@ -23,6 +23,30 @@ export function authHeader() {
 }
 
 export const apiCall = async (method, path, payload) => {
+
+    if (import.meta.env.VITE_SECRET_KEY_DECREPT_FLAG) {
+        const payloadWithTimestamp = {
+            ...payload,
+            timestamp: new Date().toISOString()
+        };
+        payload = {
+            data: payloadWithTimestamp,
+            isEncruption: true
+        };
+
+
+
+        const encryptedDataee = CryptoJS.AES.encrypt(
+            JSON.stringify(payloadWithTimestamp),
+            import.meta.env.VITE_SECRET_KEY_DECREPT).toString();
+        payload = {
+            data: encryptedDataee,
+            isEncruption: true
+        };
+    }
+
+
+
     // if (import.meta.env.VITE_SECRET_KEY_DECREPT_FLAG && path !="user/login") {
     //     const encryptedDataee = CryptoJS.AES.encrypt(JSON.stringify(payload), import.meta.env.VITE_SECRET_KEY_DECREPT).toString();
     //      payload = {
@@ -87,6 +111,33 @@ async function decryptResponse(response) {
   return response.data;
 }
 
+
+
+async function encryptPayload(payload) {
+  const payloadWithTimestamp = {
+    ...payload,
+    timestamp: new Date().toISOString()
+  };
+
+  if (import.meta.env.VITE_SECRET_KEY_DECREPT_FLAG) {
+    const encryptedData = CryptoJS.AES.encrypt(
+      JSON.stringify(payloadWithTimestamp),
+      import.meta.env.VITE_SECRET_KEY_DECREPT
+    ).toString();
+
+    return {
+      data: encryptedData,
+      isEncryption: true
+    };
+  }
+  return {
+    data: payloadWithTimestamp,
+    isEncryption: true
+  };
+}
+
+
+
 export const httpPost = async (url, params, isNotify) => {
   try {
     let headers = {
@@ -94,10 +145,12 @@ export const httpPost = async (url, params, isNotify) => {
       "Access-Control-Allow-Origin": "*",
       Authorization: authHeader().Authorization,
     };
+
+     const payload = await encryptPayload(params);
     const result = await axios({
       method: "POST",
       url: baseUrl.BACKEND_URL + url,
-      data: { ...params },
+      data: payload,
       headers: headers,
     });
 
@@ -129,10 +182,11 @@ export const httpPost = async (url, params, isNotify) => {
 
 export const httpPostFormData = async (url, data, isNotify) => {
   try {
+     const payload = await encryptPayload(data);
     const result = await axios({
       method: "POST",
       url: baseUrl.BACKEND_URL + url,
-      data: data,
+      data: payload,
       headers: {
         'Content-Type': 'multipart/form-data',
       },

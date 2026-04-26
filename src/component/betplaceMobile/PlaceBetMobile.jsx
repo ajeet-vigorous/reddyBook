@@ -135,94 +135,87 @@ export default function PlaceBetMobile(props) {
   //   }
   // };
 
-  const updateOddsPostModal = async () => {
-    let oddsType = betSlipData?.oddsType;
-    let positionArray = {};
-    let positionArrayNew = {};
+const updateOddsPostModal = () => {
+  if (!betSlipData) return;
 
-    if (oddsType == "Match Odds" || oddsType == "Tied Match") {
-      betSlipData?.nameOther?.map((oddsData) => {
-        if (
-          oddsData.selectionId == betSlipData.selectionId &&
-          betSlipData.betType == "L"
-        ) {
-          positionArray[oddsData.selectionId] =
-            betSlipData.stake * (betSlipData.odds - 1);
-        }
-        if (
-          oddsData.selectionId == betSlipData.selectionId &&
-          betSlipData.betType == "K"
-        ) {
-          positionArray[oddsData.selectionId] =
-            -1 * betSlipData.stake * (betSlipData.odds - 1);
-        }
-        if (
-          oddsData.selectionId != betSlipData.selectionId &&
-          betSlipData.betType == "L"
-        ) {
-          positionArray[oddsData.selectionId] = -1 * betSlipData.stake;
-        }
-        if (
-          oddsData.selectionId != betSlipData.selectionId &&
-          betSlipData.betType == "K"
-        ) {
-          positionArray[oddsData.selectionId] = betSlipData.stake;
-        }
+  // Save original market position only once
+  if (!betSlipData.oldPos) {
+    betSlipData.oldPos = { ...(betSlipData.position || {}) };
+  }
 
-        let currentPos = betSlipData.position[oddsData.selectionId]
-          ? betSlipData.position[oddsData.selectionId]
-          : 0;
-        let calculatePos = positionArray[oddsData.selectionId];
+  // If stake is zero or empty, restore original position
+  if (Number(betSlipData.stake) <= 0) {
+    betSlipData.position = { ...betSlipData.oldPos };
+    return;
+  }
 
-        positionArray[oddsData.selectionId] =
-          Number(calculatePos) + Number(currentPos);
-        positionArrayNew[oddsData.selectionId] = Number(calculatePos);
-      });
-    }
+  const oddsType = betSlipData?.oddsType;
+  const positionArray = {};
 
-    if (oddsType == "toss" || oddsType == "bookmaker") {
-      betSlipData?.nameOther.map((oddsData) => {
-        if (
-          oddsData.selectionid == betSlipData.selectionId &&
-          betSlipData.betType == "L"
-        ) {
-          positionArray[oddsData.selectionid] =
-            betSlipData.stake * betSlipData.odds;
-        }
-        if (
-          oddsData.selectionid == betSlipData.selectionId &&
-          betSlipData.betType == "K"
-        ) {
-          positionArray[oddsData.selectionid] =
-            -1 * betSlipData.stake * betSlipData.odds;
-        }
-        if (
-          oddsData.selectionid != betSlipData.selectionId &&
-          betSlipData.betType == "L"
-        ) {
-          positionArray[oddsData.selectionid] = -1 * betSlipData.stake;
-        }
-        if (
-          oddsData.selectionid != betSlipData.selectionId &&
-          betSlipData.betType == "K"
-        ) {
-          positionArray[oddsData.selectionid] = betSlipData.stake;
-        }
+  // MATCH ODDS / TIED MATCH
+  if (oddsType === "Match Odds" || oddsType === "Tied Match") {
+    betSlipData?.nameOther?.forEach((oddsData) => {
+      let calculatedPos = 0;
 
-        let currentPos = betSlipData.position[oddsData.selectionid]
-          ? betSlipData.position[oddsData.selectionid]
-          : 0;
-        let calculatePos = positionArray[oddsData.selectionid];
+      const selectionId = oddsData.selectionId;
+      const isSelected =
+        selectionId === betSlipData.selectionId;
 
-        positionArray[oddsData.selectionid] =
-          Number(calculatePos) + Number(currentPos);
-        positionArrayNew[oddsData.selectionid] = Number(calculatePos);
-      });
-    }
+      if (isSelected) {
+        calculatedPos =
+          betSlipData.betType === "L"
+            ? Number(betSlipData.stake) *
+              (Number(betSlipData.odds) - 1)
+            : -Number(betSlipData.stake) *
+              (Number(betSlipData.odds) - 1);
+      } else {
+        calculatedPos =
+          betSlipData.betType === "L"
+            ? -Number(betSlipData.stake)
+            : Number(betSlipData.stake);
+      }
 
-    betSlipData.oldPos = betSlipData.position;
-    betSlipData.position = positionArray;
-  };
+      const currentPos =
+        Number(betSlipData.oldPos?.[selectionId]) || 0;
+
+      positionArray[selectionId] =
+        currentPos + calculatedPos;
+    });
+  }
+
+  // BOOKMAKER / TOSS
+  if (oddsType === "bookmaker" || oddsType === "toss") {
+    betSlipData?.nameOther?.forEach((oddsData) => {
+      let calculatedPos = 0;
+
+      const selectionId = oddsData.selectionid;
+      const isSelected =
+        selectionId === betSlipData.selectionId;
+
+      if (isSelected) {
+        calculatedPos =
+          betSlipData.betType === "L"
+            ? Number(betSlipData.stake) *
+              Number(betSlipData.odds)
+            : -Number(betSlipData.stake) *
+              Number(betSlipData.odds);
+      } else {
+        calculatedPos =
+          betSlipData.betType === "L"
+            ? -Number(betSlipData.stake)
+            : Number(betSlipData.stake);
+      }
+
+      const currentPos =
+        Number(betSlipData.oldPos?.[selectionId]) || 0;
+
+      positionArray[selectionId] =
+        currentPos + calculatedPos;
+    });
+  }
+
+  betSlipData.position = positionArray;
+};
   const handleClear = () => {
     setStack(0);
     betSlipData.stake = 0;
@@ -249,14 +242,7 @@ export default function PlaceBetMobile(props) {
             <BetPlaceCounter />
           </div>
         )}
-        {/* <div className=" w-full  h-full flex justify-between bg-[var(--primary)] pt-1.5 pb-3 px-2 items-center">
-                    <h2 className="text-white text-[16px] font-[700]" >
-                        Placebet
-                    </h2>
-                    <div className='text-center pl-2' onClick={() => handleClose()}>
-                        <IoCloseSharp className='text-white cursor-pointer ' size={24} />
-                    </div>
-                </div> */}
+ 
         <div className="flex  justify-between items-center space-x-1 text-black px-2 pt-2.5">
           <div className="p-1 font-medium text-[12px] capitalize">
             {betSlipData.name}
@@ -312,12 +298,7 @@ export default function PlaceBetMobile(props) {
                 ))
               : null}
           </div>
-          {/* <div className='text-black text-[12px]'>Profit: 0</div> */}
-          {/* <div className="bg-white my-1 rounded flex divide-x divide-gray-300">
-                            <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={decreaseCount}>-</span>
-                            <span className="py-1 px-6 text-sm">{count && count ? count : 0}</span>
-                            <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={increaseCount}>+</span>
-                        </div> */}
+      
         </div>
 
         <div className="px-0 bg-[#ffffff45] grid grid-cols-2 justify-between items-center gap-2 mx-2 ">
@@ -346,7 +327,7 @@ export default function PlaceBetMobile(props) {
             {/* <span className="text-center text-[12px]">Amount</span> */}
             <input
               className="focus:outline-none text-sm w-full text-start px-2 py-4 bg-white h-8 border border-black"
-              type="number"
+              type="text"
               placeholder="0"
               value={betSlipData.stake}
               onChange={updateInputValue}
@@ -354,30 +335,9 @@ export default function PlaceBetMobile(props) {
           </div>
         </div>
 
-        {/* <div className="grid grid-cols-2 gap-4 px-3 py-2">
-                        <div className="bg-white my-1 rounded flex divide-x divide-gray-300">
-                            <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={decreaseCount}>-</span>
-                            <span className="py-1 px-6 text-sm">{count && count ? count : 0}</span>
-                            <span className="py-1 px-2 font-bold cursor-pointer bg-[var(--secondary)]" onClick={increaseCount}>+</span>
-                        </div>
-                        <div className="bg-white flex divide-x divide-gray-300">
-                            <input className="focus:outline-none text-sm w-20 text-start px-2 py-1" type="number" placeholder="0" value={betSlipData.stake} onChange={inputChange} />
-                        </div>
-                    </div> */}
-        {/* {isFetch ?
-                            <button className="bg-[var(--primary)]  px-2 py-1 text-sm text-white font-semibold relative" >Submit
-                                <div className=" flex items-center justify-center absolute top-0 right-2 bg-transparent">
-                                    <div className="w-5 h-5 rounded-full animate-spin border-[5px] border-solid border-[#ffffff] border-t-transparent"></div>
-                                </div>
-                            </button> :
-                            <button className="bg-[var(--primary)] px-2 py-1 text-sm text-white font-semibold" onClick={() => { placeBet() }}>Submit</button>} */}
-        {/* <div className='font-medium text-base text-center'>
-                            0
-                        </div> */}
+    
         <div className="grid grid-cols-4 gap-[3px] px-2 py-2">
-          {/* {betchipdata && betchipdata.length > 0 && betchipdata.map((chip) => (
-                            <button key={chip} className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic(chip)}>{chip}</button>
-                        ))} */}
+        
 
           {betchipdata &&
             betchipdata.length > 0 &&
@@ -395,14 +355,7 @@ export default function PlaceBetMobile(props) {
                 </span>
               </button>
             ))}
-          {/* <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("500")}>500</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("1000")}>1000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("2000")}>2000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("3000")}>3000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("4000")}>4000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("5000")}>5000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("10000")}>10000</button>
-                        <button className="px-1.5 py-1 text-xs bg-[var(--secondary)] text-white font-bold" onClick={() => updateStackOnclic("20000")}>20000</button> */}
+
         </div>
 
         <div className="grid grid-cols-4 gap-[3px] px-2">
